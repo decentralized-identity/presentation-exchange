@@ -1,0 +1,213 @@
+
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+            <title>DIF Proof Presentation</title>
+            <link href="../specdown/css/index.css" rel="stylesheet">
+            <link href="../specdown/css/prism.css" rel="stylesheet">
+            <link href="../specdown/css/font-awesome.css" rel="stylesheet">
+            
+
+          </head>
+          <body>
+            <main>
+              <header id="header">
+                <a id="logo" href="https://identity.foundation">
+                  <img src="https://rawcdn.githack.com/decentralized-identity/decentralized-identity.github.io/a3ca39717e440302d1fd99a796e7f00e1c42eb2d/images/logo-flat.svg" />
+                </a>
+                <a id="sidebar_toggle" href="#sidebar">Table of Contents</a>
+              </header>
+              <article id="content">
+                <h1 id="proof-presentation"><a class="toc-anchor" href="#proof-presentation">§</a> Proof Presentation</h1>
+<p><strong>Specification Status:</strong> Strawman</p>
+<p><strong>Latest Draft:</strong>
+<a href="https://identity.foundation/proof-presentation/spec">identity.foundation/proof-presentation/spec</a></p>
+<dl>
+<dt><strong>Editors:</strong></dt>
+<dd><a href="https://www.linkedin.com/in/dbuchner/">Daniel Buchner</a> (Microsoft)</dd>
+<dd><a href="https://www.linkedin.com/in/bzundel/">Brent Zundel</a> (Evernym)</dd>
+</dl>
+<!-- -->
+<dl>
+<dt><strong>Participate:</strong></dt>
+<dd><a href="https://github.com/decentralized-identity/proof-presentation">GitHub repo</a></dd>
+<dd><a href="https://github.com/decentralized-identity/proof-presentation/issues">File a bug</a></dd>
+<dd><a href="https://github.com/decentralized-identity/proof-presentation/commits/master">Commit history</a></dd>
+</dl>
+<hr>
+<h2 id="abstract"><a class="toc-anchor" href="#abstract">§</a> Abstract</h2>
+<p>A common activity between peers in identity systems that feature the ability to generate self-asserted and third-party issued claims is the demand and submission of proofs from a Subject to a Verifier. This flow implicitly requires the Subject and Verifier have a known mechanism to facilitate the two primary steps in a proofing exchange: the way Verifiers define the proof requirements, and how Subjects must encode submissions of proof to align with those requirements.</p>
+<p>To address these needs, this Proof Presentation specification codifies the <code>Proof Definition</code> data format Verifiers can use to articulate proof requirements, as well as the <code>Proof Submission</code> data format Subjects can use to submit proofs in accordance with them.</p>
+<p>This specification does not endeavor to define transport protocols, specific endpoints, or other means for conveying the formatted objects it codifies herein, but it is encouraged that others specifications and projects that do define such mechanisms utilize these data formats within their flows.</p>
+<h2 id="status-of-this-document"><a class="toc-anchor" href="#status-of-this-document">§</a> Status of This Document</h2>
+<p>Proof Presentation is a draft specification being developed within the Decentralized Identity Foundation (DIF), and being designed to incorporate the requirements and learnings from related work of the most active industry players into a shared specification that meets the collective needs of the community. This spec will be updated to reflect relevant changes, and participants are encouraged to actively engage on GitHub (see above) and other mediums (e.g. DIF) where this work is being done.</p>
+<h2 id="terminology"><a class="toc-anchor" href="#terminology">§</a> Terminology</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Term</th>
+<th style="text-align:left">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Decentralized Identifier (DID)</td>
+<td style="text-align:left">Unique ID string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).</td>
+</tr>
+<tr>
+<td style="text-align:left">Subject</td>
+<td style="text-align:left">The entity that submits proofs to a Verifier to satisfy the requirements described in a Proof Definition</td>
+</tr>
+<tr>
+<td style="text-align:left">Verifier</td>
+<td style="text-align:left">The entity that defines what proofs they require from a Subject (via a Proof Definition) in order to proceed with an interaction.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="proof-definition"><a class="toc-anchor" href="#proof-definition">§</a> <code>Proof Definition</code></h2>
+<p>Proof Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Proof Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.</p>
+<div id="example-proof-definition---all-features-exercised" class="notice example"><a class="notice-link" href="#example-proof-definition---all-features-exercised"></a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"input_selection"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
+      <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+      <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"data"</span><span class="token punctuation">,</span>
+      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"field"</span><span class="token operator">:</span> <span class="token string">"routing_number"</span><span class="token punctuation">,</span>
+      <span class="token property">"value"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+          <span class="token property">"maxLength"</span><span class="token operator">:</span> <span class="token number">9</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"data"</span><span class="token punctuation">,</span>
+      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"field"</span><span class="token operator">:</span> <span class="token string">"account_number"</span><span class="token punctuation">,</span>
+      <span class="token property">"value"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span>
+        <span class="token property">"maxLength"</span><span class="token operator">:</span> <span class="token number">17</span><span class="token punctuation">,</span>
+        <span class="token property">"required"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"idtoken"</span><span class="token punctuation">,</span>
+      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"redirect"</span><span class="token operator">:</span> <span class="token string">"https://acmebank.com/oauth"</span><span class="token punctuation">,</span>
+      <span class="token property">"parameters"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"dhfiuhsdre"</span><span class="token punctuation">,</span>
+        <span class="token property">"scope"</span><span class="token operator">:</span> <span class="token string">"openid+profile"</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"vc"</span><span class="token punctuation">,</span>
+      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token string">"https://eu.com/claims/IDCard"</span><span class="token punctuation">,</span>
+      <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:foo:gov1"</span><span class="token punctuation">,</span> <span class="token string">"did:bar:gov2"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"vc"</span><span class="token punctuation">,</span>
+      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token string">"hub://did:foo:123/Collections/schema.us.gov/Passport"</span><span class="token punctuation">,</span>
+      <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:foo:gov1"</span><span class="token punctuation">,</span> <span class="token string">"did:bar:gov2"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>  
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div>
+<h3 id="top-level-properties"><a class="toc-anchor" href="#top-level-properties">§</a> Top-Level Properties</h3>
+<p>The following properties are defined for use at the top-level of the resource - all other properties that are not defined below MUST be ignored:</p>
+<ul>
+<li><code>input_selection</code> - The resource MUST contain this property, and its value MUST be an array of Input Selection Rule objects.</li>
+<li><code>input_descriptors</code> - The resource MUST contain this property, and its value MUST be an array of Input Descriptor objects</li>
+</ul>
+<h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors">§</a> Input Descriptors</h3>
+<p>Input Descriptors are objects used to describe the proofs an entity requires of a Subject before they will proceed with an interaction. These descriptor objects are classified by type, which are defined below:</p>
+<h4 id="data-input-descriptor"><a class="toc-anchor" href="#data-input-descriptor">§</a> <code>data</code> Input Descriptor</h4>
+<h4 id="vc-input-descriptor"><a class="toc-anchor" href="#vc-input-descriptor">§</a> <code>vc</code> Input Descriptor</h4>
+<h4 id="idtoken-input-descriptor"><a class="toc-anchor" href="#idtoken-input-descriptor">§</a> <code>idtoken</code> Input Descriptor</h4>
+<h3 id="input-selection-rules"><a class="toc-anchor" href="#input-selection-rules">§</a> Input Selection Rules</h3>
+<p>To enable Verifying entities to encode optionality into their Proof Definition requirements, the Proof Definition includes a section where Verifiers can encode Input Selection Rules. These rules convey what combinations of proof inputs are acceptable to fulfill their processing requirements. Input Selection Rules introduce a set of rule types that provide different ways for Verifiers to instruct a Subject’s User Agent to present optionality and how matching inputs should be submitted (via a <code>Proof Submission</code>) to satisfy their requirements.</p>
+<h4 id="pick-rule"><a class="toc-anchor" href="#pick-rule">§</a> <code>pick</code> rule</h4>
+<h4 id="all-rule"><a class="toc-anchor" href="#all-rule">§</a> <code>all</code> rule</h4>
+<h2 id="proof-submission"><a class="toc-anchor" href="#proof-submission">§</a> <code>Proof Submission</code></h2>
+<div id="example-proof-submission---all-features-exercised" class="notice example"><a class="notice-link" href="#example-proof-submission---all-features-exercised"></a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"input_submissions"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token string">"A"</span><span class="token punctuation">,</span>
+      <span class="token property">"proof"</span><span class="token operator">:</span> <span class="token punctuation">{</span>...<span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token string">"A"</span><span class="token punctuation">,</span>
+      <span class="token property">"proof"</span><span class="token operator">:</span> <span class="token punctuation">{</span>...<span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token string">"A"</span><span class="token punctuation">,</span>
+      <span class="token property">"proof"</span><span class="token operator">:</span> <span class="token punctuation">{</span>...<span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token string">"B"</span><span class="token punctuation">,</span>
+      <span class="token property">"proof"</span><span class="token operator">:</span> <span class="token punctuation">{</span>...<span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div>
+
+              </article>
+              <aside id="sidebar">
+                <a id="sidebar_closer" href="#_"></a>
+                <section>
+                  <header>
+                    <a href="#_"></a>
+                  </header>
+                  <ul class="toc">
+<li><a href="#abstract">Abstract</a></li>
+<li><a href="#status-of-this-document">Status of This Document</a></li>
+<li><a href="#terminology">Terminology</a></li>
+<li><a href="#proof-definition"><code>Proof Definition</code></a>
+<ul>
+<li><a href="#top-level-properties">Top-Level Properties</a></li>
+<li><a href="#input-descriptors">Input Descriptors</a>
+<ul>
+<li><a href="#data-input-descriptor"><code>data</code> Input Descriptor</a></li>
+<li><a href="#vc-input-descriptor"><code>vc</code> Input Descriptor</a></li>
+<li><a href="#idtoken-input-descriptor"><code>idtoken</code> Input Descriptor</a></li>
+</ul>
+</li>
+<li><a href="#input-selection-rules">Input Selection Rules</a>
+<ul>
+<li><a href="#pick-rule"><code>pick</code> rule</a></li>
+<li><a href="#all-rule"><code>all</code> rule</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#proof-submission"><code>Proof Submission</code></a></li>
+</ul>
+
+                </section>
+              </aside>
+            </main>
+          </body>
+          <script src="../specdown/js/mermaid.js"></script>
+          <script>mermaid.initialize({ startOnLoad: true, theme: "neutral" });</script>
+          <script src="../specdown/js/index.js"></script>
+        </html>
+      
