@@ -21,7 +21,7 @@ Proof Presentation
 
 A common activity between peers in identity systems that feature the ability to generate self-asserted and third-party issued claims is the demand and submission of proofs from a Subject to a Verifier. This flow implicitly requires the Subject and Verifier have a known mechanism to facilitate the two primary steps in a proofing exchange: the way Verifiers define the proof requirements, and how Subjects must encode submissions of proof to align with those requirements.
 
-To address these needs, this Proof Presentation specification codifies the `Proof Definition` data format Verifiers can use to articulate proof requirements, as well as the `Proof Submission` data format Subjects can use to submit proofs in accordance with them.
+To address these needs, this Proof Presentation specification codifies the `Presentation Definition` data format Verifiers can use to articulate proof requirements, as well as the `Presentation Submission` data format Subjects can use to submit proofs in accordance with them.
 
 This specification does not endeavor to define transport protocols, specific endpoints, or other means for conveying the formatted objects it codifies herein, but it is encouraged that others specifications and projects that do define such mechanisms utilize these data formats within their flows.
 
@@ -34,14 +34,14 @@ Proof Presentation is a draft specification being developed within the Decentral
 Term | Definition
 :--- | :---------
 Decentralized Identifier (DID) | Unique ID string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).
-Subject | The entity that submits proofs to a Verifier to satisfy the requirements described in a Proof Definition
-Verifier | The entity that defines what proofs they require from a Subject (via a Proof Definition) in order to proceed with an interaction.
+Subject | The entity that submits proofs to a Verifier to satisfy the requirements described in a Presentation Definition
+Verifier | The entity that defines what proofs they require from a Subject (via a Presentation Definition) in order to proceed with an interaction.
 
-## `Proof Definition`
+## `Presentation Definition`
 
-Proof Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Proof Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.
+Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.
 
-::: example Proof Definition - all features exercised
+::: example Presentation Definition - all features exercised
 ```json
 {
   "input_selection": [
@@ -125,17 +125,17 @@ Input Descriptors are objects used to describe the proofs an entity requires of 
 
 ### Input Selection Rules
 
-To enable Verifying entities to encode optionality into their Proof Definition requirements, the Proof Definition includes a section where Verifiers can encode Input Selection Rules. These rules convey what combinations of proof inputs are acceptable to fulfill their processing requirements. Input Selection Rules introduce a set of rule types that provide different ways for Verifiers to instruct a Subject's User Agent to present optionality and how matching inputs should be submitted (via a `Proof Submission`) to satisfy their requirements. 
+To enable Verifying entities to encode optionality into their Presentation Definition requirements, the Presentation Definition includes a section where Verifiers can encode Input Selection Rules. These rules convey what combinations of proof inputs are acceptable to fulfill their processing requirements. Input Selection Rules introduce a set of rule types that provide different ways for Verifiers to instruct a Subject's User Agent to present optionality and how matching inputs should be submitted (via a `Presentation Submission`) to satisfy their requirements. 
 
 #### `pick` rule
 
 #### `all` rule
 
 
-## `Proof Submission`
+## `Presentation Submission`
 
 
-::: example Proof Submission - all features exercised
+::: example Presentation Submission - all features exercised
 ```json
 {
   "input_submissions": [
