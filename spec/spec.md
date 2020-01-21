@@ -19,15 +19,34 @@ Proof Presentation
 
 ## Abstract
 
-A common activity between peers in identity systems that feature the ability to generate self-asserted and third-party issued claims is the demand and submission of proofs from a Subject to a Verifier. This flow implicitly requires the Subject and Verifier have a known mechanism to facilitate the two primary steps in a proofing exchange: the way Verifiers define the proof requirements, and how Subjects must encode submissions of proof to align with those requirements.
+A common activity between peers in identity systems that feature the 
+ability to generate self-asserted and third-party issued claims is the 
+demand and submission of proofs from a Subject to a Verifier. This flow 
+implicitly requires the Subject and Verifier have a known mechanism to 
+facilitate the two primary steps in a proofing exchange: the way Verifiers
+define the proof requirements, and how Subjects must encode submissions of
+proof to align with those requirements.
 
-To address these needs, this Proof Presentation specification codifies the `Presentation Definition` data format Verifiers can use to articulate proof requirements, as well as the `Presentation Submission` data format Subjects can use to submit proofs in accordance with them.
+To address these needs, this Proof Presentation specification codifies the
+`Presentation Definition` data format Verifiers can use to articulate proof
+requirements, as well as the `Presentation Submission` data format Subjects
+can use to submit proofs in accordance with them.
 
-This specification does not endeavor to define transport protocols, specific endpoints, or other means for conveying the formatted objects it codifies herein, but it is encouraged that others specifications and projects that do define such mechanisms utilize these data formats within their flows.
+This specification does not endeavor to define transport protocols,
+specific endpoints, or other means for conveying the formatted objects it
+codifies herein, but it is encouraged that others specifications and
+projects that do define such mechanisms utilize these data formats within
+their flows.
 
 ## Status of This Document
 
-Proof Presentation is a draft specification being developed within the Decentralized Identity Foundation (DIF), and being designed to incorporate the requirements and learnings from related work of the most active industry players into a shared specification that meets the collective needs of the community. This spec will be updated to reflect relevant changes, and participants are encouraged to actively engage on GitHub (see above) and other mediums (e.g. DIF) where this work is being done.
+Proof Presentation is a draft specification being developed within the
+Decentralized Identity Foundation (DIF), and being designed to incorporate
+the requirements and learnings from related work of the most active
+industry players into a shared specification that meets the collective
+needs of the community. This spec will be updated to reflect relevant
+changes, and participants are encouraged to actively engage on GitHub (see
+above) and other mediums (e.g. DIF) where this work is being done.
 
 ## Terminology
 
@@ -39,7 +58,12 @@ Verifier | The entity that defines what proofs they require from a Subject (via 
 
 ## `Presentation Definition`
 
-Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.
+Presentation Definitions are objects generate to articulate what proofs an
+entity requires to make a decision about an interaction with a Subject.
+Presentation Definitions are composed of inputs, which describe the forms
+and details of the proofs they require, and and optional set of selection
+rules, to allow Subjects flexibility in cases where many different types of
+proofs may satisfy an input requirement.
 
 ::: example Presentation Definition - all features exercised
 ```json
@@ -107,14 +131,19 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 
 ### Top-Level Properties
 
-The following properties are defined for use at the top-level of the resource - all other properties that are not defined below MUST be ignored:
+The following properties are defined for use at the top-level of the
+resource - all other properties that are not defined below MUST be ignored:
 
-- `input_selection` - The resource MUST contain this property, and its value MUST be an array of Input Selection Rule objects.
-- `input_descriptors` - The resource MUST contain this property, and its value MUST be an array of Input Descriptor objects
+- `input_selection` - The resource MUST contain this property, and its
+    value MUST be an array of Input Selection Rule objects.
+- `input_descriptors` - The resource MUST contain this property, and its
+    value MUST be an array of Input Descriptor objects
 
 ### Input Descriptors
 
-Input Descriptors are objects used to describe the proofs an entity requires of a Subject before they will proceed with an interaction. These descriptor objects are classified by type, which are defined below:
+Input Descriptors are objects used to describe the proofs an entity
+requires of a Subject before they will proceed with an interaction. These
+descriptor objects are classified by type, which are defined below:
 
 #### `data` Input Descriptor
 
@@ -125,7 +154,14 @@ Input Descriptors are objects used to describe the proofs an entity requires of 
 
 ### Input Selection Rules
 
-To enable Verifying entities to encode optionality into their Presentation Definition requirements, the Presentation Definition includes a section where Verifiers can encode Input Selection Rules. These rules convey what combinations of proof inputs are acceptable to fulfill their processing requirements. Input Selection Rules introduce a set of rule types that provide different ways for Verifiers to instruct a Subject's User Agent to present optionality and how matching inputs should be submitted (via a `Presentation Submission`) to satisfy their requirements. 
+To enable Verifying entities to encode optionality into their Presentation
+Definition requirements, the Presentation Definition includes a section
+where Verifiers can encode Input Selection Rules. These rules convey what
+combinations of proof inputs are acceptable to fulfill their processing
+requirements. Input Selection Rules introduce a set of rule types that
+provide different ways for Verifiers to instruct a Subject's User Agent to
+present optionality and how matching inputs should be submitted (via a
+`Presentation Submission`) to satisfy their requirements. 
 
 #### `pick` rule
 
