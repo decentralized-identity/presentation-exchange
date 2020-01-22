@@ -412,13 +412,9 @@ pre[class*="language-"] {
   padding: 0 0 0 1em;
 }
 
-.toc li {
-  margin-top: 0.5em;
-}
-
 .toc a {
   display: block;
-  padding: 0.2em 0 0.1em;
+  padding: 0.4em 0.3em 0.225em;
   text-decoration: none;
   border-radius: 3px;
   color: #333;
