@@ -11,7 +11,8 @@
   "devDependencies": {
     "gulp": "4.0.2",
     "serve": "^10.1.1",
-    "app-root-path": "3.0.0",
+    "globby": "11.0.0",
+    "pkg-dir": "4.2.0",
     "primer-markdown": "^4.0.0",
     "markdown-it": "10.0.0",
     "markdown-it-modify-token": "1.0.2",

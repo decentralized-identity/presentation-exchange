@@ -1,5 +1,7 @@
 const gulp = require('gulp');
 const fs = require('fs');
+const pkg = require('pkg-dir');
+const globby = require('globby');
 const containers = require('markdown-it-container');
 
 var toc;
@@ -58,11 +60,43 @@ const md = require('markdown-it')({
     anchorClassName: 'toc-anchor'
   })
 
-async function render(spec, config) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(spec.path + '/spec.md', 'utf8', function(err, doc) {
+function getRelativePrefix(location){
+  return (location.match(/[a-zA-Z0-9-\._]+/g) || []).map(() => '../').join('');
+}
+
+let init = new Promise(async (resolve, reject) => {
+  var projectPath = await pkg(__dirname);
+  var moduleLocation = __dirname.replace(projectPath, ''); 
+  var rootRelativePrefix = getRelativePrefix(moduleLocation);
+  let specPaths = (await globby([rootRelativePrefix + '**/spec.md', `!${rootRelativePrefix}node_modules`])).map(path => {
+    return path.replace('/spec.md', '')
+  });
+
+  
+
+  specPaths.forEach(path => {
+    fs.readFile(path + '/spec.json', function(err, data) {
       if (err) return reject(err);
-      fs.writeFile(spec.path + '/index.html', `
+      let config = JSON.parse(data);
+          config.path = path;
+          config.rootRelativePrefix = rootRelativePrefix;
+          config.moduleRelativeLocation = getRelativePrefix(path);
+      //console.log(projectPath, moduleLocation, rootRelativePrefix, path, config.moduleRelativeLocation);
+      gulp.watch(
+        [path + '/**/*', '!' + path + '/index.html'],
+        { ignoreInitial: false },
+        render.bind(null, config)
+      )
+    });
+  })
+
+});
+
+async function render(config) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(config.path + '/spec.md', 'utf8', function(err, doc) {
+      if (err) return reject(err);
+      fs.writeFile(config.output_path ? config.rootRelativePrefix + config.output_path : config.path + '/index.html', `
         <!DOCTYPE html>
         <html lang="en">
           <head>
@@ -70,12 +104,10 @@ async function render(spec, config) {
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-            <title>${spec.title}</title>
-            <link href="${spec.rootPath}specdown/css/index.css" rel="stylesheet">
-            <link href="${spec.rootPath}specdown/css/prism.css" rel="stylesheet">
-            <link href="${spec.rootPath}specdown/css/font-awesome.css" rel="stylesheet">
-            
-
+            <title>${config.title}</title>
+            <link href="${config.moduleRelativeLocation}specdown/css/index.css" rel="stylesheet">
+            <link href="${config.moduleRelativeLocation}specdown/css/prism.css" rel="stylesheet">
+            <link href="${config.moduleRelativeLocation}specdown/css/font-awesome.css" rel="stylesheet">
           </head>
           <body>
             <main>
@@ -99,9 +131,9 @@ async function render(spec, config) {
               </aside>
             </main>
           </body>
-          <script src="${spec.rootPath}specdown/js/mermaid.js"></script>
+          <script src="${config.moduleRelativeLocation}specdown/js/mermaid.js"></script>
           <script>mermaid.initialize({ startOnLoad: true, theme: "neutral" });</script>
-          <script src="${spec.rootPath}specdown/js/index.js"></script>
+          <script src="${config.moduleRelativeLocation}specdown/js/index.js"></script>
         </html>
       `, function(err, data){
         if (err) reject(err);
@@ -113,32 +145,9 @@ async function render(spec, config) {
 
 // Mermaid CDN version: https://cdn.jsdelivr.net/npm/mermaid@8.4.5/dist/mermaid.min.js
 
-let init = new Promise((resolve, reject) => {
-
-  fs.readFile('./specs.json', function(err, data) {
-    if (err) return reject(err);
-    let config = JSON.parse(data);
-    config.renderers = [];
-    config.specs.forEach(spec => {
-      spec.rootPath = '';
-      (spec.path.match(/\/[a-zA-Z0-9-\._]/g) || []).forEach(() => spec.rootPath += '../')
-      let fn = render.bind(null, spec, config);
-      config.renderers.push(fn);
-      gulp.task(spec.title, () => {
-        gulp.watch([
-          spec.path + '/**/*',
-          '!' + spec.path + '/index.html'
-        ], fn)
-      });
-    });
-    resolve(config);
-  });
-
-});
-
 gulp.task('start', async () => {
   init.then(config => {
-    gulp.parallel(...config.renderers)();
-    gulp.parallel(...config.specs.map(spec => spec.title))();
+    //gulp.parallel(...config.renderers)();
+    //gulp.parallel(...config.specs.map(spec => spec.title))();
   }).catch(e => console.log(e));
 });
