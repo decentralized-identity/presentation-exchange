@@ -4,7 +4,7 @@ Proof Presentation
 **Specification Status:** Strawman
 
 **Latest Draft:**
-  [identity.foundation/proof-presentation/spec](https://identity.foundation/proof-presentation/spec)
+  [identity.foundation/proof-presentation](https://identity.foundation/proof-presentation)
 
 **Editors:**
 ~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Microsoft)
@@ -112,13 +112,59 @@ The following properties are defined for use at the top-level of the resource - 
 - `input_selection` - The resource MUST contain this property, and its value MUST be an array of Input Selection Rule objects.
 - `input_descriptors` - The resource MUST contain this property, and its value MUST be an array of Input Descriptor objects
 
+### Input Selection Rules
+
+Within the `input_selection` array, a Credential Manifest MAY include Input Selection Rule objects that define what combinations of inputs an Issuer will accept for credential issuance evaluation. The following section defines the format for Input Selection Rule objects and the selection syntax Issuers can use to specify which combinations of inputs are acceptable.
+
+::: example Basic input selection rule
+```json
+"input_selection": [
+  {
+    "rule": "all",
+    "from": ["A"]
+  }
+]
+```
+:::
+
 ### Input Descriptors
 
 Input Descriptors are objects used to describe the proofs an entity requires of a Subject before they will proceed with an interaction. These descriptor objects are classified by type, which are defined below:
 
 #### `data` Input Descriptor
 
+::: example Input Descriptor - Data
+```json
+"input_descriptors": [
+  {
+    "type": "data",
+    "group": ["A"],
+    "field": "credit_card_number",
+    "value": {
+      "type": "integer",
+      "maximum": 9999999999999999
+    }
+  }
+]
+```
+:::
+
 #### `vc` Input Descriptor
+
+::: example Input Descriptor - Verifiable Credential
+```json
+"input_descriptors": [
+  {
+    "type": "vc",
+    "group": ["B"],
+    "schema": "https://eu.com/claims/IDCard",
+    "constraints": {
+      "issuers": ["did:foo:gov1", "did:bar:gov2"]
+    }
+  }
+]
+```
+:::
 
 #### `idtoken` Input Descriptor
 

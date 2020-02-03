@@ -7,23 +7,43 @@
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
             <title>DIF Proof Presentation</title>
-            <link href="./spec-up/css/index.css" rel="stylesheet">
+            <link href="./spec-up/css/custom-elements.css" rel="stylesheet">
             <link href="./spec-up/css/prism.css" rel="stylesheet">
+            <link href="./spec-up/css/chart.css" rel="stylesheet">
             <link href="./spec-up/css/font-awesome.css" rel="stylesheet">
+            <link href="./spec-up/css/index.css" rel="stylesheet">
+            <script src="./spec-up/js/custom-elements.js"></script>
           </head>
-          <body>
+          <body features="source logo">
+            
+            <svg id="svg" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="github" viewBox="0 0 20 20">
+    <path d="M10 0.247c-5.522 0-10 4.477-10 10 0 4.418 2.865 8.167 6.839 9.489 0.5 0.093 0.683-0.217 0.683-0.481 0-0.238-0.009-1.026-0.014-1.862-2.782 0.605-3.369-1.18-3.369-1.18-0.455-1.156-1.11-1.463-1.11-1.463-0.907-0.621 0.069-0.608 0.069-0.608 1.004 0.071 1.533 1.031 1.533 1.031 0.892 1.529 2.339 1.087 2.91 0.831 0.090-0.646 0.349-1.087 0.635-1.337-2.221-0.253-4.556-1.11-4.556-4.942 0-1.092 0.391-1.984 1.030-2.684-0.104-0.252-0.446-1.269 0.097-2.646 0 0 0.84-0.269 2.751 1.025 0.798-0.222 1.653-0.333 2.503-0.337 0.85 0.004 1.706 0.115 2.505 0.337 1.909-1.294 2.747-1.025 2.747-1.025 0.544 1.378 0.202 2.395 0.098 2.646 0.641 0.7 1.029 1.592 1.029 2.684 0 3.841-2.339 4.687-4.566 4.934 0.359 0.31 0.678 0.919 0.678 1.852 0 1.338-0.012 2.415-0.012 2.744 0 0.266 0.18 0.578 0.687 0.48 3.971-1.324 6.833-5.071 6.833-9.488 0-5.523-4.477-10-10-10z"></path>
+  </symbol>
+  <symbol id="nested_list" viewBox="0 0 37 32">
+    <path d="M0 2.286c0-1.262 1.023-2.286 2.286-2.286s2.286 1.023 2.286 2.286c0 1.262-1.023 2.286-2.286 2.286s-2.286-1.023-2.286-2.286zM9.143 0h27.429v4.571h-27.429zM9.143 11.429c0-1.262 1.023-2.286 2.286-2.286s2.286 1.023 2.286 2.286c0 1.262-1.023 2.286-2.286 2.286s-2.286-1.023-2.286-2.286zM18.286 9.143h18.286v4.571h-18.286zM9.143 29.714c0-1.262 1.023-2.286 2.286-2.286s2.286 1.023 2.286 2.286c0 1.262-1.023 2.286-2.286 2.286s-2.286-1.023-2.286-2.286zM18.286 27.429h18.286v4.571h-18.286zM18.286 20.571c0-1.262 1.023-2.286 2.286-2.286s2.286 1.023 2.286 2.286c0 1.262-1.023 2.286-2.286 2.286s-2.286-1.023-2.286-2.286zM27.429 18.286h9.143v4.571h-9.143z"></path>
+  </symbol>
+</svg>
+
             <main>
-              <header id="header">
+
+              <header id="header" class="panel-header">
+                <span id="toc_toggle" panel-toggle="toc">
+                  <svg><use xlink:href="#nested_list"></use></svg>
+                </span>
                 <a id="logo" href="https://identity.foundation">
                   <img src="https://rawcdn.githack.com/decentralized-identity/decentralized-identity.github.io/a3ca39717e440302d1fd99a796e7f00e1c42eb2d/images/logo-flat.svg" />
                 </a>
-                <a id="sidebar_toggle" href="#sidebar">Table of Contents</a>
+                <span issue-count animate panel-toggle="repo_issues">
+                  <svg><use xlink:href="#github"></use></svg>
+                </span>
               </header>
+
               <article id="content">
                 <h1 id="proof-presentation"><a class="toc-anchor" href="#proof-presentation">§</a> Proof Presentation</h1>
 <p><strong>Specification Status:</strong> Strawman</p>
 <p><strong>Latest Draft:</strong>
-<a href="https://identity.foundation/proof-presentation/spec">identity.foundation/proof-presentation/spec</a></p>
+<a href="https://identity.foundation/proof-presentation">identity.foundation/proof-presentation</a></p>
 <dl>
 <dt><strong>Editors:</strong></dt>
 <dd><a href="https://www.linkedin.com/in/dbuchner/">Daniel Buchner</a> (Microsoft)</dd>
@@ -68,7 +88,7 @@
 </table>
 <h2 id="proof-definition"><a class="toc-anchor" href="#proof-definition">§</a> <code>Proof Definition</code></h2>
 <p>Proof Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Proof Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.</p>
-<div id="example-proof-definition---all-features-exercised" class="notice example"><a class="notice-link" href="#example-proof-definition---all-features-exercised"></a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="proof-definition---all-features-exercised" class="notice example"><a class="notice-link" href="#proof-definition---all-features-exercised"></a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"input_selection"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
@@ -135,17 +155,52 @@
 <li><code>input_selection</code> - The resource MUST contain this property, and its value MUST be an array of Input Selection Rule objects.</li>
 <li><code>input_descriptors</code> - The resource MUST contain this property, and its value MUST be an array of Input Descriptor objects</li>
 </ul>
+<h3 id="input-selection-rules"><a class="toc-anchor" href="#input-selection-rules">§</a> Input Selection Rules</h3>
+<p>Within the <code>input_selection</code> array, a Credential Manifest MAY include Input Selection Rule objects that define what combinations of inputs an Issuer will accept for credential issuance evaluation. The following section defines the format for Input Selection Rule objects and the selection syntax Issuers can use to specify which combinations of inputs are acceptable.</p>
+<div id="basic-input-selection-rule" class="notice example"><a class="notice-link" href="#basic-input-selection-rule"></a><pre class="language-json"><code class="language-json"><span class="token property">"input_selection"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
+    <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</code></pre>
+</div>
 <h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors">§</a> Input Descriptors</h3>
 <p>Input Descriptors are objects used to describe the proofs an entity requires of a Subject before they will proceed with an interaction. These descriptor objects are classified by type, which are defined below:</p>
 <h4 id="data-input-descriptor"><a class="toc-anchor" href="#data-input-descriptor">§</a> <code>data</code> Input Descriptor</h4>
+<div id="input-descriptor---data" class="notice example"><a class="notice-link" href="#input-descriptor---data"></a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"data"</span><span class="token punctuation">,</span>
+    <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"field"</span><span class="token operator">:</span> <span class="token string">"credit_card_number"</span><span class="token punctuation">,</span>
+    <span class="token property">"value"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span>
+      <span class="token property">"maximum"</span><span class="token operator">:</span> <span class="token number">9999999999999999</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</code></pre>
+</div>
 <h4 id="vc-input-descriptor"><a class="toc-anchor" href="#vc-input-descriptor">§</a> <code>vc</code> Input Descriptor</h4>
+<div id="input-descriptor---verifiable-credential" class="notice example"><a class="notice-link" href="#input-descriptor---verifiable-credential"></a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"vc"</span><span class="token punctuation">,</span>
+    <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token string">"https://eu.com/claims/IDCard"</span><span class="token punctuation">,</span>
+    <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:foo:gov1"</span><span class="token punctuation">,</span> <span class="token string">"did:bar:gov2"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</code></pre>
+</div>
 <h4 id="idtoken-input-descriptor"><a class="toc-anchor" href="#idtoken-input-descriptor">§</a> <code>idtoken</code> Input Descriptor</h4>
-<h3 id="input-selection-rules"><a class="toc-anchor" href="#input-selection-rules">§</a> Input Selection Rules</h3>
+<h3 id="input-selection-rules-2"><a class="toc-anchor" href="#input-selection-rules-2">§</a> Input Selection Rules</h3>
 <p>To enable Verifying entities to encode optionality into their Proof Definition requirements, the Proof Definition includes a section where Verifiers can encode Input Selection Rules. These rules convey what combinations of proof inputs are acceptable to fulfill their processing requirements. Input Selection Rules introduce a set of rule types that provide different ways for Verifiers to instruct a Subject’s User Agent to present optionality and how matching inputs should be submitted (via a <code>Proof Submission</code>) to satisfy their requirements.</p>
 <h4 id="pick-rule"><a class="toc-anchor" href="#pick-rule">§</a> <code>pick</code> rule</h4>
 <h4 id="all-rule"><a class="toc-anchor" href="#all-rule">§</a> <code>all</code> rule</h4>
 <h2 id="proof-submission"><a class="toc-anchor" href="#proof-submission">§</a> <code>Proof Submission</code></h2>
-<div id="example-proof-submission---all-features-exercised" class="notice example"><a class="notice-link" href="#example-proof-submission---all-features-exercised"></a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="proof-submission---all-features-exercised" class="notice example"><a class="notice-link" href="#proof-submission---all-features-exercised"></a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"input_submissions"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"group"</span><span class="token operator">:</span> <span class="token string">"A"</span><span class="token punctuation">,</span>
@@ -168,13 +223,28 @@
 </code></pre>
 </div>
 
-              </article>
-              <aside id="sidebar">
-                <a id="sidebar_closer" href="#_"></a>
-                <section>
-                  <header>
-                    <a href="#_"></a>
-                  </header>
+              </article>    
+
+            </main>
+
+            <slide-panels id="slidepanels">
+              <slide-panel id="repo_issues" options="right">
+                <header class="panel-header">
+                  <span>
+                    <svg><use xlink:href="#github"></use></svg>
+                    <span issue-count></span>
+                  </span>
+                  <span class="repo-issue-toggle" panel-toggle="repo_issues">✕</span>
+                </header>
+                <ul id="repo_issue_list"></ul>
+              </slide-panel>
+
+              <slide-panel id="toc">
+                <header class="panel-header">
+                  <span>Table of Contents</span>
+                  <span panel-toggle="toc">✕</span>
+                </header>
+                <div id="toc_list">
                   <ul class="toc">
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#status-of-this-document">Status of This Document</a></li>
@@ -182,6 +252,7 @@
 <li><a href="#proof-definition"><code>Proof Definition</code></a>
 <ul>
 <li><a href="#top-level-properties">Top-Level Properties</a></li>
+<li><a href="#input-selection-rules">Input Selection Rules</a></li>
 <li><a href="#input-descriptors">Input Descriptors</a>
 <ul>
 <li><a href="#data-input-descriptor"><code>data</code> Input Descriptor</a></li>
@@ -189,7 +260,7 @@
 <li><a href="#idtoken-input-descriptor"><code>idtoken</code> Input Descriptor</a></li>
 </ul>
 </li>
-<li><a href="#input-selection-rules">Input Selection Rules</a>
+<li><a href="#input-selection-rules-2">Input Selection Rules</a>
 <ul>
 <li><a href="#pick-rule"><code>pick</code> rule</a></li>
 <li><a href="#all-rule"><code>all</code> rule</a></li>
@@ -200,12 +271,17 @@
 <li><a href="#proof-submission"><code>Proof Submission</code></a></li>
 </ul>
 
-                </section>
-              </aside>
-            </main>
+                </div>
+              </slide-panel>
+              
+            </slide-panels>
+
           </body>
+          <script>window.specConfig = {"logo":"https://rawcdn.githack.com/decentralized-identity/decentralized-identity.github.io/a3ca39717e440302d1fd99a796e7f00e1c42eb2d/images/logo-flat.svg","logo_link":"https://identity.foundation","title":"DIF Proof Presentation","output_path":"./","source":{"host":"github","account":"decentralized-identity","repo":"proof-presentation"},"path":"spec","rootRelativePrefix":"../","assetRelativePrefix":"../"}</script>
+          <script src="./spec-up/js/markdown-it.js"></script>
+          <script src="./spec-up/js/prism.js" data-manual></script>
           <script src="./spec-up/js/mermaid.js"></script>
-          <script>mermaid.initialize({ startOnLoad: true, theme: "neutral" });</script>
+          <script src="./spec-up/js/chart.js"></script>
           <script src="./spec-up/js/index.js"></script>
         </html>
       
