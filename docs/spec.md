@@ -127,6 +127,27 @@ Within the `input_selection` array, a Credential Manifest MAY include Input Sele
 ```
 :::
 
+```json
+"input_selection": [
+  {
+    "rule": "all",
+    "from": ["A"]
+  },
+
+  // Mongo syntax
+  { "group": "A" }
+
+  {
+    "rule": "pick",
+    "count": 1,
+    "from": ["B"]
+  }
+
+  { "group": "$elemMatch": "B",  }
+
+]
+```
+
 ### Input Descriptors
 
 Input Descriptors are objects used to describe the proofs an entity requires of a Subject before they will proceed with an interaction. These descriptor objects are classified by type, which are defined below:

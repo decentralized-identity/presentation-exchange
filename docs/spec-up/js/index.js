@@ -36,12 +36,15 @@ window.onhashchange = e => {
           });
           repo_issue_list.innerHTML = issues.map(issue => {
             return `<li class="repo-issue">
-              <div class="repo-issue-title">
-                <span class="repo-issue-number">${issue.number}</span>
-                <a href="${issue.url}">${issue.title}</a>
-              </div>
-              <detail-box class="repo-issue-body">
-                ${markdown.render(issue.body)}
+              <detail-box>
+                <section>${markdown.render(issue.body)}</section>
+                <header class="repo-issue-title">
+                  <span class="repo-issue-number">${issue.number}</span>
+                  <span class="repo-issue-link">
+                    <a href="${issue.html_url}" target="_blank">${issue.title}</a>
+                  </span>
+                  <span detail-box-toggle></span>
+                </header>
               </detail-box>
             </li>`
           }).join('');
@@ -49,7 +52,7 @@ window.onhashchange = e => {
         })
     }
   }
-
+  //${markdown.render(issue.body)}
 
 /* Mermaid Diagrams */
 
