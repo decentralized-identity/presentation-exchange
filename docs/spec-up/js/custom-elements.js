@@ -33,28 +33,26 @@ customElements.define('slide-panels', class SidePanels extends HTMLElement {
   }
 });
 
-customElements.define('slide-panel', class SidePanel extends HTMLElement {
-  static get observedAttributes() {
-    return ['gap'];
-  }
-  attributeChangedCallback(attr, last, current) {
-    switch(attr) {
-      case 'gap': this.style.setProperty('--gap', current);
-    }
-  }
-});
-
 customElements.define('detail-box', class DetailBox extends HTMLElement {
   static get observedAttributes() {
     return ['open'];
   }
   constructor() {
     super();   
+    
+    this.addEventListener('pointerup', e => {
+      if (e.target.hasAttribute('detail-box-toggle')) {
+        e.stopPropagation();
+        this.toggle();   
+      }
+    });
+
     this.addEventListener('transitionend', e => {
-      // if (e.target === this && this.offsetHeight === 0) {
-      //   this.style.height = null;
-      // }
-    })
+      let node = e.target;
+      if (node.parentElement === this && node.tagName === 'SECTION' && e.propertyName === 'height') {
+        node.style.height = this.hasAttribute('open') ? 'auto' : null;
+      }
+    });
   }
   toggle(){
     this.toggleAttribute('open');
@@ -62,11 +60,22 @@ customElements.define('detail-box', class DetailBox extends HTMLElement {
   attributeChangedCallback(attr, last, current) {
     switch(attr) {
       case 'open':
-        // if (this.offsetHeight === 0) {
-
-        // }
+        for (let node of this.children) {
+          if (node.tagName === 'SECTION') {
+            if (current !== null) {
+              if (node.offsetHeight < node.scrollHeight) {
+                node.style.height = node.scrollHeight + 'px';
+              }
+            }
+            else if (node.offsetHeight > 0) {
+              node.style.height = node.offsetHeight + 'px';
+              let scroll = this.scrollHeight;
+              node.style.height = 0;
+            }
+            break;
+          }
+        }
     }
   }
-  
 });
 

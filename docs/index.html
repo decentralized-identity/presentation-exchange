@@ -7,12 +7,12 @@
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
             <title>DIF Proof Presentation</title>
-            <link href="./spec-up/css/custom-elements.css" rel="stylesheet">
-            <link href="./spec-up/css/prism.css" rel="stylesheet">
-            <link href="./spec-up/css/chart.css" rel="stylesheet">
-            <link href="./spec-up/css/font-awesome.css" rel="stylesheet">
-            <link href="./spec-up/css/index.css" rel="stylesheet">
-            <script src="./spec-up/js/custom-elements.js"></script>
+            <link href="../docs/spec-up/css/custom-elements.css" rel="stylesheet">
+            <link href="../docs/spec-up/css/prism.css" rel="stylesheet">
+            <link href="../docs/spec-up/css/chart.css" rel="stylesheet">
+            <link href="../docs/spec-up/css/font-awesome.css" rel="stylesheet">
+            <link href="../docs/spec-up/css/index.css" rel="stylesheet">
+            <script src="../docs/spec-up/js/custom-elements.js"></script>
           </head>
           <body features="source logo">
             
@@ -29,13 +29,13 @@
 
               <header id="header" class="panel-header">
                 <span id="toc_toggle" panel-toggle="toc">
-                  <svg><use xlink:href="#nested_list"></use></svg>
+                  <svg icon><use xlink:href="#nested_list"></use></svg>
                 </span>
                 <a id="logo" href="https://identity.foundation">
                   <img src="https://rawcdn.githack.com/decentralized-identity/decentralized-identity.github.io/a3ca39717e440302d1fd99a796e7f00e1c42eb2d/images/logo-flat.svg" />
                 </a>
                 <span issue-count animate panel-toggle="repo_issues">
-                  <svg><use xlink:href="#github"></use></svg>
+                  <svg icon><use xlink:href="#github"></use></svg>
                 </span>
               </header>
 
@@ -165,6 +165,25 @@
 <span class="token punctuation">]</span>
 </code></pre>
 </div>
+<pre class="language-json"><code class="language-json"><span class="token property">"input_selection"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
+    <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// Mongo syntax</span>
+  <span class="token punctuation">{</span> <span class="token property">"group"</span><span class="token operator">:</span> <span class="token string">"A"</span> <span class="token punctuation">}</span>
+
+  <span class="token punctuation">{</span>
+    <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+    <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token punctuation">{</span> <span class="token property">"group"</span><span class="token operator">:</span> <span class="token property">"$elemMatch"</span><span class="token operator">:</span> <span class="token string">"B"</span><span class="token punctuation">,</span>  <span class="token punctuation">}</span>
+
+<span class="token punctuation">]</span>
+</code></pre>
 <h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors">§</a> Input Descriptors</h3>
 <p>Input Descriptors are objects used to describe the proofs an entity requires of a Subject before they will proceed with an interaction. These descriptor objects are classified by type, which are defined below:</p>
 <h4 id="data-input-descriptor"><a class="toc-anchor" href="#data-input-descriptor">§</a> <code>data</code> Input Descriptor</h4>
@@ -231,7 +250,7 @@
               <slide-panel id="repo_issues" options="right">
                 <header class="panel-header">
                   <span>
-                    <svg><use xlink:href="#github"></use></svg>
+                    <svg icon><use xlink:href="#github"></use></svg>
                     <span issue-count></span>
                   </span>
                   <span class="repo-issue-toggle" panel-toggle="repo_issues">✕</span>
@@ -277,11 +296,11 @@
             </slide-panels>
 
           </body>
-          <script>window.specConfig = {"logo":"https://rawcdn.githack.com/decentralized-identity/decentralized-identity.github.io/a3ca39717e440302d1fd99a796e7f00e1c42eb2d/images/logo-flat.svg","logo_link":"https://identity.foundation","title":"DIF Proof Presentation","output_path":"./","source":{"host":"github","account":"decentralized-identity","repo":"proof-presentation"},"path":"spec","rootRelativePrefix":"../","assetRelativePrefix":"../"}</script>
-          <script src="./spec-up/js/markdown-it.js"></script>
-          <script src="./spec-up/js/prism.js" data-manual></script>
-          <script src="./spec-up/js/mermaid.js"></script>
-          <script src="./spec-up/js/chart.js"></script>
-          <script src="./spec-up/js/index.js"></script>
+          <script>window.specConfig = {"title":"DIF Proof Presentation","spec_directory":"./docs","logo":"https://rawcdn.githack.com/decentralized-identity/decentralized-identity.github.io/a3ca39717e440302d1fd99a796e7f00e1c42eb2d/images/logo-flat.svg","logo_link":"https://identity.foundation","source":{"host":"github","account":"decentralized-identity","repo":"proof-presentation"},"destination":"./docs/","destinationResourcePrefix":"../docs/","rootResourcePrefix":"./docs/"}</script>
+          <script src="../docs/spec-up/js/markdown-it.js"></script>
+          <script src="../docs/spec-up/js/prism.js" data-manual></script>
+          <script src="../docs/spec-up/js/mermaid.js"></script>
+          <script src="../docs/spec-up/js/chart.js"></script>
+          <script src="../docs/spec-up/js/index.js"></script>
         </html>
       
