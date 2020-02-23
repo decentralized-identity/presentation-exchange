@@ -8,27 +8,29 @@ function getRelativePrefix(location){
   return (location.match(/\/[a-zA-Z0-9-\._]+/g) || []).map(() => '../').join('') || './';
 }
 
-/* FILE DISCOVERY & CHANGE WATCHING */
+function normalizePath(path){
+  return path.trim().replace(/\/$/g, '') + '/';
+}
 
 let init = async () => {
   try {
     let projectPath = await pkg(__dirname);
     let json = await fs.readJson(projectPath + '/specs.json');
     json.specs.forEach(config => {
-      config.destination = (config.output_path || config.spec_directory).trim().replace(/\/$/g, '') + '/';
+      config.spec_directory = normalizePath(config.spec_directory);
+      config.destination = normalizePath(config.output_path || config.spec_directory);
       config.destinationResourcePrefix = getRelativePrefix(config.destination);
       config.rootResourcePrefix = './';
       if (json.resource_path) {
-        let path = config.rootResourcePrefix = json.resource_path.trim().replace(/\/$/g, '') + '/';
+        let path = config.rootResourcePrefix = normalizePath(json.resource_path);
         config.destinationResourcePrefix += path.replace(/^\/|^[./]+/, '');
-      } 
+      }
       gulp.watch(
-        [config.spec_directory + '/**/*', '!' + config.destination + 'index.html'],
-        { ignoreInitial: false },
+        [config.spec_directory + '**/*', '!' + config.destination + 'index.html'],
         render.bind(null, config)
       )
+      render.call(null, config);
     });
-    // console.log(json);
   }
   catch (e) {
     console.log(e);
@@ -106,7 +108,7 @@ async function render(config) {
   console.log('Rendering: ' + config.title);
   return new Promise(async (resolve, reject) => {
     Promise.all((config.markdown_paths || ['spec.md']).map(path => {
-      return readMDFile(config.spec_directory + '/' + path, reject)
+      return readMDFile(config.spec_directory + path, reject)
     })).then(async docs => {
       let doc = docs.join("\n");
       var features = (({ source, logo }) => ({ source, logo }))(config);
