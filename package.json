@@ -9,6 +9,6 @@
     "url": "git://github.com/decentralized-identity/proof-presentation"
   },
   "dependencies": {
-    "spec-up": "0.9.52"
+    "spec-up": "0.9.53"
   }
 }
