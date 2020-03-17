@@ -19,7 +19,19 @@
 
 :root {
   --dif-blue: #1e6fb0;
-  --header-height: 3em;
+  --header-height: 48px;
+}
+
+*:target {
+  scroll-margin: calc(var(--header-height) / 0.75) 0 0;
+}
+
+body:not([hashscroll]) *:target {
+  animation: highlight 1.5s 0.25s ease;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -56,8 +68,6 @@ main article h3,
 main article h4 {
   display: flex;
   font-weight: 500;
-  padding-top: 6vh;
-  margin-top: -4vh;
 }
 
 main article h2 {
@@ -135,7 +145,11 @@ h6 code {
 
 ol {
   margin: 0;
-  padding: 0 1em;
+  padding: 0 2em;
+}
+
+dt {
+  margin: 1em 0 0;
 }
 
 dd {
@@ -225,6 +239,15 @@ svg[icon] {
   height: 1.25em;
   vertical-align: text-top;
   pointer-events: none;
+}
+
+article p > img {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+article li {
+  margin-top: 0.4em;
 }
 
 /* Custom Elements */
@@ -659,5 +682,11 @@ pre[class*="language-"] {
   }
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes highlight {
+  50% {
+    background-color: yellow;
   }
 }

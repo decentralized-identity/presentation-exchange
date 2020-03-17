@@ -57,7 +57,7 @@ var noticeParser = {
     let matches = tokens[idx].info.match(/(\w+)\s?(.*)?/);
     if (matches && tokens[idx].nesting === 1) {
       let type = matches[1];
-      let id = (matches[2] ? matches[2].trim().replace(/\s/g , '-').toLowerCase() : type + '-' + noticeTypes[type]++);
+      let id = (matches[2] ? matches[2].trim().replace(/\s/g , '-').toLowerCase() + '-' + type : type + '-' + noticeTypes[type]++) ;
       return `<div id="${id}" class="notice ${type}"><a class="notice-link" href="#${id}"></a>`;
     }
     else return '</div>\n';
