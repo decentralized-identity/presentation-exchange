@@ -1,19 +1,19 @@
-Proof Presentation
+Presentation Exchange
 ==================
 
 **Specification Status:** Strawman
 
 **Latest Draft:**
-  [identity.foundation/proof-presentation/spec](https://identity.foundation/proof-presentation/spec)
+  [identity.foundation/presentation-exchange](https://identity.foundation/presentation-exchange)
 
 **Editors:**
 ~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Microsoft)
 ~ [Brent Zundel](https://www.linkedin.com/in/bzundel/) (Evernym)
 <!-- -->
 **Participate:**
-~ [GitHub repo](https://github.com/decentralized-identity/proof-presentation)
-~ [File a bug](https://github.com/decentralized-identity/proof-presentation/issues)
-~ [Commit history](https://github.com/decentralized-identity/proof-presentation/commits/master)
+~ [GitHub repo](https://github.com/decentralized-identity/presentation-exchange)
+~ [File a bug](https://github.com/decentralized-identity/presentation-exchange/issues)
+~ [Commit history](https://github.com/decentralized-identity/presentation-exchange/commits/master)
 
 ------------------------------------
 
@@ -27,7 +27,7 @@ This specification does not endeavor to define transport protocols, specific end
 
 ## Status of This Document
 
-Proof Presentation is a draft specification being developed within the Decentralized Identity Foundation (DIF), and being designed to incorporate the requirements and learnings from related work of the most active industry players into a shared specification that meets the collective needs of the community. This spec will be updated to reflect relevant changes, and participants are encouraged to actively engage on GitHub (see above) and other mediums (e.g. DIF) where this work is being done.
+Presentation Exchange is a draft specification being developed within the Decentralized Identity Foundation (DIF), and being designed to incorporate the requirements and learnings from related work of the most active industry players into a shared specification that meets the collective needs of the community. This spec will be updated to reflect relevant changes, and participants are encouraged to actively engage on GitHub (see above) and other mediums (e.g. DIF) where this work is being done.
 
 ## Terminology
 
@@ -112,20 +112,87 @@ The following properties are defined for use at the top-level of the resource - 
 - `input_selection` - The resource MUST contain this property, and its value MUST be an array of Input Selection Rule objects.
 - `input_descriptors` - The resource MUST contain this property, and its value MUST be an array of Input Descriptor objects
 
+### Input Selection Rules
+
+Within the `input_selection` array, a Credential Manifest MAY include Input Selection Rule objects that define what combinations of inputs an Issuer will accept for credential issuance evaluation. The following section defines the format for Input Selection Rule objects and the selection syntax Issuers can use to specify which combinations of inputs are acceptable.
+
+::: example Basic input selection rule
+```json
+"input_selection": [
+  {
+    "rule": "all",
+    "from": ["A"]
+  }
+]
+```
+:::
+
+```json
+"input_selection": [
+  {
+    "rule": "all",
+    "from": ["A"]
+  },
+
+  // Mongo syntax
+  { "group": "A" }
+
+  {
+    "rule": "pick",
+    "count": 1,
+    "from": ["B"]
+  }
+
+  { "group": "$elemMatch": "B",  }
+
+]
+```
+
 ### Input Descriptors
 
 Input Descriptors are objects used to describe the proofs an entity requires of a Subject before they will proceed with an interaction. These descriptor objects are classified by type, which are defined below:
 
 #### `data` Input Descriptor
 
+::: example Input Descriptor - Data
+```json
+"input_descriptors": [
+  {
+    "type": "data",
+    "group": ["A"],
+    "field": "credit_card_number",
+    "value": {
+      "type": "integer",
+      "maximum": 9999999999999999
+    }
+  }
+]
+```
+:::
+
 #### `vc` Input Descriptor
+
+::: example Input Descriptor - Verifiable Credential
+```json
+"input_descriptors": [
+  {
+    "type": "vc",
+    "group": ["B"],
+    "schema": "https://eu.com/claims/IDCard",
+    "constraints": {
+      "issuers": ["did:foo:gov1", "did:bar:gov2"]
+    }
+  }
+]
+```
+:::
 
 #### `idtoken` Input Descriptor
 
 
 ### Input Selection Rules
 
-To enable Verifying entities to encode optionality into their Presentation Definition requirements, the Presentation Definition includes a section where Verifiers can encode Input Selection Rules. These rules convey what combinations of proof inputs are acceptable to fulfill their processing requirements. Input Selection Rules introduce a set of rule types that provide different ways for Verifiers to instruct a Subject's User Agent to present optionality and how matching inputs should be submitted (via a `Presentation Submission`) to satisfy their requirements. 
+To enable Verifying entities to encode optionality into their Presentation Definition requirements, the Presentation Definition includes a section where Verifiers can encode Input Selection Rules. These rules convey what combinations of proof inputs are acceptable to fulfill their processing requirements. Input Selection Rules introduce a set of rule types that provide different ways for Verifiers to instruct a Subject's User Agent to present optionality and how matching inputs should be submitted (via a `Proof Submission`) to satisfy their requirements. 
 
 #### `pick` rule
 

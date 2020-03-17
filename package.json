@@ -1,39 +1,14 @@
 {
-  "name": "dif-proof-presentation",
-  "description": "DIF Proof Presentation specification",
+  "name": "dif-presentation-exchange",
+  "description": "DIF Presentation Exchange",
   "version": "0.0.1",
   "homepage": "http://identity.foundation",
   "license": "Apache 2",
   "repository": {
     "type": "git",
-    "url": "git://github.com/decentralized-identity/proof-presentation"
+    "url": "git://github.com/decentralized-identity/presentation-exchange"
   },
-  "devDependencies": {
-    "gulp": "4.0.2",
-    "serve": "^10.1.1",
-    "app-root-path": "3.0.0",
-    "primer-markdown": "^4.0.0",
-    "markdown-it": "10.0.0",
-    "markdown-it-modify-token": "1.0.2",
-    "markdown-it-abbr": "^1.0.4",
-    "markdown-it-anchor": "5.2.5",
-    "markdown-it-attrs": "3.0.1",
-    "markdown-it-chart": "^0.2.0",
-    "markdown-it-container": "^2.0.0",
-    "markdown-it-deflist": "^2.0.3",
-    "markdown-it-footnote": "^3.0.1",
-    "markdown-it-github-toc": "^3.2.4",
-    "markdown-it-highlight": "^0.2.0",
-    "markdown-it-icons": "^0.4.1",
-    "markdown-it-ins": "^2.0.0",
-    "markdown-it-latex": "^0.2.0",
-    "markdown-it-mark": "^2.0.0",
-    "markdown-it-mermaid": "^0.2.5",
-    "markdown-it-multimd-table": "4.0.0",
-    "markdown-it-prism": "2.0.3",
-    "markdown-it-sub": "^1.0.0",
-    "markdown-it-sup": "^1.0.0",
-    "markdown-it-task-lists": "2.1.1",
-    "markdown-it-toc-and-anchor": "4.2.0"
+  "dependencies": {
+    "spec-up": "0.9.56"
   }
 }

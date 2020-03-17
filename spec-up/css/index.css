@@ -19,14 +19,26 @@
 
 :root {
   --dif-blue: #1e6fb0;
-  --header-height: 3em;
+  --header-height: 48px;
+}
+
+*:target {
+  scroll-margin: calc(var(--header-height) / 0.75) 0 0;
+}
+
+body:not([hashscroll]) *:target {
+  animation: highlight 1.5s 0.25s ease;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: Heebo, san-serif;
-  line-height: 1.5;
+  line-height: 1.5em;
   widows: 2;
   orphans: 2;
   word-wrap: break-word;
@@ -36,41 +48,47 @@ body {
   counter-reset: h2 toc1;
 }
 
-h1,h2,h3,h4,h5,h6 {
-  color: #004b88;
-}
-
 h1 {
   font-size: 2em;
   font-weight: bold;
+  line-height: 1.2em;
 }
 
-h2, h3, h4 {
+main article h1,
+main article h2,
+main article h3,
+main article h4,
+main article h5,
+main article h6 {
+  color: #004b88;
+}
+
+main article h2,
+main article h3,
+main article h4 {
   display: flex;
   font-weight: 500;
-  padding-top: 6vh;
-  margin-top: -4vh;
 }
 
-h2 {
+main article h2 {
   counter-reset: h3 h4;
 }
 
-h2:after {
+main article h2:after {
   counter-increment: h2;
   content: counter(h2) ".";
   padding: 0 0.4em 0 0.2em;
   order: -1;
 }
 
-h3:after {
+main article h3:after {
   counter-increment: h3;
   content: counter(h2) "." counter(h3);
   padding: 0 0.45em 0 0.2em;
   order: -1;
 }
 
-h4:after {
+main article h4:after {
   counter-increment: h4;
   content: counter(h2) "." counter(h3) "." counter(h4);
   padding: 0 0.5em 0 0.2em;
@@ -82,6 +100,7 @@ h4:after {
   }
 
   .toc-anchor {
+    margin: -0.1em 0 0;
     font-size: 0.875em;
     color: inherit;
     text-decoration: none;
@@ -94,10 +113,23 @@ h4:after {
     opacity: 1;
   }
 
+pre {
+  overflow: auto;
+}
+
 code {
-  color: #bb0000;
-  vertical-align: middle;
+  padding: 0.085em 0.3em 0.1em;
   font-size: 1.075em;
+  color: #c7001c;
+  vertical-align: middle;
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+pre code {
+  background: unset;
+  padding: unset;
+  border-radius: unset;
 }
 
 h1 code,
@@ -108,13 +140,16 @@ h5 code,
 h6 code {
   font-size: 1.25em;
   margin: -0.11em 0.3em 0 0;
-  padding: 0 0.35em;
-  background: #eee;
+  border-radius: 3px;
 }
 
 ol {
   margin: 0;
-  padding: 0 1em;
+  padding: 0 2em;
+}
+
+dt {
+  margin: 1em 0 0;
 }
 
 dd {
@@ -135,6 +170,7 @@ thead tr th {
   color: #fff;
   background: var(--dif-blue);
   border: 1px solid #003f72;
+  text-shadow: 0px 1px 1px rgba(0,0,0,0.5);
 }
 
 tr {
@@ -149,7 +185,7 @@ tr:nth-child(2n) {
 }
 
 tr th {
-  font-weight: bold;
+  font-weight: normal;
   border: 1px solid #cccccc;
   text-align: left;
   margin: 0;
@@ -184,7 +220,7 @@ main {
   width: 75%;
   min-width: calc(100% - 325px);
   max-width: calc(100% - 275px);
-  padding: 0.5em 2em 1.5em 2.5em;
+  padding: 0.5em 2em 1.5em 2em;
   background: #fff;
   box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.3);
 }
@@ -198,7 +234,75 @@ table pre[class*="language-"]:before {
   display: none;
 }
 
+svg[icon] {
+  width: 1.25em;
+  height: 1.25em;
+  vertical-align: text-top;
+  pointer-events: none;
+}
+
+article p > img {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+article li {
+  margin-top: 0.4em;
+}
+
+/* Custom Elements */
+
+slide-panel > *:not(header):not(footer) {
+  flex: 1;
+}
+
+/*******************/
+
+[issue-count]:after {
+  content: "Issues (" attr(issue-count) ")";
+  margin: 0 0 0 0.3em;
+  padding: 0.1em 0 0;
+}
+
+[issue-count=""][animate] {
+  display: none;
+  opacity: 0;
+}
+
+[issue-count][animate]:not([issue-count=""]) {
+  animation: display-show 1s;
+}
+
+[panel-toggle] {
+  cursor: pointer;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+}
+
+.panel-header > * {
+  display: flex;
+  height: 100%;
+  padding: 0.1em 0.8em 0;
+  align-items: center;
+}
+
+
+.slide-panel {
+  width: calc(100% - 1em);
+  max-width: 475px;
+  transition: transform 0.35s ease;
+}
+
+.slide-panel[panel-open] {
+  transform: translateX(0%);
+}
+
 .notice {
+  margin: 0 0 1em;
   padding: 0.5em 0.5em 0.55em 0.6em;
   border-left: .5em solid;
 }
@@ -247,7 +351,7 @@ table pre[class*="language-"]:before {
   }
 
 .example {
-  color: #ff854b;
+  color: #cebe00;
   background: #1d1f21;
   border-left: 0.5em solid;
 }
@@ -275,19 +379,22 @@ table pre[class*="language-"]:before {
   margin: 1.5em 0 1.75em;
 }
 
+pre,
 code[class*="language-"],
 pre[class*="language-"] {
   font-size: 0.9em;
 }
 
+#svg {
+  display: none;
+}
+
 #header {
-  display: flex;
-  align-items: center;
   position: sticky;
   position: -webkit-sticky;
+  padding: 0;
   top: 0;
-  height: var(--header-height);
-  margin: -0.5em -2em 0em -2.5em;
+  margin: -0.5em -2em 0em -2em;
   background: rgba(255,255,255,0.9);
   border-bottom: 1px solid rgba(0,0,0,0.15);
   box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.1);
@@ -295,24 +402,26 @@ pre[class*="language-"] {
 }
 
   #logo {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     height: 100%;
-    padding: 0 0.5em;
+    padding: 0.5em; 
   }
 
   #logo img {
-    height: calc(var(--header-height) - 1em);
+    height: 100%;
   }
 
-#sidebar_toggle {
+
+  #logo + span {
+    margin-left: auto;
+  }
+
+#header #toc_toggle {
   display: none;
-  font-size: 0.8em;
-  height: 100%;
-  margin-left: auto;
   padding: 0 1em;
-  line-height: calc(var(--header-height) + 1em);
-  text-decoration: none;
+  border-right: 1px solid rgba(0,0,0,0.15);
 }
 
 #content {
@@ -327,54 +436,123 @@ pre[class*="language-"] {
   display: none;
 }
 
-#sidebar {
-  box-sizing: border-box;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: -1;
-  transition: transform 0s ease;
+#repo_issues {
+  width: calc(100% - 1.5em);
+  max-width: 450px;
+  border-left: 1px solid rgba(0,0,0,0.15);
 }
 
-  #sidebar:target {
-    transform: translateX(0%);
-    transition: transform 0.4s ease;
+#repo_issues > header {
+  background: #eee;
+  border-bottom: 1px solid #ddd;
+}
+
+#repo_issues > header span:first-of-type {
+  font-weight: bold;
+  padding-top: 0.1em;
+}
+
+#repo_issues > header .repo-issue-toggle {
+  margin-left: auto;
+  color: inherit;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#repo_issue_list {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.25em 1.25em;
+  font-size: 0.85em;
+  overflow: auto;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+  #repo_issue_list::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
   }
 
+  #repo_issue_list:empty:before {
+    content: "No issues found";
+    display: block;
+    text-align: center;
+    font-size: 1.1em;
+    color: #aaa;
+    margin: 1em 0 0;
+  }
 
-#sidebar section {
-  box-sizing: border-box;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
+.repo-issue detail-box {
+  display: flex;
+  flex-direction: column;
+  padding: 1em 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.repo-issue detail-box > section {
+  order: 1;
+}
+
+.repo-issue detail-box > section:empty + .repo-issue-title [detail-box-toggle] {
+  display: none;
+}
+
+.repo-issue-title {
+  display: flex;
+  align-items: center;
+}
+
+.repo-issue-link {
+  flex: 1;
+  margin: 0 0 0 0.5em;
+}
+
+.repo-issue-number {
+  height: 1em;
+  margin: 0 0.4em 0 0;
+  padding: 0.3em 0.25em 0;
+  border-radius: 3px;
+  font-weight: bold;
+  background: #eee;
+  border: 1px solid #ddd;
+  text-align: center;
+  line-height: 1em;
+}
+
+.repo-issue-number:before {
+  content: "#";
+  font-weight: normal;
+  margin: 0 0.1em 0 0;
+}
+
+.repo-issue [detail-box-toggle] {
+  margin: 0 0 0 1em;
+  opacity: 0.35;
+  transition: opacity 0.4s;
+}
+
+.repo-issue [detail-box-toggle]:hover,
+.repo-issue detail-box[open] [detail-box-toggle] {
+  opacity: 1;
+}
+
+#toc {
+  display: flex;
+  flex-direction: column;
   width: 25%;
   max-width: 325px;
   min-width: 275px;
-  padding: 0 0.75em 1.3em;
   background: #eceff1;
-  box-shadow: 0 0 15px 2px rgba(0,0,0,0.3);
 }
 
-#sidebar header {
-  display: flex;
-  align-items: center;
-  height: 2em;
-  margin: 0 -0.75em 1em;
-  padding: 0.55em 0em 0.45em 0.75em;
+#toc header {
   color: #fff;
   background: var(--dif-blue);
   box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
   border-bottom: 1px solid #004c8a;
+  border-right: 1px solid #005fad;
 }
 
-  #sidebar header:before {
-    content: "Table of Contents";
-  }
-
-  #sidebar header a {
+  #toc header [panel-toggle] {
     display: none;
     height: var(--header-height);
     line-height: var(--header-height);
@@ -385,39 +563,28 @@ pre[class*="language-"] {
     text-decoration: none;
   }
 
-  #sidebar header a:before {
-    content: "✕";
-  }
-
-#sidebar_closer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+#toc_list {
+  flex: 1;
+  padding: 1em 0.8em;
 }
 
 .toc {
+  padding: 0;
   font-size: 0.85em;
 }
 
 .toc, .toc ul {
-  list-style: none;
   margin: 0;
-  padding: 0;
+  list-style: none;
 }
 
 .toc ul {
   padding: 0 0 0 1em;
 }
 
-.toc li {
-  margin-top: 0.5em;
-}
-
 .toc a {
   display: block;
-  padding: 0.2em 0 0.1em;
+  padding: 0.4em 0.3em 0.225em;
   text-decoration: none;
   border-radius: 3px;
   color: #333;
@@ -459,25 +626,67 @@ pre[class*="language-"] {
     padding: 0 0.5em 0 0.2em;
   }
 
-@media (max-width: 750px) {
+@media (min-width: 900px) {
+
+  slide-panel {
+    z-index: 2;
+  }
+
+  #slidepanels[open="sidebar"]:before {
+    opacity: 0;
+    transition: none;
+    pointer-events: none;
+  }
+
+  #slidepanels:before {
+    z-index: 1;
+  }
+
+  #toc {
+    transition: none;
+    transform: translate3d(0%, 0%, 0);
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.15) inset;
+    z-index: 0;
+  }
+}
+
+@media (max-width: 900px) {
 
   main {
     width: 100%;
     min-width: auto;
     max-width: none;
+    padding: 0.5em 1.75em 1.5em 1.75em;
+  }
+ 
+  #header {
+    margin: -0.5em -1.75em 0em -1.75em;
   }
 
-  #sidebar {
-    z-index: 1;
-    transform: translateX(-100%);
-    transition: transform 0.75s ease;
-  }
-
-  #sidebar header a {
+  #toc header [panel-toggle] {
     display: block;
   }
 
-  #sidebar_toggle {
+  #header #toc_toggle {
     display: flex;
+  }
+}
+
+@keyframes display-show {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+  1% {
+    display: block;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes highlight {
+  50% {
+    background-color: yellow;
   }
 }
