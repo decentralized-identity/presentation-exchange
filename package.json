@@ -1,14 +1,14 @@
 {
-  "name": "dif-proof-presentation",
-  "description": "DIF Proof Presentation specification",
+  "name": "dif-presentation-exchange",
+  "description": "DIF Presentation Exchange",
   "version": "0.0.1",
   "homepage": "http://identity.foundation",
   "license": "Apache 2",
   "repository": {
     "type": "git",
-    "url": "git://github.com/decentralized-identity/proof-presentation"
+    "url": "git://github.com/decentralized-identity/presentation-exchange"
   },
   "dependencies": {
-    "spec-up": "0.9.53"
+    "spec-up": "0.9.56"
   }
 }
