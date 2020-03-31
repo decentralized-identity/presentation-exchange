@@ -9,6 +9,7 @@ Presentation Exchange
 **Editors:**
 ~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Microsoft)
 ~ [Brent Zundel](https://www.linkedin.com/in/bzundel/) (Evernym)
+~ [Martin Riedel](https://www.linkedin.com/in/rado0x54/) (Civic Technologies)
 <!-- -->
 **Participate:**
 ~ [GitHub repo](https://github.com/decentralized-identity/presentation-exchange)
@@ -36,6 +37,19 @@ Term | Definition
 Decentralized Identifier (DID) | Unique ID string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).
 Subject | The entity that submits proofs to a Verifier to satisfy the requirements described in a Presentation Definition
 Verifier | The entity that defines what proofs they require from a Subject (via a Presentation Definition) in order to proceed with an interaction.
+
+## Requirements
+A `Presentation Definition` should satisfy the following requirements:
+- A `Presentation Definition` allows for a static definition. That means it is not necessarely need to dynamically created by a party upon request.
+- A `Presentation Definition` should *generally* not have a limited TTL or be restricted to a single interaction. It should a long-lived format that, for example, search indexers could pickup in order to understand service requirements.
+- A `Presentation Definition` allows to specifiy a combination of selection criteria that meet the requirements. A `Presentation Definition` can meet any combination of the requirements given.
+- A `Presentation Definition` can request verifiable (signed) information as well as unsigned information (TBD).
+- A `Presentation Definition` allows for the inclusive definition of an input selection, but not an exclusive on. (e.g. A and/or B. but not A but not B).
+
+A `Presentation Submission` should satisfy the following requirements:
+- A `Presentation Submission` is the submission of a W3C Verifiable Presentation of extended capabilities to reference an earlier `Presentation Definition`.
+- A `Presentation Submission` supports the direct reference to an `input descriptor` of a `Presentation Definition`. ("I represent value XY, e.g. a verifiable Bank Account")
+- A `Presentation Submission` supports the direct reference to an `input selector` of a `Presentation Definition` ("I satisfy condition A and B")
 
 ## `Presentation Definition`
 
