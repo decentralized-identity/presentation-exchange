@@ -20,15 +20,17 @@ delegateEvent('pointerup', '[panel-toggle]', (e, delegate) => {
 
 window.addEventListener('hashchange', (e) => {
   slidepanels.close();
-  let timer = null;
-  document.body.setAttribute('hashscroll', null);
-  document.addEventListener('scroll', function scroll(e) {
+  let timer;
+  function startTimer() {
     clearTimeout(timer);
     timer = setTimeout(() => {
       document.body.removeAttribute('hashscroll');
-      document.removeEventListener('scroll', scroll);
+      document.removeEventListener('scroll', startTimer);
     }, 50);
-  })
+  };
+  document.body.setAttribute('hashscroll', null);
+  document.addEventListener('scroll', startTimer);
+  startTimer();
 });
 
 /* GitHub Issues */
