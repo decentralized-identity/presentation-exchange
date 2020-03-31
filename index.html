@@ -48,6 +48,7 @@
 <dt><strong>Editors:</strong></dt>
 <dd><a href="https://www.linkedin.com/in/dbuchner/">Daniel Buchner</a> (Microsoft)</dd>
 <dd><a href="https://www.linkedin.com/in/bzundel/">Brent Zundel</a> (Evernym)</dd>
+<dd><a href="https://www.linkedin.com/in/rado0x54/">Martin Riedel</a> (Civic Technologies)</dd>
 </dl>
 <!-- -->
 <dl>
@@ -86,9 +87,24 @@
 </tr>
 </tbody>
 </table>
+<h2 id="requirements"><a class="toc-anchor" href="#requirements">§</a> Requirements</h2>
+<p>A <code>Presentation Definition</code> should satisfy the following requirements:</p>
+<ul>
+<li>A <code>Presentation Definition</code> allows for a static definition. That means it is not necessarely required to be dynamically created by a party upon request.</li>
+<li>A <code>Presentation Definition</code> should <em>generally</em> not have a limited TTL or be restricted to a single interaction. It should a long-lived format that, for example, search indexers could pickup in order to understand service requirements.</li>
+<li>A <code>Presentation Definition</code> allows to specifiy a combination of selection criteria that meet the requirements. A <code>Presentation Definition</code> can meet any combination of the requirements given.</li>
+<li>A <code>Presentation Definition</code> can request verifiable (signed) information as well as unsigned information (TBD).</li>
+<li>A <code>Presentation Definition</code> allows for the inclusive definition of an input selection, but not an exclusive on. (e.g. A and/or B. but not A but not B).</li>
+</ul>
+<p>A <code>Presentation Submission</code> should satisfy the following requirements:</p>
+<ul>
+<li>A <code>Presentation Submission</code> is the submission of a W3C Verifiable Presentation of extended capabilities to reference an earlier <code>Presentation Definition</code>.</li>
+<li>A <code>Presentation Submission</code> supports the direct reference to an <code>input descriptor</code> of a <code>Presentation Definition</code>. (“I represent value XY, e.g. a verifiable Bank Account”)</li>
+<li>A <code>Presentation Submission</code> supports the direct reference to an <code>input selector</code> of a <code>Presentation Definition</code> (“I satisfy condition A and B”)</li>
+</ul>
 <h2 id="presentation-definition"><a class="toc-anchor" href="#presentation-definition">§</a> <code>Presentation Definition</code></h2>
 <p>Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.</p>
-<div id="presentation-definition---all-features-exercised-1" class="notice example"><a class="notice-link" href="#presentation-definition---all-features-exercised-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-definition---all-features-exercised-2" class="notice example"><a class="notice-link" href="#presentation-definition---all-features-exercised-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"input_selection"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"bank_info"</span><span class="token punctuation">,</span>
@@ -159,7 +175,7 @@
 </ul>
 <h3 id="input-selection-rules"><a class="toc-anchor" href="#input-selection-rules">§</a> Input Selection Rules</h3>
 <p>Within the <code>input_selection</code> array, a Credential Manifest MAY include Input Selection Rule objects that define what combinations of inputs an Issuer will accept for credential issuance evaluation. The following section defines the format for Input Selection Rule objects and the selection syntax Issuers can use to specify which combinations of inputs are acceptable.</p>
-<div id="basic-input-selection-rule-1" class="notice example"><a class="notice-link" href="#basic-input-selection-rule-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_selection"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="basic-input-selection-rule-2" class="notice example"><a class="notice-link" href="#basic-input-selection-rule-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_selection"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
     <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
@@ -189,7 +205,7 @@
 <h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors">§</a> Input Descriptors</h3>
 <p>Input Descriptors are objects used to describe the proofs an entity requires of a Subject before they will proceed with an interaction. These descriptor objects are classified by type, which are defined below:</p>
 <h4 id="data-input-descriptor"><a class="toc-anchor" href="#data-input-descriptor">§</a> <code>data</code> Input Descriptor</h4>
-<div id="input-descriptor---data-1" class="notice example"><a class="notice-link" href="#input-descriptor---data-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="input-descriptor---data-2" class="notice example"><a class="notice-link" href="#input-descriptor---data-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"data"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -203,7 +219,7 @@
 </code></pre>
 </div>
 <h4 id="vc-input-descriptor"><a class="toc-anchor" href="#vc-input-descriptor">§</a> <code>vc</code> Input Descriptor</h4>
-<div id="input-descriptor---verifiable-credential-1" class="notice example"><a class="notice-link" href="#input-descriptor---verifiable-credential-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="input-descriptor---verifiable-credential-2" class="notice example"><a class="notice-link" href="#input-descriptor---verifiable-credential-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"vc"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -221,7 +237,7 @@
 <h4 id="pick-rule"><a class="toc-anchor" href="#pick-rule">§</a> <code>pick</code> rule</h4>
 <h4 id="all-rule"><a class="toc-anchor" href="#all-rule">§</a> <code>all</code> rule</h4>
 <h2 id="presentation-submission"><a class="toc-anchor" href="#presentation-submission">§</a> <code>Presentation Submission</code></h2>
-<div id="presentation-submission---all-features-exercised-1" class="notice example"><a class="notice-link" href="#presentation-submission---all-features-exercised-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission---all-features-exercised-2" class="notice example"><a class="notice-link" href="#presentation-submission---all-features-exercised-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"input_submissions"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"selector"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"bank_info"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -343,6 +359,7 @@
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#status-of-this-document">Status of This Document</a></li>
 <li><a href="#terminology">Terminology</a></li>
+<li><a href="#requirements">Requirements</a></li>
 <li><a href="#presentation-definition"><code>Presentation Definition</code></a>
 <ul>
 <li><a href="#top-level-properties">Top-Level Properties</a></li>
