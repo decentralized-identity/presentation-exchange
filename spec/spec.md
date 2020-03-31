@@ -46,10 +46,12 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 {
   "input_selection": [
     {
+      "name": "bank_info",
       "rule": "all",
       "from": ["A"]
     },
     {
+      "name": "personal_info",
       "rule": "pick",
       "count": 1,
       "from": ["B"]
@@ -59,7 +61,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
     {
       "type": "data",
       "group": ["A"],
-      "field": "routing_number",
+      "name": "routing_number",
       "value": {
           "type": "string",
           "maxLength": 9
@@ -68,7 +70,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
     {
       "type": "data",
       "group": ["A"],
-      "field": "account_number",
+      "name": "account_number",
       "value": {
         "type": "integer",
         "maxLength": 17,
@@ -207,22 +209,95 @@ To enable Verifying entities to encode optionality into their Presentation Defin
 {
   "input_submissions": [
     {
-      "group": "A",
-      "proof": {...}
+      "selector": ["bank_info"],
+      "name": "routing_number",
+      "map": {}
     },
     {
-      "group": "A",
-      "proof": {...}
+      "selector": ["bank_info"],
+      "name": "account_number",
+      "map": {}
     },
     {
-      "group": "A",
-      "proof": {...}
+      "selector": ["personal_info"],
+      "name": "drivers_license",
+      "map": {}
     },
     {
-      "group": "B",
-      "proof": {...}
+      "selector": ["personal_info"],
+      "name": "email_address",
+      "map": {
+        "credential_id": "http://example.edu/credentials/1872",
+        "credential_index": 3,
+        "subject_path": "$.stuff.email",
+        "proof_path": "$.created"
+      }
     }
-  ]
+  ],
+  "presentation": {
+    "@context": "https://www.w3.org/2018/credentials/v1",
+    "type": "VerifiablePresentation",
+    "verifiableCredential": [
+      { // DECODED JWT PAYLOAD, ASSUME THIS WILL BE A BIG UGLY OBJECT
+        "vc": {
+          "@context": "https://www.w3.org/2018/credentials/v1",
+          "type": ["PresentationSubmissionRawData"],
+          "credentialSubject": {
+            "foo": "bar"
+          }
+        }
+      },
+      {
+        "@context": "https://www.w3.org/2018/credentials/v1",
+        "id": "http://example.edu/credentials/1871",
+        "type": ["BankRoutingNumber"],
+        "issuer": "https://acme-bank.edu/issuers/565049",
+        "issuanceDate": "2010-01-01T19:73:24Z",
+        "credentialSubject": {
+          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+          "routing": 345236576575674
+        },
+        "proof": {
+          "type": "RsaSignature2018",
+          "created": "2017-06-18T21:19:10Z",
+          "proofPurpose": "assertionMethod",
+          "verificationMethod": "https://example.edu/issuers/keys/1",
+          "jws": "..."
+        }
+      },
+      {
+        "@context": "https://www.w3.org/2018/credentials/v1",
+        "id": "http://example.edu/credentials/1872",
+        "type": ["BankAccountNumber"],
+        "issuer": "https://acme-bank.edu/issuers/565049",
+        "issuanceDate": "2010-01-01T19:73:24Z",
+        "credentialSubject": {
+          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+          "stuff": {
+            "email": "foo@bar.com"
+          }
+        },
+        "proof": {
+          "type": "RsaSignature2018",
+          "created": "2017-06-18T21:19:10Z",
+          "proofPurpose": "assertionMethod",
+          "verificationMethod": "https://example.edu/issuers/keys/1",
+          "jws": "..."
+        }
+      },
+    ],
+    
+    "proof": {
+      "type": "RsaSignature2018",
+      "created": "2018-09-14T21:19:10Z",
+      "proofPurpose": "authentication",
+      "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21#keys-1",
+      "challenge": "1f44d55f-f161-4938-a659-f8026467f126",
+      "domain": "4jt78h47fh47",
+      "jws": "...",
+      "dif_presentation_submission": {...}
+    }
+  }
 }
 ```
 :::
