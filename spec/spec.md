@@ -40,7 +40,7 @@ Verifier | The entity that defines what proofs they require from a Subject (via 
 
 ## Requirements
 A `Presentation Definition` should satisfy the following requirements:
-- A `Presentation Definition` allows for a static definition. That means it is not necessarely need to dynamically created by a party upon request.
+- A `Presentation Definition` allows for a static definition. That means it is not necessarely required to be dynamically created by a party upon request.
 - A `Presentation Definition` should *generally* not have a limited TTL or be restricted to a single interaction. It should a long-lived format that, for example, search indexers could pickup in order to understand service requirements.
 - A `Presentation Definition` allows to specifiy a combination of selection criteria that meet the requirements. A `Presentation Definition` can meet any combination of the requirements given.
 - A `Presentation Definition` can request verifiable (signed) information as well as unsigned information (TBD).
