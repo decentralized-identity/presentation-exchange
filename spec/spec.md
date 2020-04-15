@@ -5,12 +5,15 @@ Presentation Exchange
 
 **Latest Draft:**
   [identity.foundation/presentation-exchange](https://identity.foundation/presentation-exchange)
-
+<!-- -->
 **Editors:**
 ~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Microsoft)
 ~ [Brent Zundel](https://www.linkedin.com/in/bzundel/) (Evernym)
 ~ [Martin Riedel](https://www.linkedin.com/in/rado0x54/) (Civic Technologies)
-<!-- -->
+
+**Contributors:**
+~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
+
 **Participate:**
 ~ [GitHub repo](https://github.com/decentralized-identity/presentation-exchange)
 ~ [File a bug](https://github.com/decentralized-identity/presentation-exchange/issues)
@@ -58,14 +61,14 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 ::: example Presentation Definition - all features exercised
 ```json
 {
-  "input_selection": [
+  "submission_requirements": [
     {
       "name": "bank_info",
       "rule": "all",
       "from": ["A"]
     },
     {
-      "name": "personal_info",
+      "name": "citizenship_proof",
       "rule": "pick",
       "count": 1,
       "from": ["B"]
@@ -75,7 +78,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
     {
       "type": "data",
       "group": ["A"],
-      "name": "routing_number",
+      "field": "routing_number",
       "value": {
           "type": "string",
           "maxLength": 9
@@ -84,33 +87,25 @@ Presentation Definitions are objects generate to articulate what proofs an entit
     {
       "type": "data",
       "group": ["A"],
-      "name": "account_number",
+      "field": "account_number",
       "value": {
         "type": "integer",
-        "maxLength": 17,
-        "required": true
+        "maxLength": 17
       }
     },
     {
-      "type": "idtoken",
-      "group": ["A"],
-      "redirect": "https://acmebank.com/oauth",
-      "parameters": {
-        "client_id": "dhfiuhsdre",
-        "scope": "openid+profile"
-      }
-    },
-    {
-      "type": "vc",
+      "type": "credential",
       "group": ["B"],
-      "schema": "https://eu.com/claims/IDCard",
+      "field": "drivers_license",
+      "schema": "https://eu.com/claims/DriversLicense",
       "constraints": {
         "issuers": ["did:foo:gov1", "did:bar:gov2"]
       }
     },
     {
-      "type": "vc",
+      "type": "credential",
       "group": ["B"],
+      "field": "passport",
       "schema": "hub://did:foo:123/Collections/schema.us.gov/Passport",
       "constraints": {
         "issuers": ["did:foo:gov1", "did:bar:gov2"]
@@ -125,44 +120,34 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 
 The following properties are defined for use at the top-level of the resource - all other properties that are not defined below MUST be ignored:
 
-- `input_selection` - The resource MUST contain this property, and its value MUST be an array of Input Selection Rule objects.
+- `submission_requirements` - The resource MUST contain this property, and its value MUST be an array of Submission Requirement Rule objects.
 - `input_descriptors` - The resource MUST contain this property, and its value MUST be an array of Input Descriptor objects
 
-### Input Selection Rules
+### Submission Requirement Rules
 
-Within the `input_selection` array, a Credential Manifest MAY include Input Selection Rule objects that define what combinations of inputs an Issuer will accept for credential issuance evaluation. The following section defines the format for Input Selection Rule objects and the selection syntax Issuers can use to specify which combinations of inputs are acceptable.
+A _Presentation Definition_ MAY include _Submission Requirement Rules_, which are objects that define what combinations of inputs must be submitted to comply with the requirements an Issuer/Verifier has for proceeding in a flow (e.g. credential issuance). _Submission Requirement Rules_ introduce a set of rule types and mapping instructions a User Agent can ingest to present requirement optionality to the user, and subsequently submit inputs in a way that maps back to the rules the verifying party has asserted (via a `Proof Submission` object). The following section defines the format for _Submission Requirement Rules_ objects and the selection syntax verifying parties can use to specify which combinations of inputs are acceptable.
 
-::: example Basic input selection rule
+::: example Basic Submission Requirement Rule
 ```json
-"input_selection": [
+"submission_requirements": [
   {
+    "name": "bank_info",
     "rule": "all",
     "from": ["A"]
+  },
+  {
+    "name": "citizenship_proof",
+    "rule": "pick",
+    "count": 1,
+    "from": ["B"]
   }
 ]
 ```
 :::
 
-```json
-"input_selection": [
-  {
-    "rule": "all",
-    "from": ["A"]
-  },
+#### `pick` rule
 
-  // Mongo syntax
-  { "group": "A" }
-
-  {
-    "rule": "pick",
-    "count": 1,
-    "from": ["B"]
-  }
-
-  { "group": "$elemMatch": "B",  }
-
-]
-```
+#### `all` rule
 
 ### Input Descriptors
 
@@ -176,25 +161,26 @@ Input Descriptors are objects used to describe the proofs an entity requires of 
   {
     "type": "data",
     "group": ["A"],
-    "field": "credit_card_number",
+    "field": "routing_number",
     "value": {
-      "type": "integer",
-      "maximum": 9999999999999999
+      "type": "string",
+      "maxLength": 9
     }
   }
 ]
 ```
 :::
 
-#### `vc` Input Descriptor
+#### `credential` Input Descriptor
 
-::: example Input Descriptor - Verifiable Credential
+::: example Input Descriptor - Signed Credential
 ```json
 "input_descriptors": [
   {
-    "type": "vc",
+    "type": "credential",
     "group": ["B"],
-    "schema": "https://eu.com/claims/IDCard",
+    "field": "drivers_license",
+    "schema": "https://eu.com/claims/DriversLicense",
     "constraints": {
       "issuers": ["did:foo:gov1", "did:bar:gov2"]
     }
@@ -202,17 +188,6 @@ Input Descriptors are objects used to describe the proofs an entity requires of 
 ]
 ```
 :::
-
-#### `idtoken` Input Descriptor
-
-
-### Input Selection Rules
-
-To enable Verifying entities to encode optionality into their Presentation Definition requirements, the Presentation Definition includes a section where Verifiers can encode Input Selection Rules. These rules convey what combinations of proof inputs are acceptable to fulfill their processing requirements. Input Selection Rules introduce a set of rule types that provide different ways for Verifiers to instruct a Subject's User Agent to present optionality and how matching inputs should be submitted (via a `Proof Submission`) to satisfy their requirements. 
-
-#### `pick` rule
-
-#### `all` rule
 
 
 ## `Presentation Submission`
@@ -225,26 +200,22 @@ To enable Verifying entities to encode optionality into their Presentation Defin
     {
       "selector": ["bank_info"],
       "name": "routing_number",
-      "map": {}
+      "map": {
+        "data_path": "$.[0].credentialSubject.routing",
+      }
     },
     {
       "selector": ["bank_info"],
       "name": "account_number",
-      "map": {}
-    },
-    {
-      "selector": ["personal_info"],
-      "name": "drivers_license",
-      "map": {}
-    },
-    {
-      "selector": ["personal_info"],
-      "name": "email_address",
       "map": {
-        "credential_id": "http://example.edu/credentials/1872",
-        "credential_index": 3,
-        "subject_path": "$.stuff.email",
-        "proof_path": "$.created"
+        "data_path": "$.[0].credentialSubject.account",
+      }
+    },
+    {
+      "selector": ["citizenship_proof"],
+      "name": "drivers_license",
+      "map": {
+        "data_path": "$.[1].credentialSubject.license.number",
       }
     }
   ],
@@ -257,38 +228,21 @@ To enable Verifying entities to encode optionality into their Presentation Defin
           "@context": "https://www.w3.org/2018/credentials/v1",
           "type": ["PresentationSubmissionRawData"],
           "credentialSubject": {
-            "foo": "bar"
+            "routing": "4fe73c65v",
+            "account": "123543565654"
           }
         }
       },
       {
         "@context": "https://www.w3.org/2018/credentials/v1",
-        "id": "http://example.edu/credentials/1871",
-        "type": ["BankRoutingNumber"],
-        "issuer": "https://acme-bank.edu/issuers/565049",
+        "id": "ttps://eu.com/claims/DriversLicense",
+        "type": ["EUDriversLicense"],
+        "issuer": "did:foo:123",
         "issuanceDate": "2010-01-01T19:73:24Z",
         "credentialSubject": {
           "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-          "routing": 345236576575674
-        },
-        "proof": {
-          "type": "RsaSignature2018",
-          "created": "2017-06-18T21:19:10Z",
-          "proofPurpose": "assertionMethod",
-          "verificationMethod": "https://example.edu/issuers/keys/1",
-          "jws": "..."
-        }
-      },
-      {
-        "@context": "https://www.w3.org/2018/credentials/v1",
-        "id": "http://example.edu/credentials/1872",
-        "type": ["BankAccountNumber"],
-        "issuer": "https://acme-bank.edu/issuers/565049",
-        "issuanceDate": "2010-01-01T19:73:24Z",
-        "credentialSubject": {
-          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-          "stuff": {
-            "email": "foo@bar.com"
+          "license": {
+            "number": "34DGE352"
           }
         },
         "proof": {
@@ -298,7 +252,7 @@ To enable Verifying entities to encode optionality into their Presentation Defin
           "verificationMethod": "https://example.edu/issuers/keys/1",
           "jws": "..."
         }
-      },
+      }
     ],
     
     "proof": {
@@ -309,7 +263,6 @@ To enable Verifying entities to encode optionality into their Presentation Defin
       "challenge": "1f44d55f-f161-4938-a659-f8026467f126",
       "domain": "4jt78h47fh47",
       "jws": "...",
-      "dif_presentation_submission": {...}
     }
   }
 }
