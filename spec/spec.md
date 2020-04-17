@@ -192,79 +192,85 @@ Input Descriptors are objects used to describe the proofs an entity requires of 
 
 ## `Presentation Submission`
 
+> NOTE: ensure all the entries in the `verifiableCredential` array are valid VCs
 
 ::: example Presentation Submission - all features exercised
 ```json
 {
-  "input_submissions": [
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://identity.foundation/presentation-exchange/submission/v1"
+  ],
+  "type": [
+    "VerifiablePresentation",
+    "PresentationSubmission"
+  ],
+  "presentation_submission": [
     {
       "selector": ["bank_info"],
       "name": "routing_number",
       "map": {
-        "data_path": "$.[0].credentialSubject.routing",
+        "data_path": "$.verifiableCredential.[0].credentialSubject.address"
       }
     },
     {
       "selector": ["bank_info"],
       "name": "account_number",
       "map": {
-        "data_path": "$.[0].credentialSubject.account",
+        "data_path": "$.verifiableCredential.[0].credentialSubject.account"
       }
     },
     {
       "selector": ["citizenship_proof"],
       "name": "drivers_license",
       "map": {
-        "data_path": "$.[1].credentialSubject.license.number",
+        "data_path": "$.verifiableCredential.[1]"
       }
     }
   ],
-  "presentation": {
-    "@context": "https://www.w3.org/2018/credentials/v1",
-    "type": "VerifiablePresentation",
-    "verifiableCredential": [
-      { // DECODED JWT PAYLOAD, ASSUME THIS WILL BE A BIG UGLY OBJECT
-        "vc": {
-          "@context": "https://www.w3.org/2018/credentials/v1",
-          "type": ["PresentationSubmissionRawData"],
-          "credentialSubject": {
-            "routing": "4fe73c65v",
-            "account": "123543565654"
-          }
-        }
-      },
-      {
+  "verifiableCredential": [
+    { // DECODED JWT PAYLOAD, ASSUME THIS WILL BE A BIG UGLY OBJECT
+      "vc": {
         "@context": "https://www.w3.org/2018/credentials/v1",
-        "id": "ttps://eu.com/claims/DriversLicense",
-        "type": ["EUDriversLicense"],
-        "issuer": "did:foo:123",
-        "issuanceDate": "2010-01-01T19:73:24Z",
+        "type": ["PresentationSubmissionRawData"],
         "credentialSubject": {
-          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-          "license": {
-            "number": "34DGE352"
-          }
-        },
-        "proof": {
-          "type": "RsaSignature2018",
-          "created": "2017-06-18T21:19:10Z",
-          "proofPurpose": "assertionMethod",
-          "verificationMethod": "https://example.edu/issuers/keys/1",
-          "jws": "..."
+          "routing": "4fe73c65v",
+          "account": "123543565654"
         }
       }
-    ],
-    
-    "proof": {
-      "type": "RsaSignature2018",
-      "created": "2018-09-14T21:19:10Z",
-      "proofPurpose": "authentication",
-      "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21#keys-1",
-      "challenge": "1f44d55f-f161-4938-a659-f8026467f126",
-      "domain": "4jt78h47fh47",
-      "jws": "...",
+    },
+    {
+      "@context": "https://www.w3.org/2018/credentials/v1",
+      "id": "https://eu.com/claims/DriversLicense",
+      "type": ["EUDriversLicense"],
+      "issuer": "did:foo:123",
+      "issuanceDate": "2010-01-01T19:73:24Z",
+      "credentialSubject": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "license": {
+          "number": "34DGE352"
+        }
+      },
+      "proof": {
+        "type": "RsaSignature2018",
+        "created": "2017-06-18T21:19:10Z",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "https://example.edu/issuers/keys/1",
+        "jws": "..."
+      }
     }
+  ],
+
+  "proof": {
+    "type": "RsaSignature2018",
+    "created": "2018-09-14T21:19:10Z",
+    "proofPurpose": "authentication",
+    "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21#keys-1",
+    "challenge": "1f44d55f-f161-4938-a659-f8026467f126",
+    "domain": "4jt78h47fh47",
+    "jws": "...",
   }
 }
+
 ```
 :::
