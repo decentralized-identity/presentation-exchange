@@ -42,17 +42,20 @@ Subject | The entity that submits proofs to a Verifier to satisfy the requiremen
 Verifier | The entity that defines what proofs they require from a Subject (via a Presentation Definition) in order to proceed with an interaction.
 
 ## Requirements
-A `Presentation Definition` should satisfy the following requirements:
-- A `Presentation Definition` allows for a static definition. That means it is not necessarely required to be dynamically created by a party upon request.
-- A `Presentation Definition` should *generally* not have a limited TTL or be restricted to a single interaction. It should a long-lived format that, for example, search indexers could pickup in order to understand service requirements.
-- A `Presentation Definition` allows to specifiy a combination of selection criteria that meet the requirements. A `Presentation Definition` can meet any combination of the requirements given.
-- A `Presentation Definition` can request verifiable (signed) information as well as unsigned information (TBD).
-- A `Presentation Definition` allows for the inclusive definition of an input selection, but not an exclusive on. (e.g. A and/or B. but not A but not B).
 
-A `Presentation Submission` should satisfy the following requirements:
-- A `Presentation Submission` is the submission of a W3C Verifiable Presentation of extended capabilities to reference an earlier `Presentation Definition`.
-- A `Presentation Submission` supports the direct reference to an `input descriptor` of a `Presentation Definition`. ("I represent value XY, e.g. a verifiable Bank Account")
-- A `Presentation Submission` supports the direct reference to an `input selector` of a `Presentation Definition` ("I satisfy condition A and B")
+The `Presentation Definition` data format should satisfy the following requirements:
+
+1. A `Presentation Definition` allows for a static definition. That means it is not necessarely required to be dynamically created by a party upon request.
+2. A `Presentation Definition` should *generally* not have a limited TTL or be restricted to a single interaction. It should a long-lived format that, for example, search indexers could pickup in order to understand service requirements.
+3. A `Presentation Definition` allows to specifiy a combination of selection criteria that meet the requirements. A `Presentation Definition` can meet any combination of the requirements given.
+4. A `Presentation Definition` can request verifiable (signed) information as well as unsigned information (TBD).
+5. A `Presentation Definition` allows for the inclusive definition of an input selection, but not an exclusive on. (e.g. A and/or B. but not A but not B).
+
+The `Presentation Submission` data format should satisfy the following requirements:
+
+1. A `Presentation Submission` is the submission of a W3C Verifiable Presentation of extended capabilities to reference an earlier `Presentation Definition`.
+2. A `Presentation Submission` supports the direct reference to an `input descriptor` of a `Presentation Definition`. ("I represent value XY, e.g. a verifiable Bank Account")
+3. A `Presentation Submission` supports the direct reference to an `input selector` of a `Presentation Definition` ("I satisfy condition A and B")
 
 ## `Presentation Definition`
 
@@ -63,12 +66,12 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 {
   "submission_requirements": [
     {
-      "name": "bank_info",
+      "requirement": "bank_info",
       "rule": "all",
       "from": ["A"]
     },
     {
-      "name": "citizenship_proof",
+      "requirement": "citizenship_proof",
       "rule": "pick",
       "count": 1,
       "from": ["B"]
@@ -76,40 +79,92 @@ Presentation Definitions are objects generate to articulate what proofs an entit
   ],
   "input_descriptors": [
     {
-      "type": "data",
       "group": ["A"],
-      "field": "routing_number",
-      "value": {
+      "schema": {
+        "context": "https://acme-bank.org/checking_account.json",
+        "type": "Accounts"
+      },
+      "constraints": {
+        "issuers": ["did:bankmethod:123"],
+        "fields": [
+          {
+            "path": "$.accounts",
+            "jsonSchema": {
+              "type": "array",
+              "maxLength": 5
+            }
+          },
+          {
+            "path": "$.accounts[0]",
+            "startsWith": "DE"
+          },
+          //  {
+          //    "path": "$.accounts[0]",
+          //    "startsWith": "US"
+          //  },
+          {
+            "path": "$.accounts[6]",
+            "startsWith": "US"
+          }
+        ]
+      }
+    },
+    {
+      "group": ["A"],
+      "schema": {
+        "context": "https://trusty-bank.org/savings_account.json",
+        "type": "Accts"
+      },
+      "constraints": {
+        "issuers": ["did:bankmethod:456"],
+        "fields": [{
+          "path": "$.routing",
           "type": "string",
           "maxLength": 9
+        }]
       }
     },
     {
-      "type": "data",
       "group": ["A"],
-      "field": "account_number",
-      "value": {
-        "type": "integer",
-        "maxLength": 17
+      "schema": {
+        "context": "https://example.org/examples/degree.json",
+        "type": "JsonSchemaValidator2018"
+      },
+      "constraints": {
+        "issuers": ["self-issued"],
+        "fields": [{
+          "path": "$.first_name",
+          "maxLength": 17
+        }]
       }
     },
     {
-      "type": "credential",
       "group": ["B"],
-      "field": "drivers_license",
-      "schema": "https://eu.com/claims/DriversLicense",
+      "schema": {
+        "context": "https://eu.com/claims/DriversLicense",
+        "type": "EUDriversLicense"
+      },
       "constraints": {
-        "issuers": ["did:foo:gov1", "did:bar:gov2"]
+        "issuers": ["did:foo:gov1", "did:bar:gov2"],
+        "fields": [{
+          "path": "$.dob",
+          "circuit": "> 21"
+        }]
       }
     },
     {
-      "type": "credential",
       "group": ["B"],
-      "field": "passport",
-      "schema": "hub://did:foo:123/Collections/schema.us.gov/Passport",
+      "schema": {
+        "context": "hub://did:foo:123/Collections/schema.us.gov",
+        "type": "Passport"
+      },
       "constraints": {
-        "issuers": ["did:foo:gov1", "did:bar:gov2"]
-      }  
+        "issuers": ["did:foo:gov1"],
+        "fields": [{
+          "path": "$.dob",
+          "circuit": "> 21"
+        }]
+      }
     }
   ]
 }
@@ -207,22 +262,22 @@ Input Descriptors are objects used to describe the proofs an entity requires of 
   ],
   "presentation_submission": [
     {
-      "selector": ["bank_info"],
-      "name": "routing_number",
+      "requirement": ["bank_info"],
+      "field": "routing_number",
       "map": {
         "data_path": "$.verifiableCredential.[0].credentialSubject.address"
       }
     },
     {
-      "selector": ["bank_info"],
-      "name": "account_number",
+      "requirement": ["bank_info"],
+      "field": "account_number",
       "map": {
         "data_path": "$.verifiableCredential.[0].credentialSubject.account"
       }
     },
     {
-      "selector": ["citizenship_proof"],
-      "name": "drivers_license",
+      "requirement": ["citizenship_proof"],
+      "field": "drivers_license",
       "map": {
         "data_path": "$.verifiableCredential.[1]"
       }
@@ -248,7 +303,8 @@ Input Descriptors are objects used to describe the proofs an entity requires of 
       "credentialSubject": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
         "license": {
-          "number": "34DGE352"
+          "number": "34DGE352",
+          "dob": "07/13/80"
         }
       },
       "proof": {
@@ -271,6 +327,5 @@ Input Descriptors are objects used to describe the proofs an entity requires of 
     "jws": "...",
   }
 }
-
 ```
 :::
