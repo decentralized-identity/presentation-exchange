@@ -452,7 +452,7 @@ Here is an example of a request:
 Here is an example of a response:
 
 ::: Example Presentation Submission using CHAPI
-```
+```json
 {
   "type": "web",
   "dataType": "VerifiablePresentation",
