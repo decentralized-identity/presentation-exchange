@@ -9,7 +9,7 @@
     "url": "git://github.com/decentralized-identity/presentation-exchange"
   },
   "dependencies": {
-    "spec-up": "0.9.68"
+    "spec-up": "0.9.71"
   },
   "scripts": {
     "edit": "node -e \"require('spec-up')()\""

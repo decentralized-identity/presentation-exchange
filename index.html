@@ -87,65 +87,63 @@
 </tr>
 </tbody>
 </table>
-<h2 id="requirements"><a class="toc-anchor" href="#requirements">§</a> Requirements</h2>
-<p>The <code>Presentation Definition</code> data format should satisfy the following requirements:</p>
-<ol>
-<li>A <code>Presentation Definition</code> allows for a static definition. That means it is not necessarely required to be dynamically created by a party upon request.</li>
-<li>A <code>Presentation Definition</code> should <em>generally</em> not have a limited TTL or be restricted to a single interaction. It should a long-lived format that, for example, search indexers could pickup in order to understand service requirements.</li>
-<li>A <code>Presentation Definition</code> allows to specifiy a combination of selection criteria that meet the requirements. A <code>Presentation Definition</code> can meet any combination of the requirements given.</li>
-<li>A <code>Presentation Definition</code> can request verifiable (signed) information as well as unsigned information (TBD).</li>
-<li>A <code>Presentation Definition</code> allows for the inclusive definition of an input selection, but not an exclusive on. (e.g. A and/or B. but not A but not B).</li>
-</ol>
-<p>The <code>Presentation Submission</code> data format should satisfy the following requirements:</p>
-<ol>
-<li>A <code>Presentation Submission</code> is the submission of a W3C Verifiable Presentation of extended capabilities to reference an earlier <code>Presentation Definition</code>.</li>
-<li>A <code>Presentation Submission</code> supports the direct reference to an <code>input descriptor</code> of a <code>Presentation Definition</code>. (“I represent value XY, e.g. a verifiable Bank Account”)</li>
-<li>A <code>Presentation Submission</code> supports the direct reference to an <code>input selector</code> of a <code>Presentation Definition</code> (“I satisfy condition A and B”)</li>
-</ol>
-<h2 id="presentation-definition"><a class="toc-anchor" href="#presentation-definition">§</a> <code>Presentation Definition</code></h2>
+<h2 id="presentation-definition"><a class="toc-anchor" href="#presentation-definition">§</a> Presentation Definition</h2>
 <p>Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.</p>
-<div id="presentation-definition---all-features-exercised" class="notice example"><a class="notice-link" href="#presentation-definition---all-features-exercised">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-definition---all-features-exercised-29" class="notice example"><a class="notice-link" href="#presentation-definition---all-features-exercised-29">EXAMPLE</a><pre class="language-json"><code class="language-json">
+<span class="token punctuation">{</span>
   <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"requirement"</span><span class="token operator">:</span> <span class="token string">"bank_info"</span><span class="token punctuation">,</span>
-      <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
-      <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
+      <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you have an established banking history."</span><span class="token punctuation">,</span>
+      <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+        <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"requirement"</span><span class="token operator">:</span> <span class="token string">"work_history"</span><span class="token punctuation">,</span>
+      <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know that you are currently employed."</span><span class="token punctuation">,</span>
+      <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
+        <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token punctuation">{</span>
       <span class="token property">"requirement"</span><span class="token operator">:</span> <span class="token string">"citizenship_proof"</span><span class="token punctuation">,</span>
-      <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
-      <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-      <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span>
+      <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+        <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"C"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
       <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"context"</span><span class="token operator">:</span> <span class="token string">"https://acme-bank.org/checking_account.json"</span><span class="token punctuation">,</span>
-        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"Accounts"</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-standards.com/customer.json"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:bankmethod:123"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:example:123"</span><span class="token punctuation">,</span> <span class="token string">"did:example:456"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// make this any ol' URI</span>
         <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token punctuation">{</span>
-            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.accounts"</span><span class="token punctuation">,</span>
-            <span class="token property">"jsonSchema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
-              <span class="token property">"maxLength"</span><span class="token operator">:</span> <span class="token number">5</span>
+          <span class="token punctuation">{</span> 
+            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.account[*].id"</span><span class="token punctuation">,</span>
+            <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank account number for processing purposes"</span><span class="token punctuation">,</span>
+            <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+              <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">21</span>
             <span class="token punctuation">}</span>
           <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token punctuation">{</span>
-            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.accounts[0]"</span><span class="token punctuation">,</span>
-            <span class="token property">"startsWith"</span><span class="token operator">:</span> <span class="token string">"DE"</span>
-          <span class="token punctuation">}</span><span class="token punctuation">,</span>
-          <span class="token comment">//  {</span>
-          <span class="token comment">//    </span><span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.accounts[0]"</span><span class="token punctuation">,</span>
-          <span class="token comment">//    </span><span class="token property">"startsWith"</span><span class="token operator">:</span> <span class="token string">"US"</span>
-          <span class="token comment">//  },</span>
-          <span class="token punctuation">{</span>
-            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.accounts[6]"</span><span class="token punctuation">,</span>
-            <span class="token property">"startsWith"</span><span class="token operator">:</span> <span class="token string">"US"</span>
+            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.account[*].route"</span><span class="token punctuation">,</span>
+            <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"You must have an account with a German, US, or Japanese bank account"</span><span class="token punctuation">,</span>
+            <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+              <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"^DE|^US|^JP"</span>
+            <span class="token punctuation">}</span>
           <span class="token punctuation">}</span>
         <span class="token punctuation">]</span>
       <span class="token punctuation">}</span>
@@ -153,60 +151,89 @@
     <span class="token punctuation">{</span>
       <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
       <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"context"</span><span class="token operator">:</span> <span class="token string">"https://trusty-bank.org/savings_account.json"</span><span class="token punctuation">,</span>
-        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"Accts"</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-schemas.org/accounts.json"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:bankmethod:456"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
-          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.routing"</span><span class="token punctuation">,</span>
-          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
-          <span class="token property">"maxLength"</span><span class="token operator">:</span> <span class="token number">9</span>
-        <span class="token punctuation">}</span><span class="token punctuation">]</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token punctuation">{</span>
-      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-      <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"context"</span><span class="token operator">:</span> <span class="token string">"https://example.org/examples/degree.json"</span><span class="token punctuation">,</span>
-        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"JsonSchemaValidator2018"</span>
-      <span class="token punctuation">}</span><span class="token punctuation">,</span>
-      <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"self-issued"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
-          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.first_name"</span><span class="token punctuation">,</span>
-          <span class="token property">"maxLength"</span><span class="token operator">:</span> <span class="token number">17</span>
-        <span class="token punctuation">}</span><span class="token punctuation">]</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token punctuation">{</span>
-      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-      <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"context"</span><span class="token operator">:</span> <span class="token string">"https://eu.com/claims/DriversLicense"</span><span class="token punctuation">,</span>
-        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"EUDriversLicense"</span>
-      <span class="token punctuation">}</span><span class="token punctuation">,</span>
-      <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:foo:gov1"</span><span class="token punctuation">,</span> <span class="token string">"did:bar:gov2"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
-          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.dob"</span><span class="token punctuation">,</span>
-          <span class="token property">"circuit"</span><span class="token operator">:</span> <span class="token string">"> 21"</span>
-        <span class="token punctuation">}</span><span class="token punctuation">]</span>
+        <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:example:789"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.accounts[*].account_number"</span><span class="token punctuation">,</span>
+            <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank account number for processing purposes"</span><span class="token punctuation">,</span>
+            <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+              <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">19</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.accounts[*].routing_number"</span><span class="token punctuation">,</span>
+            <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"You must have an account with a German, US, or Japanese bank account"</span><span class="token punctuation">,</span>
+            <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+              <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"^DE|^US|^JP"</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
       <span class="token punctuation">}</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token punctuation">{</span>
       <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
       <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"context"</span><span class="token operator">:</span> <span class="token string">"hub://did:foo:123/Collections/schema.us.gov"</span><span class="token punctuation">,</span>
-        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"Passport"</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://business-standards.org/schemas/employment-history.json"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Employment History"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:foo:gov1"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
-          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.dob"</span><span class="token punctuation">,</span>
-          <span class="token property">"circuit"</span><span class="token operator">:</span> <span class="token string">"> 21"</span>
-        <span class="token punctuation">}</span><span class="token punctuation">]</span>
+        <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.jobs[*].active"</span><span class="token punctuation">,</span>
+            <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"boolean"</span><span class="token punctuation">,</span>
+              <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"true"</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
       <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"C"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://eu.com/claims/DriversLicense.json"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"EU Driver's License"</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:example:gov1"</span><span class="token punctuation">,</span> <span class="token string">"did:example:gov2"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.dob"</span><span class="token punctuation">,</span>
+            <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
+              <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">21</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"C"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"hub://did:foo:123/Collections/schema.us.gov/passport.json"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"US Passport"</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:foo:gov3"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.birth_date"</span><span class="token punctuation">,</span>
+            <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
+              <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">21</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token punctuation">]</span>
 <span class="token punctuation">}</span>
 </code></pre>
@@ -214,63 +241,136 @@
 <h3 id="top-level-properties"><a class="toc-anchor" href="#top-level-properties">§</a> Top-Level Properties</h3>
 <p>The following properties are defined for use at the top-level of the resource - all other properties that are not defined below MUST be ignored:</p>
 <ul>
-<li><code>submission_requirements</code> - The resource MUST contain this property, and its value MUST be an array of Submission Requirement Rule objects.</li>
-<li><code>input_descriptors</code> - The resource MUST contain this property, and its value MUST be an array of Input Descriptor objects</li>
+<li><code>submission_requirements</code> - The resource <strong><strong>MAY</strong></strong> contain this property, and if present, its value <strong><strong>MUST</strong></strong> be an array of Submission Requirement Rule objects. If not present, all inputs listed in the <code>input_descriptor</code> array are required for submission.</li>
+<li><code>input_descriptors</code> - The resource <strong><strong>MUST</strong></strong> contain this property, and its value <strong><strong>MUST</strong></strong> be an array of Input Descriptor objects. If no <code>submission_requirements</code> are present, all inputs listed in the <code>input_descriptor</code> array are required for submission.</li>
 </ul>
-<h3 id="submission-requirement-rules"><a class="toc-anchor" href="#submission-requirement-rules">§</a> Submission Requirement Rules</h3>
-<p>A <em>Presentation Definition</em> MAY include <em>Submission Requirement Rules</em>, which are objects that define what combinations of inputs must be submitted to comply with the requirements an Issuer/Verifier has for proceeding in a flow (e.g. credential issuance). <em>Submission Requirement Rules</em> introduce a set of rule types and mapping instructions a User Agent can ingest to present requirement optionality to the user, and subsequently submit inputs in a way that maps back to the rules the verifying party has asserted (via a <code>Proof Submission</code> object). The following section defines the format for <em>Submission Requirement Rules</em> objects and the selection syntax verifying parties can use to specify which combinations of inputs are acceptable.</p>
-<div id="basic-submission-requirement-rule" class="notice example"><a class="notice-link" href="#basic-submission-requirement-rule">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<h3 id="submission-requirements"><a class="toc-anchor" href="#submission-requirements">§</a> Submission Requirements</h3>
+<p><em>Presentation Definitions</em> <strong><strong>MAY</strong></strong> include <em>Submission Requirement Rules</em>, which are objects that define what combinations of inputs must be submitted to comply with the requirements an Issuer/Verifier has for proceeding in a flow (e.g. credential issuance). <em>Submission Requirement Rules</em> introduce a set of rule types and mapping instructions a User Agent can ingest to present requirement optionality to the user, and subsequently submit inputs in a way that maps back to the rules the verifying party has asserted (via a <code>Proof Submission</code> object). The following section defines the format for <em>Submission Requirement Rules</em> objects and the selection syntax verifying parties can use to specify which combinations of inputs are acceptable.</p>
+<div id="submission-requirement-rules-29" class="notice example"><a class="notice-link" href="#submission-requirement-rules-29">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"bank_info"</span><span class="token punctuation">,</span>
-    <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
-    <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
+    <span class="token property">"requirement"</span><span class="token operator">:</span> <span class="token string">"bank_info"</span><span class="token punctuation">,</span>
+    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you have an established banking history."</span><span class="token punctuation">,</span>
+    <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+      <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token punctuation">{</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"citizenship_proof"</span><span class="token punctuation">,</span>
-    <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
-    <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-    <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span>
+    <span class="token property">"requirement"</span><span class="token operator">:</span> <span class="token string">"work_history"</span><span class="token punctuation">,</span>
+    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know that you are currently employed."</span><span class="token punctuation">,</span>
+    <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
+      <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    <span class="token property">"requirement"</span><span class="token operator">:</span> <span class="token string">"citizenship_proof"</span><span class="token punctuation">,</span>
+    <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+      <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"C"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">]</span>
 </code></pre>
 </div>
-<h4 id="pick-rule"><a class="toc-anchor" href="#pick-rule">§</a> <code>pick</code> rule</h4>
-<h4 id="all-rule"><a class="toc-anchor" href="#all-rule">§</a> <code>all</code> rule</h4>
+<h4 id="requirement-objects"><a class="toc-anchor" href="#requirement-objects">§</a> Requirement Objects</h4>
+<p>Within a <em>Presentation Definition</em>, <em>Requirement Objects</em> instruct consuming entities as to what combinations of inputs are required for evaluation in a subsequent <em>Presentation Submission</em>. <em>Requirement Objects</em> are JSON objects constructed as follows:</p>
+<ol>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>requirement</code> property, and its value <strong><strong>MUST</strong></strong> be a string of the creator’s choosing, which will be used to identify the <em>Requirement Object</em> in other areas of the Presentation Exchange.</li>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>rule</code> property, and its value <strong><strong>MUST</strong></strong> be a <em>Requirement Rule Object</em> matching one of the registered <a href="#requirement-rule-types">Requirement Rule Types</a> listed in the section below.</li>
+<li>The object <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property, and if present its value <strong><strong>MUST</strong></strong> be a string that describes the purpose for which the specified requirement is being asserted.</li>
+</ol>
+<h4 id="requirement-rule-types"><a class="toc-anchor" href="#requirement-rule-types">§</a> Requirement Rule Types</h4>
+<p>The following are <a href="#requirement-rule-objects" id="requirement-rule-objects"><em>Requirement Rule Objects</em></a> used within <em>Requirement Objects</em> to instruct the consuming entity on what combinations of inputs are acceptable for satisfying the submission requirements of a Verifier.</p>
+<h5 id="all-rule"><a class="toc-anchor" href="#all-rule">§</a> <code>all</code> rule</h5>
+<p>Directs the consumer of the <em>Presentation Definition</em> to submit all members of the matching <code>group</code> strings found in the <em>Requirement Object’s</em> <code>from</code> property. Rule objects of the type <code>all</code> type are constructed as follows:</p>
+<pre class="language-json"><code class="language-json"><span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
+  <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>type</code> property, and its value <strong><strong>MUST</strong></strong> be the string <code>all</code>.</li>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>from</code> property, and its value <strong><strong>MUST</strong></strong> be an array that contain at least one group string matching one or more of the <em>Input Descriptor Objects</em> in the <code>input_descriptors</code> array.</li>
+</ul>
+<h5 id="pick-rule"><a class="toc-anchor" href="#pick-rule">§</a> <code>pick</code> rule</h5>
+<p>Directs the consumer of the <em>Presentation Definition</em> to submit a specified number of members from each of the matching <code>group</code> strings found in the <em>Requirement Object’s</em> <code>from</code> property. In the example below, the consuming entity would be required to submit one input from the <code>B</code> group and one input from the <code>C</code> group. Rule objects of the <code>pick</code> type are constructed as follows:</p>
+<pre class="language-json"><code class="language-json"><span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+  <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"C"</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>type</code> property, and its value <strong><strong>MUST</strong></strong> be the string <code>pick</code>.</li>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>count</code> property, and its value <strong><strong>MUST</strong></strong> be an integer.</li>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>from</code> property, and its value <strong><strong>MUST</strong></strong> be an array that contain at least one group string matching one or more of the <em>Input Descriptor Objects</em> in the <code>input_descriptors</code> array.</li>
+</ul>
 <h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors">§</a> Input Descriptors</h3>
-<p>Input Descriptors are objects used to describe the proofs an entity requires of a Subject before they will proceed with an interaction. These descriptor objects are classified by type, which are defined below:</p>
-<h4 id="data-input-descriptor"><a class="toc-anchor" href="#data-input-descriptor">§</a> <code>data</code> Input Descriptor</h4>
-<div id="input-descriptor---data" class="notice example"><a class="notice-link" href="#input-descriptor---data">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<p><em>Input Descriptors</em> are objects used to describe the proofing inputs a Verifier requires of a Subject before they will proceed with an interaction. <em>Input Descriptor</em> objects contain a schema URI that links to the schema if the required input data, constrains on data values, and an explaination of why a certain set or item of data is being requested:</p>
+<div id="input-descriptor---data-29" class="notice example"><a class="notice-link" href="#input-descriptor---data-29">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
-    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"data"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token property">"field"</span><span class="token operator">:</span> <span class="token string">"routing_number"</span><span class="token punctuation">,</span>
-    <span class="token property">"value"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
-      <span class="token property">"maxLength"</span><span class="token operator">:</span> <span class="token number">9</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">]</span>
-</code></pre>
-</div>
-<h4 id="credential-input-descriptor"><a class="toc-anchor" href="#credential-input-descriptor">§</a> <code>credential</code> Input Descriptor</h4>
-<div id="input-descriptor---signed-credential" class="notice example"><a class="notice-link" href="#input-descriptor---signed-credential">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-  <span class="token punctuation">{</span>
-    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"credential"</span><span class="token punctuation">,</span>
-    <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token property">"field"</span><span class="token operator">:</span> <span class="token string">"drivers_license"</span><span class="token punctuation">,</span>
-    <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token string">"https://eu.com/claims/DriversLicense"</span><span class="token punctuation">,</span>
+    <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-standards.com/customer.json"</span><span class="token punctuation">,</span>
+      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
+      <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:foo:gov1"</span><span class="token punctuation">,</span> <span class="token string">"did:bar:gov2"</span><span class="token punctuation">]</span>
+      <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:example:123"</span><span class="token punctuation">,</span> <span class="token string">"did:example:456"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// make this any ol' URI</span>
+      <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span> 
+          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.account[*].id"</span><span class="token punctuation">,</span>
+          <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank account number for processing purposes"</span><span class="token punctuation">,</span>
+          <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+            <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">21</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.account[*].route"</span><span class="token punctuation">,</span>
+          <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"You must have an account with a German, US, or Japanese bank account"</span><span class="token punctuation">,</span>
+          <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+            <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"^DE|^US|^JP"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">]</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">]</span>
 </code></pre>
 </div>
+<p><em>Input Descriptors</em> are objects that describe what type of input data/credential, or sub-fields thereof, is required for submission to the Verifier. <em>Input Descriptor</em> objects are composed as follows:</p>
+<ul>
+<li>The object <strong><strong>MAY</strong></strong> contain a <code>group</code> property, and if present, its value <strong><strong>MUST</strong></strong> match one of the grouping strings listed the <code>from</code> values of a <a href="#requirement-rule-objects"><em>Requirement Rule Object</em></a>.</li>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>schema</code> property, and its value <strong><strong>MUST</strong></strong> be an object composed as follows:
+<ul>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>uri</code> property, and its value <strong><strong>MUST</strong></strong> be the valid URI string of the schema for the target data/credential type.</li>
+<li>The object <strong><strong>MAY</strong></strong> contain a <code>name</code> property, and if present its value <strong><strong>SHOULD</strong></strong> be a human-friendly name that describes what the target schema represents.</li>
+<li>The object <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property, and if present its value <strong><strong>MUST</strong></strong> be a string that describes the purpose for which the schema’s data is being requested.</li>
+</ul>
+</li>
+<li>The object <strong><strong>MAY</strong></strong> contain a <code>constraints</code> property, and its value <strong><strong>MUST</strong></strong> be an object composed as follows:
+<ul>
+<li>The object <strong><strong>MAY</strong></strong> contain an <code>issuers</code> property, and if present its value <strong><strong>MUST</strong></strong> contain one or more URIs of Issuing entities the that the target data/credential <strong><strong>MUST</strong></strong> have been issued from.</li>
+<li>The object <strong><strong>MAY</strong></strong> contain a <code>fields</code> property, and its value <strong><strong>MUST</strong></strong> be an array of <em>Input Descriptor Field Entry</em> objects, each being composed as follows:
+<ul>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>path</code> property, and its value <strong><strong>MUST</strong></strong> be a JSONPath selector that selects some subset of values from the target input.</li>
+<li>The object <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property, and if present its value <strong><strong>MUST</strong></strong> be a string that describes the purpose for which the field is being requested.</li>
+<li>The object <strong><strong>MAY</strong></strong> contain a <code>filter</code> property, and if present its value <strong><strong>MUST</strong></strong> be JSON Schema descriptor used to filter against the <code>path</code> selected subset of values.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="presentation-submission"><a class="toc-anchor" href="#presentation-submission">§</a> <code>Presentation Submission</code></h2>
 <blockquote>
 <p>NOTE: ensure all the entries in the <code>verifiableCredential</code> array are valid VCs</p>
 </blockquote>
-<div id="presentation-submission---all-features-exercised" class="notice example"><a class="notice-link" href="#presentation-submission---all-features-exercised">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission---all-features-exercised-29" class="notice example"><a class="notice-link" href="#presentation-submission---all-features-exercised-29">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
     <span class="token string">"https://identity.foundation/presentation-exchange/submission/v1"</span>
@@ -348,6 +448,22 @@
 <span class="token punctuation">}</span>
 </code></pre>
 </div>
+<h2 id="appendix"><a class="toc-anchor" href="#appendix">§</a> Appendix</h2>
+<h3 id="goals-requirements"><a class="toc-anchor" href="#goals-requirements">§</a> Goals &amp; Requirements</h3>
+<p>The <code>Presentation Definition</code> data format should satisfy the following requirements:</p>
+<ol>
+<li>A <code>Presentation Definition</code> allows for a static definition. That means it is not necessarely required to be dynamically created by a party upon request.</li>
+<li>A <code>Presentation Definition</code> should <em>generally</em> not have a limited TTL or be restricted to a single interaction. It should a long-lived format that, for example, search indexers could pickup in order to understand service requirements.</li>
+<li>A <code>Presentation Definition</code> allows to specifiy a combination of selection criteria that meet the requirements. A <code>Presentation Definition</code> can meet any combination of the requirements given.</li>
+<li>A <code>Presentation Definition</code> can request verifiable (signed) information as well as unsigned information (TBD).</li>
+<li>A <code>Presentation Definition</code> allows for the inclusive definition of an input selection, but not an exclusive on. (e.g. A and/or B. but not A but not B).</li>
+</ol>
+<p>The <code>Presentation Submission</code> data format should satisfy the following requirements:</p>
+<ol>
+<li>A <code>Presentation Submission</code> is the submission of a W3C Verifiable Presentation of extended capabilities to reference an earlier <code>Presentation Definition</code>.</li>
+<li>A <code>Presentation Submission</code> supports the direct reference to an <code>input descriptor</code> of a <code>Presentation Definition</code>. (“I represent value XY, e.g. a verifiable Bank Account”)</li>
+<li>A <code>Presentation Submission</code> supports the direct reference to an <code>input selector</code> of a <code>Presentation Definition</code> (“I satisfy condition A and B”)</li>
+</ol>
 
               </article>    
 
@@ -375,25 +491,24 @@
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#status-of-this-document">Status of This Document</a></li>
 <li><a href="#terminology">Terminology</a></li>
-<li><a href="#requirements">Requirements</a></li>
-<li><a href="#presentation-definition"><code>Presentation Definition</code></a>
+<li><a href="#presentation-definition">Presentation Definition</a>
 <ul>
 <li><a href="#top-level-properties">Top-Level Properties</a></li>
-<li><a href="#submission-requirement-rules">Submission Requirement Rules</a>
+<li><a href="#submission-requirements">Submission Requirements</a>
 <ul>
-<li><a href="#pick-rule"><code>pick</code> rule</a></li>
-<li><a href="#all-rule"><code>all</code> rule</a></li>
+<li><a href="#requirement-objects">Requirement Objects</a></li>
+<li><a href="#requirement-rule-types">Requirement Rule Types</a></li>
 </ul>
 </li>
-<li><a href="#input-descriptors">Input Descriptors</a>
-<ul>
-<li><a href="#data-input-descriptor"><code>data</code> Input Descriptor</a></li>
-<li><a href="#credential-input-descriptor"><code>credential</code> Input Descriptor</a></li>
-</ul>
-</li>
+<li><a href="#input-descriptors">Input Descriptors</a></li>
 </ul>
 </li>
 <li><a href="#presentation-submission"><code>Presentation Submission</code></a></li>
+<li><a href="#appendix">Appendix</a>
+<ul>
+<li><a href="#goals-requirements">Goals &amp; Requirements</a></li>
+</ul>
+</li>
 </ul>
 
                 </div>
