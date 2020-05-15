@@ -13,6 +13,7 @@ Presentation Exchange
 
 **Contributors:**
 ~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
+~ [Orie Steele](https://www.linkedin.com/in/OR13b/) (Transmute)
 
 **Participate:**
 ~ [GitHub repo](https://github.com/decentralized-identity/presentation-exchange)
@@ -415,6 +416,48 @@ _Input Descriptors_ are objects that describe what type of input data/credential
     "challenge": "1f44d55f-f161-4938-a659-f8026467f126",
     "domain": "4jt78h47fh47",
     "jws": "...",
+  }
+}
+```
+:::
+
+
+## Transport Integrations
+
+### CHAPI
+
+The [credential handler api (CHAPI)](https://w3c-ccg.github.io/credential-handler-api/) allows a web page to request data from a browser, and for a wallet to fulfill that request.
+
+This is commonly used for requesting and presenting verifiable credentials.
+
+See also the [vp-request-spec](https://digitalbazaar.github.io/vp-request-spec/).
+
+Here is an example of a request:
+
+::: Example Presentation Definition using CHAPI
+```json
+{
+  "query": [
+    {
+      "type": "PresentationDefinitionQuery",
+      "presentationDefinitionQuery": [
+        // Presentation Definition goes here.
+      ]
+    }
+  ]
+}
+```
+:::
+
+Here is an example of a response:
+
+::: Example Presentation Submission using CHAPI
+```json
+{
+  "type": "web",
+  "dataType": "VerifiablePresentation",
+  "data": {
+    // Presentation Submission goes here
   }
 }
 ```
