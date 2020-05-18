@@ -13,6 +13,7 @@ Presentation Exchange
 
 **Contributors:**
 ~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
+~ [Orie Steele](https://www.linkedin.com/in/or13b/) (Transmute)
 
 **Participate:**
 ~ [GitHub repo](https://github.com/decentralized-identity/presentation-exchange)
@@ -51,7 +52,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 {
   "submission_requirements": [
     {
-      "requirement": "bank_info",
+      "name": "Banking Information",
       "purpose": "We need to know if you have an established banking history.",
       "rule": {
         "type": "pick",
@@ -60,7 +61,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
       }
     },
     {
-      "requirement": "work_history",
+      "name": "Employment Information",
       "purpose": "We need to know that you are currently employed.",
       "rule": {
         "type": "all",
@@ -68,7 +69,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
       }
     },
     {
-      "requirement": "citizenship_proof",
+      "name": "Citizenship Information",
       "rule": {
         "type": "pick",
         "count": 1,
@@ -78,6 +79,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
   ],
   "input_descriptors": [
     {
+      "id": "banking_input_1",
       "group": ["A"],
       "schema": {
         "uri": "https://bank-standards.com/customer.json",
@@ -85,18 +87,26 @@ Presentation Definitions are objects generate to articulate what proofs an entit
         "purpose": "We need your bank and account information."
       },
       "constraints": {
-        "issuers": ["did:example:123", "did:example:456"], // make this any ol' URI
         "fields": [
-          { 
-            "path": "$.account[*].id",
-            "purpose": "We need your bank account number for processing purposes",
+          {
+            "path": ["$.issuer", "$.vc.issuer", "$.iss"],
+            "purpose": "The credential must be from one of the specified issuers",
             "filter": {
               "type": "string",
-              "minimum": 21
+              "pattern": "did:example:123|did:example:456"
             }
           },
           {
-            "path": "$.account[*].route",
+            "path": ["$.account[*].id"],
+            "purpose": "We need your bank account number for processing purposes",
+            "filter": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 12
+            }
+          },
+          {
+            "path": ["$.account[*].route"],
             "purpose": "You must have an account with a German, US, or Japanese bank account",
             "filter": {
               "type": "string",
@@ -107,6 +117,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
       }
     },
     {
+      "id": "banking_input_2",
       "group": ["A"],
       "schema": {
         "uri": "https://bank-schemas.org/accounts.json",
@@ -114,18 +125,26 @@ Presentation Definitions are objects generate to articulate what proofs an entit
         "purpose": "We need your bank and account information."
       },
       "constraints": {
-        "issuers": ["did:example:789"],
         "fields": [
           {
-            "path": "$.accounts[*].account_number",
+            "path": ["$.issuer", "$.vc.issuer", "$.iss"],
+            "purpose": "The credential must be from one of the specified issuers",
+            "filter": {
+              "type": "string",
+              "pattern": "did:example:123|did:example:456"
+            }
+          },
+          { 
+            "path": ["$.credentialSubject.account[*].id", "$.vc.credentialSubject.account[*].id"],
             "purpose": "We need your bank account number for processing purposes",
             "filter": {
               "type": "string",
-              "minimum": 19
+              "minLength": 10,
+              "maxLength": 12
             }
           },
           {
-            "path": "$.accounts[*].routing_number",
+            "path": ["$.credentialSubject.account[*].route", "$.vc.credentialSubject.account[*].route"],
             "purpose": "You must have an account with a German, US, or Japanese bank account",
             "filter": {
               "type": "string",
@@ -136,6 +155,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
       }
     },
     {
+      "id": "employment_input",
       "group": ["B"],
       "schema": {
         "uri": "https://business-standards.org/schemas/employment-history.json",
@@ -145,7 +165,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
       "constraints": {
         "fields": [
           {
-            "path": "$.jobs[*].active",
+            "path": ["$.jobs[*].active"],
             "filter": {
               "type": "boolean",
               "pattern": "true"
@@ -155,6 +175,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
       }
     },
     {
+      "id": "citizenship_input_1",
       "group": ["C"],
       "schema": {
         "uri": "https://eu.com/claims/DriversLicense.json",
@@ -164,16 +185,17 @@ Presentation Definitions are objects generate to articulate what proofs an entit
         "issuers": ["did:example:gov1", "did:example:gov2"],
         "fields": [
           {
-            "path": "$.dob",
+            "path": ["$.dob"],
             "filter": {
-              "type": "number",
-              "minimum": 21
+              "type": "date",
+              "minimum": "1999-5-16"
             }
           }
         ]
       }
     },
     {
+      "id": "citizenship_input_2",
       "group": ["C"],
       "schema": {
         "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json",
@@ -183,10 +205,10 @@ Presentation Definitions are objects generate to articulate what proofs an entit
         "issuers": ["did:foo:gov3"],
         "fields": [
           {
-            "path": "$.birth_date",
+            "path": ["$.birth_date"],
             "filter": {
-              "type": "number",
-              "minimum": 21
+              "type": "date",
+              "minimum": "1999-5-16"
             }
           }
         ]
@@ -197,22 +219,20 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 ```
 :::
 
-### Top-Level Properties
-
 The following properties are defined for use at the top-level of the resource - all other properties that are not defined below MUST be ignored:
 
-- `submission_requirements` - The resource ****MAY**** contain this property, and if present, its value ****MUST**** be an array of Submission Requirement Rule objects. If not present, all inputs listed in the `input_descriptor` array are required for submission.
-- `input_descriptors` - The resource ****MUST**** contain this property, and its value ****MUST**** be an array of Input Descriptor objects. If no `submission_requirements` are present, all inputs listed in the `input_descriptor` array are required for submission.
+- `submission_requirements` - The resource ****MAY**** contain this property, and if present, its value ****MUST**** be an array of Submission Requirement Rule objects. If not present, all inputs listed in the `input_descriptor` array are required for submission. The composition of values under this property are described in the [`Submission Requirements`](#submission-requirements) section below.
+- `input_descriptors` - The resource ****MUST**** contain this property, and its value ****MUST**** be an array of Input Descriptor objects. If no `submission_requirements` are present, all inputs listed in the `input_descriptor` array are required for submission. The composition of values under this property are described in the [`Input Descriptors`](#input-descriptors) section below.
 
 ### Submission Requirements
 
-_Presentation Definitions_ ****MAY**** include _Submission Requirement Rules_, which are objects that define what combinations of inputs must be submitted to comply with the requirements an Issuer/Verifier has for proceeding in a flow (e.g. credential issuance). _Submission Requirement Rules_ introduce a set of rule types and mapping instructions a User Agent can ingest to present requirement optionality to the user, and subsequently submit inputs in a way that maps back to the rules the verifying party has asserted (via a `Proof Submission` object). The following section defines the format for _Submission Requirement Rules_ objects and the selection syntax verifying parties can use to specify which combinations of inputs are acceptable.
+_Presentation Definitions_ ****MAY**** include _Submission Requirements_, which are objects that define what combinations of inputs must be submitted to comply with the requirements an Issuer/Verifier has for proceeding in a flow (e.g. credential issuance). _Submission Requirements_ introduce a set of rule types and mapping instructions a User Agent can ingest to present requirement optionality to the user, and subsequently submit inputs in a way that maps back to the rules the verifying party has asserted (via a `Proof Submission` object). The following section defines the format for _Submission Requirement_ objects and the selection syntax verifying parties can use to specify which combinations of inputs are acceptable.
 
 ::: example Submission Requirement Rules
 ```json
 "submission_requirements": [
   {
-    "requirement": "bank_info",
+    "name": "Banking Information",
     "purpose": "We need to know if you have an established banking history.",
     "rule": {
       "type": "pick",
@@ -221,7 +241,7 @@ _Presentation Definitions_ ****MAY**** include _Submission Requirement Rules_, w
     }
   },
   {
-    "requirement": "work_history",
+    "name": "Employment Information",
     "purpose": "We need to know that you are currently employed.",
     "rule": {
       "type": "all",
@@ -229,7 +249,7 @@ _Presentation Definitions_ ****MAY**** include _Submission Requirement Rules_, w
     }
   },
   {
-    "requirement": "citizenship_proof",
+    "name": "Citizenship Information",
     "rule": {
       "type": "pick",
       "count": 1,
@@ -242,15 +262,15 @@ _Presentation Definitions_ ****MAY**** include _Submission Requirement Rules_, w
 
 #### Requirement Objects
 
-Within a _Presentation Definition_, _Requirement Objects_ instruct consuming entities as to what combinations of inputs are required for evaluation in a subsequent _Presentation Submission_. _Requirement Objects_ are JSON objects constructed as follows:
+_Requirement Objects_ describe what combinations of inputs will satisfy Verifier requires for evaluation in a subsequent [Presentation Submission](#presentation-submission). _Requirement Objects_ are JSON objects constructed as follows:
 
-1. The object ****MUST**** contain a `requirement` property, and its value ****MUST**** be a string of the creator's choosing, which will be used to identify the _Requirement Object_ in other areas of the Presentation Exchange.
-2. The object ****MUST**** contain a `rule` property, and its value ****MUST**** be a _Requirement Rule Object_ matching one of the registered [Requirement Rule Types](#requirement-rule-types) listed in the section below.
-3. The object ****MAY**** contain a `purpose` property, and if present its value ****MUST**** be a string that describes the purpose for which the specified requirement is being asserted.
+1. The object ****MUST**** contain a `rule` property, and its value ****MUST**** be an object matching one of the [Requirement Rules](#requirement-rules) listed in the section below.
+2. The object ****MAY**** contain a `name` property, and if present, its value ****MUST**** be a string of the creator's choosing, which ****MAY**** be used by a consuming User Agent to display the general name of the requirement set to a user.
+2. The object ****MAY**** contain a `purpose` property, and if present, its value ****MUST**** be a string that describes the purpose for which the specified requirement is being asserted.
 
-#### Requirement Rule Types
+#### Requirement Rules
 
-The following are [_Requirement Rule Objects_](#requirement-rule-objects){id="requirement-rule-objects"} used within _Requirement Objects_ to instruct the consuming entity on what combinations of inputs are acceptable for satisfying the submission requirements of a Verifier.
+[_Requirement Rules_](#requirement-rules){id="requirement-rules"} are used within _Requirement Objects_ to describe the specific combinatorial rule that must be applied to submit a particular subset of required inputs. An implementation ****MUST**** support the following standard types:
 
 ##### `all` rule
 
@@ -283,12 +303,13 @@ Directs the consumer of the _Presentation Definition_ to submit a specified numb
 
 ### Input Descriptors
 
-_Input Descriptors_ are objects used to describe the proofing inputs a Verifier requires of a Subject before they will proceed with an interaction. _Input Descriptor_ objects contain a schema URI that links to the schema if the required input data, constrains on data values, and an explaination of why a certain set or item of data is being requested:
+_Input Descriptors_ are objects used to describe the proofing inputs a Verifier requires of a Subject before they will proceed with an interaction. _Input Descriptor_ objects contain a schema URI that links to the schema if the required input data, constrains on data values, and an explanation of why a certain set or item of data is being requested:
 
 ::: example Input Descriptor - Data
 ```json
 "input_descriptors": [
   {
+    "id": "banking_input_1",
     "group": ["A"],
     "schema": {
       "uri": "https://bank-standards.com/customer.json",
@@ -296,18 +317,26 @@ _Input Descriptors_ are objects used to describe the proofing inputs a Verifier 
       "purpose": "We need your bank and account information."
     },
     "constraints": {
-      "issuers": ["did:example:123", "did:example:456"], // make this any ol' URI
       "fields": [
+        {
+          "path": ["$.issuer", "$.vc.issuer", "$.iss"],
+          "purpose": "The credential must be from one of the specified issuers",
+          "filter": {
+            "type": "string",
+            "pattern": "did:example:123|did:example:456"
+          }
+        },
         { 
-          "path": "$.account[*].id",
+          "path": ["$.credentialSubject.account[*].id", "$.vc.credentialSubject.account[*].id"],
           "purpose": "We need your bank account number for processing purposes",
           "filter": {
             "type": "string",
-            "minimum": 21
+            "minLength": 10,
+            "maxLength": 12
           }
         },
         {
-          "path": "$.account[*].route",
+          "path": ["$.credentialSubject.account[*].route", "$.vc.credentialSubject.account[*].route"],
           "purpose": "You must have an account with a German, US, or Japanese bank account",
           "filter": {
             "type": "string",
@@ -321,6 +350,8 @@ _Input Descriptors_ are objects used to describe the proofing inputs a Verifier 
 ```
 :::
 
+#### Input Descriptor Objects
+
 _Input Descriptors_ are objects that describe what type of input data/credential, or sub-fields thereof, is required for submission to the Verifier. _Input Descriptor_ objects are composed as follows:
 
   - The object ****MAY**** contain a `group` property, and if present, its value ****MUST**** match one of the grouping strings listed the `from` values of a [_Requirement Rule Object_](#requirement-rule-objects).
@@ -329,13 +360,23 @@ _Input Descriptors_ are objects that describe what type of input data/credential
       - The object ****MAY**** contain a `name` property, and if present its value ****SHOULD**** be a human-friendly name that describes what the target schema represents.
       - The object ****MAY**** contain a `purpose` property, and if present its value ****MUST**** be a string that describes the purpose for which the schema's data is being requested.
   - The object ****MAY**** contain a `constraints` property, and its value ****MUST**** be an object composed as follows: 
-      - The object ****MAY**** contain an `issuers` property, and if present its value ****MUST**** contain one or more URIs of Issuing entities the that the target data/credential ****MUST**** have been issued from.
-      - The object ****MAY**** contain a `fields` property, and its value ****MUST**** be an array of _Input Descriptor Field Entry_ objects, each being composed as follows:
-          - The object ****MUST**** contain a `path` property, and its value ****MUST**** be a JSONPath selector that selects some subset of values from the target input.
+      - The object ****MAY**** contain a `fields` property, and its value ****MUST**** be an array of [_Input Descriptor Field Entry_](#input-descriptor-field-entry) objects, each being composed as follows:
+          - The object ****MUST**** contain a `path` property, and its value ****MUST**** be an array of one or more [JSONPath](https://goessner.net/articles/JsonPath/) string expressions, specifically this variant of JSONPath: https://www.npmjs.com/package/jsonpath, that select some subset of values from the target input. The array ****MUST**** be evaluated from 0-index forward, and the first expressions to return a value will be used for the rest of the entry's evaluation. The ability to declare multiple expressions this way allows the Verifier to account for format differences - for example: normalizing the differences in structure between JSON-LD/JWT-based [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and vanilla [JSON Web Tokens](https://tools.ietf.org/html/rfc7797) (JWTs).
           - The object ****MAY**** contain a `purpose` property, and if present its value ****MUST**** be a string that describes the purpose for which the field is being requested.
-          - The object ****MAY**** contain a `filter` property, and if present its value ****MUST**** be JSON Schema descriptor used to filter against the `path` selected subset of values.
+          - The object ****MAY**** contain a `filter` property, and if present its value ****MUST**** be [JSON Schema](https://json-schema.org/specification.html) descriptor used to filter against the values returned from evaluation of the [JSONPath](https://goessner.net/articles/JsonPath/) string expressions in the `path` array.
 
-## `Presentation Submission`
+### Input Evaluation
+
+A consumer of a _Presentation Definition_ must filter inputs they hold (signed credentials, raw data, etc.) to determine whether they possess the inputs required to fulfill the demands of the Verifying party. A consumer of a _Presentation Definition_ ****SHOULD**** use the following process to validate whether or not its candidate inputs meet the requirements it describes:
+
+1. For each _Input Descriptor_ in the `input_descriptors` array of a _Presentation Definition_, a User Agent ****should**** compare each candidate input it holds to determine whether there is a match. Evaluate each candidate input as follows:
+    1. The schema of the candidate input ****must**** match the _Input Descriptor_ `schema` object `uri` value exactly. If they are exactly equal, proceed, if they are not exactly equal, skip to the next candidate input.
+    2. If the `constraints` property of the _Input Descriptor_ is present, and it contains a `fields` property with one or more [_Input Descriptor Field Entries_](#input-descriptor-field-entry), evaluate each against the candidate input as follows:
+        1. Iterate the _Input Descriptor_ `path` array of [JSONPath](https://goessner.net/articles/JsonPath/) string expressions from 0-index, executing each expression against the candidate input. Cease iteration at the first expression that returns a matching _Field Query Result_ and use the result for the rest of the field's evaluation. If no result is returned for any of the expressions, skip to the next candidate input.
+        2. If the `filter` property of the field entry is present, validate the _Field Query Result_ from the step above against the [JSON Schema](https://json-schema.org/specification.html) descriptor value. If the result is valid, proceed iterating the rest of the `fields` entries.
+    3. If all of the previous validation steps are successful, mark the candidate input as a match for use in a _Presentation Submission_, and if present at the top level of the _Input Descriptor_, keep a relative reference to the `group` values the input is designated for.
+
+## Presentation Submission
 
 > NOTE: ensure all the entries in the `verifiableCredential` array are valid VCs
 
@@ -352,38 +393,61 @@ _Input Descriptors_ are objects that describe what type of input data/credential
   ],
   "presentation_submission": [
     {
-      "requirement": ["bank_info"],
-      "field": "routing_number",
-      "map": {
-        "data_path": "$.verifiableCredential.[0].credentialSubject.address"
-      }
+      "id": "banking_input_2",
+      "path": "$.verifiableCredential.[0]"
     },
     {
-      "requirement": ["bank_info"],
-      "field": "account_number",
-      "map": {
-        "data_path": "$.verifiableCredential.[0].credentialSubject.account"
-      }
+      "id": "employment_input",
+      "path": "$.verifiableCredential.[1]"
     },
     {
-      "requirement": ["citizenship_proof"],
-      "field": "drivers_license",
-      "map": {
-        "data_path": "$.verifiableCredential.[1]"
-      }
+      "id": "citizenship_input_1",
+      "path": "$.verifiableCredential.[2]"
     }
   ],
   "verifiableCredential": [
     { // DECODED JWT PAYLOAD, ASSUME THIS WILL BE A BIG UGLY OBJECT
       "vc": {
         "@context": "https://www.w3.org/2018/credentials/v1",
-        "type": ["PresentationSubmissionRawData"],
+        "id": "https://eu.com/claims/DriversLicense",
+        "type": ["EUDriversLicense"],
+        "issuer": "did:example:123",
+        "issuanceDate": "2010-01-01T19:73:24Z",
         "credentialSubject": {
-          "routing": "4fe73c65v",
-          "account": "123543565654"
+          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+          "accounts": [
+            {
+              "id": "1234567890",
+              "route": "DE-9876543210"
+            },
+            {
+              "id": "2457913570",
+              "route": "DE-0753197542"
+            }
+          ]
         }
       }
-    },
+    {
+      "@context": "https://www.w3.org/2018/credentials/v1",
+      "id": "https://eu.com/claims/DriversLicense",
+      "type": ["EUDriversLicense"],
+      "issuer": "did:foo:123",
+      "issuanceDate": "2010-01-01T19:73:24Z",
+      "credentialSubject": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "license": {
+          "number": "34DGE352",
+          "dob": "07/13/80"
+        }
+      },
+      "proof": {
+        "type": "EcdsaSecp256k1VerificationKey2019",
+        "created": "2017-06-18T21:19:10Z",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "https://example.edu/issuers/keys/1",
+        "jws": "..."
+      }
+    }
     {
       "@context": "https://www.w3.org/2018/credentials/v1",
       "id": "https://eu.com/claims/DriversLicense",
