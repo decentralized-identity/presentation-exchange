@@ -90,7 +90,7 @@
 </table>
 <h2 id="presentation-definition"><a class="toc-anchor" href="#presentation-definition">§</a> Presentation Definition</h2>
 <p>Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.</p>
-<div id="presentation-definition---all-features-exercised-2" class="notice example"><a class="notice-link" href="#presentation-definition---all-features-exercised-2">EXAMPLE</a><pre class="language-json"><code class="language-json">
+<div id="presentation-definition---all-features-exercised-4" class="notice example"><a class="notice-link" href="#presentation-definition---all-features-exercised-4">EXAMPLE</a><pre class="language-json"><code class="language-json">
 <span class="token punctuation">{</span>
   <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
@@ -139,7 +139,7 @@
             <span class="token punctuation">}</span>
           <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token punctuation">{</span>
-            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.account[*].id"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.credentialSubject.account[*].account_number"</span><span class="token punctuation">,</span> <span class="token string">"$.vc.credentialSubject.account[*].account_number"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
             <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank account number for processing purposes"</span><span class="token punctuation">,</span>
             <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
@@ -148,7 +148,7 @@
             <span class="token punctuation">}</span>
           <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token punctuation">{</span>
-            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.account[*].route"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.credentialSubject.account[*].routing_number"</span><span class="token punctuation">,</span> <span class="token string">"$.vc.credentialSubject.account[*].routing_number"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
             <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"You must have an account with a German, US, or Japanese bank account"</span><span class="token punctuation">,</span>
             <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
@@ -267,7 +267,7 @@
 </ul>
 <h3 id="submission-requirements"><a class="toc-anchor" href="#submission-requirements">§</a> Submission Requirements</h3>
 <p><em>Presentation Definitions</em> <strong><strong>MAY</strong></strong> include <em>Submission Requirements</em>, which are objects that define what combinations of inputs must be submitted to comply with the requirements an Issuer/Verifier has for proceeding in a flow (e.g. credential issuance). <em>Submission Requirements</em> introduce a set of rule types and mapping instructions a User Agent can ingest to present requirement optionality to the user, and subsequently submit inputs in a way that maps back to the rules the verifying party has asserted (via a <code>Proof Submission</code> object). The following section defines the format for <em>Submission Requirement</em> objects and the selection syntax verifying parties can use to specify which combinations of inputs are acceptable.</p>
-<div id="submission-requirement-rules-2" class="notice example"><a class="notice-link" href="#submission-requirement-rules-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="submission-requirement-rules-4" class="notice example"><a class="notice-link" href="#submission-requirement-rules-4">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Banking Information"</span><span class="token punctuation">,</span>
     <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you have an established banking history."</span><span class="token punctuation">,</span>
@@ -331,7 +331,7 @@
 </ul>
 <h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors">§</a> Input Descriptors</h3>
 <p><em>Input Descriptors</em> are objects used to describe the proofing inputs a Verifier requires of a Subject before they will proceed with an interaction. <em>Input Descriptor</em> objects contain a schema URI that links to the schema if the required input data, constrains on data values, and an explanation of why a certain set or item of data is being requested:</p>
-<div id="input-descriptor---data-2" class="notice example"><a class="notice-link" href="#input-descriptor---data-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="input-descriptor---data-4" class="notice example"><a class="notice-link" href="#input-descriptor---data-4">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -417,7 +417,7 @@
 <blockquote>
 <p>NOTE: ensure all the entries in the <code>verifiableCredential</code> array are valid VCs</p>
 </blockquote>
-<div id="presentation-submission---all-features-exercised-2" class="notice example"><a class="notice-link" href="#presentation-submission---all-features-exercised-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission---all-features-exercised-4" class="notice example"><a class="notice-link" href="#presentation-submission---all-features-exercised-4">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
     <span class="token string">"https://identity.foundation/presentation-exchange/submission/v1"</span>
