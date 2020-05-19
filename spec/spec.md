@@ -97,7 +97,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
             }
           },
           {
-            "path": ["$.account[*].id"],
+            "path": ["$.credentialSubject.account[*].account_number", "$.vc.credentialSubject.account[*].account_number"],
             "purpose": "We need your bank account number for processing purposes",
             "filter": {
               "type": "string",
@@ -106,7 +106,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
             }
           },
           {
-            "path": ["$.account[*].route"],
+            "path": ["$.credentialSubject.account[*].routing_number", "$.vc.credentialSubject.account[*].routing_number"],
             "purpose": "You must have an account with a German, US, or Japanese bank account",
             "filter": {
               "type": "string",
