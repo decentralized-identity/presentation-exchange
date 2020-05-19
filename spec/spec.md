@@ -354,6 +354,7 @@ _Input Descriptors_ are objects used to describe the proofing inputs a Verifier 
 
 _Input Descriptors_ are objects that describe what type of input data/credential, or sub-fields thereof, is required for submission to the Verifier. _Input Descriptor_ objects are composed as follows:
 
+  - The object ****MUST**** contain an `id` property, and if present, its value ****MUST**** be a unique identifying string that does not conflict with the `id` of another _Input Descriptor_ in the same _Presentation Definition_ object.
   - The object ****MAY**** contain a `group` property, and if present, its value ****MUST**** match one of the grouping strings listed the `from` values of a [_Requirement Rule Object_](#requirement-rule-objects).
   - The object ****MUST**** contain a `schema` property, and its value ****MUST**** be an object composed as follows:
       - The object ****MUST**** contain a `uri` property, and its value ****MUST**** be the valid URI string of the schema for the target data/credential type.
