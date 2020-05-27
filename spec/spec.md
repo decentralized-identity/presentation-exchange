@@ -120,7 +120,10 @@ Presentation Definitions are objects generate to articulate what proofs an entit
       "id": "banking_input_2",
       "group": ["A"],
       "schema": {
-        "uri": "https://bank-schemas.org/accounts.json",
+        "uri": [
+          "https://bank-schemas.org/1.0.0/accounts.json",
+          "https://bank-schemas.org/2.0.0/accounts.json"
+        ],
         "name": "Bank Account Information",
         "purpose": "We need your bank and account information."
       },
@@ -182,8 +185,15 @@ Presentation Definitions are objects generate to articulate what proofs an entit
         "name": "EU Driver's License"
       },
       "constraints": {
-        "issuers": ["did:example:gov1", "did:example:gov2"],
         "fields": [
+          {
+            "path": ["$.issuer", "$.vc.issuer", "$.iss"],
+            "purpose": "The credential must be from one of the specified issuers",
+            "filter": {
+              "type": "string",
+              "pattern": "did:example:gov1|did:example:gov2"
+            }
+          },
           {
             "path": ["$.dob"],
             "filter": {
@@ -312,7 +322,10 @@ _Input Descriptors_ are objects used to describe the proofing inputs a Verifier 
     "id": "banking_input_1",
     "group": ["A"],
     "schema": {
-      "uri": "https://bank-standards.com/customer.json",
+      "uri": [
+        "https://bank-schemas.org/1.0.0/accounts.json",
+        "https://bank-schemas.org/2.0.0/accounts.json"
+      ],
       "name": "Bank Account Information",
       "purpose": "We need your bank and account information."
     },
@@ -357,7 +370,7 @@ _Input Descriptors_ are objects that describe what type of input data/credential
   - The object ****MUST**** contain an `id` property, and if present, its value ****MUST**** be a unique identifying string that does not conflict with the `id` of another _Input Descriptor_ in the same _Presentation Definition_ object.
   - The object ****MAY**** contain a `group` property, and if present, its value ****MUST**** match one of the grouping strings listed the `from` values of a [_Requirement Rule Object_](#requirement-rule-objects).
   - The object ****MUST**** contain a `schema` property, and its value ****MUST**** be an object composed as follows:
-      - The object ****MUST**** contain a `uri` property, and its value ****MUST**** be the valid URI string of the schema for the target data/credential type.
+      - The object ****MUST**** contain a `uri` property, and its value ****MUST**** be an array consisting of one or more valid URI strings for the acceptable credential schemas. A common use of multiple entries in the `uri` array is when multiple versions of a credential schema exist and you wish to express support for submission of more than one version.
       - The object ****MAY**** contain a `name` property, and if present its value ****SHOULD**** be a human-friendly name that describes what the target schema represents.
       - The object ****MAY**** contain a `purpose` property, and if present its value ****MUST**** be a string that describes the purpose for which the schema's data is being requested.
   - The object ****MAY**** contain a `constraints` property, and its value ****MUST**** be an object composed as follows: 
@@ -371,7 +384,7 @@ _Input Descriptors_ are objects that describe what type of input data/credential
 A consumer of a _Presentation Definition_ must filter inputs they hold (signed credentials, raw data, etc.) to determine whether they possess the inputs required to fulfill the demands of the Verifying party. A consumer of a _Presentation Definition_ ****SHOULD**** use the following process to validate whether or not its candidate inputs meet the requirements it describes:
 
 1. For each _Input Descriptor_ in the `input_descriptors` array of a _Presentation Definition_, a User Agent ****should**** compare each candidate input it holds to determine whether there is a match. Evaluate each candidate input as follows:
-    1. The schema of the candidate input ****must**** match the _Input Descriptor_ `schema` object `uri` value exactly. If they are exactly equal, proceed, if they are not exactly equal, skip to the next candidate input.
+    1. The schema of the candidate input ****must**** match one of the _Input Descriptor_ `schema` object `uri` values exactly. If one of the values is an exact match, proceed, if there are no exact matches, skip to the next candidate input.
     2. If the `constraints` property of the _Input Descriptor_ is present, and it contains a `fields` property with one or more [_Input Descriptor Field Entries_](#input-descriptor-field-entry), evaluate each against the candidate input as follows:
         1. Iterate the _Input Descriptor_ `path` array of [JSONPath](https://goessner.net/articles/JsonPath/) string expressions from 0-index, executing each expression against the candidate input. Cease iteration at the first expression that returns a matching _Field Query Result_ and use the result for the rest of the field's evaluation. If no result is returned for any of the expressions, skip to the next candidate input.
         2. If the `filter` property of the field entry is present, validate the _Field Query Result_ from the step above against the [JSON Schema](https://json-schema.org/specification.html) descriptor value. If the result is valid, proceed iterating the rest of the `fields` entries.
@@ -490,9 +503,7 @@ A consumer of a _Presentation Definition_ must filter inputs they hold (signed c
 
 ### CHAPI
 
-The [credential handler api (CHAPI)](https://w3c-ccg.github.io/credential-handler-api/) allows a web page to request data from a browser, and for a wallet to fulfill that request.
-
-This is commonly used for requesting and presenting verifiable credentials.
+The [credential handler api (CHAPI)](https://w3c-ccg.github.io/credential-handler-api/) allows a web page to request data from a browser, and for a wallet to fulfill that request. This is commonly used for requesting and presenting verifiable credentials.
 
 See also the [vp-request-spec](https://digitalbazaar.github.io/vp-request-spec/).
 

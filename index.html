@@ -90,7 +90,7 @@
 </table>
 <h2 id="presentation-definition"><a class="toc-anchor" href="#presentation-definition">§</a> Presentation Definition</h2>
 <p>Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.</p>
-<div id="presentation-definition---all-features-exercised-4" class="notice example"><a class="notice-link" href="#presentation-definition---all-features-exercised-4">EXAMPLE</a><pre class="language-json"><code class="language-json">
+<div id="presentation-definition---all-features-exercised-15" class="notice example"><a class="notice-link" href="#presentation-definition---all-features-exercised-15">EXAMPLE</a><pre class="language-json"><code class="language-json">
 <span class="token punctuation">{</span>
   <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
@@ -162,7 +162,10 @@
       <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
       <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
       <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-schemas.org/accounts.json"</span><span class="token punctuation">,</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">"https://bank-schemas.org/1.0.0/accounts.json"</span><span class="token punctuation">,</span>
+          <span class="token string">"https://bank-schemas.org/2.0.0/accounts.json"</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
         <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
@@ -224,8 +227,15 @@
         <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"EU Driver's License"</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"issuers"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"did:example:gov1"</span><span class="token punctuation">,</span> <span class="token string">"did:example:gov2"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.issuer"</span><span class="token punctuation">,</span> <span class="token string">"$.vc.issuer"</span><span class="token punctuation">,</span> <span class="token string">"$.iss"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"The credential must be from one of the specified issuers"</span><span class="token punctuation">,</span>
+            <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+              <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"did:example:gov1|did:example:gov2"</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token punctuation">{</span>
             <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.dob"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
             <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -267,7 +277,7 @@
 </ul>
 <h3 id="submission-requirements"><a class="toc-anchor" href="#submission-requirements">§</a> Submission Requirements</h3>
 <p><em>Presentation Definitions</em> <strong><strong>MAY</strong></strong> include <em>Submission Requirements</em>, which are objects that define what combinations of inputs must be submitted to comply with the requirements an Issuer/Verifier has for proceeding in a flow (e.g. credential issuance). <em>Submission Requirements</em> introduce a set of rule types and mapping instructions a User Agent can ingest to present requirement optionality to the user, and subsequently submit inputs in a way that maps back to the rules the verifying party has asserted (via a <code>Proof Submission</code> object). The following section defines the format for <em>Submission Requirement</em> objects and the selection syntax verifying parties can use to specify which combinations of inputs are acceptable.</p>
-<div id="submission-requirement-rules-4" class="notice example"><a class="notice-link" href="#submission-requirement-rules-4">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="submission-requirement-rules-15" class="notice example"><a class="notice-link" href="#submission-requirement-rules-15">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Banking Information"</span><span class="token punctuation">,</span>
     <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you have an established banking history."</span><span class="token punctuation">,</span>
@@ -331,12 +341,15 @@
 </ul>
 <h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors">§</a> Input Descriptors</h3>
 <p><em>Input Descriptors</em> are objects used to describe the proofing inputs a Verifier requires of a Subject before they will proceed with an interaction. <em>Input Descriptor</em> objects contain a schema URI that links to the schema if the required input data, constrains on data values, and an explanation of why a certain set or item of data is being requested:</p>
-<div id="input-descriptor---data-4" class="notice example"><a class="notice-link" href="#input-descriptor---data-4">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="input-descriptor---data-15" class="notice example"><a class="notice-link" href="#input-descriptor---data-15">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
     <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-standards.com/customer.json"</span><span class="token punctuation">,</span>
+      <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token string">"https://bank-schemas.org/1.0.0/accounts.json"</span><span class="token punctuation">,</span>
+        <span class="token string">"https://bank-schemas.org/2.0.0/accounts.json"</span>
+      <span class="token punctuation">]</span><span class="token punctuation">,</span>
       <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
       <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
@@ -380,7 +393,7 @@
 <li>The object <strong><strong>MAY</strong></strong> contain a <code>group</code> property, and if present, its value <strong><strong>MUST</strong></strong> match one of the grouping strings listed the <code>from</code> values of a <a href="#requirement-rule-objects"><em>Requirement Rule Object</em></a>.</li>
 <li>The object <strong><strong>MUST</strong></strong> contain a <code>schema</code> property, and its value <strong><strong>MUST</strong></strong> be an object composed as follows:
 <ul>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>uri</code> property, and its value <strong><strong>MUST</strong></strong> be the valid URI string of the schema for the target data/credential type.</li>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>uri</code> property, and its value <strong><strong>MUST</strong></strong> be an array consisting of one or more valid URI strings for the acceptable credential schemas. A common use of multiple entries in the <code>uri</code> array is when multiple versions of a credential schema exist and you wish to express support for submission of more than one version.</li>
 <li>The object <strong><strong>MAY</strong></strong> contain a <code>name</code> property, and if present its value <strong><strong>SHOULD</strong></strong> be a human-friendly name that describes what the target schema represents.</li>
 <li>The object <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property, and if present its value <strong><strong>MUST</strong></strong> be a string that describes the purpose for which the schema’s data is being requested.</li>
 </ul>
@@ -402,7 +415,7 @@
 <ol>
 <li>For each <em>Input Descriptor</em> in the <code>input_descriptors</code> array of a <em>Presentation Definition</em>, a User Agent <strong><strong>should</strong></strong> compare each candidate input it holds to determine whether there is a match. Evaluate each candidate input as follows:
 <ol>
-<li>The schema of the candidate input <strong><strong>must</strong></strong> match the <em>Input Descriptor</em> <code>schema</code> object <code>uri</code> value exactly. If they are exactly equal, proceed, if they are not exactly equal, skip to the next candidate input.</li>
+<li>The schema of the candidate input <strong><strong>must</strong></strong> match one of the <em>Input Descriptor</em> <code>schema</code> object <code>uri</code> values exactly. If one of the values is an exact match, proceed, if there are no exact matches, skip to the next candidate input.</li>
 <li>If the <code>constraints</code> property of the <em>Input Descriptor</em> is present, and it contains a <code>fields</code> property with one or more <a href="#input-descriptor-field-entry"><em>Input Descriptor Field Entries</em></a>, evaluate each against the candidate input as follows:
 <ol>
 <li>Iterate the <em>Input Descriptor</em> <code>path</code> array of <a href="https://goessner.net/articles/JsonPath/">JSONPath</a> string expressions from 0-index, executing each expression against the candidate input. Cease iteration at the first expression that returns a matching <em>Field Query Result</em> and use the result for the rest of the field’s evaluation. If no result is returned for any of the expressions, skip to the next candidate input.</li>
@@ -417,7 +430,7 @@
 <blockquote>
 <p>NOTE: ensure all the entries in the <code>verifiableCredential</code> array are valid VCs</p>
 </blockquote>
-<div id="presentation-submission---all-features-exercised-4" class="notice example"><a class="notice-link" href="#presentation-submission---all-features-exercised-4">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission---all-features-exercised-15" class="notice example"><a class="notice-link" href="#presentation-submission---all-features-exercised-15">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
     <span class="token string">"https://identity.foundation/presentation-exchange/submission/v1"</span>
@@ -520,8 +533,7 @@
 </div>
 <h2 id="transport-integrations"><a class="toc-anchor" href="#transport-integrations">§</a> Transport Integrations</h2>
 <h3 id="chapi"><a class="toc-anchor" href="#chapi">§</a> CHAPI</h3>
-<p>The <a href="https://w3c-ccg.github.io/credential-handler-api/">credential handler api (CHAPI)</a> allows a web page to request data from a browser, and for a wallet to fulfill that request.</p>
-<p>This is commonly used for requesting and presenting verifiable credentials.</p>
+<p>The <a href="https://w3c-ccg.github.io/credential-handler-api/">credential handler api (CHAPI)</a> allows a web page to request data from a browser, and for a wallet to fulfill that request. This is commonly used for requesting and presenting verifiable credentials.</p>
 <p>See also the <a href="https://digitalbazaar.github.io/vp-request-spec/">vp-request-spec</a>.</p>
 <p>Here is an example of a request:</p>
 <p>::: Example Presentation Definition using CHAPI</p>
