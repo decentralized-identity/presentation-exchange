@@ -405,20 +405,22 @@ A consumer of a _Presentation Definition_ must filter inputs they hold (signed c
     "VerifiablePresentation",
     "PresentationSubmission"
   ],
-  "presentation_submission": [
-    {
-      "id": "banking_input_2",
-      "path": "$.verifiableCredential.[0]"
-    },
-    {
-      "id": "employment_input",
-      "path": "$.verifiableCredential.[1]"
-    },
-    {
-      "id": "citizenship_input_1",
-      "path": "$.verifiableCredential.[2]"
-    }
-  ],
+  "presentation_submission": {
+    "descriptor_map": [
+      {
+        "id": "banking_input_2",
+        "path": "$.verifiableCredential.[0]"
+      },
+      {
+        "id": "employment_input",
+        "path": "$.verifiableCredential.[1]"
+      },
+      {
+        "id": "citizenship_input_1",
+        "path": "$.verifiableCredential.[2]"
+      }
+    ]
+  },
   "verifiableCredential": [
     { // DECODED JWT PAYLOAD, ASSUME THIS WILL BE A BIG UGLY OBJECT
       "vc": {
@@ -498,6 +500,21 @@ A consumer of a _Presentation Definition_ must filter inputs they hold (signed c
 ```
 :::
 
+### Embedded Presentation Submission Object
+
+_Presentation Submissions_ are objects embedded within target credential negotiation formats that unify the presentation of proofs to a Verifier in accordance with the requirements a Verifier specified in a _Presentation Definition_. Embedded _Presentation Submission_ objects ****MUST**** be located within target data format as a `presentation_submission` property, which are composed as follows:
+
+  - The object ****MUST**** include a `descriptor_map` property, and its value ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being composed as follows:
+      - The object ****MUST**** include an `id` property, and its value ****MUST**** be a string matching the `id` property of the _Input Descriptor_ in the _Presentation Definition_ the submission is related to.
+      - The object ****MUST**** include a `path` property, and its value ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/) string expression that selects the credential to be submit in relation to the identified _Input Descriptor_ identified, when executed against the top-level of the object the _Presentation Submission_ is embedded within.
+
+
+<!-- ### Embedding Locations
+
+Depending on what data format the _Presentation Submission_ directives are being embedded in, the locations of the present
+
+-->
+
 
 ## Transport Integrations
 
@@ -509,7 +526,7 @@ See also the [vp-request-spec](https://digitalbazaar.github.io/vp-request-spec/)
 
 Here is an example of a request:
 
-::: Example Presentation Definition using CHAPI
+::: example Presentation Definition using CHAPI
 ```json
 {
   "query": [
@@ -526,7 +543,7 @@ Here is an example of a request:
 
 Here is an example of a response:
 
-::: Example Presentation Submission using CHAPI
+::: example Presentation Submission using CHAPI
 ```json
 {
   "type": "web",
