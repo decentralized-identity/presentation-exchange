@@ -443,6 +443,7 @@ A consumer of a _Presentation Definition_ must filter inputs they hold (signed c
           ]
         }
       }
+    },
     {
       "@context": "https://www.w3.org/2018/credentials/v1",
       "id": "https://eu.com/claims/DriversLicense",
@@ -463,7 +464,7 @@ A consumer of a _Presentation Definition_ must filter inputs they hold (signed c
         "verificationMethod": "https://example.edu/issuers/keys/1",
         "jws": "..."
       }
-    }
+    },
     {
       "@context": "https://www.w3.org/2018/credentials/v1",
       "id": "https://eu.com/claims/DriversLicense",
@@ -509,11 +510,115 @@ _Presentation Submissions_ are objects embedded within target credential negotia
       - The object ****MUST**** include a `path` property, and its value ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/) string expression that selects the credential to be submit in relation to the identified _Input Descriptor_ identified, when executed against the top-level of the object the _Presentation Submission_ is embedded within.
 
 
-<!-- ### Embedding Locations
+### Embed Targets
 
-Depending on what data format the _Presentation Submission_ directives are being embedded in, the locations of the present
+The following section details where the _Presentation Submission_ is to be embedded within a target data structure, as well as how to formulate the [JSONPath](https://goessner.net/articles/JsonPath/) expressions to select the credentials within the target data structure.
 
--->
+#### OIDC
+
+::: example Presentation Submission with OIDC JWT
+```json
+{
+  "iss": "https://self-issued.me",
+  "sub": "248289761001",
+  "preferred_username": "superman445",
+  "presentation_submission": {
+    "descriptor_map": [
+      {
+        "id": "banking_input_2",
+        "path": "$._claim_sources.banking_input_2.JWT"
+      },
+      {
+        "id": "employment_input",
+        "path": "$._claim_sources.employment_input.VC_JWT"
+      },
+      {
+        "id": "citizenship_input_1",
+        "path": "$._claim_sources.citizenship_input_1.VC"
+      }
+    ]
+  },
+  "_claim_names": {
+    "verified_claims": [
+      "banking_input_2",
+      "employment_input",
+      "citizenship_input_1"
+    ]
+  },
+  "_claim_sources": {
+    "banking_input_2": {
+      "JWT": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwcz
+      ovL3NlcnZlci5vdGhlcm9wLmNvbSIsInN1YiI6ImU4MTQ4NjAzLTg5MzQtNDI0N
+      S04MjViLWMxMDhiOGI2Yjk0NSIsInZlcmlmaWVkX2NsYWltcyI6eyJ2ZXJpZmlj
+      YXRpb24iOnsidHJ1c3RfZnJhbWV3b3JrIjoiaWFsX2V4YW1wbGVfZ29sZCJ9LCJ
+      jbGFpbXMiOnsiZ2l2ZW5fbmFtZSI6Ik1heCIsImZhbWlseV9uYW1lIjoiTWVpZX
+      IiLCJiaXJ0aGRhdGUiOiIxOTU2LTAxLTI4In19fQ.FArlPUtUVn95HCExePlWJQ
+      6ctVfVpQyeSbe3xkH9MH1QJjnk5GVbBW0qe1b7R3lE-8iVv__0mhRTUI5lcFhLj
+      oGjDS8zgWSarVsEEjwBK7WD3r9cEw6ZAhfEkhHL9eqAaED2rhhDbHD5dZWXkJCu
+      XIcn65g6rryiBanxlXK0ZmcK4fD9HV9MFduk0LRG_p4yocMaFvVkqawat5NV9QQ
+      3ij7UBr3G7A4FojcKEkoJKScdGoozir8m5XD83Sn45_79nCcgWSnCX2QTukL8Ny
+      wIItu_K48cjHiAGXXSzydDm_ccGCe0sY-Ai2-iFFuQo2PtfuK2SqPPmAZJxEFrF
+      oLY4g"
+    },
+    "employment_input": {
+      "VC_JWT": { // DECODED JWT PAYLOAD, ASSUME THIS WILL BE A BIG UGLY OBJECT
+        "vc": {
+          "@context": "https://www.w3.org/2018/credentials/v1",
+          "id": "https://eu.com/claims/DriversLicense",
+          "type": ["EUDriversLicense"],
+          "issuer": "did:example:123",
+          "issuanceDate": "2010-01-01T19:73:24Z",
+          "credentialSubject": {
+            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "accounts": [
+              {
+                "id": "1234567890",
+                "route": "DE-9876543210"
+              },
+              {
+                "id": "2457913570",
+                "route": "DE-0753197542"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "citizenship_input_1": {
+      "VC": {
+        "@context": "https://www.w3.org/2018/credentials/v1",
+        "id": "https://eu.com/claims/DriversLicense",
+        "type": ["EUDriversLicense"],
+        "issuer": "did:foo:123",
+        "issuanceDate": "2010-01-01T19:73:24Z",
+        "credentialSubject": {
+          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+          "license": {
+            "number": "34DGE352",
+            "dob": "07/13/80"
+          }
+        },
+        "proof": {
+          "type": "EcdsaSecp256k1VerificationKey2019",
+          "created": "2017-06-18T21:19:10Z",
+          "proofPurpose": "assertionMethod",
+          "verificationMethod": "https://example.edu/issuers/keys/1",
+          "jws": "..."
+        }
+      }
+    }
+  }
+}
+```
+:::
+
+#### DID Comms
+
+...
+
+#### CHAPI
+
+...
 
 
 ## Transport Integrations
