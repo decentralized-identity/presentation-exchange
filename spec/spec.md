@@ -14,6 +14,7 @@ Presentation Exchange
 **Contributors:**
 ~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
 ~ [Orie Steele](https://www.linkedin.com/in/or13b/) (Transmute)
+~ [Wayne Chang](https://www.linkedin.com/in/waynebuilds/) (Spruce)
 
 **Participate:**
 ~ [GitHub repo](https://github.com/decentralized-identity/presentation-exchange)
@@ -50,33 +51,32 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 ```json
 
 {
-  "submission_requirements": [
-    {
-      "name": "Banking Information",
-      "purpose": "We need to know if you have an established banking history.",
-      "rule": {
-        "type": "pick",
+  "submission_requirement": {
+    name: "Credential issuance requirements",
+    purpose: "Verify banking, employment, and citizenship information.",
+    rule: "all",
+    from: [
+      {
+        "name": "Banking Information",
+        "purpose": "We need to know if you have an established banking history.",
+        "rule": "pick",
         "count": 1,
-        "from": ["A"]
+        "from": "A"
+      },
+      {
+        "name": "Employment Information",
+        "purpose": "We need to know that you are currently employed.",
+        "rule": "all",
+        "from": "B"
       }
-    },
-    {
-      "name": "Employment Information",
-      "purpose": "We need to know that you are currently employed.",
-      "rule": {
-        "type": "all",
-        "from": ["B"]
-      }
-    },
-    {
-      "name": "Citizenship Information",
-      "rule": {
-        "type": "pick",
+      {
+        "name": "Citizenship Information",
+        "rule": "pick",
         "count": 1,
-        "from": ["C"]
+        "from": "C"
       }
-    }
-  ],
+    ]
+  },
   "input_descriptors": [
     {
       "id": "banking_input_1",
@@ -231,89 +231,258 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 
 The following properties are defined for use at the top-level of the resource - all other properties that are not defined below MUST be ignored:
 
-- `submission_requirements` - The resource ****MAY**** contain this property, and if present, its value ****MUST**** be an array of Submission Requirement Rule objects. If not present, all inputs listed in the `input_descriptor` array are required for submission. The composition of values under this property are described in the [`Submission Requirements`](#submission-requirements) section below.
-- `input_descriptors` - The resource ****MUST**** contain this property, and its value ****MUST**** be an array of Input Descriptor objects. If no `submission_requirements` are present, all inputs listed in the `input_descriptor` array are required for submission. The composition of values under this property are described in the [`Input Descriptors`](#input-descriptors) section below.
+- `submission_requirement` - The resource ****MAY**** contain this property,
+  and if present, its value ****MUST**** conform to the Submission Requirement
+  Format. If not present, all inputs listed in the `input_descriptor` array are
+  required for submission. The format for this property is described in the
+  [`Submission Requirement`](#submission-requirement) section below.
+- `input_descriptors` - The resource ****MUST**** contain this property, and
+  its value ****MUST**** be an array of Input Descriptor objects. If no
+  `submission_requirement` is present, all inputs listed in the
+  `input_descriptor` array are required for submission. The composition of
+  values under this property are described in the [`Input
+  Descriptors`](#input-descriptors) section below.
 
-### Submission Requirements
+### Submission Requirement
 
-_Presentation Definitions_ ****MAY**** include _Submission Requirements_, which are objects that define what combinations of inputs must be submitted to comply with the requirements an Issuer/Verifier has for proceeding in a flow (e.g. credential issuance). _Submission Requirements_ introduce a set of rule types and mapping instructions a User Agent can ingest to present requirement optionality to the user, and subsequently submit inputs in a way that maps back to the rules the verifying party has asserted (via a `Proof Submission` object). The following section defines the format for _Submission Requirement_ objects and the selection syntax verifying parties can use to specify which combinations of inputs are acceptable.
+_Presentation Definitions_ ****MAY**** include a _Submission Requirement_,
+which defines combinations of inputs that comply with an Issuer or Verifier
+flow, such as credential issuance. The _Submission Requirement_ can be
+interpreted by a User Agent as instructions on how to present requirement
+optionality to the user and submit a valid combination of inputs back via a
+_Proof Submission_ object. The following section defines the format for the
+_Submission Requirement_ object and the selection syntax used to specify valid
+input combinations.
 
-::: example Submission Requirement Rules
+::: example Submission Requirement
 ```json
-"submission_requirements": [
-  {
-    "name": "Banking Information",
-    "purpose": "We need to know if you have an established banking history.",
-    "rule": {
-      "type": "pick",
-      "count": 1,
-      "from": ["A"]
-    }
+  "submission_requirement": {
+    name: "Credential issuance requirements",
+    purpose: "Verify banking, employment, and citizenship information.",
+    rule: "all",
+    from: [
+      {
+        "name": "Banking Information",
+        "purpose": "We need to know if you have an established banking history.",
+        "rule": "pick",
+        "count": 1,
+        "from": ["A"]
+      },
+      {
+        "name": "Employment Information",
+        "purpose": "We need to know that you are currently employed.",
+        "rule": "all",
+        "from": ["B"]
+      }
+      {
+        "name": "Citizenship Information",
+        "rule": "pick",
+        "count": 1,
+        "from": ["C"]
+      }
+    ]
   },
-  {
-    "name": "Employment Information",
-    "purpose": "We need to know that you are currently employed.",
-    "rule": {
-      "type": "all",
-      "from": ["B"]
-    }
-  },
-  {
-    "name": "Citizenship Information",
-    "rule": {
-      "type": "pick",
-      "count": 1,
-      "from": ["C"]
-    }
-  }
-]
 ```
 :::
 
-#### Requirement Objects
+#### Submission Requirement Objects
 
-_Requirement Objects_ describe what combinations of inputs will satisfy Verifier requires for evaluation in a subsequent [Presentation Submission](#presentation-submission). _Requirement Objects_ are JSON objects constructed as follows:
+_Submission Requirement Objects_ describe what combinations of inputs will
+satisfy Verifier requires for evaluation in a subsequent [Presentation
+Submission](#presentation-submission). _Requirement Objects_ are JSON objects
+constructed as follows:
 
-1. The object ****MUST**** contain a `rule` property, and its value ****MUST**** be an object matching one of the [Requirement Rules](#requirement-rules) listed in the section below.
-2. The object ****MAY**** contain a `name` property, and if present, its value ****MUST**** be a string of the creator's choosing, which ****MAY**** be used by a consuming User Agent to display the general name of the requirement set to a user.
-2. The object ****MAY**** contain a `purpose` property, and if present, its value ****MUST**** be a string that describes the purpose for which the specified requirement is being asserted.
+1. The object ****MUST**** contain a `rule` property, and its value
+   ****MUST**** be a string matching one of the [Submission Requirement
+   Rules](#submission-requirement-rules) values listed in the section below.
+2. The _Submission Requirement_ object ****MUST**** contain a `from` property,
+   and its value ****MUST**** be one of
 
-#### Requirement Rules
+	(a) A `group` string matching one or more of the _Input Descriptor_
+	objects in the `input_descriptors`
 
-[_Requirement Rules_](#requirement-rules){id="requirement-rules"} are used within _Requirement Objects_ to describe the specific combinatorial rule that must be applied to submit a particular subset of required inputs. An implementation ****MUST**** support the following standard types:
+	(b) An array of nested _Submission Requirement_ objects.
+
+3. The object ****MAY**** contain a `name` property, and if present, its value
+   ****MUST**** be a string of the creator's choosing, which ****MAY**** be
+   used by a consuming User Agent to display the general name of the
+   requirement set to a user.
+4. The object ****MAY**** contain a `purpose` property, and if present, its
+   value ****MUST**** be a string that describes the purpose for which the
+   specified requirement is being asserted.
+5. The object ****MAY**** contain additional properties as required by
+   [Submission Requirement Rules](#submission-requirement-rules), such as
+   `count` for the `"pick"` rule.
+
+#### Submission Requirement Rules
+
+[_Submission Requirement
+Rules_](#submission-requirement-rules){id="requirement-rules"} are used within
+_Submission Requirement Objects_ to describe the specific combinatorial rule
+that must be applied to submit a particular subset of required inputs. Rules
+are selected by populating the `rule` property with the corresponding string.
+An implementation ****MUST**** support the following standard types:
 
 ##### `all` rule
 
-Directs the consumer of the _Presentation Definition_ to submit all members of the matching `group` strings found in the _Requirement Object's_ `from` property. Rule objects of the type `all` type are constructed as follows:
+- The _Submission Requirement_ object's `rule` property ****MUST**** contain
+  the string value `"all"`.
 
+If the `from` property contains a `group` string, it directs the consumer of
+the _Presentation Definition_ to submit all members of the matching `group`
+string. In the following example, the `from` property contains a `group`
+string to require all members of group `"A"`:
+
+::: example Submission Requirement, all, group
   ```json
-  "rule": {
-    "type": "all",
-    "from": ["A"]
+  "submission_requirement": {
+    "name": "Picking all members from group A",
+    "purpose": "We need them all",
+    "rule": "all",
+    "from": "A"
   }
   ```
-  - The object ****MUST**** contain a `type` property, and its value ****MUST**** be the string `all`.
-  - The object ****MUST**** contain a `from` property, and its value ****MUST**** be an array that contain at least one group string matching one or more of the _Input Descriptor Objects_ in the `input_descriptors` array.
+:::
 
+If the `from` property contains an array of nested _Submission Requirement_
+objects, it directs the consumer of the _Presentation Definition_ to submit
+members such that each nested _Submission Requirement_ object is satisfied. In
+the following example, the `from` property contains an array of nested
+_Submission Requirement_ objects to require all members from groups `"A"`,
+`"B"`, and `"C"`:
+
+::: example Submission Requirement, all, nested
+  ```json
+  "submission_requirement": {
+    "name": "Picking all members from groups A, B, and C",
+    "purpose": "We need them all",
+    "rule": "all",
+    "from": [
+      {"rule": "all", "from": "A"},
+      {"rule": "all", "from": "B"},
+      {"rule": "all", "from": "C"},
+    ]
+  }
+  ```
+:::
 
 ##### `pick` rule
 
-Directs the consumer of the _Presentation Definition_ to submit a specified number of members from each of the matching `group` strings found in the _Requirement Object's_ `from` property. In the example below, the consuming entity would be required to submit one input from the `B` group and one input from the `C` group. Rule objects of the `pick` type are constructed as follows:
+- The _Submission Requirement_ object's `rule` property ****MUST**** contain
+  the string value `"pick"`.
+- The _Submission Requirement_ object ****MUST**** contain a `count` property,
+  and its value ****MUST**** be an integer greater than zero.
 
+If the `from` property contains a `group` string, it directs the consumer of
+the _Presentation Definition_ to submit all members of the matching `group`
+string. In the following example, the `from` property contains a `group`
+string to require a single member of group `"B"`:
+
+::: example Submission Requirement, pick, group
   ```json
-  "rule": {
-    "type": "pick",
+  "submission_requirement": {
+    "name": "Picking one member from group B",
+    "purpose": "We only need one",
+    "rule": "pick",
     "count": 1,
-    "from": ["B", "C"]
+    "from": "B"
   }
   ```
-  - The object ****MUST**** contain a `type` property, and its value ****MUST**** be the string `pick`.
-  - The object ****MUST**** contain a `count` property, and its value ****MUST**** be an integer.
-  - The object ****MUST**** contain a `from` property, and its value ****MUST**** be an array that contain at least one group string matching one or more of the _Input Descriptor Objects_ in the `input_descriptors` array.
+:::
+
+If the `from` property contains an array of nested _Submission Requirement_
+objects, it directs the consumer of the _Presentation Definition_ to submit
+members such that the number of satisfied _Submission Requirement_ objects is
+exactly `count`. In the following example, the `from` property contains an
+array of nested _Submission Requirement_ objects to require either all members
+from group `"A"` or two members from group `"B"`:
+
+::: example Submission Requirement, pick, nested
+  ```json
+  "submission_requirement": {
+    "name": "Either all from group A or two from group B",
+    "purpose": "Either way works",
+    "rule": "pick",
+    "count": 1,
+    "from": [
+      {"rule": "all",  "from": "A"},
+      {"rule": "pick", "from": "B", "count": 2},
+    ]
+  }
+  ```
+:::
+
+#### JSON Schema
+The following JSON Schema Draft 7 definition summarizes many of the
+format-related rules above:
+
+  ```json
+  {                                                           
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {                                               
+      "submission_requirement": {
+        "type": "object",              
+        "required": ["rule", "from"],
+        "properties": {                   
+  	"name": { "type": "string" },
+  	"purpose": { "type": "string" },
+  	"rule": { "type": "string" },
+  	"count": { "type": "integer", "minimum": 1 },
+  	"from": {
+  	  "anyOf": [
+  	    { "type": "string" },                            
+  	    {
+  	      "type": "array",
+  	      "minItems": 1,
+  	      "items": { "$ref": "#/definitions/submission_requirement" }
+  	    }
+  	  ]
+  	}
+        }
+      }
+    },
+    "type": "object",
+    "properties": {
+      "submission_requirement": { "$ref": "#/definitions/submission_requirement" }
+    }
+  }
+  ```
+
+#### Property Values and Evaluation
+The following property value and evaluation guidelines summarize many of the
+processing-related rules above:
+- The `rule` property value may be either `"all"` or `"pick"`.
+- If the `rule` property value is `"pick"`, then the `count` property must be
+  present.
+- The `from` property must contain either a string representing a `group` or an
+  array of nested _Submission Requirement_ objects. In the case of a string
+  representing a group, the group must match to one or more _Input Descriptor_
+  objects within the `input_descriptors` array.
+- A _Submission Requirement_ is satisfied with respect to a _Presentation
+  Submission_, as defined by the following algorithm:
+    - If `from` is a string, then the rule refers to a `group` string defined
+	within the _Input Descriptors_, and:
+
+      - If `rule` is `"all"`, then this _Submission Requirement_ is satisfied
+	if and only if the _Presentation Submission_ entries match all of the
+	`group` string's members.
+
+      - If `rule` is `"pick"`, then this _Submission Requirement_ is satisfied
+	if and only if the number of _Presentation Submission_ entries matching
+	`group` string's members is exactly `count`.
+
+    - If `from` is an array of _Submission Requirement_ objects, then the
+	rule refers to nested requirements, and:
+
+      - If `rule is `"all"`, then this _Submission Requirement_ is satisfied if
+	and only if all nested _Submission Requirement_ objects are satisfied.
+      - If `rule` is `"pick"`, then this _Submission Requirement_ is satisfied
+	if and only if the number of satisfied nested _Submission Requirement_
+	objects is exactly `count`.
 
 ### Input Descriptors
 
-_Input Descriptors_ are objects used to describe the proofing inputs a Verifier requires of a Subject before they will proceed with an interaction. _Input Descriptor_ objects contain a schema URI that links to the schema if the required input data, constrains on data values, and an explanation of why a certain set or item of data is being requested:
+_Input Descriptors_ are objects used to describe the proofing inputs a Verifier requires of a Subject before they will proceed with an interaction. _Input Descriptor Objects_ contain a schema URI that links to the schema if the required input data, constrains on data values, and an explanation of why a certain set or item of data is being requested:
 
 ::: example Input Descriptor - Data
 ```json
@@ -365,7 +534,7 @@ _Input Descriptors_ are objects used to describe the proofing inputs a Verifier 
 
 #### Input Descriptor Objects
 
-_Input Descriptors_ are objects that describe what type of input data/credential, or sub-fields thereof, is required for submission to the Verifier. _Input Descriptor_ objects are composed as follows:
+_Input Descriptors_ are objects that describe what type of input data/credential, or sub-fields thereof, is required for submission to the Verifier. _Input Descriptor Objects_ are composed as follows:
 
   - The object ****MUST**** contain an `id` property, and if present, its value ****MUST**** be a unique identifying string that does not conflict with the `id` of another _Input Descriptor_ in the same _Presentation Definition_ object.
   - The object ****MAY**** contain a `group` property, and if present, its value ****MUST**** match one of the grouping strings listed the `from` values of a [_Requirement Rule Object_](#requirement-rule-objects).
