@@ -307,7 +307,7 @@ constructed as follows:
    ****MUST**** be a string which ****MAY**** be
    used by a consuming User Agent to display the general name of the
    requirement set to a user.
-4. The object ****MAY**** contain a `purpose` property, and if present, its
+4. The object ****MAY**** contain a `purpose` property and, if present, its
    value ****MUST**** be a string that describes the purpose for which the
    specified requirement is being asserted.
 5. The object ****MAY**** contain additional properties as required by
