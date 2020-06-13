@@ -266,7 +266,7 @@ input combinations.
         "purpose": "We need to know if you have an established banking history.",
         "rule": "pick",
         "count": 1,
-        "from": ["A"]
+        "from": "A"
       },
       {
         "name": "Employment Information",
