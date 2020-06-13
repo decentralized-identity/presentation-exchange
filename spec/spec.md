@@ -272,7 +272,7 @@ input combinations.
         "name": "Employment Information",
         "purpose": "We need to know that you are currently employed.",
         "rule": "all",
-        "from": ["B"]
+        "from": "B"
       }
       {
         "name": "Citizenship Information",
