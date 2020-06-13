@@ -278,7 +278,7 @@ input combinations.
         "name": "Citizenship Information",
         "rule": "pick",
         "count": 1,
-        "from": ["C"]
+        "from": "C"
       }
     ]
   },
