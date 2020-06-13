@@ -482,7 +482,10 @@ processing-related rules above:
 
 ### Input Descriptors
 
-_Input Descriptors_ are objects used to describe the proofing inputs a Verifier requires of a Subject before they will proceed with an interaction. _Input Descriptor Objects_ contain a schema URI that links to the schema if the required input data, constrains on data values, and an explanation of why a certain set or item of data is being requested:
+_Input Descriptors_ are objects used to describe the proofing inputs a Verifier requires
+of a Subject before they will proceed with an interaction. _Input Descriptor Objects_
+contain a schema URI that links to the schema of the required input data, constraints
+on data values, and an explanation why a certain item or set of data is being requested:
 
 ::: example Input Descriptor - Data
 ```json
