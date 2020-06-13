@@ -304,7 +304,7 @@ constructed as follows:
 	(b) An array of nested _Submission Requirement_ objects.
 
 3. The object ****MAY**** contain a `name` property, and if present, its value
-   ****MUST**** be a string of the creator's choosing, which ****MAY**** be
+   ****MUST**** be a string which ****MAY**** be
    used by a consuming User Agent to display the general name of the
    requirement set to a user.
 4. The object ****MAY**** contain a `purpose` property, and if present, its
