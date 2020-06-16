@@ -53,6 +53,7 @@
 <dt><strong>Contributors:</strong></dt>
 <dd><a href="https://www.linkedin.com/in/cohengabe/">Gabe Cohen</a> (Workday)</dd>
 <dd><a href="https://www.linkedin.com/in/or13b/">Orie Steele</a> (Transmute)</dd>
+<dd><a href="https://www.linkedin.com/in/waynebuilds/">Wayne Chang</a> (Spruce)</dd>
 <dt><strong>Participate:</strong></dt>
 <dd><a href="https://github.com/decentralized-identity/presentation-exchange">GitHub repo</a></dd>
 <dd><a href="https://github.com/decentralized-identity/presentation-exchange/issues">File a bug</a></dd>
@@ -90,35 +91,34 @@
 </table>
 <h2 id="presentation-definition"><a class="toc-anchor" href="#presentation-definition">§</a> Presentation Definition</h2>
 <p>Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.</p>
-<div id="presentation-definition---all-features-exercised-5" class="notice example"><a class="notice-link" href="#presentation-definition---all-features-exercised-5">EXAMPLE</a><pre class="language-json"><code class="language-json">
+<div id="presentation-definition---all-features-exercised-84" class="notice example"><a class="notice-link" href="#presentation-definition---all-features-exercised-84">EXAMPLE</a><pre class="language-json"><code class="language-json">
 <span class="token punctuation">{</span>
-  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">{</span>
-      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Banking Information"</span><span class="token punctuation">,</span>
-      <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you have an established banking history."</span><span class="token punctuation">,</span>
-      <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+  <span class="token property">"submission_requirement"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    name<span class="token operator">:</span> <span class="token string">"Credential issuance requirements"</span><span class="token punctuation">,</span>
+    purpose<span class="token operator">:</span> <span class="token string">"Verify banking, employment, and citizenship information."</span><span class="token punctuation">,</span>
+    rule<span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
+    from<span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Banking Information"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you have an established banking history."</span><span class="token punctuation">,</span>
+        <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
         <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-        <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
+        <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"A"</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Employment Information"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know that you are currently employed."</span><span class="token punctuation">,</span>
+        <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
+        <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"B"</span>
       <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token punctuation">{</span>
-      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Employment Information"</span><span class="token punctuation">,</span>
-      <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know that you are currently employed."</span><span class="token punctuation">,</span>
-      <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
-        <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token punctuation">{</span>
-      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Citizenship Information"</span><span class="token punctuation">,</span>
-      <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Citizenship Information"</span><span class="token punctuation">,</span>
+        <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
         <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-        <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"C"</span><span class="token punctuation">]</span>
+        <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"C"</span>
       <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
@@ -272,76 +272,249 @@
 </div>
 <p>The following properties are defined for use at the top-level of the resource - all other properties that are not defined below MUST be ignored:</p>
 <ul>
-<li><code>submission_requirements</code> - The resource <strong><strong>MAY</strong></strong> contain this property, and if present, its value <strong><strong>MUST</strong></strong> be an array of Submission Requirement Rule objects. If not present, all inputs listed in the <code>input_descriptor</code> array are required for submission. The composition of values under this property are described in the <a href="#submission-requirements"><code>Submission Requirements</code></a> section below.</li>
-<li><code>input_descriptors</code> - The resource <strong><strong>MUST</strong></strong> contain this property, and its value <strong><strong>MUST</strong></strong> be an array of Input Descriptor objects. If no <code>submission_requirements</code> are present, all inputs listed in the <code>input_descriptor</code> array are required for submission. The composition of values under this property are described in the <a href="#input-descriptors"><code>Input Descriptors</code></a> section below.</li>
+<li><code>submission_requirement</code> - The resource <strong><strong>MAY</strong></strong> contain this property,
+and if present, its value <strong><strong>MUST</strong></strong> conform to the Submission Requirement
+Format. If not present, all inputs listed in the <code>input_descriptor</code> array are
+required for submission. The format for this property is described in the
+<a href="#submission-requirement"><code>Submission Requirement</code></a> section below.</li>
+<li><code>input_descriptors</code> - The resource <strong><strong>MUST</strong></strong> contain this property, and
+its value <strong><strong>MUST</strong></strong> be an array of Input Descriptor objects. If no
+<code>submission_requirement</code> is present, all inputs listed in the
+<code>input_descriptor</code> array are required for submission. The composition of
+values under this property are described in the <a href="#input-descriptors"><code>Input Descriptors</code></a> section below.</li>
 </ul>
-<h3 id="submission-requirements"><a class="toc-anchor" href="#submission-requirements">§</a> Submission Requirements</h3>
-<p><em>Presentation Definitions</em> <strong><strong>MAY</strong></strong> include <em>Submission Requirements</em>, which are objects that define what combinations of inputs must be submitted to comply with the requirements an Issuer/Verifier has for proceeding in a flow (e.g. credential issuance). <em>Submission Requirements</em> introduce a set of rule types and mapping instructions a User Agent can ingest to present requirement optionality to the user, and subsequently submit inputs in a way that maps back to the rules the verifying party has asserted (via a <code>Proof Submission</code> object). The following section defines the format for <em>Submission Requirement</em> objects and the selection syntax verifying parties can use to specify which combinations of inputs are acceptable.</p>
-<div id="submission-requirement-rules-5" class="notice example"><a class="notice-link" href="#submission-requirement-rules-5">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-  <span class="token punctuation">{</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Banking Information"</span><span class="token punctuation">,</span>
-    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you have an established banking history."</span><span class="token punctuation">,</span>
-    <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
-      <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-      <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
-    <span class="token punctuation">}</span>
+<h3 id="submission-requirement"><a class="toc-anchor" href="#submission-requirement">§</a> Submission Requirement</h3>
+<p><em>Presentation Definitions</em> <strong><strong>MAY</strong></strong> include a <em>Submission Requirement</em>,
+which defines combinations of inputs that comply with an Issuer or Verifier
+flow, such as credential issuance. The <em>Submission Requirement</em> can be
+interpreted by a User Agent as instructions on how to present requirement
+optionality to the user and submit a valid combination of inputs back via a
+<em>Proof Submission</em> object. The following section defines the format for the
+<em>Submission Requirement</em> object and the selection syntax used to specify valid
+input combinations.</p>
+<div id="submission-requirement-84" class="notice example"><a class="notice-link" href="#submission-requirement-84">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirement"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    name<span class="token operator">:</span> <span class="token string">"Credential issuance requirements"</span><span class="token punctuation">,</span>
+    purpose<span class="token operator">:</span> <span class="token string">"Verify banking, employment, and citizenship information."</span><span class="token punctuation">,</span>
+    rule<span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
+    from<span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Banking Information"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you have an established banking history."</span><span class="token punctuation">,</span>
+        <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+        <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Employment Information"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know that you are currently employed."</span><span class="token punctuation">,</span>
+        <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
+        <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Citizenship Information"</span><span class="token punctuation">,</span>
+        <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+        <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"C"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token punctuation">{</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Employment Information"</span><span class="token punctuation">,</span>
-    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know that you are currently employed."</span><span class="token punctuation">,</span>
-    <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
-      <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token punctuation">{</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Citizenship Information"</span><span class="token punctuation">,</span>
-    <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
-      <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-      <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"C"</span><span class="token punctuation">]</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">]</span>
 </code></pre>
 </div>
-<h4 id="requirement-objects"><a class="toc-anchor" href="#requirement-objects">§</a> Requirement Objects</h4>
-<p><em>Requirement Objects</em> describe what combinations of inputs will satisfy Verifier requires for evaluation in a subsequent <a href="#presentation-submission">Presentation Submission</a>. <em>Requirement Objects</em> are JSON objects constructed as follows:</p>
+<h4 id="submission-requirement-objects"><a class="toc-anchor" href="#submission-requirement-objects">§</a> Submission Requirement Objects</h4>
+<p><em>Submission Requirement Objects</em> describe what combinations of inputs will
+satisfy Verifier requires for evaluation in a subsequent <a href="#presentation-submission">Presentation
+Submission</a>. <em>Requirement Objects</em> are JSON objects
+constructed as follows:</p>
 <ol>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>rule</code> property, and its value <strong><strong>MUST</strong></strong> be an object matching one of the <a href="#requirement-rules">Requirement Rules</a> listed in the section below.</li>
-<li>The object <strong><strong>MAY</strong></strong> contain a <code>name</code> property, and if present, its value <strong><strong>MUST</strong></strong> be a string of the creator’s choosing, which <strong><strong>MAY</strong></strong> be used by a consuming User Agent to display the general name of the requirement set to a user.</li>
-<li>The object <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property, and if present, its value <strong><strong>MUST</strong></strong> be a string that describes the purpose for which the specified requirement is being asserted.</li>
+<li>
+<p>The object <strong><strong>MUST</strong></strong> contain a <code>rule</code> property, and its value
+<strong><strong>MUST</strong></strong> be a string matching one of the <a href="#submission-requirement-rules">Submission Requirement
+Rules</a> values listed in the section below.</p>
+</li>
+<li>
+<p>The <em>Submission Requirement</em> object <strong><strong>MUST</strong></strong> contain a <code>from</code> property,
+and its value <strong><strong>MUST</strong></strong> be one of</p>
+<p>(a) A <code>group</code> string matching one or more of the <em>Input Descriptor</em>
+objects in the <code>input_descriptors</code></p>
+<p>(b) An array of nested <em>Submission Requirement</em> objects.</p>
+</li>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain a <code>name</code> property, and if present, its value
+<strong><strong>MUST</strong></strong> be a string of the creator’s choosing, which <strong><strong>MAY</strong></strong> be
+used by a consuming User Agent to display the general name of the
+requirement set to a user.</p>
+</li>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property, and if present, its
+value <strong><strong>MUST</strong></strong> be a string that describes the purpose for which the
+specified requirement is being asserted.</p>
+</li>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain additional properties as required by
+<a href="#submission-requirement-rules">Submission Requirement Rules</a>, such as
+<code>count</code> for the <code>&quot;pick&quot;</code> rule.</p>
+</li>
 </ol>
-<h4 id="requirement-rules"><a class="toc-anchor" href="#requirement-rules">§</a> Requirement Rules</h4>
-<p><a href="#requirement-rules" id="requirement-rules"><em>Requirement Rules</em></a> are used within <em>Requirement Objects</em> to describe the specific combinatorial rule that must be applied to submit a particular subset of required inputs. An implementation <strong><strong>MUST</strong></strong> support the following standard types:</p>
+<h4 id="submission-requirement-rules"><a class="toc-anchor" href="#submission-requirement-rules">§</a> Submission Requirement Rules</h4>
+<p><a href="#submission-requirement-rules" id="requirement-rules"><em>Submission Requirement
+Rules</em></a> are used within
+<em>Submission Requirement Objects</em> to describe the specific combinatorial rule
+that must be applied to submit a particular subset of required inputs. Rules
+are selected by populating the <code>rule</code> property with the corresponding string.
+An implementation <strong><strong>MUST</strong></strong> support the following standard types:</p>
 <h5 id="all-rule"><a class="toc-anchor" href="#all-rule">§</a> <code>all</code> rule</h5>
-<p>Directs the consumer of the <em>Presentation Definition</em> to submit all members of the matching <code>group</code> strings found in the <em>Requirement Object’s</em> <code>from</code> property. Rule objects of the type <code>all</code> type are constructed as follows:</p>
-<pre class="language-json"><code class="language-json"><span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
-  <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span>
-</code></pre>
 <ul>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>type</code> property, and its value <strong><strong>MUST</strong></strong> be the string <code>all</code>.</li>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>from</code> property, and its value <strong><strong>MUST</strong></strong> be an array that contain at least one group string matching one or more of the <em>Input Descriptor Objects</em> in the <code>input_descriptors</code> array.</li>
+<li>The <em>Submission Requirement</em> object’s <code>rule</code> property <strong><strong>MUST</strong></strong> contain
+the string value <code>&quot;all&quot;</code>.</li>
 </ul>
-<h5 id="pick-rule"><a class="toc-anchor" href="#pick-rule">§</a> <code>pick</code> rule</h5>
-<p>Directs the consumer of the <em>Presentation Definition</em> to submit a specified number of members from each of the matching <code>group</code> strings found in the <em>Requirement Object’s</em> <code>from</code> property. In the example below, the consuming entity would be required to submit one input from the <code>B</code> group and one input from the <code>C</code> group. Rule objects of the <code>pick</code> type are constructed as follows:</p>
-<pre class="language-json"><code class="language-json"><span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
-  <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-  <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"C"</span><span class="token punctuation">]</span>
+<p>If the <code>from</code> property contains a <code>group</code> string, it directs the consumer of
+the <em>Presentation Definition</em> to submit all members of the matching <code>group</code>
+string. In the following example, the <code>from</code> property contains a <code>group</code>
+string to require all members of group <code>&quot;A&quot;</code>:</p>
+<div id="submission-requirement,-all,-group-84" class="notice example"><a class="notice-link" href="#submission-requirement,-all,-group-84">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"submission_requirement"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Picking all members from group A"</span><span class="token punctuation">,</span>
+  <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need them all"</span><span class="token punctuation">,</span>
+  <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
+  <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"A"</span>
 <span class="token punctuation">}</span>
 </code></pre>
+</div>
+<p>If the <code>from</code> property contains an array of nested <em>Submission Requirement</em>
+objects, it directs the consumer of the <em>Presentation Definition</em> to submit
+members such that each nested <em>Submission Requirement</em> object is satisfied. In
+the following example, the <code>from</code> property contains an array of nested
+<em>Submission Requirement</em> objects to require all members from groups <code>&quot;A&quot;</code>,
+<code>&quot;B&quot;</code>, and <code>&quot;C&quot;</code>:</p>
+<div id="submission-requirement,-all,-nested-84" class="notice example"><a class="notice-link" href="#submission-requirement,-all,-nested-84">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"submission_requirement"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Picking all members from groups A, B, and C"</span><span class="token punctuation">,</span>
+  <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need them all"</span><span class="token punctuation">,</span>
+  <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>
+  <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span><span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span> <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"A"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span> <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"B"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span> <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"C"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div>
+<h5 id="pick-rule"><a class="toc-anchor" href="#pick-rule">§</a> <code>pick</code> rule</h5>
 <ul>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>type</code> property, and its value <strong><strong>MUST</strong></strong> be the string <code>pick</code>.</li>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>count</code> property, and its value <strong><strong>MUST</strong></strong> be an integer.</li>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>from</code> property, and its value <strong><strong>MUST</strong></strong> be an array that contain at least one group string matching one or more of the <em>Input Descriptor Objects</em> in the <code>input_descriptors</code> array.</li>
+<li>The <em>Submission Requirement</em> object’s <code>rule</code> property <strong><strong>MUST</strong></strong> contain
+the string value <code>&quot;pick&quot;</code>.</li>
+<li>The <em>Submission Requirement</em> object <strong><strong>MUST</strong></strong> contain a <code>count</code> property,
+and its value <strong><strong>MUST</strong></strong> be an integer greater than zero.</li>
+</ul>
+<p>If the <code>from</code> property contains a <code>group</code> string, it directs the consumer of
+the <em>Presentation Definition</em> to submit all members of the matching <code>group</code>
+string. In the following example, the <code>from</code> property contains a <code>group</code>
+string to require a single member of group <code>&quot;B&quot;</code>:</p>
+<div id="submission-requirement,-pick,-group-84" class="notice example"><a class="notice-link" href="#submission-requirement,-pick,-group-84">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"submission_requirement"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Picking one member from group B"</span><span class="token punctuation">,</span>
+  <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We only need one"</span><span class="token punctuation">,</span>
+  <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+  <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"B"</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div>
+<p>If the <code>from</code> property contains an array of nested <em>Submission Requirement</em>
+objects, it directs the consumer of the <em>Presentation Definition</em> to submit
+members such that the number of satisfied <em>Submission Requirement</em> objects is
+exactly <code>count</code>. In the following example, the <code>from</code> property contains an
+array of nested <em>Submission Requirement</em> objects to require either all members
+from group <code>&quot;A&quot;</code> or two members from group <code>&quot;B&quot;</code>:</p>
+<div id="submission-requirement,-pick,-nested-84" class="notice example"><a class="notice-link" href="#submission-requirement,-pick,-nested-84">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"submission_requirement"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Either all from group A or two from group B"</span><span class="token punctuation">,</span>
+  <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"Either way works"</span><span class="token punctuation">,</span>
+  <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
+  <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span><span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"all"</span><span class="token punctuation">,</span>  <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"A"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span> <span class="token property">"from"</span><span class="token operator">:</span> <span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token property">"count"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div>
+<h4 id="json-schema"><a class="toc-anchor" href="#json-schema">§</a> JSON Schema</h4>
+<p>The following JSON Schema Draft 7 definition summarizes many of the
+format-related rules above:</p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>                                                           
+  <span class="token property">"$schema"</span><span class="token operator">:</span> <span class="token string">"http://json-schema.org/draft-07/schema#"</span><span class="token punctuation">,</span>
+  <span class="token property">"definitions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>                                               
+    <span class="token property">"submission_requirement"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>              
+      <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"rule"</span><span class="token punctuation">,</span> <span class="token string">"from"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>                   
+	<span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token property">"count"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+	  <span class="token property">"anyOf"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+	    <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>                            
+	    <span class="token punctuation">{</span>
+	      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
+	      <span class="token property">"minItems"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+	      <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/submission_requirement"</span> <span class="token punctuation">}</span>
+	    <span class="token punctuation">}</span>
+	  <span class="token punctuation">]</span>
+	<span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
+  <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"submission_requirement"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/submission_requirement"</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="property-values-and-evaluation"><a class="toc-anchor" href="#property-values-and-evaluation">§</a> Property Values and Evaluation</h4>
+<p>The following property value and evaluation guidelines summarize many of the
+processing-related rules above:</p>
+<ul>
+<li>The <code>rule</code> property value may be either <code>&quot;all&quot;</code> or <code>&quot;pick&quot;</code>.</li>
+<li>If the <code>rule</code> property value is <code>&quot;pick&quot;</code>, then the <code>count</code> property must be
+present.</li>
+<li>The <code>from</code> property must contain either a string representing a <code>group</code> or an
+array of nested <em>Submission Requirement</em> objects. In the case of a string
+representing a group, the group must match to one or more <em>Input Descriptor</em>
+objects within the <code>input_descriptors</code> array.</li>
+<li>A <em>Submission Requirement</em> is satisfied with respect to a <em>Presentation
+Submission</em>, as defined by the following algorithm:
+<ul>
+<li>
+<p>If <code>from</code> is a string, then the rule refers to a <code>group</code> string defined
+within the <em>Input Descriptors</em>, and:</p>
+<ul>
+<li>
+<p>If <code>rule</code> is <code>&quot;all&quot;</code>, then this <em>Submission Requirement</em> is satisfied
+if and only if the <em>Presentation Submission</em> entries match all of the
+<code>group</code> string’s members.</p>
+</li>
+<li>
+<p>If <code>rule</code> is <code>&quot;pick&quot;</code>, then this <em>Submission Requirement</em> is satisfied
+if and only if the number of <em>Presentation Submission</em> entries matching
+<code>group</code> string’s members is exactly <code>count</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>If <code>from</code> is an array of <em>Submission Requirement</em> objects, then the
+rule refers to nested requirements, and:</p>
+<ul>
+<li>If <code>rule is </code>“all”`, then this <em>Submission Requirement</em> is satisfied if
+and only if all nested <em>Submission Requirement</em> objects are satisfied.</li>
+<li>If <code>rule</code> is <code>&quot;pick&quot;</code>, then this <em>Submission Requirement</em> is satisfied
+if and only if the number of satisfied nested <em>Submission Requirement</em>
+objects is exactly <code>count</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors">§</a> Input Descriptors</h3>
-<p><em>Input Descriptors</em> are objects used to describe the proofing inputs a Verifier requires of a Subject before they will proceed with an interaction. <em>Input Descriptor</em> objects contain a schema URI that links to the schema if the required input data, constrains on data values, and an explanation of why a certain set or item of data is being requested:</p>
-<div id="input-descriptor---data-5" class="notice example"><a class="notice-link" href="#input-descriptor---data-5">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<p><em>Input Descriptors</em> are objects used to describe the proofing inputs a Verifier requires of a Subject before they will proceed with an interaction. <em>Input Descriptor Objects</em> contain a schema URI that links to the schema if the required input data, constrains on data values, and an explanation of why a certain set or item of data is being requested:</p>
+<div id="input-descriptor---data-84" class="notice example"><a class="notice-link" href="#input-descriptor---data-84">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -387,7 +560,7 @@
 </code></pre>
 </div>
 <h4 id="input-descriptor-objects"><a class="toc-anchor" href="#input-descriptor-objects">§</a> Input Descriptor Objects</h4>
-<p><em>Input Descriptors</em> are objects that describe what type of input data/credential, or sub-fields thereof, is required for submission to the Verifier. <em>Input Descriptor</em> objects are composed as follows:</p>
+<p><em>Input Descriptors</em> are objects that describe what type of input data/credential, or sub-fields thereof, is required for submission to the Verifier. <em>Input Descriptor Objects</em> are composed as follows:</p>
 <ul>
 <li>The object <strong><strong>MUST</strong></strong> contain an <code>id</code> property, and if present, its value <strong><strong>MUST</strong></strong> be a unique identifying string that does not conflict with the <code>id</code> of another <em>Input Descriptor</em> in the same <em>Presentation Definition</em> object.</li>
 <li>The object <strong><strong>MAY</strong></strong> contain a <code>group</code> property, and if present, its value <strong><strong>MUST</strong></strong> match one of the grouping strings listed the <code>from</code> values of a <a href="#requirement-rule-objects"><em>Requirement Rule Object</em></a>.</li>
@@ -430,7 +603,7 @@
 <blockquote>
 <p>NOTE: ensure all the entries in the <code>verifiableCredential</code> array are valid VCs</p>
 </blockquote>
-<div id="presentation-submission---all-features-exercised-5" class="notice example"><a class="notice-link" href="#presentation-submission---all-features-exercised-5">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission---all-features-exercised-84" class="notice example"><a class="notice-link" href="#presentation-submission---all-features-exercised-84">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
     <span class="token string">"https://identity.foundation/presentation-exchange/submission/v1"</span>
@@ -547,7 +720,7 @@
 <h3 id="embed-targets"><a class="toc-anchor" href="#embed-targets">§</a> Embed Targets</h3>
 <p>The following section details where the <em>Presentation Submission</em> is to be embedded within a target data structure, as well as how to formulate the <a href="https://goessner.net/articles/JsonPath/">JSONPath</a> expressions to select the credentials within the target data structure.</p>
 <h4 id="oidc"><a class="toc-anchor" href="#oidc">§</a> OIDC</h4>
-<div id="presentation-submission-with-oidc-jwt-3" class="notice example"><a class="notice-link" href="#presentation-submission-with-oidc-jwt-3">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission-with-oidc-jwt-84" class="notice example"><a class="notice-link" href="#presentation-submission-with-oidc-jwt-84">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"iss"</span><span class="token operator">:</span> <span class="token string">"https://self-issued.me"</span><span class="token punctuation">,</span>
   <span class="token property">"sub"</span><span class="token operator">:</span> <span class="token string">"248289761001"</span><span class="token punctuation">,</span>
   <span class="token property">"preferred_username"</span><span class="token operator">:</span> <span class="token string">"superman445"</span><span class="token punctuation">,</span>
@@ -649,7 +822,7 @@
 <p>The <a href="https://w3c-ccg.github.io/credential-handler-api/">credential handler api (CHAPI)</a> allows a web page to request data from a browser, and for a wallet to fulfill that request. This is commonly used for requesting and presenting verifiable credentials.</p>
 <p>See also the <a href="https://digitalbazaar.github.io/vp-request-spec/">vp-request-spec</a>.</p>
 <p>Here is an example of a request:</p>
-<div id="presentation-definition-using-chapi-5" class="notice example"><a class="notice-link" href="#presentation-definition-using-chapi-5">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-definition-using-chapi-84" class="notice example"><a class="notice-link" href="#presentation-definition-using-chapi-84">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"query"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"PresentationDefinitionQuery"</span><span class="token punctuation">,</span>
@@ -662,7 +835,7 @@
 </code></pre>
 </div>
 <p>Here is an example of a response:</p>
-<div id="presentation-submission-using-chapi-5" class="notice example"><a class="notice-link" href="#presentation-submission-using-chapi-5">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission-using-chapi-84" class="notice example"><a class="notice-link" href="#presentation-submission-using-chapi-84">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"web"</span><span class="token punctuation">,</span>
   <span class="token property">"dataType"</span><span class="token operator">:</span> <span class="token string">"VerifiablePresentation"</span><span class="token punctuation">,</span>
   <span class="token property">"data"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -716,10 +889,12 @@
 <li><a href="#terminology">Terminology</a></li>
 <li><a href="#presentation-definition">Presentation Definition</a>
 <ul>
-<li><a href="#submission-requirements">Submission Requirements</a>
+<li><a href="#submission-requirement">Submission Requirement</a>
 <ul>
-<li><a href="#requirement-objects">Requirement Objects</a></li>
-<li><a href="#requirement-rules">Requirement Rules</a></li>
+<li><a href="#submission-requirement-objects">Submission Requirement Objects</a></li>
+<li><a href="#submission-requirement-rules">Submission Requirement Rules</a></li>
+<li><a href="#json-schema">JSON Schema</a></li>
+<li><a href="#property-values-and-evaluation">Property Values and Evaluation</a></li>
 </ul>
 </li>
 <li><a href="#input-descriptors">Input Descriptors</a>
