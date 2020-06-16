@@ -11,7 +11,12 @@
   "dependencies": {
     "spec-up": "0.9.71"
   },
+  "devDependencies": {
+    "ajv": "^6.12.2",
+    "mocha": "^8.0.1"
+  },
   "scripts": {
-    "edit": "node -e \"require('spec-up')()\""
+    "edit": "node -e \"require('spec-up')()\"",
+    "test": "mocha 'test/**/*.js'"
   }
 }
