@@ -91,7 +91,7 @@
 </table>
 <h2 id="presentation-definition"><a class="toc-anchor" href="#presentation-definition">§</a> Presentation Definition</h2>
 <p>Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.</p>
-<div id="presentation-definition---all-features-exercised" class="notice example"><a class="notice-link" href="#presentation-definition---all-features-exercised">EXAMPLE</a><pre class="language-json"><code class="language-json">
+<div id="presentation-definition---all-features-exercised-4" class="notice example"><a class="notice-link" href="#presentation-definition---all-features-exercised-4">EXAMPLE</a><pre class="language-json"><code class="language-json">
 <span class="token punctuation">{</span>
   <span class="token property">"submission_requirement"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     name<span class="token operator">:</span> <span class="token string">"Credential issuance requirements"</span><span class="token punctuation">,</span>
@@ -517,7 +517,7 @@ objects is exactly <code>count</code>.</li>
 of a Subject before they will proceed with an interaction. <em>Input Descriptor Objects</em>
 contain a schema URI that links to the schema of the required input data, constraints
 on data values, and an explanation why a certain item or set of data is being requested:</p>
-<div id="input-descriptor---data" class="notice example"><a class="notice-link" href="#input-descriptor---data">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="input-descriptor---data-4" class="notice example"><a class="notice-link" href="#input-descriptor---data-4">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -606,7 +606,7 @@ on data values, and an explanation why a certain item or set of data is being re
 <blockquote>
 <p>NOTE: ensure all the entries in the <code>verifiableCredential</code> array are valid VCs</p>
 </blockquote>
-<div id="presentation-submission---all-features-exercised" class="notice example"><a class="notice-link" href="#presentation-submission---all-features-exercised">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission---all-features-exercised-2" class="notice example"><a class="notice-link" href="#presentation-submission---all-features-exercised-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
     <span class="token string">"https://identity.foundation/presentation-exchange/submission/v1"</span>
@@ -723,7 +723,7 @@ on data values, and an explanation why a certain item or set of data is being re
 <h3 id="embed-targets"><a class="toc-anchor" href="#embed-targets">§</a> Embed Targets</h3>
 <p>The following section details where the <em>Presentation Submission</em> is to be embedded within a target data structure, as well as how to formulate the <a href="https://goessner.net/articles/JsonPath/">JSONPath</a> expressions to select the credentials within the target data structure.</p>
 <h4 id="oidc"><a class="toc-anchor" href="#oidc">§</a> OIDC</h4>
-<div id="presentation-submission-with-oidc-jwt" class="notice example"><a class="notice-link" href="#presentation-submission-with-oidc-jwt">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission-with-oidc-jwt-4" class="notice example"><a class="notice-link" href="#presentation-submission-with-oidc-jwt-4">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"iss"</span><span class="token operator">:</span> <span class="token string">"https://self-issued.me"</span><span class="token punctuation">,</span>
   <span class="token property">"sub"</span><span class="token operator">:</span> <span class="token string">"248289761001"</span><span class="token punctuation">,</span>
   <span class="token property">"preferred_username"</span><span class="token operator">:</span> <span class="token string">"superman445"</span><span class="token punctuation">,</span>
@@ -825,7 +825,7 @@ on data values, and an explanation why a certain item or set of data is being re
 <p>The <a href="https://w3c-ccg.github.io/credential-handler-api/">credential handler api (CHAPI)</a> allows a web page to request data from a browser, and for a wallet to fulfill that request. This is commonly used for requesting and presenting verifiable credentials.</p>
 <p>See also the <a href="https://digitalbazaar.github.io/vp-request-spec/">vp-request-spec</a>.</p>
 <p>Here is an example of a request:</p>
-<div id="presentation-definition-using-chapi" class="notice example"><a class="notice-link" href="#presentation-definition-using-chapi">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-definition-using-chapi-4" class="notice example"><a class="notice-link" href="#presentation-definition-using-chapi-4">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"query"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"PresentationDefinitionQuery"</span><span class="token punctuation">,</span>
@@ -838,7 +838,7 @@ on data values, and an explanation why a certain item or set of data is being re
 </code></pre>
 </div>
 <p>Here is an example of a response:</p>
-<div id="presentation-submission-using-chapi" class="notice example"><a class="notice-link" href="#presentation-submission-using-chapi">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission-using-chapi-6" class="notice example"><a class="notice-link" href="#presentation-submission-using-chapi-6">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"web"</span><span class="token punctuation">,</span>
   <span class="token property">"dataType"</span><span class="token operator">:</span> <span class="token string">"VerifiablePresentation"</span><span class="token punctuation">,</span>
   <span class="token property">"data"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -938,7 +938,7 @@ on data values, and an explanation why a certain item or set of data is being re
             </slide-panels>
 
           </body>
-          <script>window.specConfig = {"title":"DIF Presentation Exchange","spec_directory":"./spec/","output_path":"./","logo":"https://rawcdn.githack.com/decentralized-identity/decentralized-identity.github.io/a3ca39717e440302d1fd99a796e7f00e1c42eb2d/images/logo-flat.svg","logo_link":"https://identity.foundation","source":{"host":"github","account":"decentralized-identity","repo":"presentation-exchange"},"destination":"./","destinationResourcePrefix":"./","rootResourcePrefix":"./"}</script>
+          <script>window.specConfig = {"title":"DIF Presentation Exchange","spec_directory":"./spec/","output_path":"./","logo":"https://rawcdn.githack.com/decentralized-identity/decentralized-identity.github.io/a3ca39717e440302d1fd99a796e7f00e1c42eb2d/images/logo-flat.svg","logo_link":"https://identity.foundation","source":{"host":"github","account":"decentralized-identity","repo":"presentation-exchange"},"destination":"./","rootResourcePrefix":"./","destinationResourcePrefix":"./"}</script>
           <script src="./spec-up/js/markdown-it.js"></script>
           <script src="./spec-up/js/prism.js" data-manual></script>
           <script src="./spec-up/js/mermaid.js"></script>
