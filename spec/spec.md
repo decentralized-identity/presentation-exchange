@@ -564,9 +564,31 @@ A consumer of a _Presentation Definition_ must filter inputs they hold (signed c
 
 ## Presentation Submission
 
-> NOTE: ensure all the entries in the `verifiableCredential` array are valid VCs
+### Embedded Presentation Submission Object
 
-::: example Presentation Submission - all features exercised
+_Presentation Submissions_ are objects embedded within target credential negotiation formats that unify the presentation of proofs to a Verifier in accordance with the requirements a Verifier specified in a _Presentation Definition_. Embedded _Presentation Submission_ objects ****MUST**** be located within target data format as a `presentation_submission` property, which are composed as follows:
+
+  - The object ****MUST**** include a `descriptor_map` property, and its value ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being composed as follows:
+      - The object ****MUST**** include an `id` property, and its value ****MUST**** be a string matching the `id` property of the _Input Descriptor_ in the _Presentation Definition_ the submission is related to.
+      - The object ****MUST**** include a `path` property, and its value ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/) string expression that selects the credential to be submit in relation to the identified _Input Descriptor_ identified, when executed against the top-level of the object the _Presentation Submission_ is embedded within.
+
+
+### Embed Targets
+
+The following section details where the _Presentation Submission_ is to be embedded within a target data structure, as well as how to formulate the [JSONPath](https://goessner.net/articles/JsonPath/) expressions to select the credentials within the target data structure.
+
+<tab-panels selected-index="0">
+
+<nav>
+  <button type="button">Verifiable Presentation</button>
+  <button type="button">Open ID Connect</button>
+  <button type="button">CHAPI</button>
+  <button type="button">DIDComms</button>
+</nav>
+
+<section>
+
+::: example Presentation Submission - Verifiable Presentation
 ```json
 {
   "@context": [
@@ -673,20 +695,9 @@ A consumer of a _Presentation Definition_ must filter inputs they hold (signed c
 ```
 :::
 
-### Embedded Presentation Submission Object
+</section>
 
-_Presentation Submissions_ are objects embedded within target credential negotiation formats that unify the presentation of proofs to a Verifier in accordance with the requirements a Verifier specified in a _Presentation Definition_. Embedded _Presentation Submission_ objects ****MUST**** be located within target data format as a `presentation_submission` property, which are composed as follows:
-
-  - The object ****MUST**** include a `descriptor_map` property, and its value ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being composed as follows:
-      - The object ****MUST**** include an `id` property, and its value ****MUST**** be a string matching the `id` property of the _Input Descriptor_ in the _Presentation Definition_ the submission is related to.
-      - The object ****MUST**** include a `path` property, and its value ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/) string expression that selects the credential to be submit in relation to the identified _Input Descriptor_ identified, when executed against the top-level of the object the _Presentation Submission_ is embedded within.
-
-
-### Embed Targets
-
-The following section details where the _Presentation Submission_ is to be embedded within a target data structure, as well as how to formulate the [JSONPath](https://goessner.net/articles/JsonPath/) expressions to select the credentials within the target data structure.
-
-#### OIDC
+<section>
 
 ::: example Presentation Submission with OIDC JWT
 ```json
@@ -784,14 +795,36 @@ The following section details where the _Presentation Submission_ is to be embed
 ```
 :::
 
-#### DID Comms
+</section>
 
-...
+<section>
 
-#### CHAPI
+::: example Presentation Submission using CHAPI
+```json
+{
+  "type": "web",
+  "dataType": "VerifiablePresentation",
+  "data": {
+    // Presentation Submission goes here
+  }
+}
+```
 
-...
+</section>
 
+<section>
+
+::: example Presentation Submission using CHAPI
+```json
+{
+  "???": "???"
+}
+```
+:::
+
+</section>
+
+</tab-panels>
 
 ## Transport Integrations
 
@@ -817,21 +850,6 @@ Here is an example of a request:
 }
 ```
 :::
-
-Here is an example of a response:
-
-::: example Presentation Submission using CHAPI
-```json
-{
-  "type": "web",
-  "dataType": "VerifiablePresentation",
-  "data": {
-    // Presentation Submission goes here
-  }
-}
-```
-:::
-
 
 ## Appendix
 
