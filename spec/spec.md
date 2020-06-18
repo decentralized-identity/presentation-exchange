@@ -564,8 +564,6 @@ A consumer of a _Presentation Definition_ must filter inputs they hold (signed c
 
 ## Presentation Submission
 
-### Embedded Presentation Submission Object
-
 _Presentation Submissions_ are objects embedded within target credential negotiation formats that unify the presentation of proofs to a Verifier in accordance with the requirements a Verifier specified in a _Presentation Definition_. Embedded _Presentation Submission_ objects ****MUST**** be located within target data format as a `presentation_submission` property, which are composed as follows:
 
   - The object ****MUST**** include a `descriptor_map` property, and its value ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being composed as follows:
