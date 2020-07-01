@@ -48,7 +48,6 @@ mermaid.initialize({
   theme: 'neutral'
 });
 
-
 /* Charts */
 
 document.querySelectorAll('.chartjs').forEach(chart => {
