@@ -49,182 +49,185 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 
 ::: example Presentation Definition - all features exercised
 ```json
-
 {
-  "submission_requirement": {
-    name: "Credential issuance requirements",
-    purpose: "Verify banking, employment, and citizenship information.",
-    rule: "all",
-    from: [
+  // OIDC, DIDComms, or CHAPI outer wrapper
+  "presentation_definition": {
+    "submission_requirement": {
+      "name": "Credential issuance requirements",
+      "purpose": "Verify banking, employment, and citizenship information.",
+      "rule": "all",
+      "from": [
+        {
+          "name": "Banking Information",
+          "purpose": "We need to know if you have an established banking history.",
+          "rule": "pick",
+          "count": 1,
+          "from": "A"
+        },
+        {
+          "name": "Employment Information",
+          "purpose": "We need to know that you are currently employed.",
+          "rule": "all",
+          "from": "B"
+        }
+        {
+          "name": "Citizenship Information",
+          "rule": "pick",
+          "count": 1,
+          "from": "C"
+        }
+      ]
+    },
+    "input_descriptors": [
       {
-        "name": "Banking Information",
-        "purpose": "We need to know if you have an established banking history.",
-        "rule": "pick",
-        "count": 1,
-        "from": "A"
+        "id": "banking_input_1",
+        "group": ["A"],
+        "schema": {
+          "uri": "https://bank-standards.com/customer.json",
+          "name": "Bank Account Information",
+          "purpose": "We need your bank and account information."
+        },
+        "constraints": {
+          "limit_disclosure": true,
+          "fields": [
+            {
+              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
+              "purpose": "The credential must be from one of the specified issuers",
+              "filter": {
+                "type": "string",
+                "pattern": "did:example:123|did:example:456"
+              }
+            },
+            {
+              "path": ["$.credentialSubject.account[*].account_number", "$.vc.credentialSubject.account[*].account_number", "$.account[*].account_number"],
+              "purpose": "We need your bank account number for processing purposes",
+              "filter": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 12
+              }
+            },
+            {
+              "path": ["$.credentialSubject.account[*].routing_number", "$.vc.credentialSubject.account[*].routing_number", "$.account[*].routing_number"],
+              "purpose": "You must have an account with a German, US, or Japanese bank account",
+              "filter": {
+                "type": "string",
+                "pattern": "^DE|^US|^JP"
+              }
+            }
+          ]
+        }
       },
       {
-        "name": "Employment Information",
-        "purpose": "We need to know that you are currently employed.",
-        "rule": "all",
-        "from": "B"
-      }
+        "id": "banking_input_2",
+        "group": ["A"],
+        "schema": {
+          "uri": [
+            "https://bank-schemas.org/1.0.0/accounts.json",
+            "https://bank-schemas.org/2.0.0/accounts.json"
+          ],
+          "name": "Bank Account Information",
+          "purpose": "We need your bank and account information."
+        },
+        "constraints": {
+          "fields": [
+            {
+              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
+              "purpose": "The credential must be from one of the specified issuers",
+              "filter": {
+                "type": "string",
+                "pattern": "did:example:123|did:example:456"
+              }
+            },
+            { 
+              "path": ["$.credentialSubject.account[*].id", "$.vc.credentialSubject.account[*].id", "$.account[*].id"],
+              "purpose": "We need your bank account number for processing purposes",
+              "filter": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 12
+              }
+            },
+            {
+              "path": ["$.credentialSubject.account[*].route", "$.vc.credentialSubject.account[*].route", "$.account[*].route"],
+              "purpose": "You must have an account with a German, US, or Japanese bank account",
+              "filter": {
+                "type": "string",
+                "pattern": "^DE|^US|^JP"
+              }
+            }
+          ]
+        }
+      },
       {
-        "name": "Citizenship Information",
-        "rule": "pick",
-        "count": 1,
-        "from": "C"
-      }
+        "id": "employment_input",
+        "group": ["B"],
+        "schema": {
+          "uri": "https://business-standards.org/schemas/employment-history.json",
+          "name": "Employment History",
+          "purpose": "We need to know your work history."
+        },
+        "constraints": {
+          "fields": [
+            {
+              "path": ["$.jobs[*].active"],
+              "filter": {
+                "type": "boolean",
+                "pattern": "true"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "citizenship_input_1",
+        "group": ["C"],
+        "schema": {
+          "uri": "https://eu.com/claims/DriversLicense.json",
+          "name": "EU Driver's License"
+        },
+        "constraints": {
+          "fields": [
+            {
+              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
+              "purpose": "The credential must be from one of the specified issuers",
+              "filter": {
+                "type": "string",
+                "pattern": "did:example:gov1|did:example:gov2"
+              }
+            },
+            {
+              "path": ["$.credentialSubject.dob", "$.vc.credentialSubject.dob", "$.dob"],
+              "filter": {
+                "type": "date",
+                "minimum": "1999-5-16"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "citizenship_input_2",
+        "group": ["C"],
+        "schema": {
+          "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json",
+          "name": "US Passport"
+        },
+        "constraints": {
+          "issuers": ["did:foo:gov3"],
+          "fields": [
+            {
+              "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
+              "filter": {
+                "type": "date",
+                "minimum": "1999-5-16"
+              }
+            }
+          ]
+        }
+      },
     ]
-  },
-  "input_descriptors": [
-    {
-      "id": "banking_input_1",
-      "group": ["A"],
-      "schema": {
-        "uri": "https://bank-standards.com/customer.json",
-        "name": "Bank Account Information",
-        "purpose": "We need your bank and account information."
-      },
-      "constraints": {
-        "fields": [
-          {
-            "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-            "purpose": "The credential must be from one of the specified issuers",
-            "filter": {
-              "type": "string",
-              "pattern": "did:example:123|did:example:456"
-            }
-          },
-          {
-            "path": ["$.credentialSubject.account[*].account_number", "$.vc.credentialSubject.account[*].account_number"],
-            "purpose": "We need your bank account number for processing purposes",
-            "filter": {
-              "type": "string",
-              "minLength": 10,
-              "maxLength": 12
-            }
-          },
-          {
-            "path": ["$.credentialSubject.account[*].routing_number", "$.vc.credentialSubject.account[*].routing_number"],
-            "purpose": "You must have an account with a German, US, or Japanese bank account",
-            "filter": {
-              "type": "string",
-              "pattern": "^DE|^US|^JP"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "id": "banking_input_2",
-      "group": ["A"],
-      "schema": {
-        "uri": [
-          "https://bank-schemas.org/1.0.0/accounts.json",
-          "https://bank-schemas.org/2.0.0/accounts.json"
-        ],
-        "name": "Bank Account Information",
-        "purpose": "We need your bank and account information."
-      },
-      "constraints": {
-        "fields": [
-          {
-            "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-            "purpose": "The credential must be from one of the specified issuers",
-            "filter": {
-              "type": "string",
-              "pattern": "did:example:123|did:example:456"
-            }
-          },
-          { 
-            "path": ["$.credentialSubject.account[*].id", "$.vc.credentialSubject.account[*].id"],
-            "purpose": "We need your bank account number for processing purposes",
-            "filter": {
-              "type": "string",
-              "minLength": 10,
-              "maxLength": 12
-            }
-          },
-          {
-            "path": ["$.credentialSubject.account[*].route", "$.vc.credentialSubject.account[*].route"],
-            "purpose": "You must have an account with a German, US, or Japanese bank account",
-            "filter": {
-              "type": "string",
-              "pattern": "^DE|^US|^JP"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "id": "employment_input",
-      "group": ["B"],
-      "schema": {
-        "uri": "https://business-standards.org/schemas/employment-history.json",
-        "name": "Employment History",
-        "purpose": "We need your bank and account information."
-      },
-      "constraints": {
-        "fields": [
-          {
-            "path": ["$.jobs[*].active"],
-            "filter": {
-              "type": "boolean",
-              "pattern": "true"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "id": "citizenship_input_1",
-      "group": ["C"],
-      "schema": {
-        "uri": "https://eu.com/claims/DriversLicense.json",
-        "name": "EU Driver's License"
-      },
-      "constraints": {
-        "fields": [
-          {
-            "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-            "purpose": "The credential must be from one of the specified issuers",
-            "filter": {
-              "type": "string",
-              "pattern": "did:example:gov1|did:example:gov2"
-            }
-          },
-          {
-            "path": ["$.dob"],
-            "filter": {
-              "type": "date",
-              "minimum": "1999-5-16"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "id": "citizenship_input_2",
-      "group": ["C"],
-      "schema": {
-        "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json",
-        "name": "US Passport"
-      },
-      "constraints": {
-        "issuers": ["did:foo:gov3"],
-        "fields": [
-          {
-            "path": ["$.birth_date"],
-            "filter": {
-              "type": "date",
-              "minimum": "1999-5-16"
-            }
-          }
-        ]
-      }
-    },
-  ]
+  }
 }
 ```
 :::
@@ -257,10 +260,10 @@ input combinations.
 ::: example Submission Requirement
 ```json
   "submission_requirement": {
-    name: "Credential issuance requirements",
-    purpose: "Verify banking, employment, and citizenship information.",
-    rule: "all",
-    from: [
+    "name": "Credential issuance requirements",
+    "purpose": "Verify banking, employment, and citizenship information.",
+    "rule": "all",
+    "from": [
       {
         "name": "Banking Information",
         "purpose": "We need to know if you have an established banking history.",
@@ -487,7 +490,16 @@ of a Subject before they will proceed with an interaction. _Input Descriptor Obj
 contain a schema URI that links to the schema of the required input data, constraints
 on data values, and an explanation why a certain item or set of data is being requested:
 
-::: example Input Descriptor - Data
+<tab-panels selected-index="0">
+
+<nav>
+  <button type="button">Sample Descriptor</button>
+  <button type="button">Descriptor for ID Tokens</button>
+</nav>
+
+<section>
+
+::: example
 ```json
 "input_descriptors": [
   {
@@ -512,7 +524,7 @@ on data values, and an explanation why a certain item or set of data is being re
           }
         },
         { 
-          "path": ["$.credentialSubject.account[*].id", "$.vc.credentialSubject.account[*].id"],
+          "path": ["$.credentialSubject.account[*].id", "$.vc.credentialSubject.account[*].id", "$.account[*].id"],
           "purpose": "We need your bank account number for processing purposes",
           "filter": {
             "type": "string",
@@ -521,7 +533,7 @@ on data values, and an explanation why a certain item or set of data is being re
           }
         },
         {
-          "path": ["$.credentialSubject.account[*].route", "$.vc.credentialSubject.account[*].route"],
+          "path": ["$.credentialSubject.account[*].route", "$.vc.credentialSubject.account[*].route", "$.account[*].route"],
           "purpose": "You must have an account with a German, US, or Japanese bank account",
           "filter": {
             "type": "string",
@@ -535,6 +547,42 @@ on data values, and an explanation why a certain item or set of data is being re
 ```
 :::
 
+</section>
+
+<section>
+
+::: example
+```json
+{
+  "id": "employment_input_xyz_gov",
+  "group": ["B"],
+  "schema": {
+    "uri": "https://login.idp.com/xyz.gov/.well-known/openid-configuration",
+    "name": "Verify XYZ Government Employment",
+    "purpose": "We need to know if you currently work at an agency in the XYZ government",
+    "metadata": {
+      "client_id": "40be4fb5-7f3a-470b-aa37-66ed43821bd7",
+      "redirect_uri": "https://tokens.xyz.gov/verify"
+    }
+  },
+  "constraints": {
+    "fields": [
+      {
+        "path": ["$.status"],
+        "filter": {
+          "type": "string",
+          "pattern": "active"
+        }
+      }
+    ]
+  }
+}
+```
+
+</section>
+
+</tab-panel>
+
 #### Input Descriptor Objects
 
 _Input Descriptors_ are objects that describe what type of input data/credential, or sub-fields thereof, is required for submission to the Verifier. _Input Descriptor Objects_ are composed as follows:
@@ -544,8 +592,10 @@ _Input Descriptors_ are objects that describe what type of input data/credential
   - The object ****MUST**** contain a `schema` property, and its value ****MUST**** be an object composed as follows:
       - The object ****MUST**** contain a `uri` property, and its value ****MUST**** be an array consisting of one or more valid URI strings for the acceptable credential schemas. A common use of multiple entries in the `uri` array is when multiple versions of a credential schema exist and you wish to express support for submission of more than one version.
       - The object ****MAY**** contain a `name` property, and if present its value ****SHOULD**** be a human-friendly name that describes what the target schema represents.
-      - The object ****MAY**** contain a `purpose` property, and if present its value ****MUST**** be a string that describes the purpose for which the schema's data is being requested.
+      - The object ****MAY**** contain a `purpose` property, and if present its value ****MUST**** be a string that describes the purpose for which the credential's data is being requested.
+      - The object ****MAY**** contain a `metadata` property, and if present its value ****MUST**** be an object with metadata properties that describe any information specific to the acquisition, formulation, or details of the credential in question.
   - The object ****MAY**** contain a `constraints` property, and its value ****MUST**** be an object composed as follows: 
+      - The object ****MAY**** contain a `limit_disclosure` property, and if present its value ****MUST**** be a boolean value. Setting the property to `true` indicates that the processing entity ****SHOULD NOT**** submit any fields beyond those listed in the `fields` array (if present). Setting the property to `false`, or omitting the property, indicates the processing entity ****MAY**** submit a response that contains more than the data described in the `fields` array.
       - The object ****MAY**** contain a `fields` property, and its value ****MUST**** be an array of [_Input Descriptor Field Entry_](#input-descriptor-field-entry) objects, each being composed as follows:
           - The object ****MUST**** contain a `path` property, and its value ****MUST**** be an array of one or more [JSONPath](https://goessner.net/articles/JsonPath/) string expressions, specifically this variant of JSONPath: https://www.npmjs.com/package/jsonpath, that select some subset of values from the target input. The array ****MUST**** be evaluated from 0-index forward, and the first expressions to return a value will be used for the rest of the entry's evaluation. The ability to declare multiple expressions this way allows the Verifier to account for format differences - for example: normalizing the differences in structure between JSON-LD/JWT-based [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and vanilla [JSON Web Tokens](https://tools.ietf.org/html/rfc7797) (JWTs).
           - The object ****MAY**** contain a `purpose` property, and if present its value ****MUST**** be a string that describes the purpose for which the field is being requested.
@@ -555,12 +605,18 @@ _Input Descriptors_ are objects that describe what type of input data/credential
 
 A consumer of a _Presentation Definition_ must filter inputs they hold (signed credentials, raw data, etc.) to determine whether they possess the inputs required to fulfill the demands of the Verifying party. A consumer of a _Presentation Definition_ ****SHOULD**** use the following process to validate whether or not its candidate inputs meet the requirements it describes:
 
-1. For each _Input Descriptor_ in the `input_descriptors` array of a _Presentation Definition_, a User Agent ****should**** compare each candidate input it holds to determine whether there is a match. Evaluate each candidate input as follows:
-    1. The schema of the candidate input ****must**** match one of the _Input Descriptor_ `schema` object `uri` values exactly. If one of the values is an exact match, proceed, if there are no exact matches, skip to the next candidate input.
-    2. If the `constraints` property of the _Input Descriptor_ is present, and it contains a `fields` property with one or more [_Input Descriptor Field Entries_](#input-descriptor-field-entry), evaluate each against the candidate input as follows:
-        1. Iterate the _Input Descriptor_ `path` array of [JSONPath](https://goessner.net/articles/JsonPath/) string expressions from 0-index, executing each expression against the candidate input. Cease iteration at the first expression that returns a matching _Field Query Result_ and use the result for the rest of the field's evaluation. If no result is returned for any of the expressions, skip to the next candidate input.
-        2. If the `filter` property of the field entry is present, validate the _Field Query Result_ from the step above against the [JSON Schema](https://json-schema.org/specification.html) descriptor value. If the result is valid, proceed iterating the rest of the `fields` entries.
-    3. If all of the previous validation steps are successful, mark the candidate input as a match for use in a _Presentation Submission_, and if present at the top level of the _Input Descriptor_, keep a relative reference to the `group` values the input is designated for.
+For each _Input Descriptor_ in the `input_descriptors` array of a _Presentation Definition_, a User Agent ****should**** compare each candidate input it holds to determine whether there is a match. Evaluate each candidate input as follows:
+  1. The candidate input ****must**** match one of the _Input Descriptor_ `schema` object `uri` values. If one of the values is an exact match, proceed, if there are no exact matches, skip to the next candidate input.
+  2. If the `constraints` property of the _Input Descriptor_ is present and it contains a `fields` property with one or more [_Input Descriptor Field Entries_](#input-descriptor-field-entry), evaluate each against the candidate input as follows:
+      1. Iterate the _Input Descriptor_ `path` array of [JSONPath](https://goessner.net/articles/JsonPath/) string expressions from 0-index, executing each expression against the candidate input. Cease iteration at the first expression that returns a matching _Field Query Result_ and use the result for the rest of the field's evaluation. If no result is returned for any of the expressions, skip to the next candidate input.
+      2. If the `filter` property of the field entry is present, validate the _Field Query Result_ from the step above against the [JSON Schema](https://json-schema.org/specification.html) descriptor value.
+      3. If the result is valid, proceed iterating the rest of the `fields` entries.
+  3. If all of the previous validation steps are successful, mark the candidate input as a match for use in a _Presentation Submission_, and if present at the top level of the _Input Descriptor_, keep a relative reference to the `group` values the input is designated for.
+  4. If the `constraints` property of the _Input Descriptor_ is present and it contains a `limit_disclosure` property set to the boolean value `true`, ensure that any subsequent submission of data in relation to the candidate input is limited to the entries specified in the `fields` property. If the `fields` property ****is not**** present, or contains zero [_Input Descriptor Field Entries_](#input-descriptor-field-entry), submission ****SHOULD NOT**** include any claim data from the credential. (for example: a Verifier may simply want to know a Subject has a valid, signed credential of a particular type, without disclosing any of the data it contains)
+
+::: note
+Any additional testing of a candidate input for a schema match beyond comparison of the schema `uri` (e.g. specific requirements or details expressed in schema `metadata`) is at the discretion of the implementer.
+:::
 
 ## Presentation Submission
 
@@ -570,6 +626,7 @@ _Presentation Submissions_ are objects embedded within target credential negotia
       - The object ****MUST**** include an `id` property, and its value ****MUST**** be a string matching the `id` property of the _Input Descriptor_ in the _Presentation Definition_ the submission is related to.
       - The object ****MUST**** include a `path` property, and its value ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/) string expression that selects the credential to be submit in relation to the identified _Input Descriptor_ identified, when executed against the top-level of the object the _Presentation Submission_ is embedded within.
 
+If for all credentials submitted in relation to [_Input Descriptor Objects_](#input-descriptor-objects) that include a `constraints` object with a `limit_disclosure` property set to the boolean value `true`, ensure that the data submitted is limited to the entries specified in the `fields` property of the `constraints` object. If the `fields` property ****is not**** present, or contains zero [_Input Descriptor Field Entries_](#input-descriptor-field-entry), the submission ****SHOULD NOT**** include any claim data from the credential. (for example: a Verifier may simply want to know a Subject has a valid, signed credential of a particular type, without disclosing any of the data it contains).
 
 ### Embed Targets
 
@@ -851,18 +908,33 @@ Here is an example of a request:
 
 ## Appendix
 
-### Goals & Requirements
+### Developer Resources
 
-The `Presentation Definition` data format should satisfy the following requirements:
+#### JSONPath
 
-1. A `Presentation Definition` allows for a static definition. That means it is not necessarely required to be dynamically created by a party upon request.
-2. A `Presentation Definition` should *generally* not have a limited TTL or be restricted to a single interaction. It should a long-lived format that, for example, search indexers could pickup in order to understand service requirements.
-3. A `Presentation Definition` allows to specifiy a combination of selection criteria that meet the requirements. A `Presentation Definition` can meet any combination of the requirements given.
-4. A `Presentation Definition` can request verifiable (signed) information as well as unsigned information (TBD).
-5. A `Presentation Definition` allows for the inclusive definition of an input selection, but not an exclusive on. (e.g. A and/or B. but not A but not B).
+- **Node.js**
+    - https://www.npmjs.com/package/jsonpath
+- **JAVA**
+    - https://github.com/json-path/JsonPath
+- **Kotlin**
+    - https://github.com/codeniko/JsonPathKt
+- **Python**
+    - https://github.com/kennknowles/python-jsonpath-rw
 
-The `Presentation Submission` data format should satisfy the following requirements:
+#### JSON Schema
 
-1. A `Presentation Submission` is the submission of a W3C Verifiable Presentation of extended capabilities to reference an earlier `Presentation Definition`.
-2. A `Presentation Submission` supports the direct reference to an `input descriptor` of a `Presentation Definition`. ("I represent value XY, e.g. a verifiable Bank Account")
-3. A `Presentation Submission` supports the direct reference to an `input selector` of a `Presentation Definition` ("I satisfy condition A and B")
+- **Node.js**
+    - https://www.npmjs.com/package/ajv
+    - https://www.npmjs.com/package/json-schema
+- **JAVA**
+    - https://github.com/ssilverman/snowy-json
+    - https://github.com/leadpony/justify
+- **.NET**
+    - https://github.com/gregsdennis/Manatee.Json
+- **Kotlin**
+    - https://github.com/worldturner/medeia-validator
+- **Python**
+    - https://github.com/Julian/jsonschema
+    - https://github.com/horejsek/python-fastjsonschema
+- **Rust**
+    - https://github.com/Stranger6667/jsonschema-rs
