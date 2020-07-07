@@ -83,7 +83,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
         "id": "banking_input_1",
         "group": ["A"],
         "schema": {
-          "uri": "https://bank-standards.com/customer.json",
+          "uri": ["https://bank-standards.com/customer.json"],
           "name": "Bank Account Information",
           "purpose": "We need your bank and account information."
         },
@@ -163,7 +163,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
         "id": "employment_input",
         "group": ["B"],
         "schema": {
-          "uri": "https://business-standards.org/schemas/employment-history.json",
+          "uri": ["https://business-standards.org/schemas/employment-history.json"],
           "name": "Employment History",
           "purpose": "We need to know your work history."
         },
@@ -183,7 +183,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
         "id": "citizenship_input_1",
         "group": ["C"],
         "schema": {
-          "uri": "https://eu.com/claims/DriversLicense.json",
+          "uri": ["https://eu.com/claims/DriversLicense.json"],
           "name": "EU Driver's License"
         },
         "constraints": {
@@ -210,11 +210,10 @@ Presentation Definitions are objects generate to articulate what proofs an entit
         "id": "citizenship_input_2",
         "group": ["C"],
         "schema": {
-          "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json",
+          "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
           "name": "US Passport"
         },
         "constraints": {
-          "issuers": ["did:foo:gov3"],
           "fields": [
             {
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
@@ -465,18 +464,14 @@ processing-related rules above:
   Submission_, as defined by the following algorithm:
     - If `from` is a string, then the rule refers to a `group` string defined
 	within the _Input Descriptors_, and:
-
       - If `rule` is `"all"`, then this _Submission Requirement_ is satisfied
 	if and only if the _Presentation Submission_ entries match all of the
 	`group` string's members.
-
       - If `rule` is `"pick"`, then this _Submission Requirement_ is satisfied
 	if and only if the number of _Presentation Submission_ entries matching
 	`group` string's members is exactly `count`.
-
     - If `from` is an array of _Submission Requirement_ objects, then the
 	rule refers to nested requirements, and:
-
       - If `rule is `"all"`, then this _Submission Requirement_ is satisfied if
 	and only if all nested _Submission Requirement_ objects are satisfied.
       - If `rule` is `"pick"`, then this _Submission Requirement_ is satisfied
@@ -557,7 +552,7 @@ on data values, and an explanation why a certain item or set of data is being re
   "id": "employment_input_xyz_gov",
   "group": ["B"],
   "schema": {
-    "uri": "https://login.idp.com/xyz.gov/.well-known/openid-configuration",
+    "uri": ["https://login.idp.com/xyz.gov/.well-known/openid-configuration"],
     "name": "Verify XYZ Government Employment",
     "purpose": "We need to know if you currently work at an agency in the XYZ government",
     "metadata": {
@@ -880,6 +875,82 @@ The following section details where the _Presentation Submission_ is to be embed
 </section>
 
 </tab-panels>
+
+
+## JSONPath Syntax Definition
+
+The _Presentation Exchange_ specification adopts and defines the following syntax from the JSONPath object query language, which implementers ****MUST**** support for evaluation of the portions of the _Presentation Exchange_ specification that call for JSONPath expression execution.
+
+JSONPath              | Description
+----------------------|------------
+` $`                  | The root object/element
+` @`                  | The current object/element
+`.`                   | Child member operator
+`..`	                | Recursive descendant operator; JSONPath borrows this syntax from E4X
+`*`	                  | Wildcard matching all objects/elements regardless their names
+`[]`	                | Subscript operator
+`[,]`	                | Union operator for alternate names or array indices as a set
+`[start:end:step]` | Array slice operator borrowed from ES4 / Python
+`?()`                 | Applies a filter (script) expression via static evaluation
+`()`	                | Script expression via static evaluation 
+
+**Example JSON Object**
+
+```javascript
+{
+  "store": {
+    "book": [ 
+      {
+        "category": "reference",
+        "author": "Nigel Rees",
+        "title": "Sayings of the Century",
+        "price": 8.95
+      }, {
+        "category": "fiction",
+        "author": "Evelyn Waugh",
+        "title": "Sword of Honour",
+        "price": 12.99
+      }, {
+        "category": "fiction",
+        "author": "Herman Melville",
+        "title": "Moby Dick",
+        "isbn": "0-553-21311-3",
+        "price": 8.99
+      }, {
+         "category": "fiction",
+        "author": "J. R. R. Tolkien",
+        "title": "The Lord of the Rings",
+        "isbn": "0-395-19395-8",
+        "price": 22.99
+      }
+    ],
+    "bicycle": {
+      "color": "red",
+      "price": 19.95
+    }
+  }
+}
+```
+
+**Example JSONPath Expressions**
+
+JSONPath                      | Description
+------------------------------|------------
+`$.store.book[*].author`       | The authors of all books in the store
+`$..author`                     | All authors
+`$.store.*`                    | All things in store, which are some books and a red bicycle
+`$.store..price`                | The price of everything in the store
+`$..book[2]`                    | The third book
+`$..book[(@.length-1)]`         | The last book via script subscript
+`$..book[-1:]`                  | The last book via slice
+`$..book[0,1]`                  | The first two books via subscript union
+`$..book[:2]`                  | The first two books via subscript array slice
+`$..book[?(@.isbn)]`            | Filter all books with isbn number
+`$..book[?(@.price<10)]`        | Filter all books cheaper than 10
+`$..book[?(@.price==8.95)]`        | Filter all books that cost 8.95
+`$..book[?(@.price<30 && @.category=="fiction")]`        | Filter all fiction books cheaper than 30
+`$..*`                         | All members of JSON structure
+
 
 ## Transport Integrations
 
