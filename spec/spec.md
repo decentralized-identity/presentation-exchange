@@ -419,35 +419,74 @@ The following JSON Schema Draft 7 definition summarizes many of the
 format-related rules above:
 
   ```json
-  {                                                           
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {                                               
-      "submission_requirement": {
-        "type": "object",              
-        "required": ["rule", "from"],
-        "properties": {                   
-  	"name": { "type": "string" },
-  	"purpose": { "type": "string" },
-  	"rule": { "type": "string" },
-  	"count": { "type": "integer", "minimum": 1 },
-  	"from": {
-  	  "oneOf": [
-  	    { "type": "string" },                            
-  	    {
-  	      "type": "array",
-  	      "minItems": 1,
-  	      "items": { "$ref": "#/definitions/submission_requirement" }
-  	    }
-  	  ]
-  	}
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "submission_requirement": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": [
+            "rule",
+            "from"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "purpose": {
+              "type": "string"
+            },
+            "rule": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "from": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "required": [
+            "rule",
+            "from"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "purpose": {
+              "type": "string"
+            },
+            "rule": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "from": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/submission_requirement"
+              }
+            }
+          }
         }
-      }
-    },
-    "type": "object",
-    "properties": {
-      "submission_requirement": { "$ref": "#/definitions/submission_requirement" }
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "submission_requirement": {
+      "$ref": "#/definitions/submission_requirement"
     }
   }
+}
   ```
 
 #### Property Values and Evaluation
