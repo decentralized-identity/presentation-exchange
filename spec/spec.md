@@ -558,35 +558,48 @@ The following JSON Schema Draft 7 definition summarizes many of the
 format-related rules above:
 
   ```json
-  {                                                           
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {                                               
-      "submission_requirement": {
-        "type": "object",              
-        "required": ["rule", "from"],
-        "properties": {                   
-  	"name": { "type": "string" },
-  	"purpose": { "type": "string" },
-  	"rule": { "type": "string" },
-  	"count": { "type": "integer", "minimum": 1 },
-  	"from": {
-  	  "anyOf": [
-  	    { "type": "string" },                            
-  	    {
-  	      "type": "array",
-  	      "minItems": 1,
-  	      "items": { "$ref": "#/definitions/submission_requirement" }
-  	    }
-  	  ]
-  	}
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "submission_requirement": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": ["rule", "from"],
+          "properties": {
+            "name": { "type": "string" },
+            "purpose": { "type": "string" },
+            "rule": { "type": "string" },
+            "count": { "type": "integer", "minimum": 1 },
+            "from": { "type": "string" }
+          }
+        },
+        {
+          "required": ["rule", "from"],
+          "properties": {
+            "name": { "type": "string" },
+            "purpose": { "type": "string" },
+            "rule": { "type": "string" },
+            "count": { "type": "integer", "minimum": 1 },
+            "from": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/submission_requirement"
+              }
+            }
+          }
         }
-      }
-    },
-    "type": "object",
-    "properties": {
-      "submission_requirement": { "$ref": "#/definitions/submission_requirement" }
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "submission_requirement": {
+      "$ref": "#/definitions/submission_requirement"
     }
   }
+}
   ```
 
 #### Property Values and Evaluation
@@ -1134,6 +1147,8 @@ Here is an example of a request:
     - https://github.com/codeniko/JsonPathKt
 - **Python**
     - https://github.com/kennknowles/python-jsonpath-rw
+- **Go**
+    - https://github.com/PaesslerAG/jsonpath
 
 #### JSON Schema
 
@@ -1152,3 +1167,5 @@ Here is an example of a request:
     - https://github.com/horejsek/python-fastjsonschema
 - **Rust**
     - https://github.com/Stranger6667/jsonschema-rs
+- **Go**
+    - https://github.com/xeipuuv/gojsonschema
