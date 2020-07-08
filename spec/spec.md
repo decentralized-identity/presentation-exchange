@@ -426,48 +426,22 @@ format-related rules above:
       "type": "object",
       "oneOf": [
         {
-          "required": [
-            "rule",
-            "from"
-          ],
+          "required": ["rule", "from"],
           "properties": {
-            "name": {
-              "type": "string"
-            },
-            "purpose": {
-              "type": "string"
-            },
-            "rule": {
-              "type": "string"
-            },
-            "count": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "from": {
-              "type": "string"
-            }
+            "name": { "type": "string" },
+            "purpose": { "type": "string" },
+            "rule": { "type": "string" },
+            "count": { "type": "integer", "minimum": 1 },
+            "from": { "type": "string" }
           }
         },
         {
-          "required": [
-            "rule",
-            "from"
-          ],
+          "required": ["rule", "from"],
           "properties": {
-            "name": {
-              "type": "string"
-            },
-            "purpose": {
-              "type": "string"
-            },
-            "rule": {
-              "type": "string"
-            },
-            "count": {
-              "type": "integer",
-              "minimum": 1
-            },
+            "name": { "type": "string" },
+            "purpose": { "type": "string" },
+            "rule": { "type": "string" },
+            "count": { "type": "integer", "minimum": 1 },
             "from": {
               "type": "array",
               "minItems": 1,
