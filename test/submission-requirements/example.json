@@ -1,0 +1,32 @@
+{"submission_requirement": {
+  "name": "((any two from group A) AND (any one from group B)) OR (any three from group B)",
+  "purpose": "Required submission",
+  "rule": "pick",
+  "count": 1,
+  "from": [
+    {
+      "name": "(any two from group A) AND (any one from group B)",
+      "rule": "all",
+      "from": [
+	{
+	  "name": "any two from group A",
+	  "rule": "pick",
+	  "count": 2,
+	  "from": "A"
+	},
+        {
+	  "name": "any one from group B",
+	  "rule": "pick",
+	  "count": 1,
+	  "from": "B"
+        }
+      ]
+    },
+    {
+      "name": "any three from group B",
+      "rule": "pick",
+      "count": 3,
+      "from": "B"
+    }
+  ]
+}}

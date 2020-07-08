@@ -1,35 +1,13 @@
 
-function delegateEvent(type, selector, fn, container){
-  return (container || document).addEventListener(type, e => {
-    let node = e.target;
-    let match = node.matches(selector);
-    if (!match) while (node.parentElement) {
-      node = node.parentElement.matches(selector) ? match = node : node.parentElement;
-    }
-    else if (match) fn.call(node, e, node);
-  });
-}
-
 var markdown = window.markdownit();
 
 /* Sidebar Interactions */
 
 delegateEvent('pointerup', '[panel-toggle]', (e, delegate) => {
   slidepanels.toggle(delegate.getAttribute('panel-toggle'));
-});
+}, { passive: true });
 
-window.addEventListener('hashchange', (e) => {
-  slidepanels.close();
-  let timer = null;
-  document.body.setAttribute('hashscroll', null);
-  document.addEventListener('scroll', function scroll(e) {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      document.body.removeAttribute('hashscroll');
-      document.removeEventListener('scroll', scroll);
-    }, 50);
-  })
-});
+window.addEventListener('hashchange', (e) => slidepanels.close());
 
 /* GitHub Issues */
 
@@ -69,7 +47,6 @@ mermaid.initialize({
   startOnLoad: true,
   theme: 'neutral'
 });
-
 
 /* Charts */
 

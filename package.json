@@ -9,6 +9,14 @@
     "url": "git://github.com/decentralized-identity/presentation-exchange"
   },
   "dependencies": {
-    "spec-up": "0.9.56"
+    "spec-up": "0.9.78"
+  },
+  "devDependencies": {
+    "ajv": "^6.12.2",
+    "mocha": "^8.0.1"
+  },
+  "scripts": {
+    "edit": "node -e \"require('spec-up')()\"",
+    "test": "mocha 'test/**/*.js'"
   }
 }
