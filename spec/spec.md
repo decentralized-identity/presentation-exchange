@@ -47,10 +47,145 @@ Verifier | The entity that defines what proofs they require from a Subject (via 
 
 Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.
 
-::: example Presentation Definition - all features exercised
+
+<tab-panels selected-index="0">
+
+<nav>
+  <button type="button">Basic Example</button>
+  <button type="button">Single Group Example</button>
+  <button type="button">Multi-Group Example</button>
+</nav>
+
+<section>
+
+::: example Presentation Definition - Basic Example
 ```json
 {
-  // OIDC, DIDComms, or CHAPI outer wrapper
+  // VP, OIDC, DIDComms, or CHAPI outer wrapper
+
+  "presentation_definition": {
+    "input_descriptors": [
+      {
+        "id": "banking_input",
+        "schema": {
+          "uri": ["https://bank-standards.com/customer.json"],
+          "name": "Bank Account Information",
+          "purpose": "We need your bank and account information."
+        },
+        "constraints": {
+          "limit_disclosure": true,
+          "fields": [
+            {
+              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
+              "purpose": "The credential must be from one of the specified issuers",
+              "filter": {
+                "type": "string",
+                "pattern": "did:example:123|did:example:456"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "citizenship_input",
+        "schema": {
+          "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
+          "name": "US Passport"
+        },
+        "constraints": {
+          "fields": [
+            {
+              "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
+              "filter": {
+                "type": "date",
+                "minimum": "1999-5-16"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+```
+
+</section>
+
+<section>
+
+::: example Presentation Definition - Single Group Example
+```json
+{
+  // VP, OIDC, DIDComms, or CHAPI outer wrapper
+
+  "presentation_definition": {
+    "submission_requirement": {
+      "name": "Citizenship Information",
+      "rule": "pick",
+      "count": 1,
+      "from": "A"
+    },
+    "input_descriptors": [
+      {
+        "id": "citizenship_input_1",
+        "group": ["A"],
+        "schema": {
+          "uri": ["https://eu.com/claims/DriversLicense.json"],
+          "name": "EU Driver's License"
+        },
+        "constraints": {
+          "fields": [
+            {
+              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
+              "purpose": "The credential must be from one of the specified issuers",
+              "filter": {
+                "type": "string",
+                "pattern": "did:example:gov1|did:example:gov2"
+              }
+            },
+            {
+              "path": ["$.credentialSubject.dob", "$.vc.credentialSubject.dob", "$.dob"],
+              "filter": {
+                "type": "date",
+                "minimum": "1999-5-16"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "citizenship_input_2",
+        "group": ["A"],
+        "schema": {
+          "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
+          "name": "US Passport"
+        },
+        "constraints": {
+          "fields": [
+            {
+              "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
+              "filter": {
+                "type": "date",
+                "minimum": "1999-5-16"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+```
+
+</section>
+
+<section>
+
+::: example Presentation Definition - Multi-Group Example
+```json
+{
+  // VP, OIDC, DIDComms, or CHAPI outer wrapper
+  
   "presentation_definition": {
     "submission_requirement": {
       "name": "Credential issuance requirements",
@@ -69,7 +204,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
           "purpose": "We need to know that you are currently employed.",
           "rule": "all",
           "from": "B"
-        }
+        },
         {
           "name": "Citizenship Information",
           "rule": "pick",
@@ -230,6 +365,10 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 }
 ```
 :::
+
+</section>
+
+</tab-panels>
 
 The following properties are defined for use at the top-level of the resource - all other properties that are not defined below MUST be ignored:
 
@@ -888,6 +1027,10 @@ The following section details where the _Presentation Submission_ is to be embed
 </section>
 
 </tab-panels>
+
+## JSON Schema Vocabulary Definition
+
+The _Presentation Exchange_ specification adopts and defines the following JSON Schema data format and processing variant, which implementers ****MUST**** support for evaluation of the portions of the _Presentation Exchange_ specification that call for JSON Schema validation: https://tools.ietf.org/html/draft-handrews-json-schema-02
 
 
 ## JSONPath Syntax Definition
