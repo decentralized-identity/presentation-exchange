@@ -431,7 +431,7 @@ format-related rules above:
   	"rule": { "type": "string" },
   	"count": { "type": "integer", "minimum": 1 },
   	"from": {
-  	  "anyOf": [
+  	  "oneOf": [
   	    { "type": "string" },                            
   	    {
   	      "type": "array",
@@ -991,6 +991,8 @@ Here is an example of a request:
     - https://github.com/codeniko/JsonPathKt
 - **Python**
     - https://github.com/kennknowles/python-jsonpath-rw
+- **Go**
+    - https://github.com/PaesslerAG/jsonpath
 
 #### JSON Schema
 
@@ -1009,3 +1011,5 @@ Here is an example of a request:
     - https://github.com/horejsek/python-fastjsonschema
 - **Rust**
     - https://github.com/Stranger6667/jsonschema-rs
+- **Go**
+    - https://github.com/xeipuuv/gojsonschema

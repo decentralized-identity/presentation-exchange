@@ -10,7 +10,7 @@
         "rule": { "type": "string" },
         "count": { "type": "integer", "minimum": 1 },
         "from": {
-          "anyOf": [
+          "oneOf": [
             { "type": "string" },                            
             {
 	      "type": "array",
