@@ -1026,6 +1026,43 @@ The following section details where the _Presentation Submission_ is to be embed
 
 </section>
 
+### JSON Schema
+The following JSON Schema Draft 7 definition summarizes the rules above:
+
+  ```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Presentation Submission",
+  "type": "object",
+  "properties": {
+    "presentation_submission": {
+      "type": "object",
+      "properties": {
+        "descriptor_map": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/descriptor" }
+        }
+      },
+      "required": ["descriptor_map"],
+      "additionalProperties": false
+    }
+  },
+  "definitions": {
+    "descriptor": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "path": { "type": "string" }
+      },
+      "required": ["id", "path"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["presentation_submission"],
+  "additionalProperties": false
+}
+  ```
+
 </tab-panels>
 
 ## JSON Schema Vocabulary Definition

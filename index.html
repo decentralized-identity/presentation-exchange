@@ -1010,6 +1010,40 @@ on data values, and an explanation why a certain item or set of data is being re
 </div>
 </div>
 </section>
+<h3 id="json-schema-2"><a class="toc-anchor" href="#json-schema-2">§</a> JSON Schema</h3>
+<p>The following JSON Schema Draft 7 definition summarizes the rules above:</p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<span class="token property">"$schema"</span><span class="token operator">:</span> <span class="token string">"http://json-schema.org/draft-07/schema#"</span><span class="token punctuation">,</span>
+<span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"Presentation Submission"</span><span class="token punctuation">,</span>
+<span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
+<span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
+    <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
+        <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/descriptor"</span> <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"descriptor_map"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token property">"definitions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token property">"descriptor"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
+    <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"id"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"id"</span><span class="token punctuation">,</span> <span class="token string">"path"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"presentation_submission"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+<span class="token punctuation">}</span>
+</code></pre>
 </tab-panels>
 <h2 id="json-schema-vocabulary-definition"><a class="toc-anchor" href="#json-schema-vocabulary-definition">§</a> JSON Schema Vocabulary Definition</h2>
 <p>The <em>Presentation Exchange</em> specification adopts and defines the following JSON Schema data format and processing variant, which implementers <strong><strong>MUST</strong></strong> support for evaluation of the portions of the <em>Presentation Exchange</em> specification that call for JSON Schema validation: <a href="https://tools.ietf.org/html/draft-handrews-json-schema-02">https://tools.ietf.org/html/draft-handrews-json-schema-02</a></p>
@@ -1214,7 +1248,7 @@ on data values, and an explanation why a certain item or set of data is being re
 </ul>
 </li>
 </ul>
-<h4 id="json-schema-2"><a class="toc-anchor" href="#json-schema-2">§</a> JSON Schema</h4>
+<h4 id="json-schema-3"><a class="toc-anchor" href="#json-schema-3">§</a> JSON Schema</h4>
 <ul>
 <li><strong>Node.js</strong>
 <ul>
@@ -1303,6 +1337,7 @@ on data values, and an explanation why a certain item or set of data is being re
 <li><a href="#presentation-submission">Presentation Submission</a>
 <ul>
 <li><a href="#embed-targets">Embed Targets</a></li>
+<li><a href="#json-schema-2">JSON Schema</a></li>
 </ul>
 </li>
 <li><a href="#json-schema-vocabulary-definition">JSON Schema Vocabulary Definition</a></li>
@@ -1317,7 +1352,7 @@ on data values, and an explanation why a certain item or set of data is being re
 <li><a href="#developer-resources">Developer Resources</a>
 <ul>
 <li><a href="#jsonpath">JSONPath</a></li>
-<li><a href="#json-schema-2">JSON Schema</a></li>
+<li><a href="#json-schema-3">JSON Schema</a></li>
 </ul>
 </li>
 </ul>
