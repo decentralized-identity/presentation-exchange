@@ -231,6 +231,8 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 
 The following properties are defined for use at the top-level of the resource - all other properties that are not defined below MUST be ignored:
 
+- `name` - The resource ****MAY**** contain this property, and if present its value ****SHOULD**** be a human-friendly name that describes what the Presentation Definition pertains to.
+- `purpose` - The resource ****MAY**** contain this property, and if present its value ****MUST**** be a string that describes the purpose for which the Presentation Definition's inputs are being requested.
 - `submission_requirement` - The resource ****MAY**** contain this property,
   and if present, its value ****MUST**** conform to the Submission Requirement
   Format. If not present, all inputs listed in the `input_descriptor` array are
