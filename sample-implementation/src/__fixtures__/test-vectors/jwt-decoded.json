@@ -1,0 +1,10 @@
+{
+  "header": { "alg": "ES256", "typ": "JWT" },
+  "payload": {
+    "sub": "1234567890",
+    "name": "John Doe",
+    "admin": true,
+    "iat": 1516239022
+  },
+  "signature": "tyh-VfuzIxCyGYDlkBA7DfyjrqmSHu6pQ2hoZuFqUSLPNY2N0mpHb3nk5K17HWP_3cYHBw7AhHale5wky6-sVA"
+}
