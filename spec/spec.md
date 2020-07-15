@@ -45,7 +45,7 @@ Verifier | The entity that defines what proofs they require from a Prover (via a
 
 ## Presentation Definition
 
-Presentation Definitions articulate what proofs Verifier requires. Often, but not always, they help the Verifier decide how or whether to interact with a Prover. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.
+Presentation Definitions articulate what proofs a Verifier requires. Often, but not always, they help the Verifier decide how or whether to interact with a Prover. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.
 
 
 <tab-panels selected-index="0">
