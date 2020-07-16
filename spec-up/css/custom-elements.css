@@ -131,6 +131,7 @@ tab-panels > nav > *[selected] {
   color: #fff;
   background: var(--dif-blue);
   border-color: #004c8a;
+  opacity: 0.9999;
 }
 
 tab-panels > section {
