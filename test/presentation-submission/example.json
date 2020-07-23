@@ -1,0 +1,18 @@
+{
+  "presentation_submission": {
+    "descriptor_map": [
+      {
+        "id": "banking_input_2",
+        "path": "$.verifiableCredential.[0]"
+      },
+      {
+        "id": "employment_input",
+        "path": "$.verifiableCredential.[1]"
+      },
+      {
+        "id": "citizenship_input_1",
+        "path": "$.verifiableCredential.[2]"
+      }
+    ]
+  }
+}
