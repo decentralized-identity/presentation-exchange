@@ -85,6 +85,43 @@
 </tr>
 </tbody>
 </table>
+<h2 id="localization"><a class="toc-anchor" href="#localization">§</a> Localization</h2>
+<p>To support localization, <a href="https://tools.ietf.org/html/bcp47">IETF BCP 47</a> one <strong>MAY</strong> use language tags under the <code>locale</code> property in both a <code>Presentation Definition</code> and <code>Presentation Submission</code>. If a Definition has a language tag, so should the corresponding Submission. A Submission may have a language tag regardless of the presence of one in the corresponding Definition.</p>
+<p>Wrapping transports such as HTTP may choose to utlilize the <code>locale</code> property in conjunction with the <a href="https://tools.ietf.org/html/rfc7231#section-5.3.5">Accept-Language</a> header.</p>
+<tab-panels selected-index="0">
+<nav>
+  <button type="button">Presentation Definition with Locale</button>
+  <button type="button">Presentation Submission with Locale</button>
+</nav>
+<section>
+<div id="presentation-definition-with-locale" class="notice example"><a class="notice-link" href="#presentation-definition-with-locale">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token string">"en-US"</span><span class="token punctuation">,</span>
+    <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+      <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"name_input"</span><span class="token punctuation">,</span>
+      <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://name-standards.com/name.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Full Legal Name"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your full legal name."</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</section>
+<section>
+<div id="presentation-submission-with-locale" class="notice example"><a class="notice-link" href="#presentation-submission-with-locale">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token string">"de-DE"</span><span class="token punctuation">,</span>
+    <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+      <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"name_input"</span><span class="token punctuation">,</span>
+      <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.verifiableCredential.[0]"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</section>
+</tab-panels>
 <h2 id="presentation-definition"><a class="toc-anchor" href="#presentation-definition">§</a> Presentation Definition</h2>
 <p>Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions comprises inputs, which describe the forms and details of the proofs they required, and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.</p>
 <tab-panels selected-index="0">
@@ -383,6 +420,8 @@
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1318,6 +1357,7 @@ on data values, and an explanation why a certain item or set of data is being re
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#status-of-this-document">Status of This Document</a></li>
 <li><a href="#terminology">Terminology</a></li>
+<li><a href="#localization">Localization</a></li>
 <li><a href="#presentation-definition">Presentation Definition</a>
 <ul>
 <li><a href="#submission-requirements">Submission Requirements</a>
