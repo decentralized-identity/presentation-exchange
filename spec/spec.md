@@ -29,11 +29,11 @@ A common activity between peers in identity systems that feature the ability to 
 
 To address these needs, this Presentation Exchange specification codifies the `Presentation Definition` data format Verifiers can use to articulate proof requirements, as well as the `Presentation Submission` data format Subjects can use to submit proofs in accordance with them.
 
-This specification does not endeavor to define transport protocols, specific endpoints, or other means for conveying the formatted objects it codifies herein, but it is encouraged that others specifications and projects that do define such mechanisms utilize these data formats within their flows.
+This specification does not endeavor to define transport protocols, specific endpoints, or other means for conveying the formatted objects it codifies herein, but encourages others specifications and projects that do define such mechanisms utilize these data formats within their flows.
 
 ## Status of This Document
 
-Presentation Exchange is a draft specification being developed within the Decentralized Identity Foundation (DIF), and being designed to incorporate the requirements and learnings from related work of the most active industry players into a shared specification that meets the collective needs of the community. This spec will be updated to reflect relevant changes, and participants are encouraged to actively engage on GitHub (see above) and other mediums (e.g. DIF) where this work is being done.
+Presentation Exchange is a draft specification under development within the Decentralized Identity Foundation (DIF), and designed to incorporate the requirements and learnings from related work of the most active industry players into a shared specification that meets the collective needs of the community. This spec is regularly updated to reflect relevant changes, and we encourage active engagement on GitHub (see above) and other mediums (e.g. DIF) where this work is being done.
 
 ## Terminology
 
@@ -45,7 +45,7 @@ Verifier | The entity that defines what proofs they require from a Subject (via 
 
 ## Presentation Definition
 
-Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.
+Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions comprises inputs, which describe the forms and details of the proofs they required, and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.
 
 
 <tab-panels selected-index="0">
@@ -354,7 +354,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
             }
           ]
         }
-      },
+      }
     ]
   }
 }
@@ -365,15 +365,14 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 
 </tab-panels>
 
-The following properties are defined for use at the top-level of the resource - all other properties that are not defined below MUST be ignored:
+The following properties are for use at the top-level of the resource — all other properties that are not defined below MUST be ignored:
 
 - `name` - The resource ****MAY**** contain this property, and if present its value ****SHOULD**** be a human-friendly name that describes what the Presentation Definition pertains to.
 - `purpose` - The resource ****MAY**** contain this property, and if present its value ****MUST**** be a string that describes the purpose for which the Presentation Definition's inputs are being requested.
 - `submission_requirement` - The resource ****MAY**** contain this property,
   and if present, its value ****MUST**** conform to the Submission Requirement
   Format. If not present, all inputs listed in the `input_descriptor` array are
-  required for submission. The format for this property is described in the
-  [`Submission Requirement`](#submission-requirement) section below.
+  required for submission. The description for the format of this property is in the [`Submission Requirement`](#submission-requirement) section below.
 - `input_descriptors` - The resource ****MUST**** contain this property, and
   its value ****MUST**** be an array of Input Descriptor objects. If no
   `submission_requirement` is present, all inputs listed in the
@@ -409,7 +408,7 @@ All members of the `submission_requirements` array ****MUST**** be satisfied.
       "purpose": "We need to know that you are currently employed.",
       "rule": "all",
       "from": "B"
-    }
+    },
     {
       "name": "Citizenship Information",
       "rule": "pick",
@@ -479,7 +478,7 @@ An implementation ****MUST**** support the following standard types:
       subsequent [Presentation Submission](#presentation-submission).
 
 ::: example Submission Requirement, all, group
-  ```json
+```json
   "submission_requirements": [
     {
       "name": "Submission of educational transcripts",
@@ -488,7 +487,7 @@ An implementation ****MUST**** support the following standard types:
       "from": "A"
     }
   ]
-  ```
+```
 :::
 
 ##### `pick` rule
@@ -514,7 +513,7 @@ string. In the following example, the `from` property contains a `group`
 string to require a single member of group `"B"`:
 
 ::: example Submission Requirement, pick, group
-  ```json
+```json
   "submission_requirements": [
     {
       "name": "Citizenship Proof",
@@ -524,11 +523,11 @@ string to require a single member of group `"B"`:
       "from": "B"
     }
   ]
-  ```
+```
 :::
 
 ::: example Submission Requirement, pick, min/max
-  ```json
+```json
   "submission_requirements": [
     {
       "name": "Citizenship Proof",
@@ -539,7 +538,7 @@ string to require a single member of group `"B"`:
       "from": "B"
     }
   ]
-  ```
+```
 :::
 
 If the `from` property contains an array of nested _Submission Requirement_
@@ -550,7 +549,7 @@ array of nested _Submission Requirement_ objects to require either all members
 from group `"A"` or two members from group `"B"`:
 
 ::: example Submission Requirement, pick, nested
-  ```json
+```json
   "submission_requirements": [
     {
       "name": "Confirm banking relationship or employment and residence proofs",
@@ -563,14 +562,14 @@ from group `"A"` or two members from group `"B"`:
       ]
     }
   ]
-  ```
+```
 :::
 
 #### JSON Schema
 The following JSON Schema Draft 7 definition summarizes many of the
 format-related rules above:
 
-  ```json
+```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
@@ -613,7 +612,7 @@ format-related rules above:
     }
   }
 }
-  ```
+```
 
 #### Property Values and Evaluation
 The following property value and evaluation guidelines summarize many of the
@@ -898,7 +897,7 @@ The following section details where the _Presentation Submission_ is to be embed
     "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21#keys-1",
     "challenge": "1f44d55f-f161-4938-a659-f8026467f126",
     "domain": "4jt78h47fh47",
-    "jws": "...",
+    "jws": "..."
   }
 }
 ```
@@ -1036,7 +1035,7 @@ The following section details where the _Presentation Submission_ is to be embed
 ### JSON Schema
 The following JSON Schema Draft 7 definition summarizes the rules above:
 
-  ```json
+```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Presentation Submission",
@@ -1068,7 +1067,7 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
   "required": ["presentation_submission"],
   "additionalProperties": false
 }
-  ```
+```
 
 </tab-panels>
 
