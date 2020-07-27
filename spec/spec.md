@@ -43,6 +43,59 @@ Decentralized Identifier (DID) | Unique ID string and PKI metadata document form
 Subject | The entity that submits proofs to a Verifier to satisfy the requirements described in a Presentation Definition
 Verifier | The entity that defines what proofs they require from a Subject (via a Presentation Definition) in order to proceed with an interaction.
 
+## Localization
+
+To support localization, [IETF BCP 47](https://tools.ietf.org/html/bcp47) one **MAY** use language tags under the `locale` property in both a `Presentation Definition` and `Presentation Submission`. If a Definition has a language tag, so should the corresponding Submission. A Submission may have a language tag regardless of the presence of one in the corresponding Definition.
+
+Wrapping transports such as HTTP may choose to utlilize the `locale` property in conjunction with the [Accept-Language](https://tools.ietf.org/html/rfc7231#section-5.3.5) header.
+
+<tab-panels selected-index="0">
+
+<nav>
+  <button type="button">Presentation Definition with Locale</button>
+  <button type="button">Presentation Submission with Locale</button>
+</nav>
+
+<section>
+
+::: example Presentation Definition with Locale
+```json
+{
+  "presentation_definition": {
+    "locale": "en-US",
+    "input_descriptors": [{
+      "id": "name_input",
+      "schema": {
+        "uri": ["https://name-standards.com/name.json"],
+        "name": "Full Legal Name",
+        "purpose": "We need your full legal name."
+      }
+    }]
+  }
+}
+```
+
+</section>
+
+<section>
+
+::: example Presentation Submission with Locale
+```json
+{
+  "presentation_submission": {
+    "locale": "de-DE",
+    "descriptor_map": [{
+      "id": "name_input",
+      "path": "$.verifiableCredential.[0]"
+    }]
+  }
+}
+```
+
+</section>
+
+</tab-panels>
+
 ## Presentation Definition
 
 Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions comprises inputs, which describe the forms and details of the proofs they required, and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.
