@@ -1,0 +1,57 @@
+{
+  "presentation_definition": {
+    "input_descriptors": [
+      {
+        "id": "banking_input",
+        "schema": {
+          "uri": [
+            "https://bank-standards.com/customer.json"
+          ],
+          "name": "Bank Account Information",
+          "purpose": "We need your bank and account information."
+        },
+        "constraints": {
+          "limit_disclosure": true,
+          "fields": [
+            {
+              "path": [
+                "$.issuer",
+                "$.vc.issuer",
+                "$.iss"
+              ],
+              "purpose": "The credential must be from one of the specified issuers",
+              "filter": {
+                "type": "string",
+                "pattern": "did:example:123|did:example:456"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "citizenship_input",
+        "schema": {
+          "uri": [
+            "hub://did:foo:123/Collections/schema.us.gov/passport.json"
+          ],
+          "name": "US Passport"
+        },
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.credentialSubject.birth_date",
+                "$.vc.credentialSubject.birth_date",
+                "$.birth_date"
+              ],
+              "filter": {
+                "type": "date",
+                "minimum": "1999-5-16"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

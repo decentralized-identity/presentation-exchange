@@ -2,3 +2,4 @@ node_modules
 .idea
 .python-version
 .DS_Store
+.vscode
