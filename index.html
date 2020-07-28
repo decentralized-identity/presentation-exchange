@@ -618,23 +618,29 @@ format-related rules above:</p>
       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
       <span class="token property">"oneOf"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
         <span class="token punctuation">{</span>
+          <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
           <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"rule"</span><span class="token punctuation">,</span> <span class="token string">"from"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
           <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
             <span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"count"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"min"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"max"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span>
           <span class="token punctuation">}</span>
         <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token punctuation">{</span>
-          <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"rule"</span><span class="token punctuation">,</span> <span class="token string">"from"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+          <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"rule"</span><span class="token punctuation">,</span> <span class="token string">"from_nested"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
           <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
             <span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"count"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"min"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"max"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"from_nested"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
               <span class="token property">"minItems"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
               <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -649,9 +655,13 @@ format-related rules above:</p>
   <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
   <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/submission_requirements"</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
+      <span class="token property">"type:"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
+      <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/submission_requirements"</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
 <span class="token punctuation">}</span>
 </code></pre>
 <h4 id="property-values-and-evaluation"><a class="toc-anchor" href="#property-values-and-evaluation">§</a> Property Values and Evaluation</h4>
@@ -1061,6 +1071,9 @@ on data values, and an explanation why a certain item or set of data is being re
     <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
       <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"locale"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
           <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/descriptor"</span> <span class="token punctuation">}</span>

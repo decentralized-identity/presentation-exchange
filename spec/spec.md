@@ -630,23 +630,29 @@ format-related rules above:
       "type": "object",
       "oneOf": [
         {
+          "additionalProperties": false,
           "required": ["rule", "from"],
           "properties": {
             "name": { "type": "string" },
             "purpose": { "type": "string" },
             "rule": { "type": "string" },
             "count": { "type": "integer", "minimum": 1 },
+            "min": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 },
             "from": { "type": "string" }
           }
         },
         {
-          "required": ["rule", "from"],
+          "additionalProperties": false,
+          "required": ["rule", "from_nested"],
           "properties": {
             "name": { "type": "string" },
             "purpose": { "type": "string" },
             "rule": { "type": "string" },
             "count": { "type": "integer", "minimum": 1 },
-            "from": {
+            "min": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 },
+            "from_nested": {
               "type": "array",
               "minItems": 1,
               "items": {
@@ -661,9 +667,13 @@ format-related rules above:
   "type": "object",
   "properties": {
     "submission_requirements": {
-      "$ref": "#/definitions/submission_requirements"
-    }
-  }
+      "type:": "array",
+      "items": {
+        "$ref": "#/definitions/submission_requirements"
+      }
+    },
+  },
+  "additionalProperties": false
 }
 ```
 
@@ -1097,6 +1107,9 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
     "presentation_submission": {
       "type": "object",
       "properties": {
+        "locale" : {
+          "type": "string"
+        },
         "descriptor_map": {
           "type": "array",
           "items": { "$ref": "#/definitions/descriptor" }
