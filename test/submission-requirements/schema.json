@@ -46,7 +46,7 @@
       "items": {
         "$ref": "#/definitions/submission_requirements"
       }
-    },
+    }
   },
   "additionalProperties": false
 }
