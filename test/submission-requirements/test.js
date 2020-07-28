@@ -35,4 +35,3 @@ describe('Submission Requirement', function () {
     });
   });
 });
-

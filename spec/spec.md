@@ -632,30 +632,32 @@ format-related rules above:
       "type": "object",
       "oneOf": [
         {
-          "required": ["rule", "from"],
           "properties": {
             "name": { "type": "string" },
             "purpose": { "type": "string" },
             "rule": { "type": "string" },
             "count": { "type": "integer", "minimum": 1 },
             "from": { "type": "string" }
-          }
+          },
+          "required": ["rule", "from"],
+          "additionalProperties": false
         },
         {
-          "required": ["rule", "from"],
           "properties": {
             "name": { "type": "string" },
             "purpose": { "type": "string" },
             "rule": { "type": "string" },
             "count": { "type": "integer", "minimum": 1 },
-            "from": {
+            "from_nested": {
               "type": "array",
               "minItems": 1,
               "items": {
                 "$ref": "#/definitions/submission_requirements"
               }
             }
-          }
+          },
+          "required": ["rule", "from_nested"],
+          "additionalProperties": false
         }
       ]
     }
@@ -663,9 +665,14 @@ format-related rules above:
   "type": "object",
   "properties": {
     "submission_requirements": {
-      "$ref": "#/definitions/submission_requirements"
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/submission_requirements"
+      }
     }
-  }
+  },
+  "required": ["submission_requirements"],
+  "additionalProperties": false
 }
 ```
 
@@ -825,6 +832,138 @@ For each _Input Descriptor_ in the `input_descriptors` array of a _Presentation 
 ::: note
 The above evaluation process assumes the User Agent will test each candidate input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the criteria for inclusion in submission. Any additional testing of a candidate input for a schema match beyond comparison of the schema `uri` (e.g. specific requirements or details expressed in schema `metadata`) is at the discretion of the implementer.
 :::
+
+### JSON Schema
+
+The following JSON Schema Draft 7 definition summarizes the
+format-related rules above:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "submission_requirements": {
+      "type": "object",
+      "oneOf": [
+        {
+          "properties": {
+            "name": { "type": "string" },
+            "purpose": { "type": "string" },
+            "rule": { "type": "string" },
+            "count": { "type": "integer", "minimum": 1 },
+            "min": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 },
+            "from": { "type": "string" }
+          },
+          "required": ["rule", "from"],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "name": { "type": "string" },
+            "purpose": { "type": "string" },
+            "rule": { "type": "string" },
+            "count": { "type": "integer", "minimum": 1 },
+            "min": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 },
+            "from_nested": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/submission_requirements"
+              }
+            }
+          },
+          "required": ["rule", "from_nested"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "input_descriptors": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "group": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "schema": {
+          "type": "object",
+          "properties": {
+            "uri": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "name": { "type": "string" },
+            "purpose": { "type": "string" },
+            "metadata": { "type": "string" }
+          },
+          "required": ["uri", "name"],
+          "additionalProperties": false
+        },
+        "constraints": {
+          "type": "object",
+          "properties": {
+            "limit_disclosure": { "type": "boolean" },
+            "fields": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/field" }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": ["id", "schema"],
+      "additionalProperties": false
+    },
+    "field": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "purpose": { "type": "string" },
+        "filter": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string" },
+            "pattern": { "type": "string" },
+            "minimum": { "type": "string" },
+            "minLength": { "type": "integer" },
+            "maxLength": { "type": "integer" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["path"],
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "properties": {
+    "presentation_definition": {
+      "type": "object",
+      "properties": {
+        "locale": { "type": "string" },
+        "submission_requirements": {
+          "type:": "array",
+          "items": {
+            "$ref": "#/definitions/submission_requirements"
+          }
+        },
+        "input_descriptors": {
+          "type:": "array",
+          "items": { "$ref": "#/definitions/input_descriptors" }
+        }
+      },
+      "required": ["input_descriptors"],
+      "additionalProperties": false
+    }
+  }
+}
+```
 
 ## Presentation Submission
 
@@ -1099,6 +1238,9 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
     "presentation_submission": {
       "type": "object",
       "properties": {
+        "locale": {
+          "type": "string"
+        },
         "descriptor_map": {
           "type": "array",
           "items": { "$ref": "#/definitions/descriptor" }
