@@ -25,11 +25,11 @@ Presentation Exchange
 
 ## Abstract
 
-A common activity between peers in identity systems that feature the ability to generate self-asserted and third-party issued claims is the demand and submission of proofs from a Subject to a Verifier. This flow implicitly requires the Subject and Verifier have a known mechanism to facilitate the two primary steps in a proofing exchange: the way Verifiers define the proof requirements, and how Subjects must encode submissions of proof to align with those requirements.
+A common activity between peers in identity systems that feature the ability to generate self-asserted and third-party issued claims is the demand and submission of proofs from a Prover (Holder) to a Verifier. This flow implicitly requires the Holder and Verifier have a known mechanism to facilitate the two primary steps in a proving exchange: the way Verifiers define the proof requirements, and how Provers must encode submissions of proof to align with those requirements.
 
-To address these needs, this Presentation Exchange specification codifies the `Presentation Definition` data format Verifiers can use to articulate proof requirements, as well as the `Presentation Submission` data format Subjects can use to submit proofs in accordance with them.
+To address these needs, this Presentation Exchange specification codifies the `Presentation Definition` data format Verifiers can use to articulate proof requirements, as well as the `Presentation Submission` data format Provers can use to submit proofs in accordance with them.
 
-This specification does not endeavor to define transport protocols, specific endpoints, or other means for conveying the formatted objects it codifies herein, but encourages others specifications and projects that do define such mechanisms utilize these data formats within their flows.
+This specification does not endeavor to define transport protocols, specific endpoints, or other means for conveying the formatted objects it codifies, but encourages other specifications and projects that do define such mechanisms to utilize these data formats within their flows.
 
 ## Status of This Document
 
@@ -40,8 +40,8 @@ Presentation Exchange is a draft specification under development within the Dece
 Term | Definition
 :--- | :---------
 Decentralized Identifier (DID) | Unique ID string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).
-Subject | The entity that submits proofs to a Verifier to satisfy the requirements described in a Presentation Definition
-Verifier | The entity that defines what proofs they require from a Subject (via a Presentation Definition) in order to proceed with an interaction.
+Prover | The entity that submits proofs to a Verifier to satisfy the requirements described in a Presentation Definition
+Verifier | The entity that defines what proofs they require from a Prover (via a Presentation Definition) in order to proceed with an interaction.
 
 ## Localization
 
@@ -98,8 +98,7 @@ Wrapping transports such as HTTP may choose to utlilize the `locale` property in
 
 ## Presentation Definition
 
-Presentation Definitions are objects generate to articulate what proofs an entity requires to make a decision about an interaction with a Subject. Presentation Definitions comprises inputs, which describe the forms and details of the proofs they required, and optional set of selection rules, to allow Subjects flexibility in cases where many different types of proofs may satisfy an input requirement.
-
+Presentation Definitions are objects that articulate what proofs a Verifier requires. These help the Verifier to decide how or whether to interact with a Prover. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and optional sets of selection rules, to allow Provers flexibility in cases where many different types of proofs may satisfy an input requirement.
 
 <tab-panels selected-index="0">
 
@@ -114,7 +113,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
 ::: example Presentation Definition - Basic Example
 ```json
 {
-  // VP, OIDC, DIDComms, or CHAPI outer wrapper
+  // VP, OIDC, DIDComm, or CHAPI outer wrapper
 
   "presentation_definition": {
     "input_descriptors": [
@@ -156,6 +155,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
             }
           ]
         }
+
       }
     ]
   }
@@ -200,7 +200,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
               "path": ["$.credentialSubject.dob", "$.vc.credentialSubject.dob", "$.dob"],
               "filter": {
                 "type": "date",
-                "minimum": "1999-5-16"
+                "maximum": "1999-5-16"
               }
             }
           ]
@@ -219,7 +219,7 @@ Presentation Definitions are objects generate to articulate what proofs an entit
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {
                 "type": "date",
-                "minimum": "1999-5-16"
+                "maximum": "1999-5-16"
               }
             }
           ]
@@ -435,14 +435,16 @@ The following properties are for use at the top-level of the resource — all ot
 
 ### Submission Requirements
 
-_Presentation Definitions_ ****MAY**** include one or more _Submission Requirements_,
-which define combinations of inputs that satisfy an Issuer or Verifier's
-conditions, such as the satisfaction of prerequisite proofs before issuance 
-of a credential. _Submission Requirements_ can be interpreted by a 
-User Agent as instructions on how to present requirement optionality to the 
-user and submit a valid combination of inputs back to the Verifier via a _Proof Submission_ 
-object. The following section defines the format for the _Submission Requirement_ 
-object and the selection syntax used to specify valid input combinations.
+_Presentation Definitions_ ****MAY**** include _Submission Requirements_,
+which are objects that define what combinations of inputs must be submitted
+to comply with the requirements a Verifier has for proceeding in a flow (e.g.
+credential issuance, allowing entry, accepting an application).
+_Submission Requirements_ introduce a set of rule types and mapping instructions
+a User Agent can ingest to present requirement optionality to the user, and
+subsequently submit inputs in a way that maps back to the rules the verifying
+party has asserted (via a `Proof Submission` object). The following section
+defines the format for _Submission Requirement_ objects and the selection syntax
+verifying parties can use to specify which combinations of inputs are acceptable.
 
 All members of the `submission_requirements` array ****MUST**** be satisfied.
 
@@ -706,7 +708,7 @@ on data values, and an explanation why a certain item or set of data is being re
 <section>
 
 ::: example
-```json
+```jsonc
 "input_descriptors": [
   {
     "id": "banking_input_1",
@@ -812,8 +814,8 @@ _Input Descriptors_ are objects that describe what type of input data/credential
 A consumer of a _Presentation Definition_ must filter inputs they hold (signed credentials, raw data, etc.) to determine whether they possess the inputs required to fulfill the demands of the Verifying party. A consumer of a _Presentation Definition_ ****SHOULD**** use the following process to validate whether or not its candidate inputs meet the requirements it describes:
 
 For each _Input Descriptor_ in the `input_descriptors` array of a _Presentation Definition_, a User Agent ****should**** compare each candidate input (JWT, Verifiable Credential, etc.) it holds to determine whether there is a match. Evaluate each candidate input as follows:
-  1. The candidate input ****must**** match one of the _Input Descriptor_ `schema` object `uri` values. If one of the values is an exact match, proceed, if there are no exact matches, skip to the next candidate input.
-  2. If the `constraints` property of the _Input Descriptor_ is present and it contains a `fields` property with one or more [_Input Descriptor Field Entries_](#input-descriptor-field-entry), evaluate each against the candidate input as follows:
+  1. The schema of the candidate input ****must**** match one of the _Input Descriptor_ `schema` object `uri` values exactly. If the scheme is a hashlink or a similar value that points to immutable content, this means the content of the schema, not just the URI from which it is downloaded, must also match. If one of the values is an exact match, proceed, if there are no exact matches, skip to the next candidate input.
+  2. If the `constraints` property of the _Input Descriptor_ is present, and it contains a `fields` property with one or more [_Input Descriptor Field Entries_](#input-descriptor-field-entry), evaluate each against the candidate input as follows:
       1. Iterate the _Input Descriptor_ `path` array of [JSONPath](https://goessner.net/articles/JsonPath/) string expressions from 0-index, executing each expression against the candidate input. Cease iteration at the first expression that returns a matching _Field Query Result_ and use the result for the rest of the field's evaluation. If no result is returned for any of the expressions, skip to the next candidate input.
       2. If the `filter` property of the field entry is present, validate the _Field Query Result_ from the step above against the [JSON Schema](https://json-schema.org/specification.html) descriptor value.
       3. If the result is valid, proceed iterating the rest of the `fields` entries.
@@ -850,7 +852,7 @@ The following section details where the _Presentation Submission_ is to be embed
 <section>
 
 ::: example Presentation Submission - Verifiable Presentation
-```json
+```jsonc
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -961,7 +963,7 @@ The following section details where the _Presentation Submission_ is to be embed
 <section>
 
 ::: example Presentation Submission with OIDC JWT
-```json
+```jsonc
 {
   "iss": "https://self-issued.me",
   "sub": "248289761001",
@@ -1061,7 +1063,7 @@ The following section details where the _Presentation Submission_ is to be embed
 <section>
 
 ::: example Presentation Submission using CHAPI
-```json
+```jsonc
 {
   "type": "web",
   "dataType": "VerifiablePresentation",
@@ -1075,8 +1077,8 @@ The following section details where the _Presentation Submission_ is to be embed
 
 <section>
 
-::: example Presentation Submission using CHAPI
-```json
+::: example Presentation Submission using DID Comm
+```jsonc
 {
   "???": "???"
 }
