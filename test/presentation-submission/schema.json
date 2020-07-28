@@ -6,6 +6,9 @@
     "presentation_submission": {
       "type": "object",
       "properties": {
+        "locale": {
+          "type": "string"
+        },
         "descriptor_map": {
           "type": "array",
           "items": { "$ref": "#/definitions/descriptor" }
