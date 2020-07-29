@@ -1102,7 +1102,7 @@ format-related rules above:
 }
 ```
 
-### Presentation Definition Envelopes
+### Presentation Requests
 Presentation Definitions may be sent from a Verifier to a Holder using a wide
 variety of transport mechanisms or credentials exchange protocols. This
 specification does not define a transport mechanism for `Presentation
