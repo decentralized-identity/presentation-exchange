@@ -25,15 +25,33 @@ Presentation Exchange
 
 ## Abstract
 
-A common activity between peers in identity systems that feature the ability to generate self-asserted and third-party issued claims is the demand and submission of proofs from a Prover (Holder) to a Verifier. This flow implicitly requires the Holder and Verifier have a known mechanism to facilitate the two primary steps in a proving exchange: the way Verifiers define the proof requirements, and how Provers must encode submissions of proof to align with those requirements.
+A common activity between peers in identity systems that feature the ability to
+generate self-asserted and third-party issued claims is the demand and
+submission of proofs from a Prover (Holder) to a Verifier. This flow implicitly
+requires the Holder and Verifier have a known mechanism to facilitate the two
+primary steps in a proving exchange: the way Verifiers define the proof
+requirements, and how Provers must encode submissions of proof to align with
+those requirements.
 
-To address these needs, this Presentation Exchange specification codifies the `Presentation Definition` data format Verifiers can use to articulate proof requirements, as well as the `Presentation Submission` data format Provers can use to submit proofs in accordance with them.
+To address these needs, this Presentation Exchange specification codifies the
+`Presentation Definition` data format Verifiers can use to articulate proof
+requirements, as well as the `Presentation Submission` data format Provers can
+use to submit proofs in accordance with them.
 
-This specification does not endeavor to define transport protocols, specific endpoints, or other means for conveying the formatted objects it codifies, but encourages other specifications and projects that do define such mechanisms to utilize these data formats within their flows.
+This specification does not endeavor to define transport protocols, specific
+endpoints, or other means for conveying the formatted objects it codifies, but
+encourages other specifications and projects that do define such mechanisms to
+utilize these data formats within their flows.
 
 ## Status of This Document
 
-Presentation Exchange is a draft specification under development within the Decentralized Identity Foundation (DIF), and designed to incorporate the requirements and learnings from related work of the most active industry players into a shared specification that meets the collective needs of the community. This spec is regularly updated to reflect relevant changes, and we encourage active engagement on GitHub (see above) and other mediums (e.g. DIF) where this work is being done.
+Presentation Exchange is a draft specification under development within the
+Decentralized Identity Foundation (DIF), and designed to incorporate the
+requirements and learnings from related work of the most active industry players
+into a shared specification that meets the collective needs of the community.
+This spec is regularly updated to reflect relevant changes, and we encourage
+active engagement on GitHub (see above) and other mediums (e.g. DIF) where this
+work is being done.
 
 ## Terminology
 
@@ -45,9 +63,15 @@ Verifier | The entity that defines what proofs they require from a Prover (via a
 
 ## Localization
 
-To support localization, [IETF BCP 47](https://tools.ietf.org/html/bcp47) one **MAY** use language tags under the `locale` property in both a `Presentation Definition` and `Presentation Submission`. If a Definition has a language tag, so should the corresponding Submission. A Submission may have a language tag regardless of the presence of one in the corresponding Definition.
+To support localization, [IETF BCP 47](https://tools.ietf.org/html/bcp47) one
+**MAY** use language tags under the `locale` property in both a `Presentation
+Definition` and `Presentation Submission`. If a Definition has a language tag,
+so should the corresponding Submission. A Submission may have a language tag
+regardless of the presence of one in the corresponding Definition.
 
-Wrapping transports such as HTTP may choose to utlilize the `locale` property in conjunction with the [Accept-Language](https://tools.ietf.org/html/rfc7231#section-5.3.5) header.
+Wrapping transports such as HTTP may choose to utlilize the `locale` property in
+conjunction with the
+[Accept-Language](https://tools.ietf.org/html/rfc7231#section-5.3.5) header.
 
 <tab-panels selected-index="0">
 
@@ -98,7 +122,12 @@ Wrapping transports such as HTTP may choose to utlilize the `locale` property in
 
 ## Presentation Definition
 
-Presentation Definitions are objects that articulate what proofs a Verifier requires. These help the Verifier to decide how or whether to interact with a Prover. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and optional sets of selection rules, to allow Provers flexibility in cases where many different types of proofs may satisfy an input requirement.
+Presentation Definitions are objects that articulate what proofs a Verifier
+requires. These help the Verifier to decide how or whether to interact with a
+Prover. Presentation Definitions are composed of inputs, which describe the
+forms and details of the proofs they require, and optional sets of selection
+rules, to allow Provers flexibility in cases where many different types of
+proofs may satisfy an input requirement.
 
 <tab-panels selected-index="0">
 
@@ -418,14 +447,20 @@ Presentation Definitions are objects that articulate what proofs a Verifier requ
 
 </tab-panels>
 
-The following properties are for use at the top-level of the resource — all other properties that are not defined below MUST be ignored:
+The following properties are for use at the top-level of the resource — all
+other properties that are not defined below MUST be ignored:
 
-- `name` - The resource ****MAY**** contain this property, and if present its value ****SHOULD**** be a human-friendly name that describes what the Presentation Definition pertains to.
-- `purpose` - The resource ****MAY**** contain this property, and if present its value ****MUST**** be a string that describes the purpose for which the Presentation Definition's inputs are being requested.
+- `name` - The resource ****MAY**** contain this property, and if present its
+value ****SHOULD**** be a human-friendly name that describes what the
+Presentation Definition pertains to.
+- `purpose` - The resource ****MAY**** contain this property, and if present its
+value ****MUST**** be a string that describes the purpose for which the
+Presentation Definition's inputs are being requested.
 - `submission_requirement` - The resource ****MAY**** contain this property,
   and if present, its value ****MUST**** conform to the Submission Requirement
   Format. If not present, all inputs listed in the `input_descriptor` array are
-  required for submission. The description for the format of this property is in the [`Submission Requirement`](#submission-requirement) section below.
+  required for submission. The description for the format of this property is in
+  the [`Submission Requirement`](#submission-requirement) section below.
 - `input_descriptors` - The resource ****MUST**** contain this property, and
   its value ****MUST**** be an array of Input Descriptor objects. If no
   `submission_requirement` is present, all inputs listed in the
@@ -489,23 +524,25 @@ All members of the `submission_requirements` array ****MUST**** be satisfied.
 
 #### Submission Requirement Objects
 
-_Submission Requirement Objects_ describe combinations of inputs that ****must**** be submitted 
-via a [Presentation Submission](#presentation-submission) to satisfy Verifier demands. 
-_Submission Requirement Objects_ are JSON objects constructed as follows:
+_Submission Requirement Objects_ describe combinations of inputs that
+****must**** be submitted via a [Presentation Submission](#presentation-submission)
+to satisfy Verifier demands. _Submission Requirement Objects_ are JSON objects
+constructed as follows:
 
 1. The object  ****MUST**** contain a `rule` property, and its value
    ****MUST**** be a string matching one of the [Submission Requirement
    Rules](#submission-requirement-rules) values listed in the section below.
 2. The object ****MUST**** contain either a `from` 'or `from_nested` property. 
   If both properties are present, the implementation ***MUST*** produce an 
-  error. The values of the `from` and `from_nested` properties are defined as follows:
+  error. The values of the `from` and `from_nested` properties are defined as
+  follows:
     - `from` - the value of the `from` property ****must**** be a `group` string 
-    matching one of the `group` strings specified for one or more _Input Descriptor_ objects.
+    matching one of the `group` strings specified for one or more _Input
+    Descriptor_ objects.
     - `from_nested` - an array of nested _Submission Requirement Objects_.
 3. The object  ****MAY**** contain a `name` property, and if present, its value
-   ****MUST**** be a string which ****MAY**** be
-   used by a consuming User Agent to display the general name of the
-   requirement set to a user.
+   ****MUST**** be a string which ****MAY**** be used by a consuming User Agent
+   to display the general name of the requirement set to a user.
 4. The object ****MAY**** contain a `purpose` property and, if present, its
    value ****MUST**** be a string that describes the purpose for which the
    specified requirement is being asserted.
@@ -515,22 +552,25 @@ _Submission Requirement Objects_ are JSON objects constructed as follows:
 
 #### Submission Requirement Rules
 
-[_Submission Requirement Rules_](#submission-requirement-rules){id="requirement-rules"} are used within
-_Submission Requirement Objects_ to describe the specific combinatorial rule
-that must be applied to submit a particular subset of required inputs. Rules
-are selected by populating the `rule` property with the corresponding string.
-An implementation ****MUST**** support the following standard types:
+[_Submission Requirement Rules_](#submission-requirement-rules)
+{id="requirement-rules"} are used within _Submission Requirement Objects_ to
+describe the specific combinatorial rule that must be applied to submit a
+particular subset of required inputs. Rules are selected by populating the
+`rule` property with the corresponding string. An implementation ****MUST****
+support the following standard types:
 
 ##### `all` rule
 
-- The object ****must**** contain a `rule` property, and its value ****MUST**** be the string `"all"`.
+- The object ****must**** contain a `rule` property, and its value ****MUST****
+be the string `"all"`.
 - The object ****MUST**** contain either a `from` or `from_nested` property, 
   which behave as follows when used in an `all` rule:
     - `from` - when used within an `all` rule, every _Input Descriptor_ matching
       the group string of the `from` value must be submitted to the Verifier.
-    - `from_nested` - when used within an `all` rule, all the _Submission Requirement Objects_ 
-      specified in the `from_nested` array must be satisfied by the inputs submitted in a 
-      subsequent [Presentation Submission](#presentation-submission).
+    - `from_nested` - when used within an `all` rule, all the _Submission
+    Requirement Objects_ specified in the `from_nested` array must be satisfied
+    by the inputs submitted in a subsequent
+    [Presentation Submission](#presentation-submission).
 
 ::: example Submission Requirement, all, group
 ```json
@@ -554,13 +594,12 @@ An implementation ****MUST**** support the following standard types:
 - The _Submission Requirement_ object ****MAY**** contain a `min` property,
   and if present, its value ****MUST**** be an integer greater than or equal to zero.
 - The _Submission Requirement_ object ****MAY**** contain a `max` property,
-  and if present, its value ****MUST**** be an integer greater than zero, and, if 
-  also present, greater than the value of the `min` property.
-- The _Submission Requirement_ object ****MUST**** contain either a `from` property 
-  or a `from_nested` property, and of whichever are present, all inputs from the 
-  `from` group string specified or _Submission Requirements_ in the `from_nested` array 
-  ****MUST**** be submitted or satisfied.
-
+  and if present, its value ****MUST**** be an integer greater than zero, and,
+  if also present, greater than the value of the `min` property.
+- The _Submission Requirement_ object ****MUST**** contain either a `from`
+  property or a `from_nested` property, and of whichever are present, all inputs
+  from the `from` group string specified or _Submission Requirements_ in the
+  `from_nested` array ****MUST**** be submitted or satisfied.
 
 If the `from` property contains a `group` string, it directs the consumer of
 the _Presentation Definition_ to submit all members of the matching `group`
@@ -679,31 +718,40 @@ format-related rules above:
 #### Property Values and Evaluation
 The following property value and evaluation guidelines summarize many of the
 processing-related rules above:
-1. The `rule` property value may be either `"all"` or `"pick"`, and the implementation 
-  ****MUST**** produce an error if an unknown `rule` value is present.
-2. The _Submission Requirement_  ****MUST**** contain a `from` property or a `from_nested` 
-  property, not both, and if present their values must be a string or an array, respectively. 
-  If any of these conditions are not met, the implementation ****MUST**** produce an error.
-3. To determine whether a _Submission Requirement_ is satisfied, used the following algorithm:
-    - If the `rule` is `"all"`, then the _Submission Requirement_ MUST contain a `from` property 
-      or a `from_nested` property, and of whichever are present, all inputs from the 
-      `from` group string specified or _Submission Requirements_ in the `from_nested` array 
-      ****MUST**** be submitted or satisfied, respectively.
-    - If the `rule` is `"pick"`, then the _Submission Requirement_ MUST contain a `from` property 
-      or a `from_nested` property, and of whichever are present, they must be evaluated as follows:
-        - if a `count` property is present, the number of inputs submitted, or nested 
-          _Submission Requirements_ satisfied, ****MUST**** be exactly equal to the value of `count` property.
-        - if a `min` property is present, the number of inputs submitted, or nested 
-          _Submission Requirements_ satisfied, ****MUST**** be equal to or greater than the value of the `min` property.
-        - if a `max` property is present, the number of inputs submitted, or nested 
-          _Submission Requirements_ satisfied, ****MUST**** be equal to or less than the value of the `max` property.
+1. The `rule` property value may be either `"all"` or `"pick"`, and the
+  implementation ****MUST**** produce an error if an unknown `rule` value is
+  present.
+2. The _Submission Requirement_  ****MUST**** contain a `from` property or a
+  `from_nested` property, not both, and if present their values must be a string
+  or an array, respectively. If any of these conditions are not met, the
+  implementation ****MUST**** produce an error.
+3. To determine whether a _Submission Requirement_ is satisfied, used the
+  following algorithm:
+    - If the `rule` is `"all"`, then the _Submission Requirement_ MUST contain a
+      `from` property or a `from_nested` property, and of whichever are present,
+      all inputs from the `from` group string specified or _Submission
+      Requirements_ in the `from_nested` array ****MUST**** be submitted or
+      satisfied, respectively.
+    - If the `rule` is `"pick"`, then the _Submission Requirement_ MUST contain
+      a `from` property or a `from_nested` property, and of whichever are
+      present, they must be evaluated as follows:
+        - if a `count` property is present, the number of inputs submitted, or
+          nested _Submission Requirements_ satisfied, ****MUST**** be exactly
+          equal to the value of `count` property.
+        - if a `min` property is present, the number of inputs submitted, or
+          nested _Submission Requirements_ satisfied, ****MUST**** be equal to
+          or greater than the value of the `min` property.
+        - if a `max` property is present, the number of inputs submitted, or
+          nested _Submission Requirements_ satisfied, ****MUST**** be equal to
+          or less than the value of the `max` property.
 
 ### Input Descriptors
 
-_Input Descriptors_ are objects used to describe the proofing inputs a Verifier requires
-of a Subject before they will proceed with an interaction. _Input Descriptor Objects_
-contain a schema URI that links to the schema of the required input data, constraints
-on data values, and an explanation why a certain item or set of data is being requested:
+_Input Descriptors_ are objects used to describe the proofing inputs a Verifier
+requires of a Subject before they will proceed with an interaction. _Input
+Descriptor Objects_ contain a schema URI that links to the schema of the
+required input data, constraints on data values, and an explanation why a
+certain item or set of data is being requested:
 
 <tab-panels selected-index="0">
 
@@ -715,7 +763,7 @@ on data values, and an explanation why a certain item or set of data is being re
 <section>
 
 ::: example
-```jsonc
+```json
 "input_descriptors": [
   {
     "id": "banking_input_1",
@@ -991,7 +1039,7 @@ The following section details where the _Presentation Submission_ is to be embed
 <section>
 
 ::: example Presentation Submission - Verifiable Presentation
-```jsonc
+```json
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1102,7 +1150,7 @@ The following section details where the _Presentation Submission_ is to be embed
 <section>
 
 ::: example Presentation Submission with OIDC JWT
-```jsonc
+```json
 {
   "iss": "https://self-issued.me",
   "sub": "248289761001",
@@ -1202,7 +1250,7 @@ The following section details where the _Presentation Submission_ is to be embed
 <section>
 
 ::: example Presentation Submission using CHAPI
-```jsonc
+```json
 {
   "type": "web",
   "dataType": "VerifiablePresentation",
@@ -1217,7 +1265,7 @@ The following section details where the _Presentation Submission_ is to be embed
 <section>
 
 ::: example Presentation Submission using DID Comm
-```jsonc
+```json
 {
   "???": "???"
 }
@@ -1270,12 +1318,18 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
 
 ## JSON Schema Vocabulary Definition
 
-The _Presentation Exchange_ specification adopts and defines the following JSON Schema data format and processing variant, which implementers ****MUST**** support for evaluation of the portions of the _Presentation Exchange_ specification that call for JSON Schema validation: https://tools.ietf.org/html/draft-handrews-json-schema-02
-
+The _Presentation Exchange_ specification adopts and defines the following JSON
+Schema data format and processing variant, which implementers ****MUST****
+support for evaluation of the portions of the _Presentation Exchange_
+specification that call for JSON Schema validation:
+https://tools.ietf.org/html/draft-handrews-json-schema-02
 
 ## JSONPath Syntax Definition
 
-The _Presentation Exchange_ specification adopts and defines the following syntax from the JSONPath object query language, which implementers ****MUST**** support for evaluation of the portions of the _Presentation Exchange_ specification that call for JSONPath expression execution.
+The _Presentation Exchange_ specification adopts and defines the following
+syntax from the JSONPath object query language, which implementers ****MUST****
+support for evaluation of the portions of the _Presentation Exchange_
+specification that call for JSONPath expression execution.
 
 JSONPath              | Description
 ----------------------|------------
@@ -1352,7 +1406,10 @@ JSONPath                      | Description
 
 ### CHAPI
 
-The [credential handler api (CHAPI)](https://w3c-ccg.github.io/credential-handler-api/) allows a web page to request data from a browser, and for a wallet to fulfill that request. This is commonly used for requesting and presenting verifiable credentials.
+The [credential handler api (CHAPI)](https://w3c-ccg.github.io/credential-handler-api/)
+allows a web page to request data from a browser, and for a wallet to fulfill
+that request. This is commonly used for requesting and presenting verifiable
+credentials.
 
 See also the [vp-request-spec](https://digitalbazaar.github.io/vp-request-spec/).
 
