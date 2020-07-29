@@ -140,7 +140,7 @@ proofs may satisfy an input requirement.
 <section>
 
 ::: example Presentation Definition - Basic Example
-```jsonc
+```json
 {
   // VP, OIDC, DIDComm, or CHAPI outer wrapper
 
@@ -196,7 +196,7 @@ proofs may satisfy an input requirement.
 <section>
 
 ::: example Presentation Definition - Single Group Example
-```jsonc
+```json
 {
   // VP, OIDC, DIDComms, or CHAPI outer wrapper
 
@@ -264,7 +264,7 @@ proofs may satisfy an input requirement.
 <section>
 
 ::: example Presentation Definition - Multi-Group Example
-```jsonc
+```json
 {
   // VP, OIDC, DIDComms, or CHAPI outer wrapper
   
@@ -1039,7 +1039,7 @@ The following section details where the _Presentation Submission_ is to be embed
 <section>
 
 ::: example Presentation Submission - Verifiable Presentation
-```jsonc
+```json
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1150,7 +1150,7 @@ The following section details where the _Presentation Submission_ is to be embed
 <section>
 
 ::: example Presentation Submission with OIDC JWT
-```jsonc
+```json
 {
   "iss": "https://self-issued.me",
   "sub": "248289761001",
@@ -1250,7 +1250,7 @@ The following section details where the _Presentation Submission_ is to be embed
 <section>
 
 ::: example Presentation Submission using CHAPI
-```jsonc
+```json
 {
   "type": "web",
   "dataType": "VerifiablePresentation",
@@ -1265,7 +1265,7 @@ The following section details where the _Presentation Submission_ is to be embed
 <section>
 
 ::: example Presentation Submission using DID Comm
-```jsonc
+```json
 {
   "???": "???"
 }
@@ -1416,7 +1416,7 @@ See also the [vp-request-spec](https://digitalbazaar.github.io/vp-request-spec/)
 Here is an example of a request:
 
 ::: example Presentation Definition using CHAPI
-```jsonc
+```json
 {
   "query": [
     {
