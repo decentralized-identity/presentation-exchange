@@ -36,7 +36,13 @@ requirements.
 To address these needs, this Presentation Exchange specification codifies the
 `Presentation Definition` data format Verifiers can use to articulate proof
 requirements, as well as the `Presentation Submission` data format Holders can
-use to submit proofs in accordance with them.
+use to submit proofs in accordance with them. The specification is designed to 
+be both credential format and transport envelope agnostic, meaning an implementer 
+can use JWTs, VCs, JWT-VCs, or any other credential format, and convey them 
+via OIDC, DID Comms, CHAPI, or any other transport envelope. The goal of 
+this flexible format and transport agnostic mechanism is to nullify the 
+redundant handling, code, and hassle involved in presenting and satisfying 
+logical requirements across formats and transport envelopes.
 
 This specification does not endeavor to define transport protocols, specific
 endpoints, or other means for conveying the formatted objects it codifies, but
@@ -58,7 +64,7 @@ work is being done.
 Term | Definition
 :--- | :---------
 Decentralized Identifier (DID) | Unique ID string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).
-Holed | The entity that submits proofs to a Verifier to satisfy the requirements described in a Presentation Definition
+Holder | The entity that submits proofs to a Verifier to satisfy the requirements described in a Presentation Definition
 Verifier | The entity that defines what proofs they require from a Holder (via a Presentation Definition) in order to proceed with an interaction.
 
 ## Localization
@@ -458,13 +464,13 @@ value ****MUST**** be a string that describes the purpose for which the
 Presentation Definition's inputs are being requested.
 - `submission_requirement` - The resource ****MAY**** contain this property,
   and if present, its value ****MUST**** conform to the Submission Requirement
-  Format. If not present, all inputs listed in the `input_descriptor` array are
+  Format. If not present, all inputs listed in the `input_descriptors` array are
   required for submission. The description for the format of this property is in
   the [`Submission Requirement`](#submission-requirement) section below.
 - `input_descriptors` - The resource ****MUST**** contain this property, and
   its value ****MUST**** be an array of Input Descriptor objects. If no
   `submission_requirement` is present, all inputs listed in the
-  `input_descriptor` array are required for submission. The composition of
+  `input_descriptors` array are required for submission. The composition of
   values under this property are described in the [`Input
   Descriptors`](#input-descriptors) section below.
 
@@ -865,7 +871,10 @@ Descriptor Objects_ are composed as follows:
         ****MUST**** be an array consisting of one or more valid URI strings for
         the acceptable credential schemas. A common use of multiple entries in
         the `uri` array is when multiple versions of a credential schema exist
-        and you wish to express support for submission of more than one version.
+        and there is a desire to express support for more than one version. 
+        This field allowing multiple URIs is not intended to be used as 
+        a mechanism for including references to fundamentally different schemas, 
+        and ****SHOULD NOT**** be used by the implementer this way.
       - The object ****MAY**** contain a `name` property, and if present its
         value ****SHOULD**** be a human-friendly name that describes what the
         target schema represents.
@@ -1153,6 +1162,17 @@ submission ****SHOULD NOT**** include any claim data from the credential. (for
 example: a Verifier may simply want to know a Holder has a valid, signed
 credential of a particular type, without disclosing any of the data it contains).
 
+### Validation of Credentials
+
+Once a credential has been ingested via a Presentation Submission, any validation 
+beyond the process of evaluation defined by the [Input Evaluation](#input-evaluation) 
+section is outside the scope of Presentation Exchange. Validation of signatures 
+and other cryptographic proofs are a function of a given credential format, and 
+should be evaluated in accordance with a given credential format's standardized 
+processing steps. Additional verification of credential data or subsequent 
+validation required by a given Verifier are left to the Verifier's systems, code 
+and business processes to define and execute.
+
 ### Embed Targets
 
 The following section details where the _Presentation Submission_ is to be
@@ -1223,16 +1243,13 @@ credentials within the target data structure.
     },
     {
       "@context": "https://www.w3.org/2018/credentials/v1",
-      "id": "https://eu.com/claims/DriversLicense",
-      "type": ["EUDriversLicense"],
+      "id": "https://business-standards.org/schemas/employment-history.json",
+      "type": ["VerifiableCredential", "GenericEmploymentCredential"],
       "issuer": "did:foo:123",
       "issuanceDate": "2010-01-01T19:73:24Z",
       "credentialSubject": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-        "license": {
-          "number": "34DGE352",
-          "dob": "07/13/80"
-        }
+        "active": true
       },
       "proof": {
         "type": "EcdsaSecp256k1VerificationKey2019",
@@ -1327,26 +1344,22 @@ credentials within the target data structure.
       oLY4g"
     },
     "employment_input": {
-      "VC_JWT": { // DECODED JWT PAYLOAD, ASSUME THIS WILL BE A BIG UGLY OBJECT
-        "vc": {
-          "@context": "https://www.w3.org/2018/credentials/v1",
-          "id": "https://eu.com/claims/DriversLicense",
-          "type": ["EUDriversLicense"],
-          "issuer": "did:example:123",
-          "issuanceDate": "2010-01-01T19:73:24Z",
-          "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-            "accounts": [
-              {
-                "id": "1234567890",
-                "route": "DE-9876543210"
-              },
-              {
-                "id": "2457913570",
-                "route": "DE-0753197542"
-              }
-            ]
-          }
+      "VC": {
+        "@context": "https://www.w3.org/2018/credentials/v1",
+        "id": "https://business-standards.org/schemas/employment-history.json",
+        "type": ["VerifiableCredential", "GenericEmploymentCredential"],
+        "issuer": "did:foo:123",
+        "issuanceDate": "2010-01-01T19:73:24Z",
+        "credentialSubject": {
+          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+          "active": true
+        },
+        "proof": {
+          "type": "EcdsaSecp256k1VerificationKey2019",
+          "created": "2017-06-18T21:19:10Z",
+          "proofPurpose": "assertionMethod",
+          "verificationMethod": "https://example.edu/issuers/keys/1",
+          "jws": "..."
         }
       }
     },
@@ -1533,35 +1546,6 @@ JSONPath                      | Description
 `$..book[?(@.price==8.95)]`        | Filter all books that cost 8.95
 `$..book[?(@.price<30 && @.category=="fiction")]`        | Filter all fiction books cheaper than 30
 `$..*`                         | All members of JSON structure
-
-
-## Transport Integrations
-
-### CHAPI
-
-The [credential handler api (CHAPI)](https://w3c-ccg.github.io/credential-handler-api/)
-allows a web page to request data from a browser, and for a wallet to fulfill
-that request. This is commonly used for requesting and presenting verifiable
-credentials.
-
-See also the [vp-request-spec](https://digitalbazaar.github.io/vp-request-spec/).
-
-Here is an example of a request:
-
-::: example Presentation Definition using CHAPI
-```json
-{
-  "query": [
-    {
-      "type": "PresentationDefinitionQuery",
-      "presentationDefinitionQuery": [
-        // Presentation Definition goes here.
-      ]
-    }
-  ]
-}
-```
-:::
 
 ## Appendix
 
