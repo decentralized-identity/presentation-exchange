@@ -1102,6 +1102,24 @@ format-related rules above:
 }
 ```
 
+### Presentation Requests
+Presentation Definitions may be sent from a Verifier to a Holder using a wide
+variety of transport mechanisms or credentials exchange protocols. This
+specification does not define a transport mechanism for `Presentation
+Definitions` (or `Presentation Request`), but does note that different use
+cases, supported signature schemes, protocols, and threat models may require a
+`Presentation Request` to have certain properties:
+- Signature verification - A Holder may wish to have assurances as to the
+  provenance, identity, or status of a `Presentation Definition`. In this case,
+  a `Presentation Request` that uses digital signatures may be required. 
+- `domain`, `challenge`, or `nonce` - Some presentation protocols may require
+  that presentations be unique, i.e., it should be possible for a Verifier to
+  detect if a presentation has been used before. Other protocols may require
+  that a presentation to be bound to a particular communication exchange, or
+  session. In these cases, a `Presentation Request` that provides a `domain`,
+  `challenge`,or `nonce` property may be required.
+
+
 ## Presentation Submission
 
 _Presentation Submissions_ are objects embedded within target credential
