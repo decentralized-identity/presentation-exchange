@@ -1226,16 +1226,12 @@ credentials within the target data structure.
     },
     {
       "@context": "https://www.w3.org/2018/credentials/v1",
-      "id": "https://eu.com/claims/DriversLicense",
-      "type": ["EUDriversLicense"],
+      "id": "https://business-standards.org/schemas/employment-history.json",
       "issuer": "did:foo:123",
       "issuanceDate": "2010-01-01T19:73:24Z",
       "credentialSubject": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-        "license": {
-          "number": "34DGE352",
-          "dob": "07/13/80"
-        }
+        "active": true
       },
       "proof": {
         "type": "EcdsaSecp256k1VerificationKey2019",
