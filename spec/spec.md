@@ -39,7 +39,7 @@ requirements, as well as the `Presentation Submission` data format Holders can
 use to submit proofs in accordance with them. The specification is designed to 
 be both credential format and transport envelope agnostic, meaning an implementer 
 can use JWTs, VCs, JWT-VCs, or any other credential format, and convey them 
-via OIDC, DID Comms, CHAPI, VPs, or any other transport envelope. The goal of 
+via OIDC, DID Comms, CHAPI, or any other transport envelope. The goal of 
 this flexible format and transport agnostic mechanism is to nullify the 
 redundant handling, code, and hassle involved in presenting and satisfying 
 logical requirements across formats and transport envelopes.
