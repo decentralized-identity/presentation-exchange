@@ -747,7 +747,7 @@ processing-related rules above:
 
 ### Input Descriptors
 
-_Input Descriptors_ are objects used to describe the proofing inputs a Verifier
+_Input Descriptors_ are objects used to describe the information a Verifier
 requires of a Holder before they will proceed with an interaction. _Input
 Descriptor Objects_ contain a schema URI that links to the schema of the
 required input data, constraints on data values, and an explanation why a
