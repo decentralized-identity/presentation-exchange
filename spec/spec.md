@@ -1162,6 +1162,17 @@ submission ****SHOULD NOT**** include any claim data from the credential. (for
 example: a Verifier may simply want to know a Holder has a valid, signed
 credential of a particular type, without disclosing any of the data it contains).
 
+### Validation of Credentials
+
+Once a credential has been ingested via a Presentation Submission, any validation 
+beyond the process of evaluation defined by the [Input Evaluation](#input-evaluation) 
+section is outside the scope of Presentation Exchange. Validation of signatures 
+and other cryptographic proofs are a function of a given credential format, and 
+should be evaluated in accordance with a given credential format's standardized 
+processing steps. Additional verification of credential data or subsequent 
+validation required by a given Verifier are left to the Verifier's systems, code 
+and business processes to define and execute.
+
 ### Embed Targets
 
 The following section details where the _Presentation Submission_ is to be
