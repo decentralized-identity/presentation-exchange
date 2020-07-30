@@ -1027,6 +1027,10 @@ Evaluate each candidate input as follows:
     (for example: a Verifier may simply want to know a Holder has a valid,
     signed credential of a particular type, without disclosing any of the
     data it contains).
+  5. If the `constraints` property of the _Input Descriptor_ is present and it
+    contains a `self_attested` property set to the value `required`, ensure that
+    any submission of data in relation to the candidate input is provided by the
+    Holder.
 
 ::: note
 The above evaluation process assumes the User Agent will test each candidate
