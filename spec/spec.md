@@ -1347,7 +1347,7 @@ credentials within the target data structure.
       "VC": {
         "@context": "https://www.w3.org/2018/credentials/v1",
         "id": "https://business-standards.org/schemas/employment-history.json",
-        "type": ["GenericEmploymentCredential"],
+        "type": ["VerifiableCredential", "GenericEmploymentCredential"],
         "issuer": "did:foo:123",
         "issuanceDate": "2010-01-01T19:73:24Z",
         "credentialSubject": {
