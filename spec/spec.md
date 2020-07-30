@@ -952,6 +952,13 @@ Descriptor Objects_ are composed as follows:
           submit a response provided by the Holder.
         - `allowed` - This indicates that the processing entity ****MAY****
           submit a response provided by the Holder.
+      
+        The `self_attested` property could be used by a Verifier to require that
+        certain inputs be provided by the Holder. For example, a college
+        application `presentation definition` might contain an _Input Descriptor_
+        object for an essay submission. In this case, the Verifier would be able
+        to indicate that the essay is required to be provided by the Holder. 
+        
       - The object ****MAY**** contain a `fields` property, and its value
         ****MUST**** be an array of
         [_Input Descriptor Field Entry_](#input-descriptor-field-entry) objects,
