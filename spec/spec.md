@@ -946,12 +946,12 @@ Descriptor Objects_ are composed as follows:
         Setting the property to `false`, or omitting the property, indicates
         the processing entity ****MAY**** submit a response that contains more
         than the data described in the `fields` array.
-      - The object ***MAY*** contain a `self_attested` property, and if present
-        its value ***MUST*** be one of the following strings:
-        - `required` - This indicates that the processing entity ***MUST***
+      - The object ****MAY**** contain a `self_attested` property, and if
+        present its value ****MUST**** be one of the following strings:
+        - `required` - This indicates that the processing entity ****MUST****
           submit a response provided by the Holder.
-        - `allowed` - This indicates that the processing entity ***MAY*** submit
-          a response provided by the Holder.
+        - `allowed` - This indicates that the processing entity ****MAY****
+          submit a response provided by the Holder.
       - The object ****MAY**** contain a `fields` property, and its value
         ****MUST**** be an array of
         [_Input Descriptor Field Entry_](#input-descriptor-field-entry) objects,
