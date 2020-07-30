@@ -1537,35 +1537,6 @@ JSONPath                      | Description
 `$..book[?(@.price<30 && @.category=="fiction")]`        | Filter all fiction books cheaper than 30
 `$..*`                         | All members of JSON structure
 
-
-## Transport Integrations
-
-### CHAPI
-
-The [credential handler api (CHAPI)](https://w3c-ccg.github.io/credential-handler-api/)
-allows a web page to request data from a browser, and for a wallet to fulfill
-that request. This is commonly used for requesting and presenting verifiable
-credentials.
-
-See also the [vp-request-spec](https://digitalbazaar.github.io/vp-request-spec/).
-
-Here is an example of a request:
-
-::: example Presentation Definition using CHAPI
-```json
-{
-  "query": [
-    {
-      "type": "PresentationDefinitionQuery",
-      "presentationDefinitionQuery": [
-        // Presentation Definition goes here.
-      ]
-    }
-  ]
-}
-```
-:::
-
 ## Appendix
 
 ### Developer Resources
