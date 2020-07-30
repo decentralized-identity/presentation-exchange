@@ -64,7 +64,7 @@ work is being done.
 Term | Definition
 :--- | :---------
 Decentralized Identifier (DID) | Unique ID string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).
-Holed | The entity that submits proofs to a Verifier to satisfy the requirements described in a Presentation Definition
+Holder | The entity that submits proofs to a Verifier to satisfy the requirements described in a Presentation Definition
 Verifier | The entity that defines what proofs they require from a Holder (via a Presentation Definition) in order to proceed with an interaction.
 
 ## Localization
@@ -871,8 +871,8 @@ Descriptor Objects_ are composed as follows:
         ****MUST**** be an array consisting of one or more valid URI strings for
         the acceptable credential schemas. A common use of multiple entries in
         the `uri` array is when multiple versions of a credential schema exist
-        and you wish to express support for submission of more than one version. 
-        This field allowing multiple URIs ****IS NOT**** intended to be used as 
+        and there is a desire to express support for more than one version. 
+        This field allowing multiple URIs is not intended to be used as 
         a mechanism for including references to fundamentally different schemas, 
         and ****SHOULD NOT**** be used by the implementer this way.
       - The object ****MAY**** contain a `name` property, and if present its
@@ -1244,6 +1244,7 @@ credentials within the target data structure.
     {
       "@context": "https://www.w3.org/2018/credentials/v1",
       "id": "https://business-standards.org/schemas/employment-history.json",
+      "type": ["GenericEmploymentCredential"],
       "issuer": "did:foo:123",
       "issuanceDate": "2010-01-01T19:73:24Z",
       "credentialSubject": {
@@ -1343,26 +1344,22 @@ credentials within the target data structure.
       oLY4g"
     },
     "employment_input": {
-      "VC_JWT": { // DECODED JWT PAYLOAD, ASSUME THIS WILL BE A BIG UGLY OBJECT
-        "vc": {
-          "@context": "https://www.w3.org/2018/credentials/v1",
-          "id": "https://eu.com/claims/DriversLicense",
-          "type": ["EUDriversLicense"],
-          "issuer": "did:example:123",
-          "issuanceDate": "2010-01-01T19:73:24Z",
-          "credentialSubject": {
-            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-            "accounts": [
-              {
-                "id": "1234567890",
-                "route": "DE-9876543210"
-              },
-              {
-                "id": "2457913570",
-                "route": "DE-0753197542"
-              }
-            ]
-          }
+      "VC": {
+        "@context": "https://www.w3.org/2018/credentials/v1",
+        "id": "https://business-standards.org/schemas/employment-history.json",
+        "type": ["GenericEmploymentCredential"],
+        "issuer": "did:foo:123",
+        "issuanceDate": "2010-01-01T19:73:24Z",
+        "credentialSubject": {
+          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+          "active": true
+        },
+        "proof": {
+          "type": "EcdsaSecp256k1VerificationKey2019",
+          "created": "2017-06-18T21:19:10Z",
+          "proofPurpose": "assertionMethod",
+          "verificationMethod": "https://example.edu/issuers/keys/1",
+          "jws": "..."
         }
       }
     },

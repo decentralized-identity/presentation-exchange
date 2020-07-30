@@ -100,7 +100,7 @@ work is being done.</p>
 <td style="text-align:left">Unique ID string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).</td>
 </tr>
 <tr>
-<td style="text-align:left">Holed</td>
+<td style="text-align:left">Holder</td>
 <td style="text-align:left">The entity that submits proofs to a Verifier to satisfy the requirements described in a Presentation Definition</td>
 </tr>
 <tr>
@@ -123,7 +123,7 @@ conjunction with the
   <button type="button">Presentation Submission with Locale</button>
 </nav>
 <section>
-<div id="presentation-definition-with-locale-10" class="notice example"><a class="notice-link" href="#presentation-definition-with-locale-10">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-definition-with-locale-16" class="notice example"><a class="notice-link" href="#presentation-definition-with-locale-16">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token string">"en-US"</span><span class="token punctuation">,</span>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
@@ -139,7 +139,7 @@ conjunction with the
 </code></pre>
 </section>
 <section>
-<div id="presentation-submission-with-locale-10" class="notice example"><a class="notice-link" href="#presentation-submission-with-locale-10">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission-with-locale-16" class="notice example"><a class="notice-link" href="#presentation-submission-with-locale-16">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token string">"de-DE"</span><span class="token punctuation">,</span>
     <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
@@ -165,7 +165,7 @@ proofs may satisfy an input requirement.</p>
   <button type="button">Multi-Group Example</button>
 </nav>
 <section>
-<div id="presentation-definition---basic-example-10" class="notice example"><a class="notice-link" href="#presentation-definition---basic-example-10">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-definition---basic-example-16" class="notice example"><a class="notice-link" href="#presentation-definition---basic-example-16">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token comment">// VP, OIDC, DIDComm, or CHAPI outer wrapper</span>
 
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -216,7 +216,7 @@ proofs may satisfy an input requirement.</p>
 </code></pre>
 </section>
 <section>
-<div id="presentation-definition---single-group-example-10" class="notice example"><a class="notice-link" href="#presentation-definition---single-group-example-10">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-definition---single-group-example-16" class="notice example"><a class="notice-link" href="#presentation-definition---single-group-example-16">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token comment">// VP, OIDC, DIDComms, or CHAPI outer wrapper</span>
 
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -279,7 +279,7 @@ proofs may satisfy an input requirement.</p>
 </code></pre>
 </section>
 <section>
-<div id="presentation-definition---multi-group-example-10" class="notice example"><a class="notice-link" href="#presentation-definition---multi-group-example-10">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-definition---multi-group-example-16" class="notice example"><a class="notice-link" href="#presentation-definition---multi-group-example-16">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token comment">// VP, OIDC, DIDComms, or CHAPI outer wrapper</span>
   
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -494,7 +494,7 @@ party has asserted (via a <code>Proof Submission</code> object). The following s
 defines the format for <em>Submission Requirement</em> objects and the selection syntax
 verifying parties can use to specify which combinations of inputs are acceptable.</p>
 <p>All members of the <code>submission_requirements</code> array <strong><strong>MUST</strong></strong> be satisfied.</p>
-<div id="submission-requirement-10" class="notice example"><a class="notice-link" href="#submission-requirement-10">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="submission-requirement-16" class="notice example"><a class="notice-link" href="#submission-requirement-16">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Banking Information"</span><span class="token punctuation">,</span>
       <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you have an established banking history."</span><span class="token punctuation">,</span>
@@ -583,7 +583,7 @@ by the inputs submitted in a subsequent
 </ul>
 </li>
 </ul>
-<div id="submission-requirement,-all,-group-10" class="notice example"><a class="notice-link" href="#submission-requirement,-all,-group-10">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="submission-requirement,-all,-group-16" class="notice example"><a class="notice-link" href="#submission-requirement,-all,-group-16">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Submission of educational transcripts"</span><span class="token punctuation">,</span>
       <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need all your educational transcripts to process your application"</span><span class="token punctuation">,</span>
@@ -613,7 +613,7 @@ from the <code>from</code> group string specified or <em>Submission Requirements
 the <em>Presentation Definition</em> to submit all members of the matching <code>group</code>
 string. In the following example, the <code>from</code> property contains a <code>group</code>
 string to require a single member of group <code>&quot;B&quot;</code>:</p>
-<div id="submission-requirement,-pick,-group-10" class="notice example"><a class="notice-link" href="#submission-requirement,-pick,-group-10">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="submission-requirement,-pick,-group-16" class="notice example"><a class="notice-link" href="#submission-requirement,-pick,-group-16">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Citizenship Proof"</span><span class="token punctuation">,</span>
       <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to confirm you are a citizen of one of the following countries"</span><span class="token punctuation">,</span>
@@ -624,7 +624,7 @@ string to require a single member of group <code>&quot;B&quot;</code>:</p>
   <span class="token punctuation">]</span>
 </code></pre>
 </div>
-<div id="submission-requirement,-pick,-min/max-10" class="notice example"><a class="notice-link" href="#submission-requirement,-pick,-min/max-10">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="submission-requirement,-pick,-min/max-16" class="notice example"><a class="notice-link" href="#submission-requirement,-pick,-min/max-16">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Citizenship Proof"</span><span class="token punctuation">,</span>
       <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to confirm you are a citizen of one of the following countries"</span><span class="token punctuation">,</span>
@@ -642,7 +642,7 @@ members such that the number of satisfied <em>Submission Requirement</em> object
 exactly <code>count</code>. In the following example, the <code>from</code> property contains an
 array of nested <em>Submission Requirement</em> objects to require either all members
 from group <code>&quot;A&quot;</code> or two members from group <code>&quot;B&quot;</code>:</p>
-<div id="submission-requirement,-pick,-nested-10" class="notice example"><a class="notice-link" href="#submission-requirement,-pick,-nested-10">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="submission-requirement,-pick,-nested-16" class="notice example"><a class="notice-link" href="#submission-requirement,-pick,-nested-16">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Confirm banking relationship or employment and residence proofs"</span><span class="token punctuation">,</span>
       <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"Submit your bank statement or proofs of employment and residence to process your loan"</span><span class="token punctuation">,</span>
@@ -758,7 +758,7 @@ certain item or set of data is being requested:</p>
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-21" class="notice example"><a class="notice-link" href="#example-21">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="example-33" class="notice example"><a class="notice-link" href="#example-33">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -805,7 +805,7 @@ certain item or set of data is being requested:</p>
 </div>
 </section>
 <section>
-<div id="example-22" class="notice example"><a class="notice-link" href="#example-22">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-34" class="notice example"><a class="notice-link" href="#example-34">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
   <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -851,8 +851,8 @@ Definition</em> object.</li>
 <strong><strong>MUST</strong></strong> be an array consisting of one or more valid URI strings for
 the acceptable credential schemas. A common use of multiple entries in
 the <code>uri</code> array is when multiple versions of a credential schema exist
-and you wish to express support for submission of more than one version.
-This field allowing multiple URIs <strong><strong>IS NOT</strong></strong> intended to be used as
+and there is a desire to express support for more than one version.
+This field allowing multiple URIs is not intended to be used as
 a mechanism for including references to fundamentally different schemas,
 and <strong><strong>SHOULD NOT</strong></strong> be used by the implementer this way.</li>
 <li>The object <strong><strong>MAY</strong></strong> contain a <code>name</code> property, and if present its
@@ -960,7 +960,7 @@ submission <strong><strong>SHOULD NOT</strong></strong> include any claim data f
 signed credential of a particular type, without disclosing any of the
 data it contains).</li>
 </ol>
-<div id="note-11" class="notice note"><a class="notice-link" href="#note-11">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
+<div id="note-17" class="notice note"><a class="notice-link" href="#note-17">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
 criteria for inclusion in submission. Any additional testing of a candidate
 input for a schema match beyond comparison of the schema <code>uri</code> (e.g. specific
@@ -1169,7 +1169,7 @@ credentials within the target data structure.</p>
   <button type="button">DIDComms</button>
 </nav>
 <section>
-<div id="presentation-submission---verifiable-presentation-10" class="notice example"><a class="notice-link" href="#presentation-submission---verifiable-presentation-10">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission---verifiable-presentation-16" class="notice example"><a class="notice-link" href="#presentation-submission---verifiable-presentation-16">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
     <span class="token string">"https://identity.foundation/presentation-exchange/submission/v1"</span>
@@ -1220,6 +1220,7 @@ credentials within the target data structure.</p>
     <span class="token punctuation">{</span>
       <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
       <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"https://business-standards.org/schemas/employment-history.json"</span><span class="token punctuation">,</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"GenericEmploymentCredential"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
       <span class="token property">"issuer"</span><span class="token operator">:</span> <span class="token string">"did:foo:123"</span><span class="token punctuation">,</span>
       <span class="token property">"issuanceDate"</span><span class="token operator">:</span> <span class="token string">"2010-01-01T19:73:24Z"</span><span class="token punctuation">,</span>
       <span class="token property">"credentialSubject"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -1271,7 +1272,7 @@ credentials within the target data structure.</p>
 </div>
 </section>
 <section>
-<div id="presentation-submission-with-oidc-jwt-10" class="notice example"><a class="notice-link" href="#presentation-submission-with-oidc-jwt-10">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission-with-oidc-jwt-16" class="notice example"><a class="notice-link" href="#presentation-submission-with-oidc-jwt-16">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"iss"</span><span class="token operator">:</span> <span class="token string">"https://self-issued.me"</span><span class="token punctuation">,</span>
   <span class="token property">"sub"</span><span class="token operator">:</span> <span class="token string">"248289761001"</span><span class="token punctuation">,</span>
   <span class="token property">"preferred_username"</span><span class="token operator">:</span> <span class="token string">"superman445"</span><span class="token punctuation">,</span>
@@ -1314,26 +1315,22 @@ credentials within the target data structure.</p>
       oLY<span class="token number">4</span>g"
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token property">"employment_input"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"VC_JWT"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token comment">// DECODED JWT PAYLOAD, ASSUME THIS WILL BE A BIG UGLY OBJECT</span>
-        <span class="token property">"vc"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
-          <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"https://eu.com/claims/DriversLicense"</span><span class="token punctuation">,</span>
-          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"EUDriversLicense"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"issuer"</span><span class="token operator">:</span> <span class="token string">"did:example:123"</span><span class="token punctuation">,</span>
-          <span class="token property">"issuanceDate"</span><span class="token operator">:</span> <span class="token string">"2010-01-01T19:73:24Z"</span><span class="token punctuation">,</span>
-          <span class="token property">"credentialSubject"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-            <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span><span class="token punctuation">,</span>
-            <span class="token property">"accounts"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-              <span class="token punctuation">{</span>
-                <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"1234567890"</span><span class="token punctuation">,</span>
-                <span class="token property">"route"</span><span class="token operator">:</span> <span class="token string">"DE-9876543210"</span>
-              <span class="token punctuation">}</span><span class="token punctuation">,</span>
-              <span class="token punctuation">{</span>
-                <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"2457913570"</span><span class="token punctuation">,</span>
-                <span class="token property">"route"</span><span class="token operator">:</span> <span class="token string">"DE-0753197542"</span>
-              <span class="token punctuation">}</span>
-            <span class="token punctuation">]</span>
-          <span class="token punctuation">}</span>
+      <span class="token property">"VC"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"https://business-standards.org/schemas/employment-history.json"</span><span class="token punctuation">,</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"GenericEmploymentCredential"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"issuer"</span><span class="token operator">:</span> <span class="token string">"did:foo:123"</span><span class="token punctuation">,</span>
+        <span class="token property">"issuanceDate"</span><span class="token operator">:</span> <span class="token string">"2010-01-01T19:73:24Z"</span><span class="token punctuation">,</span>
+        <span class="token property">"credentialSubject"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span><span class="token punctuation">,</span>
+          <span class="token property">"active"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"proof"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"EcdsaSecp256k1VerificationKey2019"</span><span class="token punctuation">,</span>
+          <span class="token property">"created"</span><span class="token operator">:</span> <span class="token string">"2017-06-18T21:19:10Z"</span><span class="token punctuation">,</span>
+          <span class="token property">"proofPurpose"</span><span class="token operator">:</span> <span class="token string">"assertionMethod"</span><span class="token punctuation">,</span>
+          <span class="token property">"verificationMethod"</span><span class="token operator">:</span> <span class="token string">"https://example.edu/issuers/keys/1"</span><span class="token punctuation">,</span>
+          <span class="token property">"jws"</span><span class="token operator">:</span> <span class="token string">"..."</span>
         <span class="token punctuation">}</span>
       <span class="token punctuation">}</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
@@ -1366,7 +1363,7 @@ credentials within the target data structure.</p>
 </div>
 </section>
 <section>
-<div id="presentation-submission-using-chapi-10" class="notice example"><a class="notice-link" href="#presentation-submission-using-chapi-10">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission-using-chapi-16" class="notice example"><a class="notice-link" href="#presentation-submission-using-chapi-16">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"web"</span><span class="token punctuation">,</span>
   <span class="token property">"dataType"</span><span class="token operator">:</span> <span class="token string">"VerifiablePresentation"</span><span class="token punctuation">,</span>
   <span class="token property">"data"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -1376,7 +1373,7 @@ credentials within the target data structure.</p>
 </code></pre>
 </section>
 <section>
-<div id="presentation-submission-using-did-comm-10" class="notice example"><a class="notice-link" href="#presentation-submission-using-did-comm-10">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-submission-using-did-comm-16" class="notice example"><a class="notice-link" href="#presentation-submission-using-did-comm-16">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"???"</span><span class="token operator">:</span> <span class="token string">"???"</span>
 <span class="token punctuation">}</span>
 </code></pre>
