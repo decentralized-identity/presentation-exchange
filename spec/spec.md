@@ -464,13 +464,13 @@ value ****MUST**** be a string that describes the purpose for which the
 Presentation Definition's inputs are being requested.
 - `submission_requirement` - The resource ****MAY**** contain this property,
   and if present, its value ****MUST**** conform to the Submission Requirement
-  Format. If not present, all inputs listed in the `input_descriptor` array are
+  Format. If not present, all inputs listed in the `input_descriptors` array are
   required for submission. The description for the format of this property is in
   the [`Submission Requirement`](#submission-requirement) section below.
 - `input_descriptors` - The resource ****MUST**** contain this property, and
   its value ****MUST**** be an array of Input Descriptor objects. If no
   `submission_requirement` is present, all inputs listed in the
-  `input_descriptor` array are required for submission. The composition of
+  `input_descriptors` array are required for submission. The composition of
   values under this property are described in the [`Input
   Descriptors`](#input-descriptors) section below.
 
