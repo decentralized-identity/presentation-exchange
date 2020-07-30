@@ -36,7 +36,13 @@ requirements.
 To address these needs, this Presentation Exchange specification codifies the
 `Presentation Definition` data format Verifiers can use to articulate proof
 requirements, as well as the `Presentation Submission` data format Holders can
-use to submit proofs in accordance with them.
+use to submit proofs in accordance with them. The specification is designed to 
+be both credential format and transport envelope agnostic, meaning an implementer 
+can use JWTs, VCs, JWT-VCs, or any other credential format, and convey them 
+via OIDC, DID Comms, CHAPI, VPs, or any other transport envelope. The goal of 
+this flexible format and transport agnostic mechanism is to nullify the 
+redundant handling, code, and hassle involved in presenting and satisfying 
+logical requirements across formats and transport envelopes.
 
 This specification does not endeavor to define transport protocols, specific
 endpoints, or other means for conveying the formatted objects it codifies, but
