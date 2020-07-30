@@ -865,7 +865,10 @@ Descriptor Objects_ are composed as follows:
         ****MUST**** be an array consisting of one or more valid URI strings for
         the acceptable credential schemas. A common use of multiple entries in
         the `uri` array is when multiple versions of a credential schema exist
-        and you wish to express support for submission of more than one version.
+        and you wish to express support for submission of more than one version. 
+        This field allowing multiple URIs ****IS NOT**** intended to be used as 
+        a mechanism for including references to fundamentally different schemas, 
+        and ****SHOULD NOT**** be used by the implementer this way.
       - The object ****MAY**** contain a `name` property, and if present its
         value ****SHOULD**** be a human-friendly name that describes what the
         target schema represents.
