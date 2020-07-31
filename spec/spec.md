@@ -951,10 +951,10 @@ Descriptor Objects_ are composed as follows:
             - `required` - The value of this property ****MUST**** be a boolean.
               Setting the property to `true` indicates that the returned value
               ****MUST**** be a boolean derived from the input using the
-              provided `operation` and `value` properties. Setting the property
-              to `false` indicates that the returned value ****SHOULD**** be a
-              boolean derived from the input using the provided `operation` and
-              `value` properties.
+              provided `operation` and `p_value`/`p_set` properties. Setting the
+              property to `false` indicates that the returned value
+              ****SHOULD**** be a boolean derived from the input using the
+              provided `operation` and `p_value`/`p_set` properties.
 
 ### Input Evaluation
 
