@@ -39,7 +39,7 @@ requirements, as well as the `Presentation Submission` data format Holders can
 use to submit proofs in accordance with them. The specification is designed to 
 be both credential format and transport envelope agnostic, meaning an implementer 
 can use JWTs, VCs, JWT-VCs, or any other credential format, and convey them 
-via OIDC, DID Comms, CHAPI, or any other transport envelope. The goal of 
+via OIDC, DIDComm, CHAPI, or any other transport envelope. The goal of 
 this flexible format and transport agnostic mechanism is to nullify the 
 redundant handling, code, and hassle involved in presenting and satisfying 
 logical requirements across formats and transport envelopes.
@@ -204,7 +204,7 @@ proofs may satisfy an input requirement.
 ::: example Presentation Definition - Single Group Example
 ```json
 {
-  // VP, OIDC, DIDComms, or CHAPI outer wrapper
+  // VP, OIDC, DIDComm, or CHAPI outer wrapper
 
   "presentation_definition": {
     "submission_requirements": [{
@@ -272,7 +272,7 @@ proofs may satisfy an input requirement.
 ::: example Presentation Definition - Multi-Group Example
 ```json
 {
-  // VP, OIDC, DIDComms, or CHAPI outer wrapper
+  // VP, OIDC, DIDComm, or CHAPI outer wrapper
   
   "presentation_definition": {
     "submission_requirements": [
@@ -1186,7 +1186,7 @@ credentials within the target data structure.
   <button type="button">Verifiable Presentation</button>
   <button type="button">Open ID Connect</button>
   <button type="button">CHAPI</button>
-  <button type="button">DIDComms</button>
+  <button type="button">DIDComm</button>
 </nav>
 
 <section>
@@ -1410,10 +1410,25 @@ credentials within the target data structure.
 
 <section>
 
-::: example Presentation Submission using DID Comm
+::: example Presentation Submission using DIDComm
 ```json
 {
-  "???": "???"
+    "@type": "https://didcomm.org/present-proof/%VER/presentation",
+    "@id": "f1ca8245-ab2d-4d9c-8d7d-94bf310314ef",
+    "comment": "some comment",
+    "formats" : [{
+        "attach_id" : "2a3f1c4c-623c-44e6-b159-179048c51260",
+        "format" : "dif/presentation-exchange/submission@v1.0"
+    }],
+    "presentations~attach": [{
+        "@id": "2a3f1c4c-623c-44e6-b159-179048c51260",
+        "mime-type": "application/ld+json",
+        "data": {
+            "json": {
+              // Presentation Submission goes here
+            }
+        }
+    }]
 }
 ```
 :::
