@@ -921,6 +921,40 @@ Descriptor Objects_ are composed as follows:
             used to filter against the values returned from evaluation of the
             [JSONPath](https://goessner.net/articles/JsonPath/) string
             expressions in the `path` array.
+          - The object ****MAY**** contain a `predicate` property, and if
+            present its value ****MUST**** be an object comprised of the
+            following properties:
+            - The `predicate` object ****MUST**** contain exactly one of
+              `p_value` or `p_set`:
+              - `p_value` - A single value provided for use with the predicate
+                operations: `gt`, `lt`, `gte`, `lte`, `eq`, or `neq`. The value
+                of this property ****MUST**** be of the same type as the input
+                value, e.g., the `p_value` must be an integer if the input to
+                which it is to be compared is an integer.
+              - `p_set` - A set of values provided for use with the predicate
+                operations: `is_in` or `is_not_in`. The value of this property
+                ****MUST**** be a set of the same type as the input value, e.g.,
+                the `p_set` must be a set of integers if the input to which it
+                is to be compared is an integer.
+            - `operation` - The value of this property ****MUST**** be one of
+              the following strings:
+              - `gt` - The input is strictly greater than the provided `p_value`.
+              - `lt` - The input is strictly less than the provided `p_value`.
+              - `gte` - The input is greater than or equal to the provided
+                `p_value`.
+              - `lte` - The input is less than or equal to the provided
+                `p_value`.
+              - `eq` - The input is the same as the provided `p_value`.
+              - `neq` - The input is not the same as the provided `p_value`.
+              - `is_in` - The input is a member of the provided `p_set`.
+              - `is_not_in` - The input is not a member of the provided `p_set`.
+            - `required` - The value of this property ****MUST**** be a boolean.
+              Setting the property to `true` indicates that the returned value
+              ****MUST**** be a boolean derived from the input using the
+              provided `operation` and `value` properties. Setting the property
+              to `false` indicates that the returned value ****SHOULD**** be a
+              boolean derived from the input using the provided `operation` and
+              `value` properties.
 
 ### Input Evaluation
 
@@ -954,7 +988,11 @@ Evaluate each candidate input as follows:
       2. If the `filter` property of the field entry is present, validate the
         _Field Query Result_ from the step above against the
         [JSON Schema](https://json-schema.org/specification.html) descriptor value.
-      3. If the result is valid, proceed iterating the rest of the `fields` entries.
+      3. If the `predicate` property of the field entry is present, derive a
+        _Field Query Predicate_ boolean value using the value of the _Field
+        Query Result_ obtained above, according to the `operation` and `p_value`
+        or `p_set` provided in the `predicate` object.
+      4. If the result is valid, proceed iterating the rest of the `fields` entries.
   3. If all of the previous validation steps are successful, mark the candidate
     input as a match for use in a _Presentation Submission_, and if present at
     the top level of the _Input Descriptor_, keep a relative reference to the
