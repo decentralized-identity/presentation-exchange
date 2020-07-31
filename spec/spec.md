@@ -946,18 +946,22 @@ Descriptor Objects_ are composed as follows:
         Setting the property to `false`, or omitting the property, indicates
         the processing entity ****MAY**** submit a response that contains more
         than the data described in the `fields` array.
-      - The object ****MAY**** contain a `self_attested` property, and if
+      - The object ****MAY**** contain a `subject_is_issuer` property, and if
         present its value ****MUST**** be one of the following strings:
         - `required` - This indicates that the processing entity ****MUST****
-          submit a response provided by the Holder.
+          submit a response that has been _self-attested_, i.e., the credential
+          used in the presentation has been 'issued' by the subject of the
+          credential.
         - `allowed` - This indicates that the processing entity ****MAY****
-          submit a response provided by the Holder.
+          submit a response that has been _self-attested_, i.e., the credential
+          used in the presentation has been 'issued' by the subject of the
+          credential.
       
-        The `self_attested` property could be used by a Verifier to require that
-        certain inputs be provided by the Holder. For example, a college
+        The `subject_is_issuer` property could be used by a Verifier to require
+        that certain inputs be _self_attested_. For example, a college
         application `presentation definition` might contain an _Input Descriptor_
         object for an essay submission. In this case, the Verifier would be able
-        to indicate that the essay is required to be provided by the Holder. 
+        to require that the essay be provided by the one submits the application. 
         
       - The object ****MAY**** contain a `fields` property, and its value
         ****MUST**** be an array of
@@ -1034,10 +1038,10 @@ Evaluate each candidate input as follows:
     (for example: a Verifier may simply want to know a Holder has a valid,
     signed credential of a particular type, without disclosing any of the
     data it contains).
-  5. If the `constraints` property of the _Input Descriptor_ is present and it
-    contains a `self_attested` property set to the value `required`, ensure that
-    any submission of data in relation to the candidate input is provided by the
-    Holder.
+  5. If the `constraints` property of the _Input Descriptor_ is present, and it
+    contains a `subject_is_issuer` property set to the value `required`, ensure
+    that any submission of data in relation to the candidate input is fulfilled
+    using a _self_attested_ credential.
 
 ::: note
 The above evaluation process assumes the User Agent will test each candidate
