@@ -457,11 +457,20 @@ The following properties are for use at the top-level of the resource — all
 other properties that are not defined below MUST be ignored:
 
 - `name` - The resource ****MAY**** contain this property, and if present its
-value ****SHOULD**** be a human-friendly name that describes what the
-Presentation Definition pertains to.
+  value ****SHOULD**** be a human-friendly name that describes what the
+  Presentation Definition pertains to.
 - `purpose` - The resource ****MAY**** contain this property, and if present its
-value ****MUST**** be a string that describes the purpose for which the
-Presentation Definition's inputs are being requested.
+  value ****MUST**** be a string that describes the purpose for which the
+  Presentation Definition's inputs are being requested.
+- The resource ****MUST**** include a `format` property, and its value 
+  ****MUST**** be an object with one or more properties matching the registered 
+  [Credential Format Designations](#credential-format-designations) to inform the 
+  Holder of the credential format configurations the Verifier can process. The 
+  value for each property included ****MUST**** be an object composed as follows:
+    - The object ****MUST**** include an `algorithms` property, and its value 
+      ****MUST**** be an array of one or more of the format-specific algorithmic 
+      identifier references, as noted in the 
+      [Credential Format Designations](#credential-format-designations) section.
 - `submission_requirement` - The resource ****MAY**** contain this property,
   and if present, its value ****MUST**** conform to the Submission Requirement
   Format. If not present, all inputs listed in the `input_descriptors` array are
@@ -1138,18 +1147,22 @@ Definition_. Embedded _Presentation Submission_ objects ****MUST**** be located
 within target data format as a `presentation_submission` property, which are
 composed as follows:
 
-  - The object ****MUST**** include a `descriptor_map` property, and its value
-    ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being
-    composed as follows:
-      - The object ****MUST**** include an `id` property, and its value
-        ****MUST**** be a string matching the `id` property of the _Input
-        Descriptor_ in the _Presentation Definition_ the submission is related to.
-      - The object ****MUST**** include a `path` property, and its value
-        ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
-        string expression that selects the credential to be submit in relation
-        to the identified _Input Descriptor_ identified, when executed against
-        the top-level of the object the _Presentation Submission_ is embedded
-        within.
+- The object ****MUST**** include a `descriptor_map` property, and its value
+  ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being
+  composed as follows:
+    - The object ****MUST**** include an `id` property, and its value
+      ****MUST**** be a string matching the `id` property of the _Input
+      Descriptor_ in the _Presentation Definition_ the submission is related to.
+    - The object ****MUST**** include a `path` property, and its value
+      ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
+      string expression that selects the credential to be submit in relation
+      to the identified _Input Descriptor_ identified, when executed against
+      the top-level of the object the _Presentation Submission_ is embedded
+      within.
+    - The object ****MUST**** include a `format` property, and its value 
+      ****MUST**** be a string value matching one of the 
+      [Credential Format Designation](#credential-format-designations), 
+      to denote what data format the credential is being submitted in.
 
 If for all credentials submitted in relation to
 [_Input Descriptor Objects_](#input-descriptor-objects) that include a
@@ -1461,6 +1474,26 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
 ```
 
 </tab-panels>
+
+## Credential Format Designations
+
+Within the _Presentation Exchange_ specification, there are numerous sections 
+where Verifiers and Holders convey what credential variants they support and 
+are submitting. The following are the normalized references used within the 
+specification:
+
+- `jwt` - the supported format is a [JSON Web Token](https://tools.ietf.org/html/rfc7797) 
+  that will be submitted as a string, and wherever applicable, the expression of 
+  supported algorithms ****MUST**** be conveyed with identifiers from the 
+  [RFC 7518 JSON Web Algorithms](https://tools.ietf.org/html/rfc7518) registry.
+- `vc` - the supported format is a [Verifiable Credential](https://www.w3.org/TR/vc-data-model/) 
+  that will be submitted as an object, and wherever applicable, the expression of 
+  supported algorithms ****MUST**** be conveyed with identifiers from the 
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+- `vc-jwt` - the supported format is a [JWT-extended Verifiable Credential](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions)
+  that will be submitted as an object, and wherever applicable, the expression of 
+  supported algorithms ****MUST**** be conveyed with identifiers from the 
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 
 ## JSON Schema Vocabulary Definition
 
