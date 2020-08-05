@@ -462,15 +462,35 @@ other properties that are not defined below MUST be ignored:
 - `purpose` - The resource ****MAY**** contain this property, and if present its
   value ****MUST**** be a string that describes the purpose for which the
   Presentation Definition's inputs are being requested.
-- The resource ****MUST**** include a `format` property, and its value 
+- The resource ****MAY**** include a `format` property, and its value 
   ****MUST**** be an object with one or more properties matching the registered 
   [Credential Format Designations](#credential-format-designations) to inform the 
   Holder of the credential format configurations the Verifier can process. The 
   value for each property included ****MUST**** be an object composed as follows:
-    - The object ****MUST**** include an `algorithms` property, and its value 
+    - The object ****MAY**** include an `signatures` property, and its value 
       ****MUST**** be an array of one or more of the format-specific algorithmic 
       identifier references, as noted in the 
       [Credential Format Designations](#credential-format-designations) section.
+
+      ```json
+      {
+        "presentation_definition": {
+          "format": {
+            "jwt": {
+              "signatures": ["EdDSA", "ES256K", "ES384", "PS256"],
+            },
+            "vc": {
+              "signatures": [
+                "JsonWebSignature2020",
+                "Ed25519Signature2018",
+                "EcdsaSecp256k1Signature2019",
+                "RsaSignature2018"
+              ]
+            }
+          }
+        }
+      }
+      ```
 - `submission_requirement` - The resource ****MAY**** contain this property,
   and if present, its value ****MUST**** conform to the Submission Requirement
   Format. If not present, all inputs listed in the `input_descriptors` array are
