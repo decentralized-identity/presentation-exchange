@@ -467,7 +467,7 @@ other properties that are not defined below MUST be ignored:
   [Credential Format Designations](#credential-format-designations) to inform the 
   Holder of the credential format configurations the Verifier can process. The 
   value for each property included ****MUST**** be an object composed as follows:
-    - The object ****MAY**** include an `signatures` property, and its value 
+    - The object ****MAY**** include an `signature` property, and its value 
       ****MUST**** be an array of one or more of the format-specific algorithmic 
       identifier references, as noted in the 
       [Credential Format Designations](#credential-format-designations) section.
@@ -477,10 +477,10 @@ other properties that are not defined below MUST be ignored:
         "presentation_definition": {
           "format": {
             "jwt": {
-              "signatures": ["EdDSA", "ES256K", "ES384", "PS256"],
+              "signature": ["EdDSA", "ES256K", "ES384", "PS256"],
             },
             "vc": {
-              "signatures": [
+              "signature": [
                 "JsonWebSignature2020",
                 "Ed25519Signature2018",
                 "EcdsaSecp256k1Signature2019",
