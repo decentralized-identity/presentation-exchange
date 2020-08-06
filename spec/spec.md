@@ -479,6 +479,9 @@ other properties that are not defined below MUST be ignored:
             "jwt": {
               "signature": ["EdDSA", "ES256K", "ES384", "PS256"],
             },
+            "jwt-vc": {
+              "signature": ["EdDSA", "ES256K", "ES384", "PS256"]
+            },
             "vc": {
               "signature": [
                 "JsonWebSignature2020",
@@ -1502,18 +1505,15 @@ where Verifiers and Holders convey what credential variants they support and
 are submitting. The following are the normalized references used within the 
 specification:
 
-- `jwt` - the supported format is a [JSON Web Token](https://tools.ietf.org/html/rfc7797) 
+- `vc`, `vp` - these supported formats are defined in the 
+  [W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) specification,
+  and will be submitted as objects. Wherever applicable in this specification, 
+  the expression of supported algorithms ****MUST**** be conveyed with identifiers 
+  from the [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+- `jwt`, `jwt-vc`, `jwt-vp` - the supported format is a [JSON Web Token](https://tools.ietf.org/html/rfc7797) 
   that will be submitted as a string, and wherever applicable, the expression of 
   supported algorithms ****MUST**** be conveyed with identifiers from the 
   [RFC 7518 JSON Web Algorithms](https://tools.ietf.org/html/rfc7518) registry.
-- `vc` - the supported format is a [Verifiable Credential](https://www.w3.org/TR/vc-data-model/) 
-  that will be submitted as an object, and wherever applicable, the expression of 
-  supported algorithms ****MUST**** be conveyed with identifiers from the 
-  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
-- `vc-jwt` - the supported format is a [JWT-extended Verifiable Credential](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions)
-  that will be submitted as an object, and wherever applicable, the expression of 
-  supported algorithms ****MUST**** be conveyed with identifiers from the 
-  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 
 ## JSON Schema Vocabulary Definition
 
