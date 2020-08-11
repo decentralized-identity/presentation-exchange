@@ -22,7 +22,10 @@ Maintainers must be Working Group Participants selected by Working Group Partici
 
 ### Repository process
 
-The Repository process is an extension of the *Deliverable Development Process – Draft* section detailed in DIF’s Charter. The goal of this process is to introduce a repository management processes for the work section developed by the Working Group. 
+The Repository process is an extension of the *Deliverable Development
+Process – Draft* section detailed in DIF’s Charter. The goal of this process
+is to introduce a repository management processes for the work section
+developed by the Working Group. 
 
 Following the *Pre-Draft* proposal submission stage described in DIF’s Charter, the Draft Development Process goes through a three-state lightweight lifecycle tracked on GitHub by the Maintainers to signal the current status of each section.
 
@@ -69,4 +72,3 @@ Note:  when it comes to substantive changes, there are alternatives to the above
 3. depreciate current version of a standard, and write a new version together as a group or in a rechartered smaller group
 
 Once all expected sections of the Scope reach the STABLE stage the Working Group commences the work carried out during the Draft stage to Working Group Approved stage as described in DIF’s Charter. 
-
