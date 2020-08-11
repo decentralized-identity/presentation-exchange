@@ -84,10 +84,10 @@ will lead to issues for consensual/deliberative resolution. This merges Further
 validation and improvement of the section can/expected to be done via (code) 
 implementations and testing. 
 
-During periods of **normal mode** development, issue-linked PRs should allow 4-5
-business day for review and change requests.  During periods of **crunch mode**
-development, this may move as fast as 2 business days. At least two maintainers 
-should still review all PRs.
+During periods of **normal mode** development, issue-linked PRs should allow up 
+to 5 business day for review and change requests.  During periods of **crunch 
+mode** development, this window is reduced to 2 business days. At least two 
+maintainers should still review all PRs.
 
 
 #### Assigning section content in the STABLE state: 
@@ -96,8 +96,8 @@ when all of the following conditions are met:
 * There is quality code that demonstrates the concepts it describes.
 * There are no outstanding issues related to that section that the Working Group 
 Participants consider substantive.
-* The Working Group has at least 2 conformant implementations originated outside 
-of the Working Group 
+* The Working Group has at least 2 conformant implementations, at least 1 of
+which originated outside of the Working Group 
 
 When consensus has been arrived at that the above conditions have been reached, 
 the section enters a final 2-week comment period has elapsed without any 
@@ -122,4 +122,4 @@ as a group or in a rechartered smaller group
 
 Once all expected sections of the Scope reach the STABLE stage the Working 
 Group commences the work carried out during the Draft stage to Working Group
-Approved stage as described in DIF’s Charter. 
+Approved stage as described in DIF’s Charter.
