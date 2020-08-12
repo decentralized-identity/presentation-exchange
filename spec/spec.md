@@ -184,7 +184,8 @@ proofs may satisfy an input requirement.
             {
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {
-                "type": "date",
+                "type": "string",
+                "format": "date",
                 "minimum": "1999-5-16"
               }
             }
@@ -234,7 +235,8 @@ proofs may satisfy an input requirement.
             {
               "path": ["$.credentialSubject.dob", "$.vc.credentialSubject.dob", "$.dob"],
               "filter": {
-                "type": "date",
+                "type": "string",
+                "format": "date",
                 "maximum": "1999-5-16"
               }
             }
@@ -253,7 +255,8 @@ proofs may satisfy an input requirement.
             {
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {
-                "type": "date",
+                "type": "string",
+                "format": "date",
                 "maximum": "1999-5-16"
               }
             }
@@ -417,7 +420,8 @@ proofs may satisfy an input requirement.
             {
               "path": ["$.credentialSubject.dob", "$.vc.credentialSubject.dob", "$.dob"],
               "filter": {
-                "type": "date",
+                "type": "string",
+                "format": "date",
                 "minimum": "1999-5-16"
               }
             }
@@ -436,7 +440,8 @@ proofs may satisfy an input requirement.
             {
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {
-                "type": "date",
+                "type": "string",
+                "format": "date",
                 "minimum": "1999-5-16"
               }
             }
@@ -1074,6 +1079,7 @@ format-related rules above:
           "type": "object",
           "properties": {
             "type": { "type": "string" },
+            "format": { "type": "string" },
             "pattern": { "type": "string" },
             "minimum": { "type": "string" },
             "minLength": { "type": "integer" },
