@@ -467,9 +467,10 @@ other properties that are not defined below MUST be ignored:
   [Credential Format Designations](#credential-format-designations) to inform the 
   Holder of the credential format configurations the Verifier can process. The 
   value for each property included ****MUST**** be an object composed as follows:
-    - The object ****MAY**** include an `signature` property, and its value 
-      ****MUST**** be an array of one or more of the format-specific algorithmic 
-      identifier references, as noted in the 
+    - The object ****MAY**** include a format-specific property (i.e. `alg`, `type`) 
+      that expresses which algorithms the Verifier supports for the format, and if 
+      present, its value ****MUST**** be an array of one or more of the 
+      format-specific algorithmic identifier references, as noted in the 
       [Credential Format Designations](#credential-format-designations) section.
 
       ```json
@@ -477,16 +478,29 @@ other properties that are not defined below MUST be ignored:
         "presentation_definition": {
           "format": {
             "jwt": {
-              "signature": ["EdDSA", "ES256K", "ES384", "PS256"],
+              "alg": ["EdDSA", "ES256K", "ES384", "PS256"]
             },
             "jwt-vc": {
-              "signature": ["EdDSA", "ES256K", "ES384", "PS256"]
+              "alg": ["EdDSA", "ES256K", "ES384", "PS256"]
+            },
+            "jwt-vp": {
+              "alg": ["EdDSA", "ES256K", "ES384", "PS256"]
             },
             "vc": {
-              "signature": [
+              "type": [
                 "JsonWebSignature2020",
                 "Ed25519Signature2018",
                 "EcdsaSecp256k1Signature2019",
+                "RsaSignature2018"
+              ]
+            },
+            "vp": {
+              "type": [
+                "Ed25519Signature2018"
+              ]
+            },
+            "ldp": {
+              "type": [
                 "RsaSignature2018"
               ]
             }
@@ -522,7 +536,7 @@ verifying parties can use to specify which combinations of inputs are acceptable
 All members of the `submission_requirements` array ****MUST**** be satisfied.
 
 ::: example Submission Requirement
-```json
+```json 12
   "submission_requirements": [
     {
       "name": "Banking Information",
@@ -1520,15 +1534,27 @@ where Verifiers and Holders convey what credential variants they support and
 are submitting. The following are the normalized references used within the 
 specification:
 
-- `vc`, `vp` - these supported formats are defined in the 
-  [W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) specification,
-  and will be submitted as objects. Wherever applicable in this specification, 
-  the expression of supported algorithms ****MUST**** be conveyed with identifiers 
-  from the [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
-- `jwt`, `jwt-vc`, `jwt-vp` - the supported format is a [JSON Web Token](https://tools.ietf.org/html/rfc7797) 
-  that will be submitted as a string, and wherever applicable, the expression of 
-  supported algorithms ****MUST**** be conveyed with identifiers from the 
+- `jwt` - the format is a [JSON Web Token](https://tools.ietf.org/html/rfc7797) 
+  that will be submitted in the form of a JWT encoded string. Expression of 
+  supported algorithms in relation to this format ****MUST**** be conveyed using an `alg` property 
+  paired with values that are identifiers from the 
   [RFC 7518 JSON Web Algorithms](https://tools.ietf.org/html/rfc7518) registry.
+- `jwt-vc`, `jwt-vp` - these formats are [JSON Web Tokens](https://tools.ietf.org/html/rfc7797) 
+  that will be submitted in the form of a JWT encoded string, and the body of the decoded 
+  JWT string is defined in the [JSON Web Token section](https://www.w3.org/TR/vc-data-model/#json-web-token) 
+  of the W3C Verifiable Credentials specification. Expression of supported algorithms in 
+  relation to these formats ****MUST**** be conveyed using an `alg` property paired with values that 
+  are identifiers from the [RFC 7518 JSON Web Algorithms](https://tools.ietf.org/html/rfc7518) registry. 
+- `vc`, `vp` - these formats are [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) 
+  that will be submitted in the form of a JSON object. Expression of supported 
+  algorithms in relation to these formats ****MUST**** be conveyed using a `type` property 
+  paired with values that are identifiers from the 
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+- `ldp` - this format is defined in the [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/) 
+  specification, and will be submitted as objects. Expression of supported algorithms 
+  in relation to these formats ****MUST**** be conveyed using a `type` property 
+  with values that are identifiers from the 
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 
 ## JSON Schema Vocabulary Definition
 
