@@ -464,13 +464,14 @@ other properties that are not defined below MUST be ignored:
   Presentation Definition's inputs are being requested.
 - The resource ****MAY**** include a `format` property, and its value 
   ****MUST**** be an object with one or more properties matching the registered 
-  [Credential Format Designations](#credential-format-designations) to inform the 
-  Holder of the credential format configurations the Verifier can process. The 
-  value for each property included ****MUST**** be an object composed as follows:
-    - The object ****MAY**** include a format-specific property (i.e. `alg`, `type`) 
-      that expresses which algorithms the Verifier supports for the format, and if 
-      present, its value ****MUST**** be an array of one or more of the 
-      format-specific algorithmic identifier references, as noted in the 
+  [Credential Format Designations](#credential-format-designations) (`jwt`, 
+  `jwt_vc`, `jwt_vp`, etc.) to inform the Holder of the credential format 
+  configurations the Verifier can process. The value for each property included 
+  ****MUST**** be an object composed as follows:
+    - The object ****MAY**** include a format-specific property (i.e. `alg`, 
+      `proof_type`) that expresses which algorithms the Verifier supports for the 
+      format, and if present, its value ****MUST**** be an array of one or more 
+      of the format-specific algorithmic identifier references, as noted in the 
       [Credential Format Designations](#credential-format-designations) section.
 
       ```json
@@ -478,29 +479,29 @@ other properties that are not defined below MUST be ignored:
         "presentation_definition": {
           "format": {
             "jwt": {
-              "alg": ["EdDSA", "ES256K", "ES384", "PS256"]
+              "alg": ["EdDSA", "ES256K", "ES384"]
             },
-            "jwt-vc": {
-              "alg": ["EdDSA", "ES256K", "ES384", "PS256"]
+            "jwt_vc": {
+              "alg": ["ES256K", "ES384"]
             },
-            "jwt-vp": {
-              "alg": ["EdDSA", "ES256K", "ES384", "PS256"]
+            "jwt_vp": {
+              "alg": ["EdDSA", "ES256K"]
             },
-            "vc": {
-              "type": [
+            "ldp_vc": {
+              "proof_type": [
                 "JsonWebSignature2020",
                 "Ed25519Signature2018",
                 "EcdsaSecp256k1Signature2019",
                 "RsaSignature2018"
               ]
             },
-            "vp": {
-              "type": [
+            "ldp_vp": {
+              "proof_type": [
                 "Ed25519Signature2018"
               ]
             },
             "ldp": {
-              "type": [
+              "proof_type": [
                 "RsaSignature2018"
               ]
             }
@@ -1198,8 +1199,9 @@ composed as follows:
       within.
     - The object ****MUST**** include a `format` property, and its value 
       ****MUST**** be a string value matching one of the 
-      [Credential Format Designation](#credential-format-designations), 
-      to denote what data format the credential is being submitted in.
+      [Credential Format Designation](#credential-format-designations) (`jwt`, 
+      `jwt_vc`, `jwt_vp`), to denote what data format the credential is being 
+      submitted in.
 
 If for all credentials submitted in relation to
 [_Input Descriptor Objects_](#input-descriptor-objects) that include a
@@ -1256,14 +1258,17 @@ credentials within the target data structure.
     "descriptor_map": [
       {
         "id": "banking_input_2",
+        "format": "jwt_vc",
         "path": "$.verifiableCredential.[0]"
       },
       {
         "id": "employment_input",
+        "format": "ldp_vc",
         "path": "$.verifiableCredential.[1]"
       },
       {
         "id": "citizenship_input_1",
+        "format": "ldp_vc",
         "path": "$.verifiableCredential.[2]"
       }
     ]
@@ -1359,14 +1364,17 @@ credentials within the target data structure.
     "descriptor_map": [
       {
         "id": "banking_input_2",
+        "format": "jwt",
         "path": "$._claim_sources.banking_input_2.JWT"
       },
       {
         "id": "employment_input",
+        "format": "jwt_vc",
         "path": "$._claim_sources.employment_input.VC_JWT"
       },
       {
         "id": "citizenship_input_1",
+        "format": "ldp_vc",
         "path": "$._claim_sources.citizenship_input_1.VC"
       }
     ]
@@ -1539,20 +1547,20 @@ specification:
   supported algorithms in relation to this format ****MUST**** be conveyed using an `alg` property 
   paired with values that are identifiers from the 
   [RFC 7518 JSON Web Algorithms](https://tools.ietf.org/html/rfc7518) registry.
-- `jwt-vc`, `jwt-vp` - these formats are [JSON Web Tokens](https://tools.ietf.org/html/rfc7797) 
+- `jwt_vc`, `jwt_vp` - these formats are [JSON Web Tokens](https://tools.ietf.org/html/rfc7797) 
   that will be submitted in the form of a JWT encoded string, and the body of the decoded 
   JWT string is defined in the [JSON Web Token section](https://www.w3.org/TR/vc-data-model/#json-web-token) 
   of the W3C Verifiable Credentials specification. Expression of supported algorithms in 
   relation to these formats ****MUST**** be conveyed using an `alg` property paired with values that 
   are identifiers from the [RFC 7518 JSON Web Algorithms](https://tools.ietf.org/html/rfc7518) registry. 
-- `vc`, `vp` - these formats are [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) 
+- `ldp_vc`, `ldp_vp` - these formats are [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) 
   that will be submitted in the form of a JSON object. Expression of supported 
-  algorithms in relation to these formats ****MUST**** be conveyed using a `type` property 
+  algorithms in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
   paired with values that are identifiers from the 
   [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 - `ldp` - this format is defined in the [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/) 
   specification, and will be submitted as objects. Expression of supported algorithms 
-  in relation to these formats ****MUST**** be conveyed using a `type` property 
+  in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
   with values that are identifiers from the 
   [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 
