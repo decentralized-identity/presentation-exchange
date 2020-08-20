@@ -476,6 +476,56 @@ Presentation Definition pertains to.</li>
 <li><code>purpose</code> - The resource <strong><strong>MAY</strong></strong> contain this property, and if present its
 value <strong><strong>MUST</strong></strong> be a string that describes the purpose for which the
 Presentation Definition’s inputs are being requested.</li>
+<li>The resource <strong><strong>MAY</strong></strong> include a <code>format</code> property, and its value
+<strong><strong>MUST</strong></strong> be an object with one or more properties matching the registered
+<a href="#credential-format-designations">Credential Format Designations</a> (<code>jwt</code>,
+<code>jwt_vc</code>, <code>jwt_vp</code>, etc.) to inform the Holder of the credential format
+configurations the Verifier can process. The value for each property included
+<strong><strong>MUST</strong></strong> be an object composed as follows:
+<ul>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> include a format-specific property (i.e. <code>alg</code>,
+<code>proof_type</code>) that expresses which algorithms the Verifier supports for the
+format, and if present, its value <strong><strong>MUST</strong></strong> be an array of one or more
+of the format-specific algorithmic identifier references, as noted in the
+<a href="#credential-format-designations">Credential Format Designations</a> section.</p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"format"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"jwt"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"alg"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"EdDSA"</span><span class="token punctuation">,</span> <span class="token string">"ES256K"</span><span class="token punctuation">,</span> <span class="token string">"ES384"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"jwt_vc"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"alg"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"ES256K"</span><span class="token punctuation">,</span> <span class="token string">"ES384"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"jwt_vp"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"alg"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"EdDSA"</span><span class="token punctuation">,</span> <span class="token string">"ES256K"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"ldp_vc"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"proof_type"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">"JsonWebSignature2020"</span><span class="token punctuation">,</span>
+          <span class="token string">"Ed25519Signature2018"</span><span class="token punctuation">,</span>
+          <span class="token string">"EcdsaSecp256k1Signature2019"</span><span class="token punctuation">,</span>
+          <span class="token string">"RsaSignature2018"</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"ldp_vp"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"proof_type"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">"Ed25519Signature2018"</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"ldp"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"proof_type"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">"RsaSignature2018"</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+</li>
 <li><code>submission_requirement</code> - The resource <strong><strong>MAY</strong></strong> contain this property,
 and if present, its value <strong><strong>MUST</strong></strong> conform to the Submission Requirement
 Format. If not present, all inputs listed in the <code>input_descriptors</code> array are
@@ -1140,6 +1190,11 @@ string expression that selects the credential to be submit in relation
 to the identified <em>Input Descriptor</em> identified, when executed against
 the top-level of the object the <em>Presentation Submission</em> is embedded
 within.</li>
+<li>The object <strong><strong>MUST</strong></strong> include a <code>format</code> property, and its value
+<strong><strong>MUST</strong></strong> be a string value matching one of the
+<a href="#credential-format-designations">Credential Format Designation</a> (<code>jwt</code>,
+<code>jwt_vc</code>, <code>jwt_vp</code>), to denote what data format the credential is being
+submitted in.</li>
 </ul>
 </li>
 </ul>
@@ -1188,14 +1243,17 @@ credentials within the target data structure.</p>
     <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
+        <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"jwt_vc"</span><span class="token punctuation">,</span>
         <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.verifiableCredential.[0]"</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input"</span><span class="token punctuation">,</span>
+        <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"ldp_vc"</span><span class="token punctuation">,</span>
         <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.verifiableCredential.[1]"</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"citizenship_input_1"</span><span class="token punctuation">,</span>
+        <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"ldp_vc"</span><span class="token punctuation">,</span>
         <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.verifiableCredential.[2]"</span>
       <span class="token punctuation">}</span>
     <span class="token punctuation">]</span>
@@ -1286,14 +1344,17 @@ credentials within the target data structure.</p>
     <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
+        <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"jwt"</span><span class="token punctuation">,</span>
         <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$._claim_sources.banking_input_2.JWT"</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input"</span><span class="token punctuation">,</span>
+        <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"jwt_vc"</span><span class="token punctuation">,</span>
         <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$._claim_sources.employment_input.VC_JWT"</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"citizenship_input_1"</span><span class="token punctuation">,</span>
+        <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"ldp_vc"</span><span class="token punctuation">,</span>
         <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$._claim_sources.citizenship_input_1.VC"</span>
       <span class="token punctuation">}</span>
     <span class="token punctuation">]</span>
@@ -1307,18 +1368,18 @@ credentials within the target data structure.</p>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token property">"_claim_sources"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"banking_input_2"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"JWT"</span><span class="token operator">:</span> "eyJhbGciOiJSUzI<span class="token number">1</span>NiIsInR<span class="token number">5</span>cCI<span class="token number">6</span>IkpXVCJ<span class="token number">9.</span>eyJpc<span class="token number">3</span>MiOiJodHRwcz
-      ovL<span class="token number">3</span>NlcnZlci<span class="token number">5</span>vdGhlcm<span class="token number">9</span>wLmNvbSIsInN<span class="token number">1</span>YiI<span class="token number">6</span>ImU<span class="token number">4</span>MTQ<span class="token number">4</span>NjAzLTg<span class="token number">5</span>MzQtNDI<span class="token number">0</span>N
-      S<span class="token number">04</span>MjViLWMxMDhiOGI<span class="token number">2</span>Yjk<span class="token number">0</span>NSIsInZlcmlmaWVkX<span class="token number">2</span>NsYWltcyI<span class="token number">6</span>eyJ<span class="token number">2</span>ZXJpZmlj
-      YXRpb<span class="token number">24</span>iOnsidHJ<span class="token number">1</span>c<span class="token number">3</span>RfZnJhbWV<span class="token number">3</span>b<span class="token number">3</span>JrIjoiaWFsX<span class="token number">2</span>V<span class="token number">4</span>YW<span class="token number">1</span>wbGVfZ<span class="token number">29</span>sZCJ<span class="token number">9</span>LCJ
-      jbGFpbXMiOnsiZ<span class="token number">2</span>l<span class="token number">2</span>ZW<span class="token number">5</span>fbmFtZSI<span class="token number">6</span>Ik<span class="token number">1</span>heCIsImZhbWlseV<span class="token number">9</span>uYW<span class="token number">1</span>lIjoiTWVpZX
-      IiLCJiaXJ<span class="token number">0</span>aGRhdGUiOiIxOTU<span class="token number">2</span>LTAxLTI<span class="token number">4</span>In<span class="token number">19</span>fQ.FArlPUtUVn<span class="token number">95</span>HCExePlWJQ
-      <span class="token number">6</span>ctVfVpQyeSbe<span class="token number">3</span>xkH<span class="token number">9</span>MH<span class="token number">1</span>QJjnk<span class="token number">5</span>GVbBW<span class="token number">0</span>qe<span class="token number">1</span>b<span class="token number">7</span>R<span class="token number">3</span>lE<span class="token number">-8</span>iVv__<span class="token number">0</span>mhRTUI<span class="token number">5</span>lcFhLj
-      oGjDS<span class="token number">8</span>zgWSarVsEEjwBK<span class="token number">7</span>WD<span class="token number">3</span>r<span class="token number">9</span>cEw<span class="token number">6</span>ZAhfEkhHL<span class="token number">9</span>eqAaED<span class="token number">2</span>rhhDbHD<span class="token number">5</span>dZWXkJCu
-      XIcn<span class="token number">65</span>g<span class="token number">6</span>rryiBanxlXK<span class="token number">0</span>ZmcK<span class="token number">4</span>fD<span class="token number">9</span>HV<span class="token number">9</span>MFduk<span class="token number">0</span>LRG_p<span class="token number">4</span>yocMaFvVkqawat<span class="token number">5</span>NV<span class="token number">9</span>QQ
-      <span class="token number">3</span>ij<span class="token number">7</span>UBr<span class="token number">3</span>G<span class="token number">7</span>A<span class="token number">4</span>FojcKEkoJKScdGoozir<span class="token number">8</span>m<span class="token number">5</span>XD<span class="token number">83</span>Sn<span class="token number">45</span>_<span class="token number">79</span>nCcgWSnCX<span class="token number">2</span>QTukL<span class="token number">8</span>Ny
-      wIItu_K<span class="token number">48</span>cjHiAGXXSzydDm_ccGCe<span class="token number">0</span>sY-Ai<span class="token number">2</span>-iFFuQo<span class="token number">2</span>PtfuK<span class="token number">2</span>SqPPmAZJxEFrF
-      oLY<span class="token number">4</span>g"
+      <span class="token property">"JWT"</span><span class="token operator">:</span> "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwcz
+      ovL3NlcnZlci5vdGhlcm9wLmNvbSIsInN1YiI6ImU4MTQ4NjAzLTg5MzQtNDI0N
+      S04MjViLWMxMDhiOGI2Yjk0NSIsInZlcmlmaWVkX2NsYWltcyI6eyJ2ZXJpZmlj
+      YXRpb24iOnsidHJ1c3RfZnJhbWV3b3JrIjoiaWFsX2V4YW1wbGVfZ29sZCJ9LCJ
+      jbGFpbXMiOnsiZ2l2ZW5fbmFtZSI6Ik1heCIsImZhbWlseV9uYW1lIjoiTWVpZX
+      IiLCJiaXJ0aGRhdGUiOiIxOTU2LTAxLTI4In19fQ.FArlPUtUVn95HCExePlWJQ
+      6ctVfVpQyeSbe3xkH9MH1QJjnk5GVbBW0qe1b7R3lE-8iVv__0mhRTUI5lcFhLj
+      oGjDS8zgWSarVsEEjwBK7WD3r9cEw6ZAhfEkhHL9eqAaED2rhhDbHD5dZWXkJCu
+      XIcn65g6rryiBanxlXK0ZmcK4fD9HV9MFduk0LRG_p4yocMaFvVkqawat5NV9QQ
+      3ij7UBr3G7A4FojcKEkoJKScdGoozir8m5XD83Sn45_79nCcgWSnCX2QTukL8Ny
+      wIItu_K48cjHiAGXXSzydDm_ccGCe0sY-Ai2-iFFuQo2PtfuK2SqPPmAZJxEFrF
+      oLY4g"
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token property">"employment_input"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"VC"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -1439,6 +1500,34 @@ credentials within the target data structure.</p>
 <span class="token punctuation">}</span>
 </code></pre>
 </tab-panels>
+<h2 id="credential-format-designations"><a class="toc-anchor" href="#credential-format-designations">§</a> Credential Format Designations</h2>
+<p>Within the <em>Presentation Exchange</em> specification, there are numerous sections
+where Verifiers and Holders convey what credential variants they support and
+are submitting. The following are the normalized references used within the
+specification:</p>
+<ul>
+<li><code>jwt</code> - the format is a <a href="https://tools.ietf.org/html/rfc7797">JSON Web Token</a>
+that will be submitted in the form of a JWT encoded string. Expression of
+supported algorithms in relation to this format <strong><strong>MUST</strong></strong> be conveyed using an <code>alg</code> property
+paired with values that are identifiers from the
+<a href="https://tools.ietf.org/html/rfc7518">RFC 7518 JSON Web Algorithms</a> registry.</li>
+<li><code>jwt_vc</code>, <code>jwt_vp</code> - these formats are <a href="https://tools.ietf.org/html/rfc7797">JSON Web Tokens</a>
+that will be submitted in the form of a JWT encoded string, and the body of the decoded
+JWT string is defined in the <a href="https://www.w3.org/TR/vc-data-model/#json-web-token">JSON Web Token section</a>
+of the W3C Verifiable Credentials specification. Expression of supported algorithms in
+relation to these formats <strong><strong>MUST</strong></strong> be conveyed using an <code>alg</code> property paired with values that
+are identifiers from the <a href="https://tools.ietf.org/html/rfc7518">RFC 7518 JSON Web Algorithms</a> registry.</li>
+<li><code>ldp_vc</code>, <code>ldp_vp</code> - these formats are <a href="https://www.w3.org/TR/vc-data-model/">Verifiable Credentials</a>
+that will be submitted in the form of a JSON object. Expression of supported
+algorithms in relation to these formats <strong><strong>MUST</strong></strong> be conveyed using a <code>proof_type</code> property
+paired with values that are identifiers from the
+<a href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data Cryptographic Suite Registry</a>.</li>
+<li><code>ldp</code> - this format is defined in the <a href="https://w3c-ccg.github.io/ld-proofs/">W3C CCG Linked Data Proofs</a>
+specification, and will be submitted as objects. Expression of supported algorithms
+in relation to these formats <strong><strong>MUST</strong></strong> be conveyed using a <code>proof_type</code> property
+with values that are identifiers from the
+<a href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data Cryptographic Suite Registry</a>.</li>
+</ul>
 <h2 id="json-schema-vocabulary-definition"><a class="toc-anchor" href="#json-schema-vocabulary-definition">§</a> JSON Schema Vocabulary Definition</h2>
 <p>The <em>Presentation Exchange</em> specification adopts and defines the following JSON
 Schema data format and processing variant, which implementers <strong><strong>MUST</strong></strong>
@@ -1728,6 +1817,7 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="#json-schema-3">JSON Schema</a></li>
 </ul>
 </li>
+<li><a href="#credential-format-designations">Credential Format Designations</a></li>
 <li><a href="#json-schema-vocabulary-definition">JSON Schema Vocabulary Definition</a></li>
 <li><a href="#jsonpath-syntax-definition">JSONPath Syntax Definition</a></li>
 <li><a href="#appendix">Appendix</a>
