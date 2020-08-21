@@ -1376,7 +1376,6 @@ credentials within the target data structure.
       }
     }
   ],
-
   "proof": {
     "type": "RsaSignature2018",
     "created": "2018-09-14T21:19:10Z",
