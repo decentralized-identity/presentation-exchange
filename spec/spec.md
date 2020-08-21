@@ -1040,6 +1040,37 @@ format-related rules above:
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "format": {
+      "type": "object",
+      "patternProperties": {
+        "^jwt$|^jwt_vc$|^jwt_vp$": {
+          "type": "object",
+          "properties": {
+            "alg": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string" }
+            }
+          },
+          "required": ["alg"],
+          "additionalProperties": false
+        },
+        "^ldp_vc$|^ldp_vp$|^ldp$": {
+          "type": "object",
+          "properties": {
+            "proof_type": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string" }
+            }
+          },
+          "required": ["proof_type"],
+          "additionalProperties": false
+        }, 
+        "additionalProperties": false  
+      },
+      "additionalProperties": false
+    },
     "submission_requirements": {
       "type": "object",
       "oneOf": [
@@ -1145,15 +1176,18 @@ format-related rules above:
     "presentation_definition": {
       "type": "object",
       "properties": {
+        "name": { "type": "string" },
+        "purpose": { "type": "string" },
         "locale": { "type": "string" },
+        "format": { "$ref": "#/definitions/format"},
         "submission_requirements": {
-          "type:": "array",
+          "type": "array",
           "items": {
             "$ref": "#/definitions/submission_requirements"
           }
         },
         "input_descriptors": {
-          "type:": "array",
+          "type": "array",
           "items": { "$ref": "#/definitions/input_descriptors" }
         }
       },
@@ -1528,9 +1562,13 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
       "type": "object",
       "properties": {
         "id": { "type": "string" },
-        "path": { "type": "string" }
+        "path": { "type": "string" },
+        "format": { 
+          "type": "string",
+          "enum": ["jwt", "jwt_vc", "jwt_vp", "ldp", "ldp_vc", "ldp_vp"]
+        }
       },
-      "required": ["id", "path"],
+      "required": ["id", "path", "format"],
       "additionalProperties": false
     }
   },
