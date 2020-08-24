@@ -3,15 +3,18 @@
     "descriptor_map": [
       {
         "id": "banking_input_2",
-        "path": "$.verifiableCredential.[0]"
+        "path": "$.verifiableCredential.[0]",
+        "format": "jwt"
       },
       {
         "id": "employment_input",
-        "path": "$.verifiableCredential.[1]"
+        "path": "$.verifiableCredential.[1]",
+        "format": "ldp_vc"
       },
       {
         "id": "citizenship_input_1",
-        "path": "$.verifiableCredential.[2]"
+        "path": "$.verifiableCredential.[2]",
+        "format": "jwt_vp"
       }
     ]
   }
