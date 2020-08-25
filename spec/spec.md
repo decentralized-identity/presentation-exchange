@@ -952,16 +952,31 @@ Descriptor Objects_ are composed as follows:
           submit a response that has been _self-attested_, i.e., the credential
           used in the presentation has been 'issued' by the subject of the
           credential.
-        - `allowed` - This indicates that the processing entity ****MAY****
-          submit a response that has been _self-attested_, i.e., the credential
-          used in the presentation has been 'issued' by the subject of the
-          credential.
+        - `preferred` - This indicates that it is ****RECOMMENDED**** that the
+          processing entity submit a response that has been _self-attested_,
+          i.e., the credential used in the presentation has been 'issued' by the
+          subject of the credential.
       
         The `subject_is_issuer` property could be used by a Verifier to require
         that certain inputs be _self_attested_. For example, a college
         application `presentation definition` might contain an _Input Descriptor_
         object for an essay submission. In this case, the Verifier would be able
         to require that the essay be provided by the one submits the application. 
+      - The object ****MAY**** contain a `subject_is_holder` property, and if
+        present its value ****MUST**** be one of the following strings:
+        - `required` - This indicates that the processing entity ****MUST****
+          include proof that the subject of the credential is the same as the
+          entity submitting the response.
+        - `preferred` - This indicates that it is ****RECOMMENDED**** that the
+          processing entity include proof that the subject of the credential is
+          the same as the entity submitting the response, i.e., the holder.
+      
+        The `subject_is_holder` property could be used by a Verifier to require
+        that certain inputs be provided by e subject. For example, an identity
+        verification `presentation definition` might contain an _Input
+        Descriptor_ object for a passport number. In this case, the Verifier
+        would be able to require that the passport credential was issued to the
+        one who submits the identity verification. 
         
       - The object ****MAY**** contain a `fields` property, and its value
         ****MUST**** be an array of
@@ -1042,6 +1057,10 @@ Evaluate each candidate input as follows:
     contains a `subject_is_issuer` property set to the value `required`, ensure
     that any submission of data in relation to the candidate input is fulfilled
     using a _self_attested_ credential.
+  6. If the `constraints` property of the _Input Descriptor_ is present, and it
+    contains a `subject_is_holder` property set to the value `required`, ensure
+    that any submission of data in relation to the candidate input is fulfilled
+    by the subject of the credential
 
 ::: note
 The above evaluation process assumes the User Agent will test each candidate
