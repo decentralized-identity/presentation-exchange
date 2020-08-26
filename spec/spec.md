@@ -1177,6 +1177,14 @@ format-related rules above:
             "fields": {
               "type": "array",
               "items": { "$ref": "#/definitions/field" }
+            },
+            "subject_is_issuer": { 
+              "type": "string",
+              "enum": [ "required", "preferred" ]
+            },
+            "subject_is_holder": { 
+              "type": "string",
+              "enum": [ "required", "preferred" ]
             }
           },
           "additionalProperties": false

@@ -37,6 +37,7 @@
           "name": "US Passport"
         },
         "constraints": {
+          "subject_is_holder": "required",
           "fields": [
             {
               "path": [
