@@ -925,17 +925,57 @@ the credential in question.</li>
 <li>The object <strong><strong>MAY</strong></strong> contain a <code>constraints</code> property, and its value
 <strong><strong>MUST</strong></strong> be an object composed as follows:
 <ul>
-<li>The object <strong><strong>MAY</strong></strong> contain a <code>limit_disclosure</code> property, and if
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain a <code>limit_disclosure</code> property, and if
 present its value <strong><strong>MUST</strong></strong> be a boolean value. Setting the property
 to <code>true</code> indicates that the processing entity <strong><strong>SHOULD NOT</strong></strong> submit
 any fields beyond those listed in the <code>fields</code> array (if present).
 Setting the property to <code>false</code>, or omitting the property, indicates
 the processing entity <strong><strong>MAY</strong></strong> submit a response that contains more
-than the data described in the <code>fields</code> array.</li>
-<li>The object <strong><strong>MAY</strong></strong> contain a <code>fields</code> property, and its value
+than the data described in the <code>fields</code> array.</p>
+</li>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain a <code>subject_is_issuer</code> property, and if
+present its value <strong><strong>MUST</strong></strong> be one of the following strings:</p>
+<ul>
+<li><code>required</code> - This indicates that the processing entity <strong><strong>MUST</strong></strong>
+submit a response that has been <em>self-attested</em>, i.e., the credential
+used in the presentation has been ‘issued’ by the subject of the
+credential.</li>
+<li><code>preferred</code> - This indicates that it is <strong><strong>RECOMMENDED</strong></strong> that the
+processing entity submit a response that has been <em>self-attested</em>,
+i.e., the credential used in the presentation has been ‘issued’ by the
+subject of the credential.</li>
+</ul>
+<p>The <code>subject_is_issuer</code> property could be used by a Verifier to require
+that certain inputs be <em>self_attested</em>. For example, a college
+application <code>presentation definition</code> might contain an <em>Input Descriptor</em>
+object for an essay submission. In this case, the Verifier would be able
+to require that the essay be provided by the one submits the application.</p>
+</li>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain a <code>subject_is_holder</code> property, and if
+present its value <strong><strong>MUST</strong></strong> be one of the following strings:</p>
+<ul>
+<li><code>required</code> - This indicates that the processing entity <strong><strong>MUST</strong></strong>
+include proof that the subject of the credential is the same as the
+entity submitting the response.</li>
+<li><code>preferred</code> - This indicates that it is <strong><strong>RECOMMENDED</strong></strong> that the
+processing entity include proof that the subject of the credential is
+the same as the entity submitting the response, i.e., the holder.</li>
+</ul>
+<p>The <code>subject_is_holder</code> property could be used by a Verifier to require
+that certain inputs be provided by e subject. For example, an identity
+verification <code>presentation definition</code> might contain an <em>Input
+Descriptor</em> object for a passport number. In this case, the Verifier
+would be able to require that the passport credential was issued to the
+one who submits the identity verification.</p>
+</li>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain a <code>fields</code> property, and its value
 <strong><strong>MUST</strong></strong> be an array of
 <a href="#input-descriptor-field-entry"><em>Input Descriptor Field Entry</em></a> objects,
-each being composed as follows:
+each being composed as follows:</p>
 <ul>
 <li>The object <strong><strong>MUST</strong></strong> contain a <code>path</code> property, and its value
 <strong><strong>MUST</strong></strong> be an array of one or more
@@ -1014,6 +1054,14 @@ submission <strong><strong>SHOULD NOT</strong></strong> include any claim data f
 (for example: a Verifier may simply want to know a Holder has a valid,
 signed credential of a particular type, without disclosing any of the
 data it contains).</li>
+<li>If the <code>constraints</code> property of the <em>Input Descriptor</em> is present, and it
+contains a <code>subject_is_issuer</code> property set to the value <code>required</code>, ensure
+that any submission of data in relation to the candidate input is fulfilled
+using a <em>self_attested</em> credential.</li>
+<li>If the <code>constraints</code> property of the <em>Input Descriptor</em> is present, and it
+contains a <code>subject_is_holder</code> property set to the value <code>required</code>, ensure
+that any submission of data in relation to the candidate input is fulfilled
+by the subject of the credential</li>
 </ol>
 <div id="note-1" class="notice note"><a class="notice-link" href="#note-1">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
@@ -1126,6 +1174,14 @@ format-related rules above:</p>
             <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
               <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/field"</span> <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"subject_is_issuer"</span><span class="token operator">:</span> <span class="token punctuation">{</span> 
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+              <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"preferred"</span> <span class="token punctuation">]</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"subject_is_holder"</span><span class="token operator">:</span> <span class="token punctuation">{</span> 
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+              <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"preferred"</span> <span class="token punctuation">]</span>
             <span class="token punctuation">}</span>
           <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
@@ -1401,18 +1457,18 @@ credentials within the target data structure.</p>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token property">"_claim_sources"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"banking_input_2"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"JWT"</span><span class="token operator">:</span> "eyJhbGciOiJSUzI<span class="token number">1</span>NiIsInR<span class="token number">5</span>cCI<span class="token number">6</span>IkpXVCJ<span class="token number">9.</span>eyJpc<span class="token number">3</span>MiOiJodHRwcz
-      ovL<span class="token number">3</span>NlcnZlci<span class="token number">5</span>vdGhlcm<span class="token number">9</span>wLmNvbSIsInN<span class="token number">1</span>YiI<span class="token number">6</span>ImU<span class="token number">4</span>MTQ<span class="token number">4</span>NjAzLTg<span class="token number">5</span>MzQtNDI<span class="token number">0</span>N
-      S<span class="token number">04</span>MjViLWMxMDhiOGI<span class="token number">2</span>Yjk<span class="token number">0</span>NSIsInZlcmlmaWVkX<span class="token number">2</span>NsYWltcyI<span class="token number">6</span>eyJ<span class="token number">2</span>ZXJpZmlj
-      YXRpb<span class="token number">24</span>iOnsidHJ<span class="token number">1</span>c<span class="token number">3</span>RfZnJhbWV<span class="token number">3</span>b<span class="token number">3</span>JrIjoiaWFsX<span class="token number">2</span>V<span class="token number">4</span>YW<span class="token number">1</span>wbGVfZ<span class="token number">29</span>sZCJ<span class="token number">9</span>LCJ
-      jbGFpbXMiOnsiZ<span class="token number">2</span>l<span class="token number">2</span>ZW<span class="token number">5</span>fbmFtZSI<span class="token number">6</span>Ik<span class="token number">1</span>heCIsImZhbWlseV<span class="token number">9</span>uYW<span class="token number">1</span>lIjoiTWVpZX
-      IiLCJiaXJ<span class="token number">0</span>aGRhdGUiOiIxOTU<span class="token number">2</span>LTAxLTI<span class="token number">4</span>In<span class="token number">19</span>fQ.FArlPUtUVn<span class="token number">95</span>HCExePlWJQ
-      <span class="token number">6</span>ctVfVpQyeSbe<span class="token number">3</span>xkH<span class="token number">9</span>MH<span class="token number">1</span>QJjnk<span class="token number">5</span>GVbBW<span class="token number">0</span>qe<span class="token number">1</span>b<span class="token number">7</span>R<span class="token number">3</span>lE<span class="token number">-8</span>iVv__<span class="token number">0</span>mhRTUI<span class="token number">5</span>lcFhLj
-      oGjDS<span class="token number">8</span>zgWSarVsEEjwBK<span class="token number">7</span>WD<span class="token number">3</span>r<span class="token number">9</span>cEw<span class="token number">6</span>ZAhfEkhHL<span class="token number">9</span>eqAaED<span class="token number">2</span>rhhDbHD<span class="token number">5</span>dZWXkJCu
-      XIcn<span class="token number">65</span>g<span class="token number">6</span>rryiBanxlXK<span class="token number">0</span>ZmcK<span class="token number">4</span>fD<span class="token number">9</span>HV<span class="token number">9</span>MFduk<span class="token number">0</span>LRG_p<span class="token number">4</span>yocMaFvVkqawat<span class="token number">5</span>NV<span class="token number">9</span>QQ
-      <span class="token number">3</span>ij<span class="token number">7</span>UBr<span class="token number">3</span>G<span class="token number">7</span>A<span class="token number">4</span>FojcKEkoJKScdGoozir<span class="token number">8</span>m<span class="token number">5</span>XD<span class="token number">83</span>Sn<span class="token number">45</span>_<span class="token number">79</span>nCcgWSnCX<span class="token number">2</span>QTukL<span class="token number">8</span>Ny
-      wIItu_K<span class="token number">48</span>cjHiAGXXSzydDm_ccGCe<span class="token number">0</span>sY-Ai<span class="token number">2</span>-iFFuQo<span class="token number">2</span>PtfuK<span class="token number">2</span>SqPPmAZJxEFrF
-      oLY<span class="token number">4</span>g"
+      <span class="token property">"JWT"</span><span class="token operator">:</span> "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwcz
+      ovL3NlcnZlci5vdGhlcm9wLmNvbSIsInN1YiI6ImU4MTQ4NjAzLTg5MzQtNDI0N
+      S04MjViLWMxMDhiOGI2Yjk0NSIsInZlcmlmaWVkX2NsYWltcyI6eyJ2ZXJpZmlj
+      YXRpb24iOnsidHJ1c3RfZnJhbWV3b3JrIjoiaWFsX2V4YW1wbGVfZ29sZCJ9LCJ
+      jbGFpbXMiOnsiZ2l2ZW5fbmFtZSI6Ik1heCIsImZhbWlseV9uYW1lIjoiTWVpZX
+      IiLCJiaXJ0aGRhdGUiOiIxOTU2LTAxLTI4In19fQ.FArlPUtUVn95HCExePlWJQ
+      6ctVfVpQyeSbe3xkH9MH1QJjnk5GVbBW0qe1b7R3lE-8iVv__0mhRTUI5lcFhLj
+      oGjDS8zgWSarVsEEjwBK7WD3r9cEw6ZAhfEkhHL9eqAaED2rhhDbHD5dZWXkJCu
+      XIcn65g6rryiBanxlXK0ZmcK4fD9HV9MFduk0LRG_p4yocMaFvVkqawat5NV9QQ
+      3ij7UBr3G7A4FojcKEkoJKScdGoozir8m5XD83Sn45_79nCcgWSnCX2QTukL8Ny
+      wIItu_K48cjHiAGXXSzydDm_ccGCe0sY-Ai2-iFFuQo2PtfuK2SqPPmAZJxEFrF
+      oLY4g"
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token property">"employment_input"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"VC"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
