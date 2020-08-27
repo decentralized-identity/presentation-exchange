@@ -973,40 +973,35 @@ Descriptor Objects_ are composed as follows:
             used to filter against the values returned from evaluation of the
             [JSONPath](https://goessner.net/articles/JsonPath/) string
             expressions in the `path` array.
-          - The object ****MAY**** contain a `predicate` property, and if
-            present its value ****MUST**** be an object comprised of the
-            following properties:
-            - The `predicate` object ****MUST**** contain exactly one of
-              `p_value` or `p_set`:
-              - `p_value` - A single value provided for use with the predicate
-                operations: `gt`, `lt`, `gte`, `lte`, `eq`, or `neq`. The value
-                of this property ****MUST**** be of the same type as the input
-                value, e.g., the `p_value` must be an integer if the input to
-                which it is to be compared is an integer.
-              - `p_set` - A set of values provided for use with the predicate
-                operations: `is_in` or `is_not_in`. The value of this property
-                ****MUST**** be a set of the same type as the input value, e.g.,
-                the `p_set` must be a set of integers if the input to which it
-                is to be compared is an integer.
-            - `operation` - The value of this property ****MUST**** be one of
-              the following strings:
-              - `gt` - The input is strictly greater than the provided `p_value`.
-              - `lt` - The input is strictly less than the provided `p_value`.
-              - `gte` - The input is greater than or equal to the provided
-                `p_value`.
-              - `lte` - The input is less than or equal to the provided
-                `p_value`.
-              - `eq` - The input is the same as the provided `p_value`.
-              - `neq` - The input is not the same as the provided `p_value`.
-              - `is_in` - The input is a member of the provided `p_set`.
-              - `is_not_in` - The input is not a member of the provided `p_set`.
-            - `required` - The value of this property ****MUST**** be a boolean.
-              Setting the property to `true` indicates that the returned value
-              ****MUST**** be a boolean derived from the input using the
-              provided `operation` and `p_value`/`p_set` properties. Setting the
-              property to `false` indicates that the returned value
-              ****SHOULD**** be a boolean derived from the input using the
-              provided `operation` and `p_value`/`p_set` properties.
+          - The object ****MAY**** contain a `predicate` property. If the
+            `predicate` property is present, the `filter` property ****MUST****
+            also be present. The inclusion of the `predicate` property
+            indicates that the processing entity returns a boolean, rather than
+            a value returned from evaluation of the
+            [JSONPath](https://goessner.net/articles/JsonPath/) string
+            expressions in the `path` array. The boolean returned is the result
+            of using the `filter` property's
+            [JSON Schema](https://json-schema.org/specification.html)
+            descriptors against the evaluated value. The value of `predicate`
+            ****MUST**** be one of the following strings:
+            - `required` - This indicates that the returned value ****MUST****
+              be the boolean result of applying the value of the `filter`
+              property to the result of evaluating the `path` property.
+            - `preferred` - This indicates that the returned value
+              ****SHOULD**** be the boolean result of applying the value of the
+              `filter` property to the result of evaluating the `path` property.
+            The set of JSON Schema descriptors which comprise the value of the
+            `filter` property ****MUST**** be restricted according to the
+            desired predicate operation, as follows:
+            - `greater-than` - Use the `exclusiveMinimum` descriptor 
+            - `less-than` - Use the `exclusiveMaximum` descriptor
+            - `greater-than or equal-to` - Use the `minimum` descriptor
+            - `less-than or equal-to` - Use the `maximum` descriptor
+            - `equal-to` - Use the `const` descriptor
+            - `not equal-to` - Use the `const` descriptor with the `not` operator.
+            - `found-in-set` - Filter using an `enum`
+            _ `not found-in-set` - Filter using an `enum` paired with the `not` operator.
+            At this time, additional predicate operations are not supported.
 
 ### Input Evaluation
 
