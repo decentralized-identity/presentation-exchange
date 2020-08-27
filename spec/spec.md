@@ -39,7 +39,7 @@ requirements, as well as the `Presentation Submission` data format Holders can
 use to submit proofs in accordance with them. The specification is designed to 
 be both credential format and transport envelope agnostic, meaning an implementer 
 can use JWTs, VCs, JWT-VCs, or any other credential format, and convey them 
-via OIDC, DID Comms, CHAPI, or any other transport envelope. The goal of 
+via OIDC, DIDComm, CHAPI, or any other transport envelope. The goal of 
 this flexible format and transport agnostic mechanism is to nullify the 
 redundant handling, code, and hassle involved in presenting and satisfying 
 logical requirements across formats and transport envelopes.
@@ -184,7 +184,8 @@ proofs may satisfy an input requirement.
             {
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {
-                "type": "date",
+                "type": "string",
+                "format": "date",
                 "minimum": "1999-5-16"
               }
             }
@@ -204,7 +205,7 @@ proofs may satisfy an input requirement.
 ::: example Presentation Definition - Single Group Example
 ```json
 {
-  // VP, OIDC, DIDComms, or CHAPI outer wrapper
+  // VP, OIDC, DIDComm, or CHAPI outer wrapper
 
   "presentation_definition": {
     "submission_requirements": [{
@@ -234,7 +235,8 @@ proofs may satisfy an input requirement.
             {
               "path": ["$.credentialSubject.dob", "$.vc.credentialSubject.dob", "$.dob"],
               "filter": {
-                "type": "date",
+                "type": "string",
+                "format": "date",
                 "maximum": "1999-5-16"
               }
             }
@@ -253,7 +255,8 @@ proofs may satisfy an input requirement.
             {
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {
-                "type": "date",
+                "type": "string",
+                "format": "date",
                 "maximum": "1999-5-16"
               }
             }
@@ -272,7 +275,7 @@ proofs may satisfy an input requirement.
 ::: example Presentation Definition - Multi-Group Example
 ```json
 {
-  // VP, OIDC, DIDComms, or CHAPI outer wrapper
+  // VP, OIDC, DIDComm, or CHAPI outer wrapper
   
   "presentation_definition": {
     "submission_requirements": [
@@ -417,7 +420,8 @@ proofs may satisfy an input requirement.
             {
               "path": ["$.credentialSubject.dob", "$.vc.credentialSubject.dob", "$.dob"],
               "filter": {
-                "type": "date",
+                "type": "string",
+                "format": "date",
                 "minimum": "1999-5-16"
               }
             }
@@ -436,7 +440,8 @@ proofs may satisfy an input requirement.
             {
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {
-                "type": "date",
+                "type": "string",
+                "format": "date",
                 "minimum": "1999-5-16"
               }
             }
@@ -457,11 +462,58 @@ The following properties are for use at the top-level of the resource — all
 other properties that are not defined below MUST be ignored:
 
 - `name` - The resource ****MAY**** contain this property, and if present its
-value ****SHOULD**** be a human-friendly name that describes what the
-Presentation Definition pertains to.
+  value ****SHOULD**** be a human-friendly name that describes what the
+  Presentation Definition pertains to.
 - `purpose` - The resource ****MAY**** contain this property, and if present its
-value ****MUST**** be a string that describes the purpose for which the
-Presentation Definition's inputs are being requested.
+  value ****MUST**** be a string that describes the purpose for which the
+  Presentation Definition's inputs are being requested.
+- The resource ****MAY**** include a `format` property, and its value 
+  ****MUST**** be an object with one or more properties matching the registered 
+  [Credential Format Designations](#credential-format-designations) (`jwt`, 
+  `jwt_vc`, `jwt_vp`, etc.) to inform the Holder of the credential format 
+  configurations the Verifier can process. The value for each property included 
+  ****MUST**** be an object composed as follows:
+    - The object ****MAY**** include a format-specific property (i.e. `alg`, 
+      `proof_type`) that expresses which algorithms the Verifier supports for the 
+      format, and if present, its value ****MUST**** be an array of one or more 
+      of the format-specific algorithmic identifier references, as noted in the 
+      [Credential Format Designations](#credential-format-designations) section.
+
+      ```json
+      {
+        "presentation_definition": {
+          "format": {
+            "jwt": {
+              "alg": ["EdDSA", "ES256K", "ES384"]
+            },
+            "jwt_vc": {
+              "alg": ["ES256K", "ES384"]
+            },
+            "jwt_vp": {
+              "alg": ["EdDSA", "ES256K"]
+            },
+            "ldp_vc": {
+              "proof_type": [
+                "JsonWebSignature2020",
+                "Ed25519Signature2018",
+                "EcdsaSecp256k1Signature2019",
+                "RsaSignature2018"
+              ]
+            },
+            "ldp_vp": {
+              "proof_type": [
+                "Ed25519Signature2018"
+              ]
+            },
+            "ldp": {
+              "proof_type": [
+                "RsaSignature2018"
+              ]
+            }
+          }
+        }
+      }
+      ```
 - `submission_requirement` - The resource ****MAY**** contain this property,
   and if present, its value ****MUST**** conform to the Submission Requirement
   Format. If not present, all inputs listed in the `input_descriptors` array are
@@ -490,7 +542,7 @@ verifying parties can use to specify which combinations of inputs are acceptable
 All members of the `submission_requirements` array ****MUST**** be satisfied.
 
 ::: example Submission Requirement
-```json
+```json 12
   "submission_requirements": [
     {
       "name": "Banking Information",
@@ -1026,6 +1078,37 @@ format-related rules above:
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "format": {
+      "type": "object",
+      "patternProperties": {
+        "^jwt$|^jwt_vc$|^jwt_vp$": {
+          "type": "object",
+          "properties": {
+            "alg": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string" }
+            }
+          },
+          "required": ["alg"],
+          "additionalProperties": false
+        },
+        "^ldp_vc$|^ldp_vp$|^ldp$": {
+          "type": "object",
+          "properties": {
+            "proof_type": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string" }
+            }
+          },
+          "required": ["proof_type"],
+          "additionalProperties": false
+        }, 
+        "additionalProperties": false  
+      },
+      "additionalProperties": false
+    },
     "submission_requirements": {
       "type": "object",
       "oneOf": [
@@ -1112,6 +1195,7 @@ format-related rules above:
           "type": "object",
           "properties": {
             "type": { "type": "string" },
+            "format": { "type": "string" },
             "pattern": { "type": "string" },
             "minimum": { "type": "string" },
             "minLength": { "type": "integer" },
@@ -1130,15 +1214,18 @@ format-related rules above:
     "presentation_definition": {
       "type": "object",
       "properties": {
+        "name": { "type": "string" },
+        "purpose": { "type": "string" },
         "locale": { "type": "string" },
+        "format": { "$ref": "#/definitions/format"},
         "submission_requirements": {
-          "type:": "array",
+          "type": "array",
           "items": {
             "$ref": "#/definitions/submission_requirements"
           }
         },
         "input_descriptors": {
-          "type:": "array",
+          "type": "array",
           "items": { "$ref": "#/definitions/input_descriptors" }
         }
       },
@@ -1176,18 +1263,23 @@ Definition_. Embedded _Presentation Submission_ objects ****MUST**** be located
 within target data format as a `presentation_submission` property, which are
 composed as follows:
 
-  - The object ****MUST**** include a `descriptor_map` property, and its value
-    ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being
-    composed as follows:
-      - The object ****MUST**** include an `id` property, and its value
-        ****MUST**** be a string matching the `id` property of the _Input
-        Descriptor_ in the _Presentation Definition_ the submission is related to.
-      - The object ****MUST**** include a `path` property, and its value
-        ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
-        string expression that selects the credential to be submit in relation
-        to the identified _Input Descriptor_ identified, when executed against
-        the top-level of the object the _Presentation Submission_ is embedded
-        within.
+- The object ****MUST**** include a `descriptor_map` property, and its value
+  ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being
+  composed as follows:
+    - The object ****MUST**** include an `id` property, and its value
+      ****MUST**** be a string matching the `id` property of the _Input
+      Descriptor_ in the _Presentation Definition_ the submission is related to.
+    - The object ****MUST**** include a `path` property, and its value
+      ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
+      string expression that selects the credential to be submit in relation
+      to the identified _Input Descriptor_ identified, when executed against
+      the top-level of the object the _Presentation Submission_ is embedded
+      within.
+    - The object ****MUST**** include a `format` property, and its value 
+      ****MUST**** be a string value matching one of the 
+      [Credential Format Designation](#credential-format-designations) (`jwt`, 
+      `jwt_vc`, `jwt_vp`), to denote what data format the credential is being 
+      submitted in.
 
 If for all credentials submitted in relation to
 [_Input Descriptor Objects_](#input-descriptor-objects) that include a
@@ -1224,7 +1316,7 @@ credentials within the target data structure.
   <button type="button">Verifiable Presentation</button>
   <button type="button">Open ID Connect</button>
   <button type="button">CHAPI</button>
-  <button type="button">DIDComms</button>
+  <button type="button">DIDComm</button>
 </nav>
 
 <section>
@@ -1244,14 +1336,17 @@ credentials within the target data structure.
     "descriptor_map": [
       {
         "id": "banking_input_2",
+        "format": "jwt_vc",
         "path": "$.verifiableCredential.[0]"
       },
       {
         "id": "employment_input",
+        "format": "ldp_vc",
         "path": "$.verifiableCredential.[1]"
       },
       {
         "id": "citizenship_input_1",
+        "format": "ldp_vc",
         "path": "$.verifiableCredential.[2]"
       }
     ]
@@ -1319,7 +1414,6 @@ credentials within the target data structure.
       }
     }
   ],
-
   "proof": {
     "type": "RsaSignature2018",
     "created": "2018-09-14T21:19:10Z",
@@ -1347,14 +1441,17 @@ credentials within the target data structure.
     "descriptor_map": [
       {
         "id": "banking_input_2",
+        "format": "jwt",
         "path": "$._claim_sources.banking_input_2.JWT"
       },
       {
         "id": "employment_input",
+        "format": "jwt_vc",
         "path": "$._claim_sources.employment_input.VC_JWT"
       },
       {
         "id": "citizenship_input_1",
+        "format": "ldp_vc",
         "path": "$._claim_sources.citizenship_input_1.VC"
       }
     ]
@@ -1448,10 +1545,25 @@ credentials within the target data structure.
 
 <section>
 
-::: example Presentation Submission using DID Comm
+::: example Presentation Submission using DIDComm
 ```json
 {
-  "???": "???"
+    "@type": "https://didcomm.org/present-proof/%VER/presentation",
+    "@id": "f1ca8245-ab2d-4d9c-8d7d-94bf310314ef",
+    "comment": "some comment",
+    "formats" : [{
+        "attach_id" : "2a3f1c4c-623c-44e6-b159-179048c51260",
+        "format" : "dif/presentation-exchange/submission@v1.0"
+    }],
+    "presentations~attach": [{
+        "@id": "2a3f1c4c-623c-44e6-b159-179048c51260",
+        "mime-type": "application/ld+json",
+        "data": {
+            "json": {
+              // Presentation Submission goes here
+            }
+        }
+    }]
 }
 ```
 :::
@@ -1487,9 +1599,13 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
       "type": "object",
       "properties": {
         "id": { "type": "string" },
-        "path": { "type": "string" }
+        "path": { "type": "string" },
+        "format": { 
+          "type": "string",
+          "enum": ["jwt", "jwt_vc", "jwt_vp", "ldp", "ldp_vc", "ldp_vp"]
+        }
       },
-      "required": ["id", "path"],
+      "required": ["id", "path", "format"],
       "additionalProperties": false
     }
   },
@@ -1499,6 +1615,35 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
 ```
 
 </tab-panels>
+
+## Credential Format Designations
+
+Within the _Presentation Exchange_ specification, there are numerous sections 
+where Verifiers and Holders convey what credential variants they support and 
+are submitting. The following are the normalized references used within the 
+specification:
+
+- `jwt` - the format is a [JSON Web Token](https://tools.ietf.org/html/rfc7797) 
+  that will be submitted in the form of a JWT encoded string. Expression of 
+  supported algorithms in relation to this format ****MUST**** be conveyed using an `alg` property 
+  paired with values that are identifiers from the 
+  [RFC 7518 JSON Web Algorithms](https://tools.ietf.org/html/rfc7518) registry.
+- `jwt_vc`, `jwt_vp` - these formats are [JSON Web Tokens](https://tools.ietf.org/html/rfc7797) 
+  that will be submitted in the form of a JWT encoded string, and the body of the decoded 
+  JWT string is defined in the [JSON Web Token section](https://www.w3.org/TR/vc-data-model/#json-web-token) 
+  of the W3C Verifiable Credentials specification. Expression of supported algorithms in 
+  relation to these formats ****MUST**** be conveyed using an `alg` property paired with values that 
+  are identifiers from the [RFC 7518 JSON Web Algorithms](https://tools.ietf.org/html/rfc7518) registry. 
+- `ldp_vc`, `ldp_vp` - these formats are [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) 
+  that will be submitted in the form of a JSON object. Expression of supported 
+  algorithms in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
+  paired with values that are identifiers from the 
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+- `ldp` - this format is defined in the [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/) 
+  specification, and will be submitted as objects. Expression of supported algorithms 
+  in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
+  with values that are identifiers from the 
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 
 ## JSON Schema Vocabulary Definition
 

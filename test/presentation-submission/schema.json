@@ -23,9 +23,13 @@
       "type": "object",
       "properties": {
         "id": { "type": "string" },
-        "path": { "type": "string" }
+        "path": { "type": "string" },
+        "format": { 
+          "type": "string",
+          "enum": ["jwt", "jwt_vc", "jwt_vp", "ldp", "ldp_vc", "ldp_vp"]
+        }
       },
-      "required": ["id", "path"],
+      "required": ["id", "path", "format"],
       "additionalProperties": false
     }
   },
