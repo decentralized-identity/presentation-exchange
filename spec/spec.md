@@ -990,17 +990,90 @@ Descriptor Objects_ are composed as follows:
             - `preferred` - This indicates that the returned value
               ****SHOULD**** be the boolean result of applying the value of the
               `filter` property to the result of evaluating the `path` property.
-            The set of JSON Schema descriptors which comprise the value of the
-            `filter` property ****MUST**** be restricted according to the
-            desired predicate operation, as follows:
-            - `greater-than` - Use the `exclusiveMinimum` descriptor 
-            - `less-than` - Use the `exclusiveMaximum` descriptor
-            - `greater-than or equal-to` - Use the `minimum` descriptor
-            - `less-than or equal-to` - Use the `maximum` descriptor
-            - `equal-to` - Use the `const` descriptor
-            - `not equal-to` - Use the `const` descriptor with the `not` operator.
-            - `found-in-set` - Filter using an `enum`
-            _ `not found-in-set` - Filter using an `enum` paired with the `not` operator.
+       
+            If the `predicate` property is present, the set of JSON Schema
+            descriptors which comprise the value of the `filter` property
+            ****MUST**** be restricted according to the desired predicate
+            operation, as follows:
+            - To express the following range proofs, use the JSON Schema
+              [numeric range](https://json-schema.org/understanding-json-schema/reference/numeric.html#range)
+              properties: 
+              - `greater-than` - Use the `exclusiveMinimum` descriptor. For
+                example, to request a proof that an attribute is greater than
+                10000: 
+                ```json             
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 10000,
+                }
+                ``` 
+              - `less-than` - Use the `exclusiveMaximum` descriptor. For
+                example, to request a proof that an attribute is less than 85: 
+                ```json             
+                {
+                  "type": "number",
+                  "exclusiveMaximum": 85,
+                }
+                ```
+              - `greater-than or equal-to` - Use the `minimum` descriptor. For
+                example, to request a proof that an attribute is greater than or
+                equal to 18: 
+                ```json             
+                {
+                  "type": "number",
+                  "minimum": 18,
+                }
+                ``` 
+              - `less-than or equal-to` - Use the `maximum` descriptor. For
+                example, to request a proof that an attribute is less than or
+                equal to 65536: 
+                ```json             
+                {
+                  "type": "number",
+                  "maximum": 65536,
+                }
+                ```
+            - to express the following equality proofs, use the JSON Schema
+              `const` descriptor:
+              - `equal-to` - Use the `const` descriptor. For example to request
+                proof that an attribute has the value "Chad":
+                ```json
+                {
+                  "const": "Chad"
+                }
+                ```
+              - `not equal-to` - Use the `const` descriptor with the `not`
+                operator. For example, to request proof that an attribute does
+                not have the value "Karen":
+                ```json
+                {
+                  "not": {
+                    "const": "Karen"
+                  }
+                }
+                ``` 
+            - to express set-membership proofs, use the JSON Schema `enum`
+              descriptor: 
+              - `in-set` - Use the `enum` descriptor. For example, to
+                request proof that an attribute is contained in the set of
+                rainbow colors:
+                ```json
+                {
+                  "type": "string",
+                  "enum": ["red", "yellow", "blue"]
+                }
+                ```
+              - `not-in-set` - Use the `enum` descriptor with the `not`
+                operator. For example, to request proof that an attribute is not
+                contained in the set of primary colors:
+                ```json
+                {
+                  "not": { 
+                    "enum": ["red", "yellow", "blue"] 
+                  }
+                }
+                ```
+            
             At this time, additional predicate operations are not supported.
 
 ### Input Evaluation
