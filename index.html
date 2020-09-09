@@ -510,14 +510,10 @@ of the format-specific algorithmic identifier references, as noted in the
         <span class="token punctuation">]</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token property">"ldp_vp"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"proof_type"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token string">"Ed25519Signature2018"</span>
-        <span class="token punctuation">]</span>
+        <span class="token property">"proof_type"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"Ed25519Signature2018"</span><span class="token punctuation">]</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token property">"ldp"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"proof_type"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token string">"RsaSignature2018"</span>
-        <span class="token punctuation">]</span>
+        <span class="token property">"proof_type"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"RsaSignature2018"</span><span class="token punctuation">]</span>
       <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
@@ -813,7 +809,7 @@ certain item or set of data is being requested:</p>
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-1" class="notice example"><a class="notice-link" href="#example-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="example-29" class="notice example"><a class="notice-link" href="#example-29">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -860,7 +856,7 @@ certain item or set of data is being requested:</p>
 </div>
 </section>
 <section>
-<div id="example-2" class="notice example"><a class="notice-link" href="#example-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-30" class="notice example"><a class="notice-link" href="#example-30">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
   <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -886,7 +882,7 @@ certain item or set of data is being requested:</p>
 <span class="token punctuation">}</span>
 </code></pre>
 </section>
-</tab-panels>
+</tab-panel>
 <h4 id="input-descriptor-objects"><a class="toc-anchor" href="#input-descriptor-objects">§</a> Input Descriptor Objects</h4>
 <p><em>Input Descriptors</em> are objects that describe what type of input data/credential,
 or sub-fields thereof, is required for submission to the Verifier. <em>Input
@@ -1063,7 +1059,7 @@ contains a <code>subject_is_holder</code> property set to the value <code>requir
 that any submission of data in relation to the candidate input is fulfilled
 by the subject of the credential</li>
 </ol>
-<div id="note-1" class="notice note"><a class="notice-link" href="#note-1">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
+<div id="note-15" class="notice note"><a class="notice-link" href="#note-15">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
 criteria for inclusion in submission. Any additional testing of a candidate
 input for a schema match beyond comparison of the schema <code>uri</code> (e.g. specific
@@ -1071,6 +1067,67 @@ requirements or details expressed in schema <code>metadata</code>) is at the dis
 of the implementer.</p>
 </div>
 </div>
+<h4 id="expired-and-revoked-data"><a class="toc-anchor" href="#expired-and-revoked-data">§</a> Expired and Revoked Data</h4>
+<p>Certain types of credentials have concepts of <em>expiration</em> and <em>revocation</em>. <em>Expiration</em> is mechanism normally used to communicate a time bound up until which a credential is considered valid. <em>Revocation</em> is a mechanism normally used to give an issuer control over the status of a credential after it has been issued. Different credential specifications handle these concepts in different ways.</p>
+<p><code>Presentation Definitions</code> have a need to specify whether expired, revoked, or credentials of other statuses can be accepted. For credentials that have simple status properties <a href="#input-descriptor-objects">Input Descriptor Filters</a> using JSON Schema can be used to write specify acceptable criteria.</p>
+<p>The first example demonstrates <em>expiry</em> using the <a href="https://w3c.github.io/vc-data-model/#expiration-0">VC Data Model’s <code>expirationDate</code> property</a>. The second demonstrates <em>revocation</em>, or more generally, <em>credential status</em> using the <a href="https://w3c.github.io/vc-data-model/#status-0">VC Data Model’s <code>credentialStatus</code> property</a>. Using the syntax provided in the example a verifier will have all requisite information to resolve the status of a credential.</p>
+<tab-panels selected-index="0">
+<nav>
+  <button type="button">Verifiable Credential Expiration</button>
+  <button type="button">Verifiable Credential Revocation Status</button>
+</nav>
+<section>
+<div id="drivers-license-expiry" class="notice example"><a class="notice-link" href="#drivers-license-expiry">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"drivers_license_information"</span><span class="token punctuation">,</span>
+  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://yourwatchful.gov/drivers-license-schema.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify Valid License"</span><span class="token punctuation">,</span>
+    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know you have a license valid through December."</span><span class="token punctuation">,</span>
+    <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"4fb540be-3a7f-0b47-bb37-3821bd766ed4"</span><span class="token punctuation">,</span>
+      <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://yourwatchful.gov/verify"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.expirationDate"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+          <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"date-time"</span><span class="token punctuation">,</span>
+          <span class="token property">"min"</span><span class="token operator">:</span> <span class="token string">"2020-12-31T23:59:59.000Z"</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div>
+</section>
+<section>
+<div id="drivers-license-revocation" class="notice example"><a class="notice-link" href="#drivers-license-revocation">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"drivers_license_information"</span><span class="token punctuation">,</span>
+  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://yourwatchful.gov/drivers-license-schema.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify Valid License"</span><span class="token punctuation">,</span>
+    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know that your license has not been revoked."</span><span class="token punctuation">,</span>
+    <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"4fb540be-3a7f-0b47-bb37-3821bd766ed4"</span><span class="token punctuation">,</span>
+      <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://yourwatchful.gov/verify"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.credentialStatus"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div>
+</section>
+</tab-panel>
 <h3 id="json-schema-2"><a class="toc-anchor" href="#json-schema-2">§</a> JSON Schema</h3>
 <p>The following JSON Schema Draft 7 definition summarizes the
 format-related rules above:</p>
@@ -1283,7 +1340,7 @@ within.</li>
 <li>The object <strong><strong>MUST</strong></strong> include a <code>format</code> property, and its value
 <strong><strong>MUST</strong></strong> be a string value matching one of the
 <a href="#credential-format-designations">Credential Format Designation</a> (<code>jwt</code>,
-<code>jwt_vc</code>, <code>jwt_vp</code>), to denote what data format the credential is being
+``jwt<code>_vc</code>, <code>jwt_vp</code>), to denote what data format the credential is being
 submitted in.</li>
 </ul>
 </li>
@@ -1457,18 +1514,18 @@ credentials within the target data structure.</p>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token property">"_claim_sources"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"banking_input_2"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"JWT"</span><span class="token operator">:</span> "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwcz
-      ovL3NlcnZlci5vdGhlcm9wLmNvbSIsInN1YiI6ImU4MTQ4NjAzLTg5MzQtNDI0N
-      S04MjViLWMxMDhiOGI2Yjk0NSIsInZlcmlmaWVkX2NsYWltcyI6eyJ2ZXJpZmlj
-      YXRpb24iOnsidHJ1c3RfZnJhbWV3b3JrIjoiaWFsX2V4YW1wbGVfZ29sZCJ9LCJ
-      jbGFpbXMiOnsiZ2l2ZW5fbmFtZSI6Ik1heCIsImZhbWlseV9uYW1lIjoiTWVpZX
-      IiLCJiaXJ0aGRhdGUiOiIxOTU2LTAxLTI4In19fQ.FArlPUtUVn95HCExePlWJQ
-      6ctVfVpQyeSbe3xkH9MH1QJjnk5GVbBW0qe1b7R3lE-8iVv__0mhRTUI5lcFhLj
-      oGjDS8zgWSarVsEEjwBK7WD3r9cEw6ZAhfEkhHL9eqAaED2rhhDbHD5dZWXkJCu
-      XIcn65g6rryiBanxlXK0ZmcK4fD9HV9MFduk0LRG_p4yocMaFvVkqawat5NV9QQ
-      3ij7UBr3G7A4FojcKEkoJKScdGoozir8m5XD83Sn45_79nCcgWSnCX2QTukL8Ny
-      wIItu_K48cjHiAGXXSzydDm_ccGCe0sY-Ai2-iFFuQo2PtfuK2SqPPmAZJxEFrF
-      oLY4g"
+      <span class="token property">"JWT"</span><span class="token operator">:</span> "eyJhbGciOiJSUzI<span class="token number">1</span>NiIsInR<span class="token number">5</span>cCI<span class="token number">6</span>IkpXVCJ<span class="token number">9.</span>eyJpc<span class="token number">3</span>MiOiJodHRwcz
+      ovL<span class="token number">3</span>NlcnZlci<span class="token number">5</span>vdGhlcm<span class="token number">9</span>wLmNvbSIsInN<span class="token number">1</span>YiI<span class="token number">6</span>ImU<span class="token number">4</span>MTQ<span class="token number">4</span>NjAzLTg<span class="token number">5</span>MzQtNDI<span class="token number">0</span>N
+      S<span class="token number">04</span>MjViLWMxMDhiOGI<span class="token number">2</span>Yjk<span class="token number">0</span>NSIsInZlcmlmaWVkX<span class="token number">2</span>NsYWltcyI<span class="token number">6</span>eyJ<span class="token number">2</span>ZXJpZmlj
+      YXRpb<span class="token number">24</span>iOnsidHJ<span class="token number">1</span>c<span class="token number">3</span>RfZnJhbWV<span class="token number">3</span>b<span class="token number">3</span>JrIjoiaWFsX<span class="token number">2</span>V<span class="token number">4</span>YW<span class="token number">1</span>wbGVfZ<span class="token number">29</span>sZCJ<span class="token number">9</span>LCJ
+      jbGFpbXMiOnsiZ<span class="token number">2</span>l<span class="token number">2</span>ZW<span class="token number">5</span>fbmFtZSI<span class="token number">6</span>Ik<span class="token number">1</span>heCIsImZhbWlseV<span class="token number">9</span>uYW<span class="token number">1</span>lIjoiTWVpZX
+      IiLCJiaXJ<span class="token number">0</span>aGRhdGUiOiIxOTU<span class="token number">2</span>LTAxLTI<span class="token number">4</span>In<span class="token number">19</span>fQ.FArlPUtUVn<span class="token number">95</span>HCExePlWJQ
+      <span class="token number">6</span>ctVfVpQyeSbe<span class="token number">3</span>xkH<span class="token number">9</span>MH<span class="token number">1</span>QJjnk<span class="token number">5</span>GVbBW<span class="token number">0</span>qe<span class="token number">1</span>b<span class="token number">7</span>R<span class="token number">3</span>lE<span class="token number">-8</span>iVv__<span class="token number">0</span>mhRTUI<span class="token number">5</span>lcFhLj
+      oGjDS<span class="token number">8</span>zgWSarVsEEjwBK<span class="token number">7</span>WD<span class="token number">3</span>r<span class="token number">9</span>cEw<span class="token number">6</span>ZAhfEkhHL<span class="token number">9</span>eqAaED<span class="token number">2</span>rhhDbHD<span class="token number">5</span>dZWXkJCu
+      XIcn<span class="token number">65</span>g<span class="token number">6</span>rryiBanxlXK<span class="token number">0</span>ZmcK<span class="token number">4</span>fD<span class="token number">9</span>HV<span class="token number">9</span>MFduk<span class="token number">0</span>LRG_p<span class="token number">4</span>yocMaFvVkqawat<span class="token number">5</span>NV<span class="token number">9</span>QQ
+      <span class="token number">3</span>ij<span class="token number">7</span>UBr<span class="token number">3</span>G<span class="token number">7</span>A<span class="token number">4</span>FojcKEkoJKScdGoozir<span class="token number">8</span>m<span class="token number">5</span>XD<span class="token number">83</span>Sn<span class="token number">45</span>_<span class="token number">79</span>nCcgWSnCX<span class="token number">2</span>QTukL<span class="token number">8</span>Ny
+      wIItu_K<span class="token number">48</span>cjHiAGXXSzydDm_ccGCe<span class="token number">0</span>sY-Ai<span class="token number">2</span>-iFFuQo<span class="token number">2</span>PtfuK<span class="token number">2</span>SqPPmAZJxEFrF
+      oLY<span class="token number">4</span>g"
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token property">"employment_input"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"VC"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -1793,7 +1850,7 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="https://www.npmjs.com/package/jsonpath">https://www.npmjs.com/package/jsonpath</a></li>
 </ul>
 </li>
-<li><strong>JAVA</strong>
+<li><strong>Java</strong>
 <ul>
 <li><a href="https://github.com/json-path/JsonPath">https://github.com/json-path/JsonPath</a></li>
 </ul>
@@ -1822,7 +1879,7 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="https://www.npmjs.com/package/json-schema">https://www.npmjs.com/package/json-schema</a></li>
 </ul>
 </li>
-<li><strong>JAVA</strong>
+<li><strong>Java</strong>
 <ul>
 <li><a href="https://github.com/ssilverman/snowy-json">https://github.com/ssilverman/snowy-json</a></li>
 <li><a href="https://github.com/leadpony/justify">https://github.com/leadpony/justify</a></li>
@@ -1898,7 +1955,11 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="#input-descriptor-objects">Input Descriptor Objects</a></li>
 </ul>
 </li>
-<li><a href="#input-evaluation">Input Evaluation</a></li>
+<li><a href="#input-evaluation">Input Evaluation</a>
+<ul>
+<li><a href="#expired-and-revoked-data">Expired and Revoked Data</a></li>
+</ul>
+</li>
 <li><a href="#json-schema-2">JSON Schema</a></li>
 <li><a href="#presentation-requests">Presentation Requests</a></li>
 </ul>
