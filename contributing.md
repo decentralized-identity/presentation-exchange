@@ -80,7 +80,7 @@ approved by a maintainer different from the person who raised the issue, or by
 consensus among Working Group Participants during a Working Group call. During 
 the REFINING state, the Working Group will request feedback from other 
 decentralized identity-related and -adjacent communities. Ideally, these inputs
-will lead to issues for consensual/deliberative resolution. This merges Further
+will lead to issues for consensual/deliberative resolution. Further
 validation and improvement of the section can/expected to be done via (code) 
 implementations and testing. 
 
