@@ -92,7 +92,7 @@ maintainers should still review all PRs.
 
 #### Assigning section content in the STABLE state: 
 
-when all of the following conditions are met: 
+When all of the following conditions are met: 
 * There is quality code that demonstrates the concepts it describes.
 * There are no outstanding issues related to that section that the Working Group 
 Participants consider substantive.
