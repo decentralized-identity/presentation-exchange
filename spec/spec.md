@@ -1180,13 +1180,13 @@ format-related rules above:
               "type": "array",
               "items": { "$ref": "#/definitions/field" }
             },
-            "subject_is_issuer": { 
+            "subject_is_issuer": {
               "type": "string",
-              "enum": [ "required", "preferred" ]
+              "enum": ["required", "preferred"]
             },
-            "subject_is_holder": { 
+            "subject_is_holder": {
               "type": "string",
-              "enum": [ "required", "preferred" ]
+              "enum": ["required","preferred"]
             }
           },
           "additionalProperties": false
