@@ -1361,7 +1361,7 @@ composed as follows:
     - The object ****MUST**** include a `format` property, and its value 
       ****MUST**** be a string value matching one of the 
       [Credential Format Designation](#credential-format-designations) (`jwt`, 
-      ``jwt`_vc`, `jwt_vp`), to denote what data format the credential is being 
+      `jwt_vc`, `jwt_vp`), to denote what data format the credential is being 
       submitted in.
 
 If for all credentials submitted in relation to
