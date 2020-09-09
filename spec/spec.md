@@ -1185,7 +1185,7 @@ format-related rules above:
             },
             "subject_is_holder": {
               "type": "string",
-              "enum": ["required","preferred"]
+              "enum": ["required", "preferred"]
             }
           },
           "additionalProperties": false
