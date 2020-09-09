@@ -898,7 +898,7 @@ certain item or set of data is being requested:
 
 </section>
 
-</tab-panel>
+</tab-panels>
 
 #### Input Descriptor Objects
 
