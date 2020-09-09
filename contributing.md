@@ -99,7 +99,7 @@ Participants consider substantive.
 * The Working Group has at least 2 conformant implementations, at least 1 of
 which originated outside of the Working Group 
 
-When consensus has been arrived at that the above conditions have been reached, 
+When the WG has consensus that the above conditions have been reached, 
 the section enters a final 2-week comment period has elapsed without any 
 substantive objections to the LAST-COMMENTS status. The start of this period, 
 intended for "last comments," should be announced on the Working Group mailing 
