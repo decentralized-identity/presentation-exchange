@@ -109,8 +109,8 @@ be extended 1 additional week at the discretion of the chairs.
 Once a section reaches STABLE status, non-substantive changes can be merged at 
 maintainer discretion, however, substantive changes are generally discouraged 
 except by discretion of the chairs. Even then, substantial changes should be 
-discussed on a Working Group call or discussed (however briefly) on a Working 
-Group call if resolved asynchronously via GitHub issues.
+discussed on a Working Group call. If resolved asynchronously via GitHub issues,
+the discussion during a Working Group call may be brief.
 
 Note:  when it comes to substantive changes, there are alternatives to the 
 above, which may delay completion of the consensual work: 
