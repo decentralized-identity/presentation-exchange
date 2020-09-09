@@ -100,11 +100,12 @@ Participants consider substantive.
 which originated outside of the Working Group 
 
 When the WG has consensus that the above conditions have been reached, 
-the section enters a final 2-week comment period has elapsed without any 
-substantive objections to the LAST-COMMENTS status. The start of this period, 
-intended for "last comments," should be announced on the Working Group mailing 
-list. If substantial discussion or change happens, this LAST-COMMENTS phase can
-be extended 1 additional week at the discretion of the chairs.
+the section enters a final 2-week comment period if no substantive
+objections are raised against the LAST-COMMENTS status. The start
+of this period, intended for "last comments," should be announced
+on the Working Group mailing list. If substantial discussion or change
+happens, this LAST-COMMENTS phase can be extended 1 additional
+week at the discretion of the chairs.
 
 Once a section reaches STABLE status, non-substantive changes can be merged at 
 maintainer discretion, however, substantive changes are generally discouraged 
