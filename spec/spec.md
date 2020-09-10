@@ -539,7 +539,7 @@ party has asserted (via a `Proof Submission` object). The following section
 defines the format for _Submission Requirement_ objects and the selection syntax
 verifying parties can use to specify which combinations of inputs are acceptable.
 
-All members of the `submission_requirements` array ****MUST**** be satisfied. If present, `input_descriptors`, not satisfied by `submission_requirements`, ****MUST**** be satisfied.
+All members of the `submission_requirements` array ****MUST**** be satisfied. All `input_descriptors` must be grouped. There may be `input_descriptors` left unfulfilled after satisfying all `submission_requirements`.
 
 ::: example Submission Requirement
 ```json 12
@@ -806,7 +806,7 @@ processing-related rules above:
 ### Input Descriptors
 
 _Input Descriptors_ are objects used to describe the information a Verifier
-requires of a Holder before they will proceed with an interaction. To successfully fulfill a `Presentation Definition`, all `input_descriptor` objects ****MUST**** be satisfied.
+requires of a Holder before they will proceed with an interaction. If no `submission_requirement` objects are presenet, to successfully fulfill a `Presentation Definition`, all `input_descriptor` objects ****MUST**** be satisfied.
 
 _Input Descriptor Objects_ contain a schema URI that links to the schema 
 of the required input data, constraints on data values, and an explanation 
