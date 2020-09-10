@@ -806,7 +806,7 @@ processing-related rules above:
 ### Input Descriptors
 
 _Input Descriptors_ are objects used to describe the information a Verifier
-requires of a Holder before they will proceed with an interaction. If no `submission_requirement` objects are presenet, to successfully fulfill a `Presentation Definition`, all `input_descriptor` objects ****MUST**** be satisfied.
+requires of a Holder before they will proceed with an interaction. If no `submission_requirement` objects are present, all `input_descriptor` objects ****MUST**** be satisfied.
 
 _Input Descriptor Objects_ contain a schema URI that links to the schema 
 of the required input data, constraints on data values, and an explanation 
