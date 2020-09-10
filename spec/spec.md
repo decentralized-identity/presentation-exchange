@@ -1070,11 +1070,23 @@ of the implementer.
 
 #### Expired and Revoked Data
 
-Certain types of credentials have concepts of _expiration_ and _revocation_. _Expiration_ is mechanism normally used to communicate a time bound up until which a credential is considered valid. _Revocation_ is a mechanism normally used to give an issuer control over the status of a credential after it has been issued. Different credential specifications handle these concepts in different ways. 
+Certain types of credentials have concepts of _expiration_ and _revocation_.
+_Expiration_ is mechanism normally used to communicate a time bound up until
+which a credential is valid. _Revocation_ is a mechanism normally used to give
+an issuer control over the status of a credential after issuance. Different
+credential specifications handle these concepts in different ways. 
 
-`Presentation Definitions` have a need to specify whether expired, revoked, or credentials of other statuses can be accepted. For credentials that have simple status properties [Input Descriptor Filters](#input-descriptor-objects) using JSON Schema can be used to write specify acceptable criteria.
+`Presentation Definitions` have a need to specify whether expired, revoked,
+or credentials of other statuses can be accepted. For credentials that have
+simple status properties [Input Descriptor Filters](#input-descriptor-objects)
+JSON Schema can be used to write specify acceptable criteria.
 
-The first example demonstrates _expiry_ using the [VC Data Model's `expirationDate` property](https://w3c.github.io/vc-data-model/#expiration-0). The second demonstrates _revocation_, or more generally, _credential status_ using the [VC Data Model's `credentialStatus` property](https://w3c.github.io/vc-data-model/#status-0). Using the syntax provided in the example a verifier will have all requisite information to resolve the status of a credential.
+The first example demonstrates _expiry_ using the [VC Data Model's
+ `expirationDate` property](https://w3c.github.io/vc-data-model/#expiration-0).
+The second demonstrates _revocation_, or more generally, _credential status_
+using the [VC Data Model's `credentialStatus` property](https://w3c.github.io/vc-data-model/#status-0).
+Using the syntax provided in the example a verifier will have all requisite
+information to resolve the status of a credential.
 
 <tab-panels selected-index="0">
 

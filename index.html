@@ -1068,9 +1068,21 @@ of the implementer.</p>
 </div>
 </div>
 <h4 id="expired-and-revoked-data"><a class="toc-anchor" href="#expired-and-revoked-data">§</a> Expired and Revoked Data</h4>
-<p>Certain types of credentials have concepts of <em>expiration</em> and <em>revocation</em>. <em>Expiration</em> is mechanism normally used to communicate a time bound up until which a credential is considered valid. <em>Revocation</em> is a mechanism normally used to give an issuer control over the status of a credential after it has been issued. Different credential specifications handle these concepts in different ways.</p>
-<p><code>Presentation Definitions</code> have a need to specify whether expired, revoked, or credentials of other statuses can be accepted. For credentials that have simple status properties <a href="#input-descriptor-objects">Input Descriptor Filters</a> using JSON Schema can be used to write specify acceptable criteria.</p>
-<p>The first example demonstrates <em>expiry</em> using the <a href="https://w3c.github.io/vc-data-model/#expiration-0">VC Data Model’s <code>expirationDate</code> property</a>. The second demonstrates <em>revocation</em>, or more generally, <em>credential status</em> using the <a href="https://w3c.github.io/vc-data-model/#status-0">VC Data Model’s <code>credentialStatus</code> property</a>. Using the syntax provided in the example a verifier will have all requisite information to resolve the status of a credential.</p>
+<p>Certain types of credentials have concepts of <em>expiration</em> and <em>revocation</em>.
+<em>Expiration</em> is mechanism normally used to communicate a time bound up until
+which a credential is valid. <em>Revocation</em> is a mechanism normally used to give
+an issuer control over the status of a credential after issuance. Different
+credential specifications handle these concepts in different ways.</p>
+<p><code>Presentation Definitions</code> have a need to specify whether expired, revoked,
+or credentials of other statuses can be accepted. For credentials that have
+simple status properties <a href="#input-descriptor-objects">Input Descriptor Filters</a>
+JSON Schema can be used to write specify acceptable criteria.</p>
+<p>The first example demonstrates <em>expiry</em> using the <a href="https://w3c.github.io/vc-data-model/#expiration-0">VC Data Model’s
+<code>expirationDate</code> property</a>.
+The second demonstrates <em>revocation</em>, or more generally, <em>credential status</em>
+using the <a href="https://w3c.github.io/vc-data-model/#status-0">VC Data Model’s <code>credentialStatus</code> property</a>.
+Using the syntax provided in the example a verifier will have all requisite
+information to resolve the status of a credential.</p>
 <tab-panels selected-index="0">
 <nav>
   <button type="button">Verifiable Credential Expiration</button>
@@ -1340,7 +1352,7 @@ within.</li>
 <li>The object <strong><strong>MUST</strong></strong> include a <code>format</code> property, and its value
 <strong><strong>MUST</strong></strong> be a string value matching one of the
 <a href="#credential-format-designations">Credential Format Designation</a> (<code>jwt</code>,
-``jwt<code>_vc</code>, <code>jwt_vp</code>), to denote what data format the credential is being
+<code>jwt_vc</code>, <code>jwt_vp</code>), to denote what data format the credential is being
 submitted in.</li>
 </ul>
 </li>
