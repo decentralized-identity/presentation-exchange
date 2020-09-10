@@ -510,14 +510,10 @@ of the format-specific algorithmic identifier references, as noted in the
         <span class="token punctuation">]</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token property">"ldp_vp"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"proof_type"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token string">"Ed25519Signature2018"</span>
-        <span class="token punctuation">]</span>
+        <span class="token property">"proof_type"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"Ed25519Signature2018"</span><span class="token punctuation">]</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token property">"ldp"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"proof_type"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token string">"RsaSignature2018"</span>
-        <span class="token punctuation">]</span>
+        <span class="token property">"proof_type"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"RsaSignature2018"</span><span class="token punctuation">]</span>
       <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
@@ -1071,6 +1067,67 @@ requirements or details expressed in schema <code>metadata</code>) is at the dis
 of the implementer.</p>
 </div>
 </div>
+<h4 id="expired-and-revoked-data"><a class="toc-anchor" href="#expired-and-revoked-data">§</a> Expired and Revoked Data</h4>
+<p>Certain types of credentials have concepts of <em>expiration</em> and <em>revocation</em>. <em>Expiration</em> is mechanism normally used to communicate a time bound up until which a credential is considered valid. <em>Revocation</em> is a mechanism normally used to give an issuer control over the status of a credential after it has been issued. Different credential specifications handle these concepts in different ways.</p>
+<p><code>Presentation Definitions</code> have a need to specify whether expired, revoked, or credentials of other statuses can be accepted. For credentials that have simple status properties <a href="#input-descriptor-objects">Input Descriptor Filters</a> using JSON Schema can be used to write specify acceptable criteria.</p>
+<p>The first example demonstrates <em>expiry</em> using the <a href="https://w3c.github.io/vc-data-model/#expiration-0">VC Data Model’s <code>expirationDate</code> property</a>. The second demonstrates <em>revocation</em>, or more generally, <em>credential status</em> using the <a href="https://w3c.github.io/vc-data-model/#status-0">VC Data Model’s <code>credentialStatus</code> property</a>. Using the syntax provided in the example a verifier will have all requisite information to resolve the status of a credential.</p>
+<tab-panels selected-index="0">
+<nav>
+  <button type="button">Verifiable Credential Expiration</button>
+  <button type="button">Verifiable Credential Revocation Status</button>
+</nav>
+<section>
+<div id="drivers-license-expiry" class="notice example"><a class="notice-link" href="#drivers-license-expiry">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"drivers_license_information"</span><span class="token punctuation">,</span>
+  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://yourwatchful.gov/drivers-license-schema.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify Valid License"</span><span class="token punctuation">,</span>
+    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know you have a license valid through December."</span><span class="token punctuation">,</span>
+    <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"4fb540be-3a7f-0b47-bb37-3821bd766ed4"</span><span class="token punctuation">,</span>
+      <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://yourwatchful.gov/verify"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.expirationDate"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+          <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"date-time"</span><span class="token punctuation">,</span>
+          <span class="token property">"min"</span><span class="token operator">:</span> <span class="token string">"2020-12-31T23:59:59.000Z"</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div>
+</section>
+<section>
+<div id="drivers-license-revocation" class="notice example"><a class="notice-link" href="#drivers-license-revocation">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"drivers_license_information"</span><span class="token punctuation">,</span>
+  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://yourwatchful.gov/drivers-license-schema.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify Valid License"</span><span class="token punctuation">,</span>
+    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know that your license has not been revoked."</span><span class="token punctuation">,</span>
+    <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"4fb540be-3a7f-0b47-bb37-3821bd766ed4"</span><span class="token punctuation">,</span>
+      <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://yourwatchful.gov/verify"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.credentialStatus"</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div>
+</section>
+</tab-panel>
 <h3 id="json-schema-2"><a class="toc-anchor" href="#json-schema-2">§</a> JSON Schema</h3>
 <p>The following JSON Schema Draft 7 definition summarizes the
 format-related rules above:</p>
@@ -1283,7 +1340,7 @@ within.</li>
 <li>The object <strong><strong>MUST</strong></strong> include a <code>format</code> property, and its value
 <strong><strong>MUST</strong></strong> be a string value matching one of the
 <a href="#credential-format-designations">Credential Format Designation</a> (<code>jwt</code>,
-<code>jwt_vc</code>, <code>jwt_vp</code>), to denote what data format the credential is being
+``jwt<code>_vc</code>, <code>jwt_vp</code>), to denote what data format the credential is being
 submitted in.</li>
 </ul>
 </li>
@@ -1793,7 +1850,7 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="https://www.npmjs.com/package/jsonpath">https://www.npmjs.com/package/jsonpath</a></li>
 </ul>
 </li>
-<li><strong>JAVA</strong>
+<li><strong>Java</strong>
 <ul>
 <li><a href="https://github.com/json-path/JsonPath">https://github.com/json-path/JsonPath</a></li>
 </ul>
@@ -1822,7 +1879,7 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="https://www.npmjs.com/package/json-schema">https://www.npmjs.com/package/json-schema</a></li>
 </ul>
 </li>
-<li><strong>JAVA</strong>
+<li><strong>Java</strong>
 <ul>
 <li><a href="https://github.com/ssilverman/snowy-json">https://github.com/ssilverman/snowy-json</a></li>
 <li><a href="https://github.com/leadpony/justify">https://github.com/leadpony/justify</a></li>
@@ -1898,7 +1955,11 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="#input-descriptor-objects">Input Descriptor Objects</a></li>
 </ul>
 </li>
-<li><a href="#input-evaluation">Input Evaluation</a></li>
+<li><a href="#input-evaluation">Input Evaluation</a>
+<ul>
+<li><a href="#expired-and-revoked-data">Expired and Revoked Data</a></li>
+</ul>
+</li>
 <li><a href="#json-schema-2">JSON Schema</a></li>
 <li><a href="#presentation-requests">Presentation Requests</a></li>
 </ul>

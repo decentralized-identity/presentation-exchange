@@ -501,14 +501,10 @@ other properties that are not defined below MUST be ignored:
               ]
             },
             "ldp_vp": {
-              "proof_type": [
-                "Ed25519Signature2018"
-              ]
+              "proof_type": ["Ed25519Signature2018"]
             },
             "ldp": {
-              "proof_type": [
-                "RsaSignature2018"
-              ]
+              "proof_type": ["RsaSignature2018"]
             }
           }
         }
@@ -901,7 +897,6 @@ why a certain item or set of data is being requested:
 }
 ```
 
-
 </section>
 
 </tab-panels>
@@ -1072,6 +1067,83 @@ input for a schema match beyond comparison of the schema `uri` (e.g. specific
 requirements or details expressed in schema `metadata`) is at the discretion
 of the implementer.
 :::
+
+#### Expired and Revoked Data
+
+Certain types of credentials have concepts of _expiration_ and _revocation_. _Expiration_ is mechanism normally used to communicate a time bound up until which a credential is considered valid. _Revocation_ is a mechanism normally used to give an issuer control over the status of a credential after it has been issued. Different credential specifications handle these concepts in different ways. 
+
+`Presentation Definitions` have a need to specify whether expired, revoked, or credentials of other statuses can be accepted. For credentials that have simple status properties [Input Descriptor Filters](#input-descriptor-objects) using JSON Schema can be used to write specify acceptable criteria.
+
+The first example demonstrates _expiry_ using the [VC Data Model's `expirationDate` property](https://w3c.github.io/vc-data-model/#expiration-0). The second demonstrates _revocation_, or more generally, _credential status_ using the [VC Data Model's `credentialStatus` property](https://w3c.github.io/vc-data-model/#status-0). Using the syntax provided in the example a verifier will have all requisite information to resolve the status of a credential.
+
+<tab-panels selected-index="0">
+
+<nav>
+  <button type="button">Verifiable Credential Expiration</button>
+  <button type="button">Verifiable Credential Revocation Status</button>
+</nav>
+
+<section>
+
+::: example Drivers License Expiry
+```json
+{
+  "id": "drivers_license_information",
+  "schema": {
+    "uri": ["https://yourwatchful.gov/drivers-license-schema.json"],
+    "name": "Verify Valid License",
+    "purpose": "We need to know you have a license valid through December.",
+    "metadata": {
+      "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
+      "redirect_uri": "https://yourwatchful.gov/verify"
+    }
+  },
+  "constraints": {
+    "fields": [
+      {
+        "path": ["$.expirationDate"],
+        "filter": {
+          "type": "string",
+          "format": "date-time",
+          "min": "2020-12-31T23:59:59.000Z"
+        }
+      }
+    ]
+  }
+}
+```
+:::
+
+</section>
+
+<section>
+
+::: example Drivers License Revocation
+```json
+{
+  "id": "drivers_license_information",
+  "schema": {
+    "uri": ["https://yourwatchful.gov/drivers-license-schema.json"],
+    "name": "Verify Valid License",
+    "purpose": "We need to know that your license has not been revoked.",
+    "metadata": {
+      "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
+      "redirect_uri": "https://yourwatchful.gov/verify"
+    }
+  },
+  "constraints": {
+    "fields": [
+      {
+        "path": ["$.credentialStatus"]
+      }
+    ]
+  }
+}
+```
+:::
+</section>
+
+</tab-panel>
 
 ### JSON Schema
 
@@ -1750,7 +1822,7 @@ JSONPath                      | Description
 
 - **Node.js**
     - https://www.npmjs.com/package/jsonpath
-- **JAVA**
+- **Java**
     - https://github.com/json-path/JsonPath
 - **Kotlin**
     - https://github.com/codeniko/JsonPathKt
@@ -1764,7 +1836,7 @@ JSONPath                      | Description
 - **Node.js**
     - https://www.npmjs.com/package/ajv
     - https://www.npmjs.com/package/json-schema
-- **JAVA**
+- **Java**
     - https://github.com/ssilverman/snowy-json
     - https://github.com/leadpony/justify
 - **.NET**
