@@ -539,7 +539,7 @@ party has asserted (via a `Proof Submission` object). The following section
 defines the format for _Submission Requirement_ objects and the selection syntax
 verifying parties can use to specify which combinations of inputs are acceptable.
 
-All members of the `submission_requirements` array ****MUST**** be satisfied. All `input_descriptors` must be grouped. There may be `input_descriptors` left unfulfilled after satisfying all `submission_requirements`.
+If present, all members of the `submission_requirements` array ****MUST**** be satisfied, and all input_descriptors ****MUST**** be grouped. Any unused input_descriptors that remain after satisfying all submission_requirements ****MUST**** be ignored.
 
 ::: example Submission Requirement
 ```json 12
