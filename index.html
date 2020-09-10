@@ -542,9 +542,12 @@ credential issuance, allowing entry, accepting an application).
 a User Agent can ingest to present requirement optionality to the user, and
 subsequently submit inputs in a way that maps back to the rules the verifying
 party has asserted (via a <code>Proof Submission</code> object). The following section
-defines the format for <em>Submission Requirement</em> objects and the selection syntax
+defines the format for <em>Submission Requirement</em> objects, and the selection syntax
 verifying parties can use to specify which combinations of inputs are acceptable.</p>
-<p>If present, all members of the <code>submission_requirements</code> array <strong><strong>MUST</strong></strong> be satisfied, and all input_descriptors <strong><strong>MUST</strong></strong> be grouped. Any unused input_descriptors that remain after satisfying all submission_requirements <strong><strong>MUST</strong></strong> be ignored.</p>
+<p>If present, all members of the <code>submission_requirements</code> array <strong><strong>MUST</strong></strong>
+be satisfied, and all input_descriptors <strong><strong>MUST</strong></strong> be grouped. Any unused
+input_descriptors that remain after satisfying all submission_requirements
+<strong><strong>MUST</strong></strong> be ignored.</p>
 <div id="submission-requirement" class="notice example"><a class="notice-link" href="#submission-requirement">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Banking Information"</span><span class="token punctuation">,</span>

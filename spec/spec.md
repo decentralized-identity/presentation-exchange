@@ -532,10 +532,13 @@ _Submission Requirements_ introduce a set of rule types and mapping instructions
 a User Agent can ingest to present requirement optionality to the user, and
 subsequently submit inputs in a way that maps back to the rules the verifying
 party has asserted (via a `Proof Submission` object). The following section
-defines the format for _Submission Requirement_ objects and the selection syntax
+defines the format for _Submission Requirement_ objects, and the selection syntax
 verifying parties can use to specify which combinations of inputs are acceptable.
 
-If present, all members of the `submission_requirements` array ****MUST**** be satisfied, and all input_descriptors ****MUST**** be grouped. Any unused input_descriptors that remain after satisfying all submission_requirements ****MUST**** be ignored.
+If present, all members of the `submission_requirements` array ****MUST****
+be satisfied, and all input_descriptors ****MUST**** be grouped. Any unused
+input_descriptors that remain after satisfying all submission_requirements
+****MUST**** be ignored.
 
 ::: example Submission Requirement
 ```json 12
