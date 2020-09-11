@@ -542,9 +542,12 @@ credential issuance, allowing entry, accepting an application).
 a User Agent can ingest to present requirement optionality to the user, and
 subsequently submit inputs in a way that maps back to the rules the verifying
 party has asserted (via a <code>Proof Submission</code> object). The following section
-defines the format for <em>Submission Requirement</em> objects and the selection syntax
+defines the format for <em>Submission Requirement</em> objects, and the selection syntax
 verifying parties can use to specify which combinations of inputs are acceptable.</p>
-<p>All members of the <code>submission_requirements</code> array <strong><strong>MUST</strong></strong> be satisfied.</p>
+<p>If present, all members of the <code>submission_requirements</code> array <strong><strong>MUST</strong></strong>
+be satisfied, and all input_descriptors <strong><strong>MUST</strong></strong> be grouped. Any unused
+input_descriptors that remain after satisfying all submission_requirements
+<strong><strong>MUST</strong></strong> be ignored.</p>
 <div id="submission-requirement" class="notice example"><a class="notice-link" href="#submission-requirement">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Banking Information"</span><span class="token punctuation">,</span>
@@ -799,10 +802,10 @@ or less than the value of the <code>max</code> property.</li>
 </ol>
 <h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors">§</a> Input Descriptors</h3>
 <p><em>Input Descriptors</em> are objects used to describe the information a Verifier
-requires of a Holder before they will proceed with an interaction. <em>Input
-Descriptor Objects</em> contain a schema URI that links to the schema of the
-required input data, constraints on data values, and an explanation why a
-certain item or set of data is being requested:</p>
+requires of a Holder before they will proceed with an interaction. If no <code>submission_requirement</code> objects are present, all <code>input_descriptor</code> objects <strong><strong>MUST</strong></strong> be satisfied.</p>
+<p><em>Input Descriptor Objects</em> contain a schema URI that links to the schema
+of the required input data, constraints on data values, and an explanation
+why a certain item or set of data is being requested:</p>
 <tab-panels selected-index="0">
 <nav>
   <button type="button">Sample Descriptor</button>
@@ -1068,9 +1071,21 @@ of the implementer.</p>
 </div>
 </div>
 <h4 id="expired-and-revoked-data"><a class="toc-anchor" href="#expired-and-revoked-data">§</a> Expired and Revoked Data</h4>
-<p>Certain types of credentials have concepts of <em>expiration</em> and <em>revocation</em>. <em>Expiration</em> is mechanism normally used to communicate a time bound up until which a credential is considered valid. <em>Revocation</em> is a mechanism normally used to give an issuer control over the status of a credential after it has been issued. Different credential specifications handle these concepts in different ways.</p>
-<p><code>Presentation Definitions</code> have a need to specify whether expired, revoked, or credentials of other statuses can be accepted. For credentials that have simple status properties <a href="#input-descriptor-objects">Input Descriptor Filters</a> using JSON Schema can be used to write specify acceptable criteria.</p>
-<p>The first example demonstrates <em>expiry</em> using the <a href="https://w3c.github.io/vc-data-model/#expiration-0">VC Data Model’s <code>expirationDate</code> property</a>. The second demonstrates <em>revocation</em>, or more generally, <em>credential status</em> using the <a href="https://w3c.github.io/vc-data-model/#status-0">VC Data Model’s <code>credentialStatus</code> property</a>. Using the syntax provided in the example a verifier will have all requisite information to resolve the status of a credential.</p>
+<p>Certain types of credentials have concepts of <em>expiration</em> and <em>revocation</em>.
+<em>Expiration</em> is mechanism normally used to communicate a time bound up until
+which a credential is valid. <em>Revocation</em> is a mechanism normally used to give
+an issuer control over the status of a credential after issuance. Different
+credential specifications handle these concepts in different ways.</p>
+<p><code>Presentation Definitions</code> have a need to specify whether expired, revoked,
+or credentials of other statuses can be accepted. For credentials that have
+simple status properties <a href="#input-descriptor-objects">Input Descriptor Filters</a>
+JSON Schema can be used to write specify acceptable criteria.</p>
+<p>The first example demonstrates <em>expiry</em> using the <a href="https://w3c.github.io/vc-data-model/#expiration-0">VC Data Model’s
+<code>expirationDate</code> property</a>.
+The second demonstrates <em>revocation</em>, or more generally, <em>credential status</em>
+using the <a href="https://w3c.github.io/vc-data-model/#status-0">VC Data Model’s <code>credentialStatus</code> property</a>.
+Using the syntax provided in the example a verifier will have all requisite
+information to resolve the status of a credential.</p>
 <tab-panels selected-index="0">
 <nav>
   <button type="button">Verifiable Credential Expiration</button>
@@ -1232,13 +1247,13 @@ format-related rules above:</p>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
               <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/field"</span> <span class="token punctuation">}</span>
             <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token property">"subject_is_issuer"</span><span class="token operator">:</span> <span class="token punctuation">{</span> 
+            <span class="token property">"subject_is_issuer"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
-              <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"preferred"</span> <span class="token punctuation">]</span>
+              <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"preferred"</span><span class="token punctuation">]</span>
             <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token property">"subject_is_holder"</span><span class="token operator">:</span> <span class="token punctuation">{</span> 
+            <span class="token property">"subject_is_holder"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
-              <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"preferred"</span> <span class="token punctuation">]</span>
+              <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"preferred"</span><span class="token punctuation">]</span>
             <span class="token punctuation">}</span>
           <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
@@ -1340,7 +1355,7 @@ within.</li>
 <li>The object <strong><strong>MUST</strong></strong> include a <code>format</code> property, and its value
 <strong><strong>MUST</strong></strong> be a string value matching one of the
 <a href="#credential-format-designations">Credential Format Designation</a> (<code>jwt</code>,
-``jwt<code>_vc</code>, <code>jwt_vp</code>), to denote what data format the credential is being
+<code>jwt_vc</code>, <code>jwt_vp</code>), to denote what data format the credential is being
 submitted in.</li>
 </ul>
 </li>

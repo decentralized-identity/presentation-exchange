@@ -532,10 +532,13 @@ _Submission Requirements_ introduce a set of rule types and mapping instructions
 a User Agent can ingest to present requirement optionality to the user, and
 subsequently submit inputs in a way that maps back to the rules the verifying
 party has asserted (via a `Proof Submission` object). The following section
-defines the format for _Submission Requirement_ objects and the selection syntax
+defines the format for _Submission Requirement_ objects, and the selection syntax
 verifying parties can use to specify which combinations of inputs are acceptable.
 
-All members of the `submission_requirements` array ****MUST**** be satisfied.
+If present, all members of the `submission_requirements` array ****MUST****
+be satisfied, and all input_descriptors ****MUST**** be grouped. Any unused
+input_descriptors that remain after satisfying all submission_requirements
+****MUST**** be ignored.
 
 ::: example Submission Requirement
 ```json 12
@@ -802,10 +805,11 @@ processing-related rules above:
 ### Input Descriptors
 
 _Input Descriptors_ are objects used to describe the information a Verifier
-requires of a Holder before they will proceed with an interaction. _Input
-Descriptor Objects_ contain a schema URI that links to the schema of the
-required input data, constraints on data values, and an explanation why a
-certain item or set of data is being requested:
+requires of a Holder before they will proceed with an interaction. If no `submission_requirement` objects are present, all `input_descriptor` objects ****MUST**** be satisfied.
+
+_Input Descriptor Objects_ contain a schema URI that links to the schema 
+of the required input data, constraints on data values, and an explanation 
+why a certain item or set of data is being requested:
 
 <tab-panels selected-index="0">
 
@@ -1069,11 +1073,23 @@ of the implementer.
 
 #### Expired and Revoked Data
 
-Certain types of credentials have concepts of _expiration_ and _revocation_. _Expiration_ is mechanism normally used to communicate a time bound up until which a credential is considered valid. _Revocation_ is a mechanism normally used to give an issuer control over the status of a credential after it has been issued. Different credential specifications handle these concepts in different ways. 
+Certain types of credentials have concepts of _expiration_ and _revocation_.
+_Expiration_ is mechanism normally used to communicate a time bound up until
+which a credential is valid. _Revocation_ is a mechanism normally used to give
+an issuer control over the status of a credential after issuance. Different
+credential specifications handle these concepts in different ways. 
 
-`Presentation Definitions` have a need to specify whether expired, revoked, or credentials of other statuses can be accepted. For credentials that have simple status properties [Input Descriptor Filters](#input-descriptor-objects) using JSON Schema can be used to write specify acceptable criteria.
+`Presentation Definitions` have a need to specify whether expired, revoked,
+or credentials of other statuses can be accepted. For credentials that have
+simple status properties [Input Descriptor Filters](#input-descriptor-objects)
+JSON Schema can be used to write specify acceptable criteria.
 
-The first example demonstrates _expiry_ using the [VC Data Model's `expirationDate` property](https://w3c.github.io/vc-data-model/#expiration-0). The second demonstrates _revocation_, or more generally, _credential status_ using the [VC Data Model's `credentialStatus` property](https://w3c.github.io/vc-data-model/#status-0). Using the syntax provided in the example a verifier will have all requisite information to resolve the status of a credential.
+The first example demonstrates _expiry_ using the [VC Data Model's
+ `expirationDate` property](https://w3c.github.io/vc-data-model/#expiration-0).
+The second demonstrates _revocation_, or more generally, _credential status_
+using the [VC Data Model's `credentialStatus` property](https://w3c.github.io/vc-data-model/#status-0).
+Using the syntax provided in the example a verifier will have all requisite
+information to resolve the status of a credential.
 
 <tab-panels selected-index="0">
 
@@ -1251,13 +1267,13 @@ format-related rules above:
               "type": "array",
               "items": { "$ref": "#/definitions/field" }
             },
-            "subject_is_issuer": { 
+            "subject_is_issuer": {
               "type": "string",
-              "enum": [ "required", "preferred" ]
+              "enum": ["required", "preferred"]
             },
-            "subject_is_holder": { 
+            "subject_is_holder": {
               "type": "string",
-              "enum": [ "required", "preferred" ]
+              "enum": ["required", "preferred"]
             }
           },
           "additionalProperties": false
