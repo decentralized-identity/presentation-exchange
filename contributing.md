@@ -17,7 +17,7 @@ Repository Process (below).
 
 ### Repository Maintainer selection
 Maintainers must be Working Group Participants selected by Working Group 
-Participants via consensus. At 	least 3 maintainers must be to be active at any 
+Participants via consensus. At least 3 maintainers must be to be active at any 
 given time operating the Repository Process for the Working Group. Maintainers 
 *MUST* have different organizational affiliations to represent the diversity of 
 the Working Group (i.e., no two maintainers should work for the same company, 
