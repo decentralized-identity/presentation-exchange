@@ -1315,13 +1315,14 @@ validation required by a given Verifier are left to the Verifier's systems, code
 and business processes to define and execute.
 
 During validation, each Input Descriptor Object ****MUST**** refer to only a
-singular presentation within a _Presentation Submission_, such that all checks
-refer to properties within the same container and are protected by the same
-digital signature, if the format supports digital signatures. Examples of
-discrete containers include Verifiable Presentations as defined in W3C
-Verifiable Credentials, OpenID Connect Tokens, and JSON Web Tokens. This is to
-ensure that related requirements, for example, "given name" and "family name"
-within the same _Input Descriptor Object_ also come from the same container.
+single discrete container within a _Presentation Submission_, such that all
+checks refer to properties within the same container and are protected by the
+same digital signature, if the container format supports digital signatures.
+Examples of discrete container formats include Verifiable Presentations as
+defined in W3C Verifiable Credentials, OpenID Connect Tokens, and JSON Web
+Tokens. This is to ensure that related requirements, for example, "given name"
+and "family name" within the same _Input Descriptor Object_ also come from the
+same container.
 
 ### Embed Targets
 
