@@ -812,7 +812,7 @@ why a certain item or set of data is being requested:</p>
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-1" class="notice example"><a class="notice-link" href="#example-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="example-11" class="notice example"><a class="notice-link" href="#example-11">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -859,7 +859,7 @@ why a certain item or set of data is being requested:</p>
 </div>
 </section>
 <section>
-<div id="example-2" class="notice example"><a class="notice-link" href="#example-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-12" class="notice example"><a class="notice-link" href="#example-12">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
   <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -976,7 +976,8 @@ one who submits the identity verification.</p>
 <a href="#input-descriptor-field-entry"><em>Input Descriptor Field Entry</em></a> objects,
 each being composed as follows:</p>
 <ul>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>path</code> property, and its value
+<li>
+<p>The object <strong><strong>MUST</strong></strong> contain a <code>path</code> property, and its value
 <strong><strong>MUST</strong></strong> be an array of one or more
 <a href="https://goessner.net/articles/JsonPath/">JSONPath</a> string
 expressions, as defined in the
@@ -989,16 +990,128 @@ way allows the Verifier to account for format differences - for
 example: normalizing the differences in structure between
 JSON-LD/JWT-based
 <a href="https://www.w3.org/TR/vc-data-model/">Verifiable Credentials</a> and
-vanilla <a href="https://tools.ietf.org/html/rfc7797">JSON Web Tokens</a> (JWTs).</li>
-<li>The object <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property, and if present
+vanilla <a href="https://tools.ietf.org/html/rfc7797">JSON Web Tokens</a> (JWTs).</p>
+</li>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property, and if present
 its value <strong><strong>MUST</strong></strong> be a string that describes the purpose for
-which the field is being requested.</li>
-<li>The object <strong><strong>MAY</strong></strong> contain a <code>filter</code> property, and if present
+which the field is being requested.</p>
+</li>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain a <code>filter</code> property, and if present
 its value <strong><strong>MUST</strong></strong> be
 <a href="https://json-schema.org/specification.html">JSON Schema</a> descriptor
 used to filter against the values returned from evaluation of the
 <a href="https://goessner.net/articles/JsonPath/">JSONPath</a> string
-expressions in the <code>path</code> array.</li>
+expressions in the <code>path</code> array.</p>
+</li>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain a <code>predicate</code> property. If the
+<code>predicate</code> property is present, the <code>filter</code> property <strong><strong>MUST</strong></strong>
+also be present. The inclusion of the <code>predicate</code> property
+indicates that the processing entity returns a boolean, rather than
+a value returned from evaluation of the
+<a href="https://goessner.net/articles/JsonPath/">JSONPath</a> string
+expressions in the <code>path</code> array. The boolean returned is the result
+of using the <code>filter</code> property’s
+<a href="https://json-schema.org/specification.html">JSON Schema</a>
+descriptors against the evaluated value. The value of <code>predicate</code>
+<strong><strong>MUST</strong></strong> be one of the following strings:</p>
+<ul>
+<li><code>required</code> - This indicates that the returned value <strong><strong>MUST</strong></strong>
+be the boolean result of applying the value of the <code>filter</code>
+property to the result of evaluating the <code>path</code> property.</li>
+<li><code>preferred</code> - This indicates that the returned value
+<strong><strong>SHOULD</strong></strong> be the boolean result of applying the value of the
+<code>filter</code> property to the result of evaluating the <code>path</code> property.</li>
+</ul>
+<p>If the <code>predicate</code> property is present, the set of JSON Schema
+descriptors which comprise the value of the <code>filter</code> property
+<strong><strong>MUST</strong></strong> be restricted according to the desired predicate
+operation, as follows:</p>
+<ul>
+<li>To express the following range proofs, use the JSON Schema
+<a href="https://json-schema.org/understanding-json-schema/reference/numeric.html#range">numeric range</a>
+properties:
+<ul>
+<li><code>greater-than</code> - Use the <code>exclusiveMinimum</code> descriptor. For
+example, to request a proof that an attribute is greater than
+10000:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
+  <span class="token property">"exclusiveMinimum"</span><span class="token operator">:</span> <span class="token number">10000</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li><code>less-than</code> - Use the <code>exclusiveMaximum</code> descriptor. For
+example, to request a proof that an attribute is less than 85:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
+  <span class="token property">"exclusiveMaximum"</span><span class="token operator">:</span> <span class="token number">85</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li><code>greater-than or equal-to</code> - Use the <code>minimum</code> descriptor. For
+example, to request a proof that an attribute is greater than or
+equal to 18:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
+  <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">18</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li><code>less-than or equal-to</code> - Use the <code>maximum</code> descriptor. For
+example, to request a proof that an attribute is less than or
+equal to 65536:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
+  <span class="token property">"maximum"</span><span class="token operator">:</span> <span class="token number">65536</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+</li>
+<li>to express the following equality proofs, use the JSON Schema
+<code>const</code> descriptor:
+<ul>
+<li><code>equal-to</code> - Use the <code>const</code> descriptor. For example to request
+proof that an attribute has the value “Chad”:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"const"</span><span class="token operator">:</span> <span class="token string">"Chad"</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li><code>not equal-to</code> - Use the <code>const</code> descriptor with the <code>not</code>
+operator. For example, to request proof that an attribute does
+not have the value “Karen”:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"not"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"const"</span><span class="token operator">:</span> <span class="token string">"Karen"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+</li>
+<li>to express set-membership proofs, use the JSON Schema <code>enum</code>
+descriptor:
+<ul>
+<li><code>in-set</code> - Use the <code>enum</code> descriptor. For example, to
+request proof that an attribute is contained in the set of
+rainbow colors:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+  <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"red"</span><span class="token punctuation">,</span> <span class="token string">"yellow"</span><span class="token punctuation">,</span> <span class="token string">"blue"</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li><code>not-in-set</code> - Use the <code>enum</code> descriptor with the <code>not</code>
+operator. For example, to request proof that an attribute is not
+contained in the set of primary colors:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"not"</span><span class="token operator">:</span> <span class="token punctuation">{</span> 
+    <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"red"</span><span class="token punctuation">,</span> <span class="token string">"yellow"</span><span class="token punctuation">,</span> <span class="token string">"blue"</span><span class="token punctuation">]</span> 
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>At this time, additional predicate operations are not supported.</p>
+</li>
 </ul>
 </li>
 </ul>
@@ -1036,6 +1149,10 @@ candidate input.</li>
 <li>If the <code>filter</code> property of the field entry is present, validate the
 <em>Field Query Result</em> from the step above against the
 <a href="https://json-schema.org/specification.html">JSON Schema</a> descriptor value.</li>
+<li>If the <code>predicate</code> property of the field entry is present, derive a
+<em>Field Query Predicate</em> boolean value using the value of the <em>Field
+Query Result</em> obtained above, according to the <code>operation</code> and <code>p_value</code>
+or <code>p_set</code> provided in the <code>predicate</code> object.</li>
 <li>If the result is valid, proceed iterating the rest of the <code>fields</code> entries.</li>
 </ol>
 </li>
@@ -1062,7 +1179,7 @@ contains a <code>subject_is_holder</code> property set to the value <code>requir
 that any submission of data in relation to the candidate input is fulfilled
 by the subject of the credential</li>
 </ol>
-<div id="note-1" class="notice note"><a class="notice-link" href="#note-1">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
+<div id="note-6" class="notice note"><a class="notice-link" href="#note-6">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
 criteria for inclusion in submission. Any additional testing of a candidate
 input for a schema match beyond comparison of the schema <code>uri</code> (e.g. specific
@@ -1337,8 +1454,11 @@ negotiation formats that unify the presentation of proofs to a Verifier in
 accordance with the requirements a Verifier specified in a <em>Presentation
 Definition</em>. Embedded <em>Presentation Submission</em> objects <strong><strong>MUST</strong></strong> be located
 within target data format as a <code>presentation_submission</code> property, which are
-composed as follows:</p>
-<ul>
+composed and embedded as follows:</p>
+<ol>
+<li>The <code>presentation_submission</code> object <strong><strong>MUST</strong></strong> be included at the top-level
+of an Embed Target, or in the specific location described in the
+<a href="#embed-locations">Embed Locations table</a> in the <a href="#embed-target">Embed Target</a> section below.</li>
 <li>The object <strong><strong>MUST</strong></strong> include a <code>descriptor_map</code> property, and its value
 <strong><strong>MUST</strong></strong> be an array of <em>Input Descriptor Mapping Objects</em>, each being
 composed as follows:
@@ -1359,7 +1479,7 @@ within.</li>
 submitted in.</li>
 </ul>
 </li>
-</ul>
+</ol>
 <p>If for all credentials submitted in relation to
 <a href="#input-descriptor-objects"><em>Input Descriptor Objects</em></a> that include a
 <code>constraints</code> object with a <code>limit_disclosure</code> property set to the boolean value
@@ -1393,6 +1513,36 @@ same container.</p>
 embedded within a target data structure, as well as how to formulate the
 <a href="https://goessner.net/articles/JsonPath/">JSONPath</a> expressions to select the
 credentials within the target data structure.</p>
+<h4 id="embed-locations"><a class="toc-anchor" href="#embed-locations">§</a> Embed Locations</h4>
+<p>The following are the locations at which the <code>presentation_submission</code> object
+<strong><strong>MUST</strong></strong> be embedded for known target formats. For any location besides
+the top level of the embed target, the location is described in JSONPath syntax.</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenID</td>
+<td>top-level</td>
+</tr>
+<tr>
+<td>DIDComms</td>
+<td><code>$.presentations~attach.data.json</code></td>
+</tr>
+<tr>
+<td>VP</td>
+<td>top-level</td>
+</tr>
+<tr>
+<td>CHAPI</td>
+<td><code>$.data</code></td>
+</tr>
+</tbody>
+</table>
 <tab-panels selected-index="0">
 <nav>
   <button type="button">Verifiable Presentation</button>
@@ -1538,18 +1688,18 @@ credentials within the target data structure.</p>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token property">"_claim_sources"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"banking_input_2"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"JWT"</span><span class="token operator">:</span> "eyJhbGciOiJSUzI<span class="token number">1</span>NiIsInR<span class="token number">5</span>cCI<span class="token number">6</span>IkpXVCJ<span class="token number">9.</span>eyJpc<span class="token number">3</span>MiOiJodHRwcz
-      ovL<span class="token number">3</span>NlcnZlci<span class="token number">5</span>vdGhlcm<span class="token number">9</span>wLmNvbSIsInN<span class="token number">1</span>YiI<span class="token number">6</span>ImU<span class="token number">4</span>MTQ<span class="token number">4</span>NjAzLTg<span class="token number">5</span>MzQtNDI<span class="token number">0</span>N
-      S<span class="token number">04</span>MjViLWMxMDhiOGI<span class="token number">2</span>Yjk<span class="token number">0</span>NSIsInZlcmlmaWVkX<span class="token number">2</span>NsYWltcyI<span class="token number">6</span>eyJ<span class="token number">2</span>ZXJpZmlj
-      YXRpb<span class="token number">24</span>iOnsidHJ<span class="token number">1</span>c<span class="token number">3</span>RfZnJhbWV<span class="token number">3</span>b<span class="token number">3</span>JrIjoiaWFsX<span class="token number">2</span>V<span class="token number">4</span>YW<span class="token number">1</span>wbGVfZ<span class="token number">29</span>sZCJ<span class="token number">9</span>LCJ
-      jbGFpbXMiOnsiZ<span class="token number">2</span>l<span class="token number">2</span>ZW<span class="token number">5</span>fbmFtZSI<span class="token number">6</span>Ik<span class="token number">1</span>heCIsImZhbWlseV<span class="token number">9</span>uYW<span class="token number">1</span>lIjoiTWVpZX
-      IiLCJiaXJ<span class="token number">0</span>aGRhdGUiOiIxOTU<span class="token number">2</span>LTAxLTI<span class="token number">4</span>In<span class="token number">19</span>fQ.FArlPUtUVn<span class="token number">95</span>HCExePlWJQ
-      <span class="token number">6</span>ctVfVpQyeSbe<span class="token number">3</span>xkH<span class="token number">9</span>MH<span class="token number">1</span>QJjnk<span class="token number">5</span>GVbBW<span class="token number">0</span>qe<span class="token number">1</span>b<span class="token number">7</span>R<span class="token number">3</span>lE<span class="token number">-8</span>iVv__<span class="token number">0</span>mhRTUI<span class="token number">5</span>lcFhLj
-      oGjDS<span class="token number">8</span>zgWSarVsEEjwBK<span class="token number">7</span>WD<span class="token number">3</span>r<span class="token number">9</span>cEw<span class="token number">6</span>ZAhfEkhHL<span class="token number">9</span>eqAaED<span class="token number">2</span>rhhDbHD<span class="token number">5</span>dZWXkJCu
-      XIcn<span class="token number">65</span>g<span class="token number">6</span>rryiBanxlXK<span class="token number">0</span>ZmcK<span class="token number">4</span>fD<span class="token number">9</span>HV<span class="token number">9</span>MFduk<span class="token number">0</span>LRG_p<span class="token number">4</span>yocMaFvVkqawat<span class="token number">5</span>NV<span class="token number">9</span>QQ
-      <span class="token number">3</span>ij<span class="token number">7</span>UBr<span class="token number">3</span>G<span class="token number">7</span>A<span class="token number">4</span>FojcKEkoJKScdGoozir<span class="token number">8</span>m<span class="token number">5</span>XD<span class="token number">83</span>Sn<span class="token number">45</span>_<span class="token number">79</span>nCcgWSnCX<span class="token number">2</span>QTukL<span class="token number">8</span>Ny
-      wIItu_K<span class="token number">48</span>cjHiAGXXSzydDm_ccGCe<span class="token number">0</span>sY-Ai<span class="token number">2</span>-iFFuQo<span class="token number">2</span>PtfuK<span class="token number">2</span>SqPPmAZJxEFrF
-      oLY<span class="token number">4</span>g"
+      <span class="token property">"JWT"</span><span class="token operator">:</span> "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwcz
+      ovL3NlcnZlci5vdGhlcm9wLmNvbSIsInN1YiI6ImU4MTQ4NjAzLTg5MzQtNDI0N
+      S04MjViLWMxMDhiOGI2Yjk0NSIsInZlcmlmaWVkX2NsYWltcyI6eyJ2ZXJpZmlj
+      YXRpb24iOnsidHJ1c3RfZnJhbWV3b3JrIjoiaWFsX2V4YW1wbGVfZ29sZCJ9LCJ
+      jbGFpbXMiOnsiZ2l2ZW5fbmFtZSI6Ik1heCIsImZhbWlseV9uYW1lIjoiTWVpZX
+      IiLCJiaXJ0aGRhdGUiOiIxOTU2LTAxLTI4In19fQ.FArlPUtUVn95HCExePlWJQ
+      6ctVfVpQyeSbe3xkH9MH1QJjnk5GVbBW0qe1b7R3lE-8iVv__0mhRTUI5lcFhLj
+      oGjDS8zgWSarVsEEjwBK7WD3r9cEw6ZAhfEkhHL9eqAaED2rhhDbHD5dZWXkJCu
+      XIcn65g6rryiBanxlXK0ZmcK4fD9HV9MFduk0LRG_p4yocMaFvVkqawat5NV9QQ
+      3ij7UBr3G7A4FojcKEkoJKScdGoozir8m5XD83Sn45_79nCcgWSnCX2QTukL8Ny
+      wIItu_K48cjHiAGXXSzydDm_ccGCe0sY-Ai2-iFFuQo2PtfuK2SqPPmAZJxEFrF
+      oLY4g"
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token property">"employment_input"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"VC"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -1991,7 +2141,11 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="#presentation-submission">Presentation Submission</a>
 <ul>
 <li><a href="#validation-of-credentials">Validation of Credentials</a></li>
-<li><a href="#embed-targets">Embed Targets</a></li>
+<li><a href="#embed-targets">Embed Targets</a>
+<ul>
+<li><a href="#embed-locations">Embed Locations</a></li>
+</ul>
+</li>
 <li><a href="#json-schema-3">JSON Schema</a></li>
 </ul>
 </li>
