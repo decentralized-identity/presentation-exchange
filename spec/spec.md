@@ -1466,9 +1466,12 @@ negotiation formats that unify the presentation of proofs to a Verifier in
 accordance with the requirements a Verifier specified in a _Presentation
 Definition_. Embedded _Presentation Submission_ objects ****MUST**** be located
 within target data format as a `presentation_submission` property, which are
-composed as follows:
+composed and embedded as follows:
 
-- The object ****MUST**** include a `descriptor_map` property, and its value
+1. The `presentation_submission` object ****MUST**** be included at the top-level 
+  of an Embed Target, or in the specific location described in the 
+  [Embed Locations table](#embed-locations) in the [Embed Target](#embed-target) section below.
+2. The object ****MUST**** include a `descriptor_map` property, and its value
   ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being
   composed as follows:
     - The object ****MUST**** include an `id` property, and its value
@@ -1514,6 +1517,19 @@ The following section details where the _Presentation Submission_ is to be
 embedded within a target data structure, as well as how to formulate the
 [JSONPath](https://goessner.net/articles/JsonPath/) expressions to select the
 credentials within the target data structure.
+
+#### Embed Locations
+
+The following are the locations at which the `presentation_submission` object 
+****MUST**** be embedded for known target formats. For any location besides 
+the top level of the embed target, the location is described in JSONPath syntax.
+
+Target     | Location      
+---------- | --------
+OpenID     | top-level
+DIDComms   | `$.presentations~attach.data.json`
+VP         | top-level
+CHAPI      | `$.data`
 
 <tab-panels selected-index="0">
 
