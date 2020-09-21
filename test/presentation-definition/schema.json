@@ -116,28 +116,60 @@
     },
     "field": {
       "type": "object",
-      "properties": {
-        "path": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "purpose": { "type": "string" },
-        "filter": {
-          "type": "object",
+      "oneOf": [
+        {
           "properties": {
-            "type": { "type": "string" },
-            "format": { "type": "string" },
-            "pattern": { "type": "string" },
-            "minimum": { "type": "string" },
-            "minLength": { "type": "integer" },
-            "maxLength": { "type": "integer" }
+            "path": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "purpose": { "type": "string" },
+            "filter": {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string" },
+                "format": { "type": "string" },
+                "pattern": { "type": "string" },
+                "minimum": { "type": "string" },
+                "minLength": { "type": "integer" },
+                "maxLength": { "type": "integer" }
+              },
+              "required": ["type"],
+              "additionalProperties": false
+            }
           },
-          "required": ["type"],
+          "required": ["path"],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "path": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "purpose": { "type": "string" },
+            "filter": {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string" },
+                "format": { "type": "string" },
+                "pattern": { "type": "string" },
+                "minimum": { "type": "string" },
+                "minLength": { "type": "integer" },
+                "maxLength": { "type": "integer" }
+              },
+              "required": ["type"],
+              "additionalProperties": false
+            },
+            "predicate": { 
+              "type": "string",
+              "enum": ["required", "preferred"]
+            }
+          },
+          "required": ["path", "filter", "predicate"],
           "additionalProperties": false
         }
-      },
-      "required": ["path"],
-      "additionalProperties": false
+      ]
     }
   },
   "type": "object",
