@@ -1515,11 +1515,12 @@ During validation, each Input Descriptor Object ****MUST**** refer to only a
 single discrete container within a _Presentation Submission_, such that all
 checks refer to properties within the same container and are protected by the
 same digital signature, if the container format supports digital signatures.
-Examples of discrete container formats include Verifiable Presentations as
-defined in W3C Verifiable Credentials, OpenID Connect Tokens, and JSON Web
-Tokens. This is to ensure that related requirements, for example, "given name"
-and "family name" within the same _Input Descriptor Object_ also come from the
-same container.
+Examples of discrete container formats include a single Verifiable Credential
+within a Verifiable Presentation as defined in 
+[W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/), OpenID
+Connect Tokens, and JSON Web Tokens. This is to ensure that related
+requirements, for example, "given name" and "family name" within the same
+_Input Descriptor Object_ also come from the same container.
 
 ### Embed Targets
 

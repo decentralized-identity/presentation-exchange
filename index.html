@@ -812,7 +812,7 @@ why a certain item or set of data is being requested:</p>
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-11" class="notice example"><a class="notice-link" href="#example-11">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="example-1" class="notice example"><a class="notice-link" href="#example-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -859,7 +859,7 @@ why a certain item or set of data is being requested:</p>
 </div>
 </section>
 <section>
-<div id="example-12" class="notice example"><a class="notice-link" href="#example-12">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-2" class="notice example"><a class="notice-link" href="#example-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
   <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -1179,7 +1179,7 @@ contains a <code>subject_is_holder</code> property set to the value <code>requir
 that any submission of data in relation to the candidate input is fulfilled
 by the subject of the credential</li>
 </ol>
-<div id="note-6" class="notice note"><a class="notice-link" href="#note-6">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
+<div id="note-1" class="notice note"><a class="notice-link" href="#note-1">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
 criteria for inclusion in submission. Any additional testing of a candidate
 input for a schema match beyond comparison of the schema <code>uri</code> (e.g. specific
@@ -1503,11 +1503,12 @@ and business processes to define and execute.</p>
 single discrete container within a <em>Presentation Submission</em>, such that all
 checks refer to properties within the same container and are protected by the
 same digital signature, if the container format supports digital signatures.
-Examples of discrete container formats include Verifiable Presentations as
-defined in W3C Verifiable Credentials, OpenID Connect Tokens, and JSON Web
-Tokens. This is to ensure that related requirements, for example, “given name”
-and “family name” within the same <em>Input Descriptor Object</em> also come from the
-same container.</p>
+Examples of discrete container formats include a single Verifiable Credential
+within a Verifiable Presentation as defined in
+<a href="https://www.w3.org/TR/vc-data-model/">W3C Verifiable Credentials</a>, OpenID
+Connect Tokens, and JSON Web Tokens. This is to ensure that related
+requirements, for example, “given name” and “family name” within the same
+<em>Input Descriptor Object</em> also come from the same container.</p>
 <h3 id="embed-targets"><a class="toc-anchor" href="#embed-targets">§</a> Embed Targets</h3>
 <p>The following section details where the <em>Presentation Submission</em> is to be
 embedded within a target data structure, as well as how to formulate the
