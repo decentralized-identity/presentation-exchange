@@ -1293,8 +1293,8 @@ format-related rules above:
           "items": { "type": ["number", "string"] }
         },
         "not": {
-          "type": "array",
-          "items": { "type": ["integer", "string"] }
+          "type": "object",
+          "minProperties": 1
         }
       },
       "required": ["type"],
