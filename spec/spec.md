@@ -1275,6 +1275,31 @@ format-related rules above:
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "filter": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "format": { "type": "string" },
+        "pattern": { "type": "string" },
+        "minimum": { "type": ["number", "string"] },
+        "minLength": { "type": "integer" },
+        "maxLength": { "type": "integer" },
+        "exclusiveMinimum": { "type": ["number", "string"] },
+        "exclusiveMaximum": { "type": ["number", "string"] },
+        "maximum": { "type": ["number", "string"] },
+        "const": { "type": ["number", "string"] },
+        "enum": { 
+          "type": "array",
+          "items": { "type": ["number", "string"] }
+        },
+        "not": {
+          "type": "object",
+          "minProperties": 1
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
     "format": {
       "type": "object",
       "patternProperties": {
@@ -1390,28 +1415,36 @@ format-related rules above:
     },
     "field": {
       "type": "object",
-      "properties": {
-        "path": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "purpose": { "type": "string" },
-        "filter": {
-          "type": "object",
+      "oneOf": [
+        {
           "properties": {
-            "type": { "type": "string" },
-            "format": { "type": "string" },
-            "pattern": { "type": "string" },
-            "minimum": { "type": "string" },
-            "minLength": { "type": "integer" },
-            "maxLength": { "type": "integer" }
+            "path": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "purpose": { "type": "string" },
+            "filter": { "$ref": "#/definitions/filter" }
           },
-          "required": ["type"],
+          "required": ["path"],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "path": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "purpose": { "type": "string" },
+            "filter": { "$ref": "#/definitions/filter" },
+            "predicate": { 
+              "type": "string",
+              "enum": ["required", "preferred"]
+            }
+          },
+          "required": ["path", "filter", "predicate"],
           "additionalProperties": false
         }
-      },
-      "required": ["path"],
-      "additionalProperties": false
+      ]
     }
   },
   "type": "object",
