@@ -1275,6 +1275,31 @@ format-related rules above:
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "filter": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "format": { "type": "string" },
+        "pattern": { "type": "string" },
+        "minimum": { "type": ["number", "string"] },
+        "minLength": { "type": "integer" },
+        "maxLength": { "type": "integer" },
+        "exclusiveMinimum": { "type": ["number", "string"] },
+        "exclusiveMaximum": { "type": ["number", "string"] },
+        "maximum": { "type": ["number", "string"] },
+        "const": { "type": ["number", "string"] },
+        "enum": { 
+          "type": "array",
+          "items": { "type": ["number", "string"] }
+        },
+        "not": {
+          "type": "array",
+          "items": { "type": ["integer", "string"] }
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
     "format": {
       "type": "object",
       "patternProperties": {
@@ -1398,19 +1423,7 @@ format-related rules above:
               "items": { "type": "string" }
             },
             "purpose": { "type": "string" },
-            "filter": {
-              "type": "object",
-              "properties": {
-                "type": { "type": "string" },
-                "format": { "type": "string" },
-                "pattern": { "type": "string" },
-                "minimum": { "type": "string" },
-                "minLength": { "type": "integer" },
-                "maxLength": { "type": "integer" }
-              },
-              "required": ["type"],
-              "additionalProperties": false
-            }
+            "filter": { "$ref": "#/definitions/filter" }
           },
           "required": ["path"],
           "additionalProperties": false
@@ -1422,19 +1435,7 @@ format-related rules above:
               "items": { "type": "string" }
             },
             "purpose": { "type": "string" },
-            "filter": {
-              "type": "object",
-              "properties": {
-                "type": { "type": "string" },
-                "format": { "type": "string" },
-                "pattern": { "type": "string" },
-                "minimum": { "type": "string" },
-                "minLength": { "type": "integer" },
-                "maxLength": { "type": "integer" }
-              },
-              "required": ["type"],
-              "additionalProperties": false
-            },
+            "filter": { "$ref": "#/definitions/filter" },
             "predicate": { 
               "type": "string",
               "enum": ["required", "preferred"]
