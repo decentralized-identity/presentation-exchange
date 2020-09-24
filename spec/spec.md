@@ -1280,6 +1280,31 @@ format-related rules above:
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "filter": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "format": { "type": "string" },
+        "pattern": { "type": "string" },
+        "minimum": { "type": ["number", "string"] },
+        "minLength": { "type": "integer" },
+        "maxLength": { "type": "integer" },
+        "exclusiveMinimum": { "type": ["number", "string"] },
+        "exclusiveMaximum": { "type": ["number", "string"] },
+        "maximum": { "type": ["number", "string"] },
+        "const": { "type": ["number", "string"] },
+        "enum": { 
+          "type": "array",
+          "items": { "type": ["number", "string"] }
+        },
+        "not": {
+          "type": "object",
+          "minProperties": 1
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
     "format": {
       "type": "object",
       "patternProperties": {
@@ -1395,28 +1420,36 @@ format-related rules above:
     },
     "field": {
       "type": "object",
-      "properties": {
-        "path": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "purpose": { "type": "string" },
-        "filter": {
-          "type": "object",
+      "oneOf": [
+        {
           "properties": {
-            "type": { "type": "string" },
-            "format": { "type": "string" },
-            "pattern": { "type": "string" },
-            "minimum": { "type": "string" },
-            "minLength": { "type": "integer" },
-            "maxLength": { "type": "integer" }
+            "path": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "purpose": { "type": "string" },
+            "filter": { "$ref": "#/definitions/filter" }
           },
-          "required": ["type"],
+          "required": ["path"],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "path": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "purpose": { "type": "string" },
+            "filter": { "$ref": "#/definitions/filter" },
+            "predicate": { 
+              "type": "string",
+              "enum": ["required", "preferred"]
+            }
+          },
+          "required": ["path", "filter", "predicate"],
           "additionalProperties": false
         }
-      },
-      "required": ["path"],
-      "additionalProperties": false
+      ]
     }
   },
   "type": "object",
@@ -1515,6 +1548,17 @@ should be evaluated in accordance with a given credential format's standardized
 processing steps. Additional verification of credential data or subsequent 
 validation required by a given Verifier are left to the Verifier's systems, code 
 and business processes to define and execute.
+
+During validation, each Input Descriptor Object ****MUST**** refer to only a
+single discrete container within a _Presentation Submission_, such that all
+checks refer to properties within the same container and are protected by the
+same digital signature, if the container format supports digital signatures.
+Examples of discrete container formats include a single Verifiable Credential
+within a Verifiable Presentation as defined in 
+[W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/), OpenID
+Connect Tokens, and JSON Web Tokens. This is to ensure that related
+requirements, for example, "given name" and "family name" within the same
+_Input Descriptor Object_ also come from the same container.
 
 ### Embed Targets
 
