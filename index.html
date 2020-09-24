@@ -69,8 +69,13 @@ requirements.</p>
 requirements, as well as the <code>Presentation Submission</code> data format Holders can
 use to submit proofs in accordance with them. The specification is designed to
 be both credential format and transport envelope agnostic, meaning an implementer
-can use JWTs, VCs, JWT-VCs, or any other credential format, and convey them
-via OIDC, DIDComm, CHAPI, or any other transport envelope. The goal of
+can use <a href="https://tools.ietf.org/html/rfc7519">JSON Web Tokens (JWTs)</a>,
+<a href="https://www.w3.org/TR/vc-data-model/">Verifiable Credentials (VCs)</a>,
+<a href="https://www.w3.org/TR/vc-data-model/#json-web-token-extensions">JWT-VCs</a>,
+or any other credential format, and convey them
+via <a href="https://openid.net/connect/">Open ID Connect</a>, <a href="https://identity.foundation/didcomm-messaging/spec/">DIDComm</a>,
+<a href="https://w3c-ccg.github.io/credential-handler-api/">Credential Handler API</a>,
+or any other transport envelope. The goal of
 this flexible format and transport agnostic mechanism is to nullify the
 redundant handling, code, and hassle involved in presenting and satisfying
 logical requirements across formats and transport envelopes.</p>
@@ -111,7 +116,7 @@ work is being done.</p>
 </table>
 <h2 id="localization"><a class="toc-anchor" href="#localization">§</a> Localization</h2>
 <p>To support localization, <a href="https://tools.ietf.org/html/bcp47">IETF BCP 47</a> one
-<strong>MAY</strong> use language tags under the <code>locale</code> property in both a <code>Presentation Definition</code> and <code>Presentation Submission</code>. If a Definition has a language tag,
+<strong><strong>MAY</strong></strong> use language tags under the <code>locale</code> property in both a <code>Presentation Definition</code> and <code>Presentation Submission</code>. If a Definition has a language tag,
 so should the corresponding Submission. A Submission may have a language tag
 regardless of the presence of one in the corresponding Definition.</p>
 <p>Wrapping transports such as HTTP may choose to utlilize the <code>locale</code> property in
@@ -812,7 +817,7 @@ why a certain item or set of data is being requested:</p>
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-11" class="notice example"><a class="notice-link" href="#example-11">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="example-9" class="notice example"><a class="notice-link" href="#example-9">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -859,7 +864,7 @@ why a certain item or set of data is being requested:</p>
 </div>
 </section>
 <section>
-<div id="example-12" class="notice example"><a class="notice-link" href="#example-12">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-10" class="notice example"><a class="notice-link" href="#example-10">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
   <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -1179,7 +1184,7 @@ contains a <code>subject_is_holder</code> property set to the value <code>requir
 that any submission of data in relation to the candidate input is fulfilled
 by the subject of the credential</li>
 </ol>
-<div id="note-6" class="notice note"><a class="notice-link" href="#note-6">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
+<div id="note-5" class="notice note"><a class="notice-link" href="#note-5">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
 criteria for inclusion in submission. Any additional testing of a candidate
 input for a schema match beyond comparison of the schema <code>uri</code> (e.g. specific

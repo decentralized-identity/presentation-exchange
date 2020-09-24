@@ -38,8 +38,13 @@ To address these needs, this Presentation Exchange specification codifies the
 requirements, as well as the `Presentation Submission` data format Holders can
 use to submit proofs in accordance with them. The specification is designed to 
 be both credential format and transport envelope agnostic, meaning an implementer 
-can use JWTs, VCs, JWT-VCs, or any other credential format, and convey them 
-via OIDC, DIDComm, CHAPI, or any other transport envelope. The goal of 
+can use [JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519), 
+[Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/), 
+[JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions), 
+or any other credential format, and convey them 
+via [Open ID Connect](https://openid.net/connect/), [DIDComm](https://identity.foundation/didcomm-messaging/spec/), 
+[Credential Handler API](https://w3c-ccg.github.io/credential-handler-api/), 
+or any other transport envelope. The goal of 
 this flexible format and transport agnostic mechanism is to nullify the 
 redundant handling, code, and hassle involved in presenting and satisfying 
 logical requirements across formats and transport envelopes.
@@ -70,7 +75,7 @@ Verifier | The entity that defines what proofs they require from a Holder (via a
 ## Localization
 
 To support localization, [IETF BCP 47](https://tools.ietf.org/html/bcp47) one
-**MAY** use language tags under the `locale` property in both a `Presentation
+****MAY**** use language tags under the `locale` property in both a `Presentation
 Definition` and `Presentation Submission`. If a Definition has a language tag,
 so should the corresponding Submission. A Submission may have a language tag
 regardless of the presence of one in the corresponding Definition.
@@ -1526,7 +1531,7 @@ the top level of the embed target, the location is described in JSONPath syntax.
 
 Target     | Location      
 ---------- | --------
-OpenID     | top-level
+OpenID     | top-level 
 DIDComms   | `$.presentations~attach.data.json`
 VP         | top-level
 CHAPI      | `$.data`
