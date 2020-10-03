@@ -1000,7 +1000,7 @@ Descriptor Objects_ are composed as follows:
             example: normalizing the differences in structure between
             JSON-LD/JWT-based
             [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
-            vanilla [JSON Web Tokens](https://tools.ietf.org/html/rfc7797) (JWTs).
+            vanilla JSON Web Tokens [[ref:rfc7797]] (JWTs).
           - The object ****MAY**** contain a `purpose` property, and if present
             its value ****MUST**** be a string that describes the purpose for
             which the field is being requested.
@@ -1999,6 +1999,10 @@ JSONPath                      | Description
 `$..book[?(@.price==8.95)]`        | Filter all books that cost 8.95
 `$..book[?(@.price<30 && @.category=="fiction")]`        | Filter all fiction books cheaper than 30
 `$..*`                         | All members of JSON structure
+
+## External References
+
+[[ref]]
 
 ## Appendix
 
