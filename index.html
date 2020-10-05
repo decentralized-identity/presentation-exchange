@@ -828,7 +828,7 @@ why a certain item or set of data is being requested:</p>
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-17" class="notice example"><a class="notice-link" href="#example-17">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="example-11" class="notice example"><a class="notice-link" href="#example-11">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -875,7 +875,7 @@ why a certain item or set of data is being requested:</p>
 </div>
 </section>
 <section>
-<div id="example-18" class="notice example"><a class="notice-link" href="#example-18">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-12" class="notice example"><a class="notice-link" href="#example-12">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
   <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -1195,7 +1195,7 @@ contains a <code>subject_is_holder</code> property set to the value <code>requir
 that any submission of data in relation to the candidate input is fulfilled
 by the subject of the credential</li>
 </ol>
-<div id="note-9" class="notice note"><a class="notice-link" href="#note-9">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
+<div id="note-6" class="notice note"><a class="notice-link" href="#note-6">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
 criteria for inclusion in submission. Any additional testing of a candidate
 input for a schema match beyond comparison of the schema <code>uri</code> (e.g. specific
@@ -1551,20 +1551,23 @@ value is that was selected via execution of the <code>path</code> property’s
 </ol>
 <h3 id="processing-of-steps-entries"><a class="toc-anchor" href="#processing-of-steps-entries">§</a> Processing of <code>steps</code> Entries</h3>
 <p>When the <code>steps</code> property is present in a <em>Presentation Submission</em> object,
-process the submission as follows:</p>
+process as follows:</p>
 <ol>
 <li>If the <code>path</code> or <code>format</code> properties are present, produce an error and
 fail the submission.</li>
-<li>For each Nested Submission Traversal Object in the <code>steps</code> array, process as follows:</li>
+<li>For each Nested Submission Traversal Object in the <code>steps</code> array, process as follows:
+<ol>
 <li>Execute the <a href="https://goessner.net/articles/JsonPath/">JSONPath</a> expression string
-on the <em>Current Traversal Object</em>(#current-traversal-object), or if none is designated,
+on the <a href="#current-traversal-object" id="current-traversal-object"><em>Current Traversal Object</em></a>, or if none is designated,
 the top level of the Embed Target.</li>
-<li id="current-traversal-object">Decode and parse the value returned from <a href="https://goessner.net/articles/JsonPath/">JSONPath</a>
+<li>Decode and parse the value returned from <a href="https://goessner.net/articles/JsonPath/">JSONPath</a>
 execution in accordance with the <a href="#credential-format-designations">Credential Format Designation</a>
 specified in the object’s <code>format</code> property. If value parses and validates in accordance
 with the <a href="#credential-format-designations">Credential Format Designation</a> specified, let
-the resulting object be the <em>Current Traversal Object</em>(#current-traversal-object)</li>
+the resulting object be the <a href="#current-traversal-object"><em>Current Traversal Object</em></a></li>
 <li>If present, process the next Nested Submission Traversal Object in the <code>steps</code> array.</li>
+</ol>
+</li>
 <li>If iteration of the Nested Submission Traversal Objects in the <code>steps</code> array produced a
 valid value, process it as the submission against the <em>Input Descriptor</em> indicated by the
 <code>id</code> property of the containing <em>Input Descriptor Mapping Object</em>.</li>

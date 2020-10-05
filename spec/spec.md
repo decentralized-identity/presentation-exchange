@@ -1548,21 +1548,21 @@ composed and embedded as follows:
 ### Processing of `steps` Entries
 
 When the `steps` property is present in a _Presentation Submission_ object, 
-process the submission as follows:
+process as follows:
 
 1. If the `path` or `format` properties are present, produce an error and 
   fail the submission.
 2. For each Nested Submission Traversal Object in the `steps` array, process as follows:
-  1. Execute the [JSONPath](https://goessner.net/articles/JsonPath/) expression string 
-    on the _Current Traversal Object_(#current-traversal-object), or if none is designated, 
-    the top level of the Embed Target.
-  2. Decode and parse the value returned from [JSONPath](https://goessner.net/articles/JsonPath/) 
-    execution in accordance with the [Credential Format Designation](#credential-format-designations) 
-    specified in the object's `format` property. If value parses and validates in accordance 
-    with the [Credential Format Designation](#credential-format-designations) specified, let 
-    the resulting object be the _Current Traversal Object_(#current-traversal-object){id="current-traversal-object"}
-  3. If present, process the next Nested Submission Traversal Object in the `steps` array.
-3. If iteration of the Nested Submission Traversal Objects in the `steps` array produced a 
+    1. Execute the [JSONPath](https://goessner.net/articles/JsonPath/) expression string 
+      on the [_Current Traversal Object_](#current-traversal-object){id="current-traversal-object"}, or if none is designated, 
+      the top level of the Embed Target.
+    2. Decode and parse the value returned from [JSONPath](https://goessner.net/articles/JsonPath/) 
+      execution in accordance with the [Credential Format Designation](#credential-format-designations) 
+      specified in the object's `format` property. If value parses and validates in accordance 
+      with the [Credential Format Designation](#credential-format-designations) specified, let 
+      the resulting object be the [_Current Traversal Object_](#current-traversal-object)
+    3. If present, process the next Nested Submission Traversal Object in the `steps` array.
+  3. If iteration of the Nested Submission Traversal Objects in the `steps` array produced a 
   valid value, process it as the submission against the _Input Descriptor_ indicated by the 
   `id` property of the containing _Input Descriptor Mapping Object_.
 
