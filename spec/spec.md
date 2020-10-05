@@ -1000,7 +1000,7 @@ Descriptor Objects_ are composed as follows:
             example: normalizing the differences in structure between
             JSON-LD/JWT-based
             [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
-            vanilla JSON Web Tokens [[ref:rfc7797]] (JWTs).
+            vanilla JSON Web Tokens (JWTs) [[spec:rfc7797]].
           - The object ****MAY**** contain a `purpose` property, and if present
             its value ****MUST**** be a string that describes the purpose for
             which the field is being requested.
@@ -1508,24 +1508,65 @@ composed and embedded as follows:
 
 1. The `presentation_submission` object ****MUST**** be included at the top-level 
   of an Embed Target, or in the specific location described in the 
-  [Embed Locations table](#embed-locations) in the [Embed Target](#embed-target) section below.
+  [Embed Locations table](#embed-locations) in the [Embed Target](#embed-target) 
+  section below.
 2. The object ****MUST**** include a `descriptor_map` property, and its value
   ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being
   composed as follows:
     - The object ****MUST**** include an `id` property, and its value
       ****MUST**** be a string matching the `id` property of the _Input
       Descriptor_ in the _Presentation Definition_ the submission is related to.
-    - The object ****MUST**** include a `path` property, and its value
-      ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
+    - The object ****MUST**** include a `format` property when no  `steps` property 
+      is present, and its value ****MUST**** be a string value matching one of the 
+      [Credential Format Designation](#credential-format-designations) (`jwt`, 
+      `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`), to denote what data format the 
+      credential is being submitted in. If the `format` and `steps` properties are both 
+      present, produce an error and fail the submission.
+    - The object ****MUST**** include a `path` property when no  `steps` property 
+      is present, and its value ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
       string expression that selects the credential to be submit in relation
       to the identified _Input Descriptor_ identified, when executed against
       the top-level of the object the _Presentation Submission_ is embedded
-      within.
-    - The object ****MUST**** include a `format` property, and its value 
-      ****MUST**** be a string value matching one of the 
-      [Credential Format Designation](#credential-format-designations) (`jwt`, 
-      `jwt_vc`, `jwt_vp`), to denote what data format the credential is being 
-      submitted in.
+      within. If the `path` and `steps` properties are both present, produce an error 
+      and fail the submission.
+    - The object ****MAY**** include a `steps` property, and its value ****MUST**** 
+      be an array of Nested Submission Traversal Objects, composed as follows:
+        - The object ****MUST**** include a `path` property, and its value 
+          ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
+          string expression that selects a value matching a valid 
+          [Credential Format Designation](#credential-format-designations) 
+          (`jwt`, `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`) when executed against
+          the Current Traversal Object.
+        - The object ****MUST**** include a `format` property, and its value 
+          ****MUST**** be a string value matching one of the 
+          [Credential Format Designation](#credential-format-designations) (`jwt`, 
+          `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`), to denote what data format the 
+          value is that was selected via execution of the `path` property's 
+          [JSONPath](https://goessner.net/articles/JsonPath/) string expression.
+
+
+### Processing of `steps` Entries
+
+When the `steps` property is present in a _Presentation Submission_ object, 
+process the submission as follows:
+
+1. If the `path` or `format` properties are present, produce an error and 
+  fail the submission.
+2. For each Nested Submission Traversal Object in the `steps` array, process as follows:
+  1. Execute the [JSONPath](https://goessner.net/articles/JsonPath/) expression string 
+    on the _Current Traversal Object_(#current-traversal-object), or if none is designated, 
+    the top level of the Embed Target.
+  2. Decode and parse the value returned from [JSONPath](https://goessner.net/articles/JsonPath/) 
+    execution in accordance with the [Credential Format Designation](#credential-format-designations) 
+    specified in the object's `format` property. If value parses and validates in accordance 
+    with the [Credential Format Designation](#credential-format-designations) specified, let 
+    the resulting object be the _Current Traversal Object_(#current-traversal-object){id="current-traversal-object"}
+  3. If present, process the next Nested Submission Traversal Object in the `steps` array.
+3. If iteration of the Nested Submission Traversal Objects in the `steps` array produced a 
+  valid value, process it as the submission against the _Input Descriptor_ indicated by the 
+  `id` property of the containing _Input Descriptor Mapping Object_.
+
+### Limited Disclosure Submissions
 
 If for all credentials submitted in relation to
 [_Input Descriptor Objects_](#input-descriptor-objects) that include a
@@ -1893,24 +1934,25 @@ where Verifiers and Holders convey what credential variants they support and
 are submitting. The following are the normalized references used within the 
 specification:
 
-- `jwt` - the format is a [JSON Web Token](https://tools.ietf.org/html/rfc7797) 
+- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7797]] 
   that will be submitted in the form of a JWT encoded string. Expression of 
   supported algorithms in relation to this format ****MUST**** be conveyed using an `alg` property 
   paired with values that are identifiers from the 
-  [RFC 7518 JSON Web Algorithms](https://tools.ietf.org/html/rfc7518) registry.
-- `jwt_vc`, `jwt_vp` - these formats are [JSON Web Tokens](https://tools.ietf.org/html/rfc7797) 
+  JSON Web Algorithms registry [[spec:RFC7518]].
+- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7797]] 
   that will be submitted in the form of a JWT encoded string, and the body of the decoded 
-  JWT string is defined in the [JSON Web Token section](https://www.w3.org/TR/vc-data-model/#json-web-token) 
-  of the W3C Verifiable Credentials specification. Expression of supported algorithms in 
-  relation to these formats ****MUST**** be conveyed using an `alg` property paired with values that 
-  are identifiers from the [RFC 7518 JSON Web Algorithms](https://tools.ietf.org/html/rfc7518) registry. 
-- `ldp_vc`, `ldp_vp` - these formats are [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) 
+  JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7797]] section 
+  of the [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token). 
+  Expression of supported algorithms in relation to these formats ****MUST**** be conveyed using 
+  an `alg` property paired with values that are identifiers from the JSON Web Algorithms registry 
+  [[spec:RFC7518]].
+- `ldp_vc`, `ldp_vp` - these formats are W3C Verifiable Credentials [[spec:VC-DATA MODEL]]
   that will be submitted in the form of a JSON object. Expression of supported 
   algorithms in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
   paired with values that are identifiers from the 
   [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 - `ldp` - this format is defined in the [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/) 
-  specification, and will be submitted as objects. Expression of supported algorithms 
+  specification [[spec: Linked Data Proofs]], and will be submitted as objects. Expression of supported algorithms 
   in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
   with values that are identifiers from the 
   [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
@@ -2002,7 +2044,7 @@ JSONPath                      | Description
 
 ## External References
 
-[[ref]]
+[[spec]]
 
 ## Appendix
 
