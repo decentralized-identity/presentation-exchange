@@ -2031,3 +2031,16 @@ JSONPath                      | Description
     - https://github.com/Stranger6667/jsonschema-rs
 - **Go**
     - https://github.com/xeipuuv/gojsonschema
+
+### Informative References
+
+- **[CHAPI]** - 
+     Credential Handler API 1.0. Dave Longley, Manu Sporny, Editors.
+     W3C. 19 February 2020. Draft Community Group Report.
+     URL: https://w3c-ccg.github.io/credential-handler-api/.
+- **[DIDComm]** - 
+     didcomm-messaging. @decentralized-identity, Owner. github.
+     URL: https://github.com/decentralized-identity/didcomm-messaging.
+- **[OIDC]** - 
+     Welcome to OpenID Connect. OpenID.
+     URL: https://openid.net/connect/.
