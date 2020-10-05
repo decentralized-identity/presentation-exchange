@@ -1165,10 +1165,12 @@ candidate input.</li>
 <li>If the <code>filter</code> property of the field entry is present, validate the
 <em>Field Query Result</em> from the step above against the
 <a href="https://json-schema.org/specification.html">JSON Schema</a> descriptor value.</li>
-<li>If the <code>predicate</code> property of the field entry is present, derive a
-<em>Field Query Predicate</em> boolean value using the value of the <em>Field
-Query Result</em> obtained above, according to the <code>operation</code> and <code>p_value</code>
-or <code>p_set</code> provided in the <code>predicate</code> object.</li>
+<li>If the <code>predicate</code> property of the field entry is present, a boolean
+value should be returned rather than the value of the <em>Field Query
+Result</em>. Calculate this boolean value by evaluating the <em>Field Query
+Result</em> against the
+<a href="https://json-schema.org/specification.html">JSON Schema</a> descriptor
+value of the <code>filter</code> property.</li>
 <li>If the result is valid, proceed iterating the rest of the <code>fields</code> entries.</li>
 </ol>
 </li>
