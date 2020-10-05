@@ -1140,10 +1140,12 @@ Evaluate each candidate input as follows:
       2. If the `filter` property of the field entry is present, validate the
         _Field Query Result_ from the step above against the
         [JSON Schema](https://json-schema.org/specification.html) descriptor value.
-      3. If the `predicate` property of the field entry is present, derive a
-        _Field Query Predicate_ boolean value using the value of the _Field
-        Query Result_ obtained above, according to the `operation` and `p_value`
-        or `p_set` provided in the `predicate` object.
+      3. If the `predicate` property of the field entry is present, a boolean
+        value should be returned rather than the value of the _Field Query
+        Result_. Calculate this boolean value by evaluating the _Field Query
+        Result_ against the
+        [JSON Schema](https://json-schema.org/specification.html) descriptor
+        value of the `filter` property.         
       4. If the result is valid, proceed iterating the rest of the `fields` entries.
   3. If all of the previous validation steps are successful, mark the candidate
     input as a match for use in a _Presentation Submission_, and if present at
