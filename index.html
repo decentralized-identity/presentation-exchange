@@ -828,7 +828,7 @@ why a certain item or set of data is being requested:</p>
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-11" class="notice example"><a class="notice-link" href="#example-11">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="example-1" class="notice example"><a class="notice-link" href="#example-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -875,7 +875,7 @@ why a certain item or set of data is being requested:</p>
 </div>
 </section>
 <section>
-<div id="example-12" class="notice example"><a class="notice-link" href="#example-12">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-2" class="notice example"><a class="notice-link" href="#example-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
   <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -1195,7 +1195,7 @@ contains a <code>subject_is_holder</code> property set to the value <code>requir
 that any submission of data in relation to the candidate input is fulfilled
 by the subject of the credential</li>
 </ol>
-<div id="note-6" class="notice note"><a class="notice-link" href="#note-6">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
+<div id="note-1" class="notice note"><a class="notice-link" href="#note-1">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
 criteria for inclusion in submission. Any additional testing of a candidate
 input for a schema match beyond comparison of the schema <code>uri</code> (e.g. specific
@@ -1637,6 +1637,252 @@ the top level of the embed target, the location is described in JSONPath syntax.
 </tr>
 </tbody>
 </table>
+<h2 id="credential-format-designations"><a class="toc-anchor" href="#credential-format-designations">§</a> Credential Format Designations</h2>
+<p>Within the <em>Presentation Exchange</em> specification, there are numerous sections
+where Verifiers and Holders convey what credential variants they support and
+are submitting. The following are the normalized references used within the
+specification:</p>
+<ul>
+<li><code>jwt</code> - the format is a JSON Web Token (JWTs) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>]
+that will be submitted in the form of a JWT encoded string. Expression of
+supported algorithms in relation to this format <strong><strong>MUST</strong></strong> be conveyed using an <code>alg</code> property
+paired with values that are identifiers from the
+JSON Web Algorithms registry [<a class="spec-reference" href="#ref:RFC7518">RFC7518</a>].</li>
+<li><code>jwt_vc</code>, <code>jwt_vp</code> - these formats are JSON Web Tokens (JWTs) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>]
+that will be submitted in the form of a JWT encoded string, and the body of the decoded
+JWT string is defined in the JSON Web Token (JWT) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>] section
+of the <a href="https://www.w3.org/TR/vc-data-model/#json-web-token">W3C Verifiable Credentials specification</a>.
+Expression of supported algorithms in relation to these formats <strong><strong>MUST</strong></strong> be conveyed using
+an <code>alg</code> property paired with values that are identifiers from the JSON Web Algorithms registry
+[<a class="spec-reference" href="#ref:RFC7518">RFC7518</a>].</li>
+<li><code>ldp_vc</code>, <code>ldp_vp</code> - these formats are W3C Verifiable Credentials [<a class="spec-reference" href="#ref:VC-DATA-MODEL">VC-DATA-MODEL</a>]
+that will be submitted in the form of a JSON object. Expression of supported
+algorithms in relation to these formats <strong><strong>MUST</strong></strong> be conveyed using a <code>proof_type</code> property
+paired with values that are identifiers from the
+<a href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data Cryptographic Suite Registry</a>.</li>
+<li><code>ldp</code> - this format is defined in the <a href="https://w3c-ccg.github.io/ld-proofs/">W3C CCG Linked Data Proofs</a>
+specification [[spec: Linked Data Proofs]], and will be submitted as objects. Expression of supported algorithms
+in relation to these formats <strong><strong>MUST</strong></strong> be conveyed using a <code>proof_type</code> property
+with values that are identifiers from the
+<a href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data Cryptographic Suite Registry</a>.</li>
+</ul>
+<h2 id="json-schema-vocabulary-definition"><a class="toc-anchor" href="#json-schema-vocabulary-definition">§</a> JSON Schema Vocabulary Definition</h2>
+<p>The <em>Presentation Exchange</em> specification adopts and defines the following JSON
+Schema data format and processing variant, which implementers <strong><strong>MUST</strong></strong>
+support for evaluation of the portions of the <em>Presentation Exchange</em>
+specification that call for JSON Schema validation:
+<a href="https://tools.ietf.org/html/draft-handrews-json-schema-02">https://tools.ietf.org/html/draft-handrews-json-schema-02</a></p>
+<h2 id="jsonpath-syntax-definition"><a class="toc-anchor" href="#jsonpath-syntax-definition">§</a> JSONPath Syntax Definition</h2>
+<p>The <em>Presentation Exchange</em> specification adopts and defines the following
+syntax from the JSONPath object query language, which implementers <strong><strong>MUST</strong></strong>
+support for evaluation of the portions of the <em>Presentation Exchange</em>
+specification that call for JSONPath expression execution.</p>
+<table>
+<thead>
+<tr>
+<th>JSONPath</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code> $</code></td>
+<td>The root object/element</td>
+</tr>
+<tr>
+<td><code> @</code></td>
+<td>The current object/element</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>Child member operator</td>
+</tr>
+<tr>
+<td><code>..</code></td>
+<td>Recursive descendant operator; JSONPath borrows this syntax from E4X</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>Wildcard matching all objects/elements regardless their names</td>
+</tr>
+<tr>
+<td><code>[]</code></td>
+<td>Subscript operator</td>
+</tr>
+<tr>
+<td><code>[,]</code></td>
+<td>Union operator for alternate names or array indices as a set</td>
+</tr>
+<tr>
+<td><code>[start:end:step]</code></td>
+<td>Array slice operator borrowed from ES4 / Python</td>
+</tr>
+<tr>
+<td><code>?()</code></td>
+<td>Applies a filter (script) expression via static evaluation</td>
+</tr>
+<tr>
+<td><code>()</code></td>
+<td>Script expression via static evaluation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example JSON Object</strong></p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token punctuation">{</span>
+  <span class="token string">"store"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token string">"book"</span><span class="token operator">:</span> <span class="token punctuation">[</span> 
+      <span class="token punctuation">{</span>
+        <span class="token string">"category"</span><span class="token operator">:</span> <span class="token string">"reference"</span><span class="token punctuation">,</span>
+        <span class="token string">"author"</span><span class="token operator">:</span> <span class="token string">"Nigel Rees"</span><span class="token punctuation">,</span>
+        <span class="token string">"title"</span><span class="token operator">:</span> <span class="token string">"Sayings of the Century"</span><span class="token punctuation">,</span>
+        <span class="token string">"price"</span><span class="token operator">:</span> <span class="token number">8.95</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        <span class="token string">"category"</span><span class="token operator">:</span> <span class="token string">"fiction"</span><span class="token punctuation">,</span>
+        <span class="token string">"author"</span><span class="token operator">:</span> <span class="token string">"Evelyn Waugh"</span><span class="token punctuation">,</span>
+        <span class="token string">"title"</span><span class="token operator">:</span> <span class="token string">"Sword of Honour"</span><span class="token punctuation">,</span>
+        <span class="token string">"price"</span><span class="token operator">:</span> <span class="token number">12.99</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        <span class="token string">"category"</span><span class="token operator">:</span> <span class="token string">"fiction"</span><span class="token punctuation">,</span>
+        <span class="token string">"author"</span><span class="token operator">:</span> <span class="token string">"Herman Melville"</span><span class="token punctuation">,</span>
+        <span class="token string">"title"</span><span class="token operator">:</span> <span class="token string">"Moby Dick"</span><span class="token punctuation">,</span>
+        <span class="token string">"isbn"</span><span class="token operator">:</span> <span class="token string">"0-553-21311-3"</span><span class="token punctuation">,</span>
+        <span class="token string">"price"</span><span class="token operator">:</span> <span class="token number">8.99</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+         <span class="token string">"category"</span><span class="token operator">:</span> <span class="token string">"fiction"</span><span class="token punctuation">,</span>
+        <span class="token string">"author"</span><span class="token operator">:</span> <span class="token string">"J. R. R. Tolkien"</span><span class="token punctuation">,</span>
+        <span class="token string">"title"</span><span class="token operator">:</span> <span class="token string">"The Lord of the Rings"</span><span class="token punctuation">,</span>
+        <span class="token string">"isbn"</span><span class="token operator">:</span> <span class="token string">"0-395-19395-8"</span><span class="token punctuation">,</span>
+        <span class="token string">"price"</span><span class="token operator">:</span> <span class="token number">22.99</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">"bicycle"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token string">"color"</span><span class="token operator">:</span> <span class="token string">"red"</span><span class="token punctuation">,</span>
+      <span class="token string">"price"</span><span class="token operator">:</span> <span class="token number">19.95</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><strong>Example JSONPath Expressions</strong></p>
+<table>
+<thead>
+<tr>
+<th>JSONPath</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$.store.book[*].author</code></td>
+<td>The authors of all books in the store</td>
+</tr>
+<tr>
+<td><code>$..author</code></td>
+<td>All authors</td>
+</tr>
+<tr>
+<td><code>$.store.*</code></td>
+<td>All things in store, which are some books and a red bicycle</td>
+</tr>
+<tr>
+<td><code>$.store..price</code></td>
+<td>The price of everything in the store</td>
+</tr>
+<tr>
+<td><code>$..book[2]</code></td>
+<td>The third book</td>
+</tr>
+<tr>
+<td><code>$..book[(@.length-1)]</code></td>
+<td>The last book via script subscript</td>
+</tr>
+<tr>
+<td><code>$..book[-1:]</code></td>
+<td>The last book via slice</td>
+</tr>
+<tr>
+<td><code>$..book[0,1]</code></td>
+<td>The first two books via subscript union</td>
+</tr>
+<tr>
+<td><code>$..book[:2]</code></td>
+<td>The first two books via subscript array slice</td>
+</tr>
+<tr>
+<td><code>$..book[?(@.isbn)]</code></td>
+<td>Filter all books with isbn number</td>
+</tr>
+<tr>
+<td><code>$..book[?(@.price&lt;10)]</code></td>
+<td>Filter all books cheaper than 10</td>
+</tr>
+<tr>
+<td><code>$..book[?(@.price==8.95)]</code></td>
+<td>Filter all books that cost 8.95</td>
+</tr>
+<tr>
+<td><code>$..book[?(@.price&lt;30 &amp;&amp; @.category==&quot;fiction&quot;)]</code></td>
+<td>Filter all fiction books cheaper than 30</td>
+</tr>
+<tr>
+<td><code>$..*</code></td>
+<td>All members of JSON structure</td>
+</tr>
+</tbody>
+</table>
+<h2 id="external-references"><a class="toc-anchor" href="#external-references">§</a> External References</h2>
+<p>
+<dl class="reference-list">
+        <dt id="ref:RFC7518">RFC7518</dt>
+        <dd>
+          <cite><a href="https://tools.ietf.org/html/rfc7518">JSON Web Algorithms (JWA)</a></cite>. 
+          M. Jones; 2015-05. <span class="reference-status">Status: Proposed Standard</span>.
+        </dd>
+      
+        <dt id="ref:RFC7797">RFC7797</dt>
+        <dd>
+          <cite><a href="https://tools.ietf.org/html/rfc7797">JSON Web Signature (JWS) Unencoded Payload Option</a></cite>. 
+          M. Jones; 2016-02. <span class="reference-status">Status: Proposed Standard</span>.
+        </dd>
+      
+        <dt id="ref:VC-DATA-MODEL">VC-DATA-MODEL</dt>
+        <dd>
+          <cite><a href="https://www.w3.org/TR/vc-data-model/">Verifiable Credentials Data Model 1.0</a></cite>. 
+          Manu Sporny; Grant Noble; Dave Longley; Daniel Burnett; Brent Zundel; 2019-11-19. <span class="reference-status">Status: REC</span>.
+        </dd>
+      
+</dl>
+</p>
+<h2 id="appendix"><a class="toc-anchor" href="#appendix">§</a> Appendix</h2>
+<h3 id="embed-target-examples"><a class="toc-anchor" href="#embed-target-examples">§</a> Embed Target Examples</h3>
+<!-- #### Presentation Definitions
+
+<tab-panels selected-index="0">
+
+<nav>
+  <button type="button">Verifiable Presentation</button>
+  <button type="button">Open ID Connect</button>
+  <button type="button">CHAPI</button>
+  <button type="button">DIDComm</button>
+</nav>
+
+<section>
+
+</section>
+
+<section>
+
+</section>
+
+<section>
+
+</section>
+
+<section>
+
+</section>
+
+</tab-panels> -->
+<h4 id="presentation-submissions"><a class="toc-anchor" href="#presentation-submissions">§</a> Presentation Submissions</h4>
 <tab-panels selected-index="0">
 <nav>
   <button type="button">Verifiable Presentation</button>
@@ -1918,222 +2164,6 @@ the top level of the embed target, the location is described in JSONPath syntax.
 <span class="token punctuation">}</span>
 </code></pre>
 </tab-panels>
-<h2 id="credential-format-designations"><a class="toc-anchor" href="#credential-format-designations">§</a> Credential Format Designations</h2>
-<p>Within the <em>Presentation Exchange</em> specification, there are numerous sections
-where Verifiers and Holders convey what credential variants they support and
-are submitting. The following are the normalized references used within the
-specification:</p>
-<ul>
-<li><code>jwt</code> - the format is a JSON Web Token (JWTs) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>]
-that will be submitted in the form of a JWT encoded string. Expression of
-supported algorithms in relation to this format <strong><strong>MUST</strong></strong> be conveyed using an <code>alg</code> property
-paired with values that are identifiers from the
-JSON Web Algorithms registry [<a class="spec-reference" href="#ref:RFC7518">RFC7518</a>].</li>
-<li><code>jwt_vc</code>, <code>jwt_vp</code> - these formats are JSON Web Tokens (JWTs) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>]
-that will be submitted in the form of a JWT encoded string, and the body of the decoded
-JWT string is defined in the JSON Web Token (JWT) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>] section
-of the <a href="https://www.w3.org/TR/vc-data-model/#json-web-token">W3C Verifiable Credentials specification</a>.
-Expression of supported algorithms in relation to these formats <strong><strong>MUST</strong></strong> be conveyed using
-an <code>alg</code> property paired with values that are identifiers from the JSON Web Algorithms registry
-[<a class="spec-reference" href="#ref:RFC7518">RFC7518</a>].</li>
-<li><code>ldp_vc</code>, <code>ldp_vp</code> - these formats are W3C Verifiable Credentials [<a class="spec-reference" href="#ref:VC-DATA-MODEL">VC-DATA-MODEL</a>]
-that will be submitted in the form of a JSON object. Expression of supported
-algorithms in relation to these formats <strong><strong>MUST</strong></strong> be conveyed using a <code>proof_type</code> property
-paired with values that are identifiers from the
-<a href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data Cryptographic Suite Registry</a>.</li>
-<li><code>ldp</code> - this format is defined in the <a href="https://w3c-ccg.github.io/ld-proofs/">W3C CCG Linked Data Proofs</a>
-specification [[spec: Linked Data Proofs]], and will be submitted as objects. Expression of supported algorithms
-in relation to these formats <strong><strong>MUST</strong></strong> be conveyed using a <code>proof_type</code> property
-with values that are identifiers from the
-<a href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data Cryptographic Suite Registry</a>.</li>
-</ul>
-<h2 id="json-schema-vocabulary-definition"><a class="toc-anchor" href="#json-schema-vocabulary-definition">§</a> JSON Schema Vocabulary Definition</h2>
-<p>The <em>Presentation Exchange</em> specification adopts and defines the following JSON
-Schema data format and processing variant, which implementers <strong><strong>MUST</strong></strong>
-support for evaluation of the portions of the <em>Presentation Exchange</em>
-specification that call for JSON Schema validation:
-<a href="https://tools.ietf.org/html/draft-handrews-json-schema-02">https://tools.ietf.org/html/draft-handrews-json-schema-02</a></p>
-<h2 id="jsonpath-syntax-definition"><a class="toc-anchor" href="#jsonpath-syntax-definition">§</a> JSONPath Syntax Definition</h2>
-<p>The <em>Presentation Exchange</em> specification adopts and defines the following
-syntax from the JSONPath object query language, which implementers <strong><strong>MUST</strong></strong>
-support for evaluation of the portions of the <em>Presentation Exchange</em>
-specification that call for JSONPath expression execution.</p>
-<table>
-<thead>
-<tr>
-<th>JSONPath</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code> $</code></td>
-<td>The root object/element</td>
-</tr>
-<tr>
-<td><code> @</code></td>
-<td>The current object/element</td>
-</tr>
-<tr>
-<td><code>.</code></td>
-<td>Child member operator</td>
-</tr>
-<tr>
-<td><code>..</code></td>
-<td>Recursive descendant operator; JSONPath borrows this syntax from E4X</td>
-</tr>
-<tr>
-<td><code>*</code></td>
-<td>Wildcard matching all objects/elements regardless their names</td>
-</tr>
-<tr>
-<td><code>[]</code></td>
-<td>Subscript operator</td>
-</tr>
-<tr>
-<td><code>[,]</code></td>
-<td>Union operator for alternate names or array indices as a set</td>
-</tr>
-<tr>
-<td><code>[start:end:step]</code></td>
-<td>Array slice operator borrowed from ES4 / Python</td>
-</tr>
-<tr>
-<td><code>?()</code></td>
-<td>Applies a filter (script) expression via static evaluation</td>
-</tr>
-<tr>
-<td><code>()</code></td>
-<td>Script expression via static evaluation</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Example JSON Object</strong></p>
-<pre class="language-javascript"><code class="language-javascript"><span class="token punctuation">{</span>
-  <span class="token string">"store"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token string">"book"</span><span class="token operator">:</span> <span class="token punctuation">[</span> 
-      <span class="token punctuation">{</span>
-        <span class="token string">"category"</span><span class="token operator">:</span> <span class="token string">"reference"</span><span class="token punctuation">,</span>
-        <span class="token string">"author"</span><span class="token operator">:</span> <span class="token string">"Nigel Rees"</span><span class="token punctuation">,</span>
-        <span class="token string">"title"</span><span class="token operator">:</span> <span class="token string">"Sayings of the Century"</span><span class="token punctuation">,</span>
-        <span class="token string">"price"</span><span class="token operator">:</span> <span class="token number">8.95</span>
-      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-        <span class="token string">"category"</span><span class="token operator">:</span> <span class="token string">"fiction"</span><span class="token punctuation">,</span>
-        <span class="token string">"author"</span><span class="token operator">:</span> <span class="token string">"Evelyn Waugh"</span><span class="token punctuation">,</span>
-        <span class="token string">"title"</span><span class="token operator">:</span> <span class="token string">"Sword of Honour"</span><span class="token punctuation">,</span>
-        <span class="token string">"price"</span><span class="token operator">:</span> <span class="token number">12.99</span>
-      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-        <span class="token string">"category"</span><span class="token operator">:</span> <span class="token string">"fiction"</span><span class="token punctuation">,</span>
-        <span class="token string">"author"</span><span class="token operator">:</span> <span class="token string">"Herman Melville"</span><span class="token punctuation">,</span>
-        <span class="token string">"title"</span><span class="token operator">:</span> <span class="token string">"Moby Dick"</span><span class="token punctuation">,</span>
-        <span class="token string">"isbn"</span><span class="token operator">:</span> <span class="token string">"0-553-21311-3"</span><span class="token punctuation">,</span>
-        <span class="token string">"price"</span><span class="token operator">:</span> <span class="token number">8.99</span>
-      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-         <span class="token string">"category"</span><span class="token operator">:</span> <span class="token string">"fiction"</span><span class="token punctuation">,</span>
-        <span class="token string">"author"</span><span class="token operator">:</span> <span class="token string">"J. R. R. Tolkien"</span><span class="token punctuation">,</span>
-        <span class="token string">"title"</span><span class="token operator">:</span> <span class="token string">"The Lord of the Rings"</span><span class="token punctuation">,</span>
-        <span class="token string">"isbn"</span><span class="token operator">:</span> <span class="token string">"0-395-19395-8"</span><span class="token punctuation">,</span>
-        <span class="token string">"price"</span><span class="token operator">:</span> <span class="token number">22.99</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token string">"bicycle"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token string">"color"</span><span class="token operator">:</span> <span class="token string">"red"</span><span class="token punctuation">,</span>
-      <span class="token string">"price"</span><span class="token operator">:</span> <span class="token number">19.95</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p><strong>Example JSONPath Expressions</strong></p>
-<table>
-<thead>
-<tr>
-<th>JSONPath</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>$.store.book[*].author</code></td>
-<td>The authors of all books in the store</td>
-</tr>
-<tr>
-<td><code>$..author</code></td>
-<td>All authors</td>
-</tr>
-<tr>
-<td><code>$.store.*</code></td>
-<td>All things in store, which are some books and a red bicycle</td>
-</tr>
-<tr>
-<td><code>$.store..price</code></td>
-<td>The price of everything in the store</td>
-</tr>
-<tr>
-<td><code>$..book[2]</code></td>
-<td>The third book</td>
-</tr>
-<tr>
-<td><code>$..book[(@.length-1)]</code></td>
-<td>The last book via script subscript</td>
-</tr>
-<tr>
-<td><code>$..book[-1:]</code></td>
-<td>The last book via slice</td>
-</tr>
-<tr>
-<td><code>$..book[0,1]</code></td>
-<td>The first two books via subscript union</td>
-</tr>
-<tr>
-<td><code>$..book[:2]</code></td>
-<td>The first two books via subscript array slice</td>
-</tr>
-<tr>
-<td><code>$..book[?(@.isbn)]</code></td>
-<td>Filter all books with isbn number</td>
-</tr>
-<tr>
-<td><code>$..book[?(@.price&lt;10)]</code></td>
-<td>Filter all books cheaper than 10</td>
-</tr>
-<tr>
-<td><code>$..book[?(@.price==8.95)]</code></td>
-<td>Filter all books that cost 8.95</td>
-</tr>
-<tr>
-<td><code>$..book[?(@.price&lt;30 &amp;&amp; @.category==&quot;fiction&quot;)]</code></td>
-<td>Filter all fiction books cheaper than 30</td>
-</tr>
-<tr>
-<td><code>$..*</code></td>
-<td>All members of JSON structure</td>
-</tr>
-</tbody>
-</table>
-<h2 id="external-references"><a class="toc-anchor" href="#external-references">§</a> External References</h2>
-<p>
-<dl class="reference-list">
-        <dt id="ref:RFC7518">RFC7518</dt>
-        <dd>
-          <cite><a href="https://tools.ietf.org/html/rfc7518">JSON Web Algorithms (JWA)</a></cite>. 
-          M. Jones; 2015-05. <span class="reference-status">Status: Proposed Standard</span>.
-        </dd>
-      
-        <dt id="ref:RFC7797">RFC7797</dt>
-        <dd>
-          <cite><a href="https://tools.ietf.org/html/rfc7797">JSON Web Signature (JWS) Unencoded Payload Option</a></cite>. 
-          M. Jones; 2016-02. <span class="reference-status">Status: Proposed Standard</span>.
-        </dd>
-      
-        <dt id="ref:VC-DATA-MODEL">VC-DATA-MODEL</dt>
-        <dd>
-          <cite><a href="https://www.w3.org/TR/vc-data-model/">Verifiable Credentials Data Model 1.0</a></cite>. 
-          Manu Sporny; Grant Noble; Dave Longley; Daniel Burnett; Brent Zundel; 2019-11-19. <span class="reference-status">Status: REC</span>.
-        </dd>
-      
-</dl>
-</p>
-<h2 id="appendix"><a class="toc-anchor" href="#appendix">§</a> Appendix</h2>
 <h3 id="developer-resources"><a class="toc-anchor" href="#developer-resources">§</a> Developer Resources</h3>
 <h4 id="jsonpath"><a class="toc-anchor" href="#jsonpath">§</a> JSONPath</h4>
 <ul>
@@ -2266,7 +2296,6 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="#embed-locations">Embed Locations</a></li>
 </ul>
 </li>
-<li><a href="#json-schema-3">JSON Schema</a></li>
 </ul>
 </li>
 <li><a href="#credential-format-designations">Credential Format Designations</a></li>
@@ -2275,6 +2304,12 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="#external-references">External References</a></li>
 <li><a href="#appendix">Appendix</a>
 <ul>
+<li><a href="#embed-target-examples">Embed Target Examples</a>
+<ul>
+<li><a href="#presentation-submissions">Presentation Submissions</a></li>
+</ul>
+</li>
+<li><a href="#json-schema-3">JSON Schema</a></li>
 <li><a href="#developer-resources">Developer Resources</a>
 <ul>
 <li><a href="#jsonpath">JSONPath</a></li>

@@ -1621,6 +1621,160 @@ DIDComms   | `$.presentations~attach.data.json`
 VP         | top-level
 CHAPI      | `$.data`
 
+## Credential Format Designations
+
+Within the _Presentation Exchange_ specification, there are numerous sections 
+where Verifiers and Holders convey what credential variants they support and 
+are submitting. The following are the normalized references used within the 
+specification:
+
+- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7797]] 
+  that will be submitted in the form of a JWT encoded string. Expression of 
+  supported algorithms in relation to this format ****MUST**** be conveyed using an `alg` property 
+  paired with values that are identifiers from the 
+  JSON Web Algorithms registry [[spec:RFC7518]].
+- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7797]] 
+  that will be submitted in the form of a JWT encoded string, and the body of the decoded 
+  JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7797]] section 
+  of the [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token). 
+  Expression of supported algorithms in relation to these formats ****MUST**** be conveyed using 
+  an `alg` property paired with values that are identifiers from the JSON Web Algorithms registry 
+  [[spec:RFC7518]].
+- `ldp_vc`, `ldp_vp` - these formats are W3C Verifiable Credentials [[spec:VC-DATA MODEL]]
+  that will be submitted in the form of a JSON object. Expression of supported 
+  algorithms in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
+  paired with values that are identifiers from the 
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+- `ldp` - this format is defined in the [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/) 
+  specification [[spec: Linked Data Proofs]], and will be submitted as objects. Expression of supported algorithms 
+  in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
+  with values that are identifiers from the 
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+
+## JSON Schema Vocabulary Definition
+
+The _Presentation Exchange_ specification adopts and defines the following JSON
+Schema data format and processing variant, which implementers ****MUST****
+support for evaluation of the portions of the _Presentation Exchange_
+specification that call for JSON Schema validation:
+https://tools.ietf.org/html/draft-handrews-json-schema-02
+
+## JSONPath Syntax Definition
+
+The _Presentation Exchange_ specification adopts and defines the following
+syntax from the JSONPath object query language, which implementers ****MUST****
+support for evaluation of the portions of the _Presentation Exchange_
+specification that call for JSONPath expression execution.
+
+JSONPath              | Description
+----------------------|------------
+` $`                  | The root object/element
+` @`                  | The current object/element
+`.`                   | Child member operator
+`..`	                | Recursive descendant operator; JSONPath borrows this syntax from E4X
+`*`	                  | Wildcard matching all objects/elements regardless their names
+`[]`	                | Subscript operator
+`[,]`	                | Union operator for alternate names or array indices as a set
+`[start:end:step]` | Array slice operator borrowed from ES4 / Python
+`?()`                 | Applies a filter (script) expression via static evaluation
+`()`	                | Script expression via static evaluation 
+
+**Example JSON Object**
+
+```javascript
+{
+  "store": {
+    "book": [ 
+      {
+        "category": "reference",
+        "author": "Nigel Rees",
+        "title": "Sayings of the Century",
+        "price": 8.95
+      }, {
+        "category": "fiction",
+        "author": "Evelyn Waugh",
+        "title": "Sword of Honour",
+        "price": 12.99
+      }, {
+        "category": "fiction",
+        "author": "Herman Melville",
+        "title": "Moby Dick",
+        "isbn": "0-553-21311-3",
+        "price": 8.99
+      }, {
+         "category": "fiction",
+        "author": "J. R. R. Tolkien",
+        "title": "The Lord of the Rings",
+        "isbn": "0-395-19395-8",
+        "price": 22.99
+      }
+    ],
+    "bicycle": {
+      "color": "red",
+      "price": 19.95
+    }
+  }
+}
+```
+
+**Example JSONPath Expressions**
+
+JSONPath                      | Description
+------------------------------|------------
+`$.store.book[*].author`       | The authors of all books in the store
+`$..author`                     | All authors
+`$.store.*`                    | All things in store, which are some books and a red bicycle
+`$.store..price`                | The price of everything in the store
+`$..book[2]`                    | The third book
+`$..book[(@.length-1)]`         | The last book via script subscript
+`$..book[-1:]`                  | The last book via slice
+`$..book[0,1]`                  | The first two books via subscript union
+`$..book[:2]`                  | The first two books via subscript array slice
+`$..book[?(@.isbn)]`            | Filter all books with isbn number
+`$..book[?(@.price<10)]`        | Filter all books cheaper than 10
+`$..book[?(@.price==8.95)]`        | Filter all books that cost 8.95
+`$..book[?(@.price<30 && @.category=="fiction")]`        | Filter all fiction books cheaper than 30
+`$..*`                         | All members of JSON structure
+
+## External References
+
+[[spec]]
+
+## Appendix
+
+### Embed Target Examples
+
+<!-- #### Presentation Definitions
+
+<tab-panels selected-index="0">
+
+<nav>
+  <button type="button">Verifiable Presentation</button>
+  <button type="button">Open ID Connect</button>
+  <button type="button">CHAPI</button>
+  <button type="button">DIDComm</button>
+</nav>
+
+<section>
+
+</section>
+
+<section>
+
+</section>
+
+<section>
+
+</section>
+
+<section>
+
+</section>
+
+</tab-panels> -->
+
+#### Presentation Submissions
+
 <tab-panels selected-index="0">
 
 <nav>
@@ -1926,127 +2080,6 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
 ```
 
 </tab-panels>
-
-## Credential Format Designations
-
-Within the _Presentation Exchange_ specification, there are numerous sections 
-where Verifiers and Holders convey what credential variants they support and 
-are submitting. The following are the normalized references used within the 
-specification:
-
-- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7797]] 
-  that will be submitted in the form of a JWT encoded string. Expression of 
-  supported algorithms in relation to this format ****MUST**** be conveyed using an `alg` property 
-  paired with values that are identifiers from the 
-  JSON Web Algorithms registry [[spec:RFC7518]].
-- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7797]] 
-  that will be submitted in the form of a JWT encoded string, and the body of the decoded 
-  JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7797]] section 
-  of the [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token). 
-  Expression of supported algorithms in relation to these formats ****MUST**** be conveyed using 
-  an `alg` property paired with values that are identifiers from the JSON Web Algorithms registry 
-  [[spec:RFC7518]].
-- `ldp_vc`, `ldp_vp` - these formats are W3C Verifiable Credentials [[spec:VC-DATA MODEL]]
-  that will be submitted in the form of a JSON object. Expression of supported 
-  algorithms in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
-  paired with values that are identifiers from the 
-  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
-- `ldp` - this format is defined in the [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/) 
-  specification [[spec: Linked Data Proofs]], and will be submitted as objects. Expression of supported algorithms 
-  in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
-  with values that are identifiers from the 
-  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
-
-## JSON Schema Vocabulary Definition
-
-The _Presentation Exchange_ specification adopts and defines the following JSON
-Schema data format and processing variant, which implementers ****MUST****
-support for evaluation of the portions of the _Presentation Exchange_
-specification that call for JSON Schema validation:
-https://tools.ietf.org/html/draft-handrews-json-schema-02
-
-## JSONPath Syntax Definition
-
-The _Presentation Exchange_ specification adopts and defines the following
-syntax from the JSONPath object query language, which implementers ****MUST****
-support for evaluation of the portions of the _Presentation Exchange_
-specification that call for JSONPath expression execution.
-
-JSONPath              | Description
-----------------------|------------
-` $`                  | The root object/element
-` @`                  | The current object/element
-`.`                   | Child member operator
-`..`	                | Recursive descendant operator; JSONPath borrows this syntax from E4X
-`*`	                  | Wildcard matching all objects/elements regardless their names
-`[]`	                | Subscript operator
-`[,]`	                | Union operator for alternate names or array indices as a set
-`[start:end:step]` | Array slice operator borrowed from ES4 / Python
-`?()`                 | Applies a filter (script) expression via static evaluation
-`()`	                | Script expression via static evaluation 
-
-**Example JSON Object**
-
-```javascript
-{
-  "store": {
-    "book": [ 
-      {
-        "category": "reference",
-        "author": "Nigel Rees",
-        "title": "Sayings of the Century",
-        "price": 8.95
-      }, {
-        "category": "fiction",
-        "author": "Evelyn Waugh",
-        "title": "Sword of Honour",
-        "price": 12.99
-      }, {
-        "category": "fiction",
-        "author": "Herman Melville",
-        "title": "Moby Dick",
-        "isbn": "0-553-21311-3",
-        "price": 8.99
-      }, {
-         "category": "fiction",
-        "author": "J. R. R. Tolkien",
-        "title": "The Lord of the Rings",
-        "isbn": "0-395-19395-8",
-        "price": 22.99
-      }
-    ],
-    "bicycle": {
-      "color": "red",
-      "price": 19.95
-    }
-  }
-}
-```
-
-**Example JSONPath Expressions**
-
-JSONPath                      | Description
-------------------------------|------------
-`$.store.book[*].author`       | The authors of all books in the store
-`$..author`                     | All authors
-`$.store.*`                    | All things in store, which are some books and a red bicycle
-`$.store..price`                | The price of everything in the store
-`$..book[2]`                    | The third book
-`$..book[(@.length-1)]`         | The last book via script subscript
-`$..book[-1:]`                  | The last book via slice
-`$..book[0,1]`                  | The first two books via subscript union
-`$..book[:2]`                  | The first two books via subscript array slice
-`$..book[?(@.isbn)]`            | Filter all books with isbn number
-`$..book[?(@.price<10)]`        | Filter all books cheaper than 10
-`$..book[?(@.price==8.95)]`        | Filter all books that cost 8.95
-`$..book[?(@.price<30 && @.category=="fiction")]`        | Filter all fiction books cheaper than 30
-`$..*`                         | All members of JSON structure
-
-## External References
-
-[[spec]]
-
-## Appendix
 
 ### Developer Resources
 
