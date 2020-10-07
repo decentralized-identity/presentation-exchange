@@ -1293,6 +1293,54 @@ information to resolve the status of a claim.
 
 </tab-panel>
 
+#### Holder Binding
+Credential often rely on proofs of holder binding for their validity. For
+example, a credential may be bound to a holder through the use of an identifier,
+knowledge of a secret, or via a biometric. A verifier may wish to determine that
+a particular credential, or set of credentials is bound to the credential
+holder. This can help the verifier to determine the legitimacy of the presented
+proofs.
+
+##### Proof of Identifier Control
+A number of credential types include an identifier for the credential subject.
+A verifier may wish to ascertain that the subject identified in the credential
+is the one submitting the proof, or has consented to the proof submission.
+
+One mechanism for providing such proofs is the use of a DID as the identifier
+for the credential subject. DIDs enable an entity to provide a cryptographic
+proof of control of the identifier, usually through a demonstration that the
+holder knows some secret value, such as a private key. The holder can
+demonstrate the same proof of control when presenting the credential. In
+addition to verifying the authenticity and origin of the credential itself, a
+verifier can verify that the presenter of the credential still controls the
+identifier.
+
+##### Link Secrets
+Some credential signatures support the inclusion of holder-provided information
+that becomes incorporated into the signature, but remains hidden from the
+credential issuer. One common use of this capability is known as a link secret.
+A `link secret` is a value known only to the credential holder that is embedded
+in the signature of each issued credential. Upon presentation to a verifier, the
+holder demonstrates knowledge of the random value without revealing it, and
+proves that the same value is contained in every credential included in the
+proof presentation. The verifier can verify that the presenter of the
+credentials knows the link secret, and that the `link secret` is the same in
+each credential.
+
+###### Common values across credentials
+Though not of itself a means of binding to a holder, multiple credentials with
+common values may be taken by a verifier as an indication that the credentials
+are about the same subject. For example, if multiple banking credentials contain
+the same account number, and one of those credentials may be bound to the holder
+using any of the mechanisms described here, a verifier could rely on the
+demonstration of common values to bind all of the credentials to the holder.
+
+##### Biometrics
+This type of holder binding, instead of relying on demonstrating knowledge of
+some secret value, relies on the evaluation of biometric data. There are a
+number of mechanisms for safely embedding biometric information in a credential
+such that only a person who can confirm the biometric may use the credential. 
+
 ### JSON Schema
 
 The following JSON Schema Draft 7 definition summarizes the
