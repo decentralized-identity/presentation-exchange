@@ -38,8 +38,13 @@ To address these needs, this Presentation Exchange specification codifies the
 requirements, as well as the `Presentation Submission` data format Holders can
 use to submit proofs in accordance with them. The specification is designed to 
 be both credential format and transport envelope agnostic, meaning an implementer 
-can use JWTs, VCs, JWT-VCs, or any other credential format, and convey them 
-via OIDC, DIDComm, CHAPI, or any other transport envelope. The goal of 
+can use [JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519), 
+[Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/), 
+[JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions), 
+or any other credential format, and convey them 
+via [Open ID Connect](https://openid.net/connect/), [DIDComm](https://identity.foundation/didcomm-messaging/spec/), 
+[Credential Handler API](https://w3c-ccg.github.io/credential-handler-api/), 
+or any other transport envelope. The goal of 
 this flexible format and transport agnostic mechanism is to nullify the 
 redundant handling, code, and hassle involved in presenting and satisfying 
 logical requirements across formats and transport envelopes.
@@ -61,16 +66,19 @@ work is being done.
 
 ## Terminology
 
-Term | Definition
-:--- | :---------
-Decentralized Identifier (DID) | Unique ID string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).
-Holder | The entity that submits proofs to a Verifier to satisfy the requirements described in a Presentation Definition
-Verifier | The entity that defines what proofs they require from a Holder (via a Presentation Definition) in order to proceed with an interaction.
+[[def:Decentralized Identifiers, Decentralized Identifiers, DID]]
+~ Unique ID URI string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).
+
+[[def:Holder, Holders]]
+~ The entity that submits proofs to a [[ref:Verifier]] to satisfy the requirements described in a Presentation Definition
+
+[[def:Verifier, Verifiers]]
+~ The entity that defines what proofs they require from a [[ref:Holder]] (via a Presentation Definition) in order to proceed with an interaction.
 
 ## Localization
 
 To support localization, [IETF BCP 47](https://tools.ietf.org/html/bcp47) one
-**MAY** use language tags under the `locale` property in both a `Presentation
+****MAY**** use language tags under the `locale` property in both a `Presentation
 Definition` and `Presentation Submission`. If a Definition has a language tag,
 so should the corresponding Submission. A Submission may have a language tag
 regardless of the presence of one in the corresponding Definition.
@@ -128,8 +136,8 @@ conjunction with the
 
 ## Presentation Definition
 
-Presentation Definitions are objects that articulate what proofs a Verifier
-requires. These help the Verifier to decide how or whether to interact with a
+Presentation Definitions are objects that articulate what proofs a [[ref:Verifier]]
+requires. These help the [[ref:Verifier]] to decide how or whether to interact with a
 Holder. Presentation Definitions are composed of inputs, which describe the
 forms and details of the proofs they require, and optional sets of selection
 rules, to allow Holders flexibility in cases where many different types of
@@ -471,10 +479,10 @@ other properties that are not defined below MUST be ignored:
   ****MUST**** be an object with one or more properties matching the registered 
   [Credential Format Designations](#credential-format-designations) (`jwt`, 
   `jwt_vc`, `jwt_vp`, etc.) to inform the Holder of the credential format 
-  configurations the Verifier can process. The value for each property included 
+  configurations the [[ref:Verifier]] can process. The value for each property included 
   ****MUST**** be an object composed as follows:
     - The object ****MAY**** include a format-specific property (i.e. `alg`, 
-      `proof_type`) that expresses which algorithms the Verifier supports for the 
+      `proof_type`) that expresses which algorithms the [[ref:Verifier]] supports for the 
       format, and if present, its value ****MUST**** be an array of one or more 
       of the format-specific algorithmic identifier references, as noted in the 
       [Credential Format Designations](#credential-format-designations) section.
@@ -526,7 +534,7 @@ other properties that are not defined below MUST be ignored:
 
 _Presentation Definitions_ ****MAY**** include _Submission Requirements_,
 which are objects that define what combinations of inputs must be submitted
-to comply with the requirements a Verifier has for proceeding in a flow (e.g.
+to comply with the requirements a [[ref:Verifier]] has for proceeding in a flow (e.g.
 credential issuance, allowing entry, accepting an application).
 _Submission Requirements_ introduce a set of rule types and mapping instructions
 a User Agent can ingest to present requirement optionality to the user, and
@@ -583,7 +591,7 @@ input_descriptors that remain after satisfying all submission_requirements
 
 _Submission Requirement Objects_ describe combinations of inputs that
 ****must**** be submitted via a [Presentation Submission](#presentation-submission)
-to satisfy Verifier demands. _Submission Requirement Objects_ are JSON objects
+to satisfy [[ref:Verifier]] demands. _Submission Requirement Objects_ are JSON objects
 constructed as follows:
 
 1. The object  ****MUST**** contain a `rule` property, and its value
@@ -623,7 +631,7 @@ be the string `"all"`.
 - The object ****MUST**** contain either a `from` or `from_nested` property, 
   which behave as follows when used in an `all` rule:
     - `from` - when used within an `all` rule, every _Input Descriptor_ matching
-      the group string of the `from` value must be submitted to the Verifier.
+      the group string of the `from` value must be submitted to the [[ref:Verifier]].
     - `from_nested` - when used within an `all` rule, all the _Submission
     Requirement Objects_ specified in the `from_nested` array must be satisfied
     by the inputs submitted in a subsequent
@@ -804,8 +812,10 @@ processing-related rules above:
 
 ### Input Descriptors
 
-_Input Descriptors_ are objects used to describe the information a Verifier
-requires of a Holder before they will proceed with an interaction. If no `submission_requirement` objects are present, all `input_descriptor` objects ****MUST**** be satisfied.
+_Input Descriptors_ are objects used to describe the information a [[ref:Verifier]]
+requires of a Holder before they will proceed with an interaction. If no 
+`submission_requirement` objects are present, all `input_descriptor` objects 
+****MUST**** be satisfied.
 
 _Input Descriptor Objects_ contain a schema URI that links to the schema 
 of the required input data, constraints on data values, and an explanation 
@@ -907,7 +917,7 @@ why a certain item or set of data is being requested:
 #### Input Descriptor Objects
 
 _Input Descriptors_ are objects that describe what type of input data/credential, 
-or sub-fields thereof, is required for submission to the Verifier. _Input
+or sub-fields thereof, is required for submission to the [[ref:Verifier]]. _Input
 Descriptor Objects_ are composed as follows:
 
   - The object ****MUST**** contain an `id` property. The value of the `id`
@@ -957,10 +967,10 @@ Descriptor Objects_ are composed as follows:
           i.e., the credential used in the presentation has been 'issued' by the
           subject of the credential.
       
-        The `subject_is_issuer` property could be used by a Verifier to require
+        The `subject_is_issuer` property could be used by a [[ref:Verifier]] to require
         that certain inputs be _self_attested_. For example, a college
         application `presentation definition` might contain an _Input Descriptor_
-        object for an essay submission. In this case, the Verifier would be able
+        object for an essay submission. In this case, the [[ref:Verifier]] would be able
         to require that the essay be provided by the one submits the application. 
       - The object ****MAY**** contain a `subject_is_holder` property, and if
         present its value ****MUST**** be one of the following strings:
@@ -971,10 +981,10 @@ Descriptor Objects_ are composed as follows:
           processing entity include proof that the subject of the credential is
           the same as the entity submitting the response, i.e., the holder.
       
-        The `subject_is_holder` property could be used by a Verifier to require
+        The `subject_is_holder` property could be used by a [[ref:Verifier]] to require
         that certain inputs be provided by e subject. For example, an identity
         verification `presentation definition` might contain an _Input
-        Descriptor_ object for a passport number. In this case, the Verifier
+        Descriptor_ object for a passport number. In this case, the [[ref:Verifier]]
         would be able to require that the passport credential was issued to the
         one who submits the identity verification. 
         
@@ -991,11 +1001,11 @@ Descriptor Objects_ are composed as follows:
             ****MUST**** be evaluated from 0-index forward, and the first
             expressions to return a value will be used for the rest of the
             entry's evaluation. The ability to declare multiple expressions this
-            way allows the Verifier to account for format differences - for
+            way allows the [[ref:Verifier]] to account for format differences - for
             example: normalizing the differences in structure between
             JSON-LD/JWT-based
             [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
-            vanilla [JSON Web Tokens](https://tools.ietf.org/html/rfc7797) (JWTs).
+            vanilla JSON Web Tokens (JWTs) [[spec:rfc7797]].
           - The object ****MAY**** contain a `purpose` property, and if present
             its value ****MUST**** be a string that describes the purpose for
             which the field is being requested.
@@ -1158,7 +1168,7 @@ Evaluate each candidate input as follows:
     `fields` property ****is not**** present, or contains zero
     [_Input Descriptor Field Entries_](#input-descriptor-field-entry),
     submission ****SHOULD NOT**** include any claim data from the credential.
-    (for example: a Verifier may simply want to know a Holder has a valid,
+    (for example: a [[ref:Verifier]] may simply want to know a Holder has a valid,
     signed credential of a particular type, without disclosing any of the
     data it contains).
   5. If the `constraints` property of the _Input Descriptor_ is present, and it
@@ -1196,7 +1206,7 @@ The first example demonstrates _expiry_ using the [VC Data Model's
  `expirationDate` property](https://w3c.github.io/vc-data-model/#expiration-0).
 The second demonstrates _revocation_, or more generally, _credential status_
 using the [VC Data Model's `credentialStatus` property](https://w3c.github.io/vc-data-model/#status-0).
-Using the syntax provided in the example a verifier will have all requisite
+Using the syntax provided in the example a [[ref:Verifier]] will have all requisite
 information to resolve the status of a credential.
 
 <tab-panels selected-index="0">
@@ -1477,7 +1487,7 @@ format-related rules above:
 ```
 
 ### Presentation Requests
-Presentation Definitions may be sent from a Verifier to a Holder using a wide
+Presentation Definitions may be sent from a [[ref:Verifier]] to a Holder using a wide
 variety of transport mechanisms or credentials exchange protocols. This
 specification does not define a transport mechanism for `Presentation
 Definitions` (or `Presentation Request`), but does note that different use
@@ -1487,7 +1497,7 @@ cases, supported signature schemes, protocols, and threat models may require a
   provenance, identity, or status of a `Presentation Definition`. In this case,
   a `Presentation Request` that uses digital signatures may be required. 
 - `domain`, `challenge`, or `nonce` - Some presentation protocols may require
-  that presentations be unique, i.e., it should be possible for a Verifier to
+  that presentations be unique, i.e., it should be possible for a [[ref:Verifier]] to
   detect if a presentation has been used before. Other protocols may require
   that a presentation to be bound to a particular communication exchange, or
   session. In these cases, a `Presentation Request` that provides a `domain`,
@@ -1497,8 +1507,8 @@ cases, supported signature schemes, protocols, and threat models may require a
 ## Presentation Submission
 
 _Presentation Submissions_ are objects embedded within target credential
-negotiation formats that unify the presentation of proofs to a Verifier in
-accordance with the requirements a Verifier specified in a _Presentation
+negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in
+accordance with the requirements a [[ref:Verifier]] specified in a _Presentation
 Definition_. Embedded _Presentation Submission_ objects ****MUST**** be located
 within target data format as a `presentation_submission` property, which are
 composed and embedded as follows:
@@ -1524,6 +1534,8 @@ composed and embedded as follows:
       `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`), to denote what data format the credential is being 
       submitted in.
 
+### Limited Disclosure Submissions
+
 If for all credentials submitted in relation to
 [_Input Descriptor Objects_](#input-descriptor-objects) that include a
 `constraints` object with a `limit_disclosure` property set to the boolean value
@@ -1543,7 +1555,7 @@ section is outside the scope of Presentation Exchange. Validation of signatures
 and other cryptographic proofs are a function of a given credential format, and 
 should be evaluated in accordance with a given credential format's standardized 
 processing steps. Additional verification of credential data or subsequent 
-validation required by a given Verifier are left to the Verifier's systems, code 
+validation required by a given [[ref:Verifier]] are left to the Verifier's systems, code 
 and business processes to define and execute.
 
 During validation, each Input Descriptor Object ****MUST**** refer to only a
@@ -1572,10 +1584,164 @@ the top level of the embed target, the location is described in JSONPath syntax.
 
 Target     | Location      
 ---------- | --------
-OpenID     | top-level
+OpenID     | top-level 
 DIDComms   | `$.presentations~attach.data.json`
 VP         | top-level
 CHAPI      | `$.data`
+
+## Credential Format Designations
+
+Within the _Presentation Exchange_ specification, there are numerous sections 
+where [[ref:Verifiers]] and Holders convey what credential variants they support and 
+are submitting. The following are the normalized references used within the 
+specification:
+
+- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7797]] 
+  that will be submitted in the form of a JWT encoded string. Expression of 
+  supported algorithms in relation to this format ****MUST**** be conveyed using an `alg` property 
+  paired with values that are identifiers from the 
+  JSON Web Algorithms registry [[spec:RFC7518]].
+- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7797]] 
+  that will be submitted in the form of a JWT encoded string, and the body of the decoded 
+  JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7797]] section 
+  of the [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token). 
+  Expression of supported algorithms in relation to these formats ****MUST**** be conveyed using 
+  an `alg` property paired with values that are identifiers from the JSON Web Algorithms registry 
+  [[spec:RFC7518]].
+- `ldp_vc`, `ldp_vp` - these formats are W3C Verifiable Credentials [[spec:VC-DATA MODEL]]
+  that will be submitted in the form of a JSON object. Expression of supported 
+  algorithms in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
+  paired with values that are identifiers from the 
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+- `ldp` - this format is defined in the [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/) 
+  specification [[spec: Linked Data Proofs]], and will be submitted as objects. Expression of supported algorithms 
+  in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
+  with values that are identifiers from the 
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+
+## JSON Schema Vocabulary Definition
+
+The _Presentation Exchange_ specification adopts and defines the following JSON
+Schema data format and processing variant, which implementers ****MUST****
+support for evaluation of the portions of the _Presentation Exchange_
+specification that call for JSON Schema validation:
+https://tools.ietf.org/html/draft-handrews-json-schema-02
+
+## JSONPath Syntax Definition
+
+The _Presentation Exchange_ specification adopts and defines the following
+syntax from the JSONPath object query language, which implementers ****MUST****
+support for evaluation of the portions of the _Presentation Exchange_
+specification that call for JSONPath expression execution.
+
+JSONPath              | Description
+----------------------|------------
+` $`                  | The root object/element
+` @`                  | The current object/element
+`.`                   | Child member operator
+`..`	                | Recursive descendant operator; JSONPath borrows this syntax from E4X
+`*`	                  | Wildcard matching all objects/elements regardless their names
+`[]`	                | Subscript operator
+`[,]`	                | Union operator for alternate names or array indices as a set
+`[start:end:step]` | Array slice operator borrowed from ES4 / Python
+`?()`                 | Applies a filter (script) expression via static evaluation
+`()`	                | Script expression via static evaluation 
+
+**Example JSON Object**
+
+```javascript
+{
+  "store": {
+    "book": [ 
+      {
+        "category": "reference",
+        "author": "Nigel Rees",
+        "title": "Sayings of the Century",
+        "price": 8.95
+      }, {
+        "category": "fiction",
+        "author": "Evelyn Waugh",
+        "title": "Sword of Honour",
+        "price": 12.99
+      }, {
+        "category": "fiction",
+        "author": "Herman Melville",
+        "title": "Moby Dick",
+        "isbn": "0-553-21311-3",
+        "price": 8.99
+      }, {
+         "category": "fiction",
+        "author": "J. R. R. Tolkien",
+        "title": "The Lord of the Rings",
+        "isbn": "0-395-19395-8",
+        "price": 22.99
+      }
+    ],
+    "bicycle": {
+      "color": "red",
+      "price": 19.95
+    }
+  }
+}
+```
+
+**Example JSONPath Expressions**
+
+JSONPath                      | Description
+------------------------------|------------
+`$.store.book[*].author`       | The authors of all books in the store
+`$..author`                     | All authors
+`$.store.*`                    | All things in store, which are some books and a red bicycle
+`$.store..price`                | The price of everything in the store
+`$..book[2]`                    | The third book
+`$..book[(@.length-1)]`         | The last book via script subscript
+`$..book[-1:]`                  | The last book via slice
+`$..book[0,1]`                  | The first two books via subscript union
+`$..book[:2]`                  | The first two books via subscript array slice
+`$..book[?(@.isbn)]`            | Filter all books with isbn number
+`$..book[?(@.price<10)]`        | Filter all books cheaper than 10
+`$..book[?(@.price==8.95)]`        | Filter all books that cost 8.95
+`$..book[?(@.price<30 && @.category=="fiction")]`        | Filter all fiction books cheaper than 30
+`$..*`                         | All members of JSON structure
+
+## External References
+
+[[spec]]
+
+## Appendix
+
+### Embed Target Examples
+
+<!-- #### Presentation Definitions
+
+<tab-panels selected-index="0">
+
+<nav>
+  <button type="button">Verifiable Presentation</button>
+  <button type="button">Open ID Connect</button>
+  <button type="button">CHAPI</button>
+  <button type="button">DIDComm</button>
+</nav>
+
+<section>
+
+</section>
+
+<section>
+
+</section>
+
+<section>
+
+</section>
+
+<section>
+
+</section>
+
+</tab-panels> -->
+
+#### Presentation Submissions
 
 <tab-panels selected-index="0">
 
@@ -1882,122 +2048,6 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
 ```
 
 </tab-panels>
-
-## Credential Format Designations
-
-Within the _Presentation Exchange_ specification, there are numerous sections 
-where Verifiers and Holders convey what credential variants they support and 
-are submitting. The following are the normalized references used within the 
-specification:
-
-- `jwt` - the format is a [JSON Web Token](https://tools.ietf.org/html/rfc7797) 
-  that will be submitted in the form of a JWT encoded string. Expression of 
-  supported algorithms in relation to this format ****MUST**** be conveyed using an `alg` property 
-  paired with values that are identifiers from the 
-  [RFC 7518 JSON Web Algorithms](https://tools.ietf.org/html/rfc7518) registry.
-- `jwt_vc`, `jwt_vp` - these formats are [JSON Web Tokens](https://tools.ietf.org/html/rfc7797) 
-  that will be submitted in the form of a JWT encoded string, and the body of the decoded 
-  JWT string is defined in the [JSON Web Token section](https://www.w3.org/TR/vc-data-model/#json-web-token) 
-  of the W3C Verifiable Credentials specification. Expression of supported algorithms in 
-  relation to these formats ****MUST**** be conveyed using an `alg` property paired with values that 
-  are identifiers from the [RFC 7518 JSON Web Algorithms](https://tools.ietf.org/html/rfc7518) registry. 
-- `ldp_vc`, `ldp_vp` - these formats are [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) 
-  that will be submitted in the form of a JSON object. Expression of supported 
-  algorithms in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
-  paired with values that are identifiers from the 
-  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
-- `ldp` - this format is defined in the [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/) 
-  specification, and will be submitted as objects. Expression of supported algorithms 
-  in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
-  with values that are identifiers from the 
-  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
-
-## JSON Schema Vocabulary Definition
-
-The _Presentation Exchange_ specification adopts and defines the following JSON
-Schema data format and processing variant, which implementers ****MUST****
-support for evaluation of the portions of the _Presentation Exchange_
-specification that call for JSON Schema validation:
-https://tools.ietf.org/html/draft-handrews-json-schema-02
-
-## JSONPath Syntax Definition
-
-The _Presentation Exchange_ specification adopts and defines the following
-syntax from the JSONPath object query language, which implementers ****MUST****
-support for evaluation of the portions of the _Presentation Exchange_
-specification that call for JSONPath expression execution.
-
-JSONPath              | Description
-----------------------|------------
-` $`                  | The root object/element
-` @`                  | The current object/element
-`.`                   | Child member operator
-`..`	                | Recursive descendant operator; JSONPath borrows this syntax from E4X
-`*`	                  | Wildcard matching all objects/elements regardless their names
-`[]`	                | Subscript operator
-`[,]`	                | Union operator for alternate names or array indices as a set
-`[start:end:step]` | Array slice operator borrowed from ES4 / Python
-`?()`                 | Applies a filter (script) expression via static evaluation
-`()`	                | Script expression via static evaluation 
-
-**Example JSON Object**
-
-```javascript
-{
-  "store": {
-    "book": [ 
-      {
-        "category": "reference",
-        "author": "Nigel Rees",
-        "title": "Sayings of the Century",
-        "price": 8.95
-      }, {
-        "category": "fiction",
-        "author": "Evelyn Waugh",
-        "title": "Sword of Honour",
-        "price": 12.99
-      }, {
-        "category": "fiction",
-        "author": "Herman Melville",
-        "title": "Moby Dick",
-        "isbn": "0-553-21311-3",
-        "price": 8.99
-      }, {
-         "category": "fiction",
-        "author": "J. R. R. Tolkien",
-        "title": "The Lord of the Rings",
-        "isbn": "0-395-19395-8",
-        "price": 22.99
-      }
-    ],
-    "bicycle": {
-      "color": "red",
-      "price": 19.95
-    }
-  }
-}
-```
-
-**Example JSONPath Expressions**
-
-JSONPath                      | Description
-------------------------------|------------
-`$.store.book[*].author`       | The authors of all books in the store
-`$..author`                     | All authors
-`$.store.*`                    | All things in store, which are some books and a red bicycle
-`$.store..price`                | The price of everything in the store
-`$..book[2]`                    | The third book
-`$..book[(@.length-1)]`         | The last book via script subscript
-`$..book[-1:]`                  | The last book via slice
-`$..book[0,1]`                  | The first two books via subscript union
-`$..book[:2]`                  | The first two books via subscript array slice
-`$..book[?(@.isbn)]`            | Filter all books with isbn number
-`$..book[?(@.price<10)]`        | Filter all books cheaper than 10
-`$..book[?(@.price==8.95)]`        | Filter all books that cost 8.95
-`$..book[?(@.price<30 && @.category=="fiction")]`        | Filter all fiction books cheaper than 30
-`$..*`                         | All members of JSON structure
-
-## Appendix
 
 ### Developer Resources
 
