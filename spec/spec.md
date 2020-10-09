@@ -2033,3 +2033,25 @@ JSONPath                      | Description
     - https://github.com/Stranger6667/jsonschema-rs
 - **Go**
     - https://github.com/xeipuuv/gojsonschema
+
+### IANA Considerations
+
+#### JSON Web Token Claims Registration
+
+This specification registers the Claims defined in Section 5.1 and Section 2 in the IANA JSON Web Token Claims registry defined in [[RFC7519]].
+
+##### Registry Contents
+
+Presentation Definitiion | Values
+------------------------------|------------
+Claim Name: | `presentation_definition`
+Claim Description: | Presentation Definition
+Change Controller: | DIF Claims & Credentials - Working Group - TBD@email.com
+Reference | Section XXX of this document
+
+Presentation Submission                      | Values
+------------------------------|------------
+Claim Name: | `presentation_submission`
+Claim Description: | Presentation Submission
+Change Controller: | DIF Claims & Credentials - Working Group - TBD@email.com
+Specification Document(s): | Section XXX of this document
