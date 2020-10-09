@@ -2042,7 +2042,7 @@ This specification registers the claims in section [Registry Contents]() in the 
 
 ##### Registry Contents
 
-Presentation Definitiion | Values
+Presentation Definition | Values
 ------------------------------|------------
 Claim Name: | `presentation_definition`
 Claim Description: | Presentation Definition
