@@ -24,6 +24,10 @@
       "properties": {
         "id": { "type": "string" },
         "path": { "type": "string" },
+        "path_nested": { 
+          "type": "object",
+            "$ref": "#/definitions/descriptor"
+        },
         "format": { 
           "type": "string",
           "enum": ["jwt", "jwt_vc", "jwt_vp", "ldp", "ldp_vc", "ldp_vp"]
