@@ -2038,7 +2038,7 @@ JSONPath                      | Description
 
 #### JSON Web Token Claims Registration
 
-This specification registers the Claims defined in Section 5.1 and Section 2 in the IANA JSON Web Token Claims registry defined in [[RFC7519]].
+This specification registers the claims in section [Registry Contents]() in the IANA JSON Web Token Claims registry defined in [[RFC7519]].
 
 ##### Registry Contents
 
