@@ -1522,17 +1522,68 @@ composed and embedded as follows:
     - The object ****MUST**** include an `id` property, and its value
       ****MUST**** be a string matching the `id` property of the _Input
       Descriptor_ in the _Presentation Definition_ the submission is related to.
+    - The object ****MUST**** include a `format` property, and its value 
+      ****MUST**** be a string value matching one of the 
+      [Credential Format Designation](#credential-format-designations) (`jwt`, 
+      `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`), to denote what data format the credential is being 
+      submitted in.
     - The object ****MUST**** include a `path` property, and its value
       ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
       string expression that selects the credential to be submit in relation
       to the identified _Input Descriptor_ identified, when executed against
       the top-level of the object the _Presentation Submission_ is embedded
       within.
-    - The object ****MUST**** include a `format` property, and its value 
-      ****MUST**** be a string value matching one of the 
-      [Credential Format Designation](#credential-format-designations) (`jwt`, 
-      `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`), to denote what data format the credential is being 
-      submitted in.
+    - The object ****MAY**** include a `path_nested` object to specify the
+      presence of a multi-credential envelope format, meaning the credential indending to be selected must be decoded separately from its parent enclosure.
+      + The format of a `path_nested` object mirrors that of a `descriptor_map` property. The nesting may be any number of levels deep. The `id` property ****MUST**** be the same for each level of nesting.
+      + The `path` property inside each `path_nested` property provides a _relative path_ within a given nested value.
+
+### Processing of `path_nested` Entries
+
+****Example Nested Submission****
+
+```javascript
+{
+  "presentation_submission": {
+    "descriptor_map": [
+      { 
+        "id": "banking_input_2",
+        "format": "jwt_vp",
+        "path": "$.outerCredential.[0]",
+        "path_nested": {
+            "id": "banking_input_2",
+            "format": "ldp_vc",
+            "path": "$.innerCredential.[1]",
+            "path_nested": {
+                "id": "banking_input_2",
+                "format": "jwt_vc",
+                "path": "$.mostInnerCredential.[2]"
+            }
+        }
+    }
+  ]
+}
+```
+
+When the `path_nested` property is present in a _Presentation Submission_ object, 
+process as follows:
+
+1. For each Nested Submission Traversal Object in the `path_nested` array,
+   process as follows:
+    a. Execute the [JSONPath](https://goessner.net/articles/JsonPath/) expression string 
+      on the [_Current Traversal Object_](#current-traversal-object){id="current-traversal-object"}, or if none is designated, 
+      the top level of the Embed Target.
+    b. Decode and parse the value returned from [JSONPath](https://goessner.net/articles/JsonPath/) 
+      execution in accordance with the [Credential Format Designation](#credential-format-designations) 
+      specified in the object's `format` property. If value parses and validates in accordance 
+      with the [Credential Format Designation](#credential-format-designations) specified, let 
+      the resulting object be the [_Current Traversal Object_](#current-traversal-object)
+    c. If present, process the next Nested Submission Traversal Object in the 
+       current `path_nested` property.
+2. If parsing of the Nested Submission Traversal Objects in the `path_nested`
+   property produced a valid value, process it as the submission against the
+   _Input Descriptor_ indicated by the  `id` property of the containing
+  _Input Descriptor Mapping Object_.
 
 ### Limited Disclosure Submissions
 
@@ -2033,6 +2084,10 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
       "properties": {
         "id": { "type": "string" },
         "path": { "type": "string" },
+        "path_nested": { 
+          "type": "object",
+            "$ref": "#/definitions/descriptor"
+        },
         "format": { 
           "type": "string",
           "enum": ["jwt", "jwt_vc", "jwt_vp", "ldp", "ldp_vc", "ldp_vp"]
