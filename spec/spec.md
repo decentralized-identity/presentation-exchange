@@ -75,6 +75,9 @@ work is being done.
 [[def:Verifier, Verifiers]]
 ~ The entity that defines what proofs they require from a [[ref:Holder]] (via a Presentation Definition) in order to proceed with an interaction.
 
+[[def:Input Descriptor, Input Descriptors]]
+~ Input Descriptors are objects used to describe the information a Verifier requires of a Holder before they will proceed with an interaction. 
+
 ## Localization
 
 To support localization, [IETF BCP 47](https://tools.ietf.org/html/bcp47) one
@@ -524,7 +527,7 @@ other properties that are not defined below MUST be ignored:
   required for submission. The description for the format of this property is in
   the [`Submission Requirement`](#submission-requirement) section below.
 - `input_descriptors` - The resource ****MUST**** contain this property, and
-  its value ****MUST**** be an array of Input Descriptor objects. If no
+  its value ****MUST**** be an array of [[ref:[[ref:Input Descriptor]]]] objects. If no
   `submission_requirement` is present, all inputs listed in the
   `input_descriptors` array are required for submission. The composition of
   values under this property are described in the [`Input
@@ -630,7 +633,7 @@ support the following standard types:
 be the string `"all"`.
 - The object ****MUST**** contain either a `from` or `from_nested` property, 
   which behave as follows when used in an `all` rule:
-    - `from` - when used within an `all` rule, every _Input Descriptor_ matching
+    - `from` - when used within an `all` rule, every [[ref:Input Descriptor]] matching
       the group string of the `from` value must be submitted to the [[ref:Verifier]].
     - `from_nested` - when used within an `all` rule, all the _Submission
     Requirement Objects_ specified in the `from_nested` array must be satisfied
@@ -812,7 +815,7 @@ processing-related rules above:
 
 ### Input Descriptors
 
-_Input Descriptors_ are objects used to describe the information a [[ref:Verifier]]
+[[ref:Input Descriptors]] are objects used to describe the information a [[ref:Verifier]]
 requires of a Holder before they will proceed with an interaction. If no 
 `submission_requirement` objects are present, all `input_descriptor` objects 
 ****MUST**** be satisfied.
@@ -916,13 +919,13 @@ why a certain item or set of data is being requested:
 
 #### Input Descriptor Objects
 
-_Input Descriptors_ are objects that describe what type of input data/credential, 
+[[ref:Input Descriptors]] are objects that describe what type of input data/credential, 
 or sub-fields thereof, is required for submission to the [[ref:Verifier]]. _Input
 Descriptor Objects_ are composed as follows:
 
   - The object ****MUST**** contain an `id` property. The value of the `id`
     property ****MUST**** be a unique identifying string that does not conflict
-    with the `id` of another _Input Descriptor_ in the same _Presentation
+    with the `id` of another [[ref:Input Descriptor]] in the same _Presentation
     Definition_ object.
   - The object ****MAY**** contain a `group` property, and if present, its value
     ****MUST**** match one of the grouping strings listed the `from` values of a
@@ -969,7 +972,7 @@ Descriptor Objects_ are composed as follows:
       
         The `subject_is_issuer` property could be used by a [[ref:Verifier]] to require
         that certain inputs be _self_attested_. For example, a college
-        application `presentation definition` might contain an _Input Descriptor_
+        application `presentation definition` might contain an [[ref:Input Descriptor]]
         object for an essay submission. In this case, the [[ref:Verifier]] would be able
         to require that the essay be provided by the one submits the application. 
       - The object ****MAY**** contain a `subject_is_holder` property, and if
@@ -1126,7 +1129,7 @@ required to fulfill the demands of the Verifying party. A consumer of a
 _Presentation Definition_ ****SHOULD**** use the following process to validate
 whether or not its candidate inputs meet the requirements it describes:
 
-For each _Input Descriptor_ in the `input_descriptors` array of a _Presentation
+For each [[ref:Input Descriptor]] in the `input_descriptors` array of a _Presentation
 Definition_, a User Agent ****should**** compare each candidate input (JWT,
 Verifiable Credential, etc.) it holds to determine whether there is a match.
 Evaluate each candidate input as follows:
@@ -1136,11 +1139,11 @@ Evaluate each candidate input as follows:
     content of the schema, not just the URI from which it is downloaded, must
     also match. If one of the values is an exact match, proceed, if there are no
     exact matches, skip to the next candidate input.
-  2. If the `constraints` property of the _Input Descriptor_ is present, and it
+  2. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
     contains a `fields` property with one or more
     [_Input Descriptor Field Entries_](#input-descriptor-field-entry), evaluate
     each against the candidate input as follows:
-      1. Iterate the _Input Descriptor_ `path` array of
+      1. Iterate the [[ref:Input Descriptor]] `path` array of
         [JSONPath](https://goessner.net/articles/JsonPath/) string expressions
         from 0-index, executing each expression against the candidate input.
         Cease iteration at the first expression that returns a matching _Field
@@ -1159,9 +1162,9 @@ Evaluate each candidate input as follows:
       4. If the result is valid, proceed iterating the rest of the `fields` entries.
   3. If all of the previous validation steps are successful, mark the candidate
     input as a match for use in a _Presentation Submission_, and if present at
-    the top level of the _Input Descriptor_, keep a relative reference to the
+    the top level of the [[ref:Input Descriptor]], keep a relative reference to the
     `group` values the input is designated for.
-  4. If the `constraints` property of the _Input Descriptor_ is present and it
+  4. If the `constraints` property of the [[ref:Input Descriptor]] is present and it
     contains a `limit_disclosure` property set to the boolean value `true`,
     ensure that any subsequent submission of data in relation to the candidate
     input is limited to the entries specified in the `fields` property. If the
@@ -1171,11 +1174,11 @@ Evaluate each candidate input as follows:
     (for example: a [[ref:Verifier]] may simply want to know a Holder has a valid,
     signed credential of a particular type, without disclosing any of the
     data it contains).
-  5. If the `constraints` property of the _Input Descriptor_ is present, and it
+  5. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
     contains a `subject_is_issuer` property set to the value `required`, ensure
     that any submission of data in relation to the candidate input is fulfilled
     using a _self_attested_ credential.
-  6. If the `constraints` property of the _Input Descriptor_ is present, and it
+  6. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
     contains a `subject_is_holder` property set to the value `required`, ensure
     that any submission of data in relation to the candidate input is fulfilled
     by the subject of the credential
@@ -1530,7 +1533,7 @@ composed and embedded as follows:
     - The object ****MUST**** include a `path` property, and its value
       ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
       string expression that selects the credential to be submit in relation
-      to the identified _Input Descriptor_ identified, when executed against
+      to the identified [[ref:Input Descriptor]] identified, when executed against
       the top-level of the object the _Presentation Submission_ is embedded
       within.
     - The object ****MAY**** include a `path_nested` object to specify the
@@ -1582,7 +1585,7 @@ process as follows:
        current `path_nested` property.
 2. If parsing of the Nested Submission Traversal Objects in the `path_nested`
    property produced a valid value, process it as the submission against the
-   _Input Descriptor_ indicated by the  `id` property of the containing
+   [[ref:Input Descriptor]] indicated by the  `id` property of the containing
   _Input Descriptor Mapping Object_.
 
 ### Limited Disclosure Submissions
