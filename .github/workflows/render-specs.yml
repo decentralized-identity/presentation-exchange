@@ -26,5 +26,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_BRANCH: master
-          BRANCH: gh-pages
+          BRANCH: master
           FOLDER: .
