@@ -3,6 +3,7 @@ name: render-specs
 
 on:
   push:
+  pull_request:
     branches:
       - master
 
