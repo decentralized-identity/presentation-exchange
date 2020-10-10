@@ -108,6 +108,8 @@ work is being done.</p>
 <dd>The entity that submits proofs to a <a class="term-reference" href="#term:verifier">Verifier</a> to satisfy the requirements described in a Presentation Definition</dd>
 <dt><span id="term:verifiers"><span id="term:verifier">Verifier</span></span></dt>
 <dd>The entity that defines what proofs they require from a <a class="term-reference" href="#term:holder">Holder</a> (via a Presentation Definition) in order to proceed with an interaction.</dd>
+<dt><span id="term:input-descriptors"><span id="term:input-descriptor">Input Descriptor</span></span></dt>
+<dd>Input Descriptors are objects used to describe the information a Verifier requires of a Holder before they will proceed with an interaction.</dd>
 </dl>
 <h2 id="localization"><a class="toc-anchor" href="#localization" >§</a> Localization</h2>
 <p>To support localization, <a path-0="tools.ietf.org"path-1="html"path-2="bcp47"href="https://tools.ietf.org/html/bcp47" >IETF BCP 47</a> one
@@ -528,7 +530,7 @@ Format. If not present, all inputs listed in the <code>input_descriptors</code> 
 required for submission. The description for the format of this property is in
 the <a href="#submission-requirement" ><code>Submission Requirement</code></a> section below.</li>
 <li><code>input_descriptors</code> - The resource <strong><strong>MUST</strong></strong> contain this property, and
-its value <strong><strong>MUST</strong></strong> be an array of Input Descriptor objects. If no
+its value <strong><strong>MUST</strong></strong> be an array of <a class="term-reference" href="#term:[[ref:input-descriptor">[[ref:Input Descriptor</a>]] objects. If no
 <code>submission_requirement</code> is present, all inputs listed in the
 <code>input_descriptors</code> array are required for submission. The composition of
 values under this property are described in the <a href="#input-descriptors" ><code>Input Descriptors</code></a> section below.</li>
@@ -628,7 +630,7 @@ be the string <code>&quot;all&quot;</code>.</li>
 <li>The object <strong><strong>MUST</strong></strong> contain either a <code>from</code> or <code>from_nested</code> property,
 which behave as follows when used in an <code>all</code> rule:
 <ul>
-<li><code>from</code> - when used within an <code>all</code> rule, every <em>Input Descriptor</em> matching
+<li><code>from</code> - when used within an <code>all</code> rule, every <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> matching
 the group string of the <code>from</code> value must be submitted to the <a class="term-reference" href="#term:verifier">Verifier</a>.</li>
 <li><code>from_nested</code> - when used within an <code>all</code> rule, all the <em>Submission
 Requirement Objects</em> specified in the <code>from_nested</code> array must be satisfied
@@ -801,7 +803,7 @@ or less than the value of the <code>max</code> property.</li>
 </li>
 </ol>
 <h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors" >§</a> Input Descriptors</h3>
-<p><em>Input Descriptors</em> are objects used to describe the information a <a class="term-reference" href="#term:verifier">Verifier</a>
+<p><a class="term-reference" href="#term:input-descriptors">Input Descriptors</a> are objects used to describe the information a <a class="term-reference" href="#term:verifier">Verifier</a>
 requires of a Holder before they will proceed with an interaction. If no
 <code>submission_requirement</code> objects are present, all <code>input_descriptor</code> objects
 <strong><strong>MUST</strong></strong> be satisfied.</p>
@@ -889,13 +891,13 @@ why a certain item or set of data is being requested:</p>
 </section>
 </tab-panels>
 <h4 id="input-descriptor-objects"><a class="toc-anchor" href="#input-descriptor-objects" >§</a> Input Descriptor Objects</h4>
-<p><em>Input Descriptors</em> are objects that describe what type of input data/credential,
+<p><a class="term-reference" href="#term:input-descriptors">Input Descriptors</a> are objects that describe what type of input data/credential,
 or sub-fields thereof, is required for submission to the <a class="term-reference" href="#term:verifier">Verifier</a>. <em>Input
 Descriptor Objects</em> are composed as follows:</p>
 <ul>
 <li>The object <strong><strong>MUST</strong></strong> contain an <code>id</code> property. The value of the <code>id</code>
 property <strong><strong>MUST</strong></strong> be a unique identifying string that does not conflict
-with the <code>id</code> of another <em>Input Descriptor</em> in the same <em>Presentation
+with the <code>id</code> of another <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> in the same <em>Presentation
 Definition</em> object.</li>
 <li>The object <strong><strong>MAY</strong></strong> contain a <code>group</code> property, and if present, its value
 <strong><strong>MUST</strong></strong> match one of the grouping strings listed the <code>from</code> values of a
@@ -950,7 +952,7 @@ subject of the credential.</li>
 </ul>
 <p>The <code>subject_is_issuer</code> property could be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to require
 that certain inputs be <em>self_attested</em>. For example, a college
-application <code>presentation definition</code> might contain an <em>Input Descriptor</em>
+application <code>presentation definition</code> might contain an <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a>
 object for an essay submission. In this case, the <a class="term-reference" href="#term:verifier">Verifier</a> would be able
 to require that the essay be provided by the one submits the application.</p>
 </li>
@@ -1125,7 +1127,7 @@ credentials, raw data, etc.) to determine whether they possess the inputs
 required to fulfill the demands of the Verifying party. A consumer of a
 <em>Presentation Definition</em> <strong><strong>SHOULD</strong></strong> use the following process to validate
 whether or not its candidate inputs meet the requirements it describes:</p>
-<p>For each <em>Input Descriptor</em> in the <code>input_descriptors</code> array of a <em>Presentation
+<p>For each <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> in the <code>input_descriptors</code> array of a <em>Presentation
 Definition</em>, a User Agent <strong><strong>should</strong></strong> compare each candidate input (JWT,
 Verifiable Credential, etc.) it holds to determine whether there is a match.
 Evaluate each candidate input as follows:</p>
@@ -1136,12 +1138,12 @@ hashlink or a similar value that points to immutable content, this means the
 content of the schema, not just the URI from which it is downloaded, must
 also match. If one of the values is an exact match, proceed, if there are no
 exact matches, skip to the next candidate input.</li>
-<li>If the <code>constraints</code> property of the <em>Input Descriptor</em> is present, and it
+<li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present, and it
 contains a <code>fields</code> property with one or more
 <a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entries</em></a>, evaluate
 each against the candidate input as follows:
 <ol>
-<li>Iterate the <em>Input Descriptor</em> <code>path</code> array of
+<li>Iterate the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> <code>path</code> array of
 <a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> string expressions
 from 0-index, executing each expression against the candidate input.
 Cease iteration at the first expression that returns a matching <em>Field
@@ -1162,9 +1164,9 @@ value of the <code>filter</code> property.</li>
 </li>
 <li>If all of the previous validation steps are successful, mark the candidate
 input as a match for use in a <em>Presentation Submission</em>, and if present at
-the top level of the <em>Input Descriptor</em>, keep a relative reference to the
+the top level of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a>, keep a relative reference to the
 <code>group</code> values the input is designated for.</li>
-<li>If the <code>constraints</code> property of the <em>Input Descriptor</em> is present and it
+<li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present and it
 contains a <code>limit_disclosure</code> property set to the boolean value <code>true</code>,
 ensure that any subsequent submission of data in relation to the candidate
 input is limited to the entries specified in the <code>fields</code> property. If the
@@ -1174,11 +1176,11 @@ submission <strong><strong>SHOULD NOT</strong></strong> include any claim data f
 (for example: a <a class="term-reference" href="#term:verifier">Verifier</a> may simply want to know a Holder has a valid,
 signed credential of a particular type, without disclosing any of the
 data it contains).</li>
-<li>If the <code>constraints</code> property of the <em>Input Descriptor</em> is present, and it
+<li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present, and it
 contains a <code>subject_is_issuer</code> property set to the value <code>required</code>, ensure
 that any submission of data in relation to the candidate input is fulfilled
 using a <em>self_attested</em> credential.</li>
-<li>If the <code>constraints</code> property of the <em>Input Descriptor</em> is present, and it
+<li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present, and it
 contains a <code>subject_is_holder</code> property set to the value <code>required</code>, ensure
 that any submission of data in relation to the candidate input is fulfilled
 by the subject of the credential</li>
@@ -1511,7 +1513,7 @@ submitted in.</li>
 <li>The object <strong><strong>MUST</strong></strong> include a <code>path</code> property, and its value
 <strong><strong>MUST</strong></strong> be a <a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a>
 string expression that selects the credential to be submit in relation
-to the identified <em>Input Descriptor</em> identified, when executed against
+to the identified <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> identified, when executed against
 the top-level of the object the <em>Presentation Submission</em> is embedded
 within.</li>
 <li>The object <strong><strong>MAY</strong></strong> include a <code>path_nested</code> object to specify the
@@ -1564,7 +1566,7 @@ c. If present, process the next Nested Submission Traversal Object in the
 current <code>path_nested</code> property.</li>
 <li>If parsing of the Nested Submission Traversal Objects in the <code>path_nested</code>
 property produced a valid value, process it as the submission against the
-<em>Input Descriptor</em> indicated by the  <code>id</code> property of the containing
+<a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> indicated by the  <code>id</code> property of the containing
 <em>Input Descriptor Mapping Object</em>.</li>
 </ol>
 <h3 id="limited-disclosure-submissions"><a class="toc-anchor" href="#limited-disclosure-submissions" >§</a> Limited Disclosure Submissions</h3>

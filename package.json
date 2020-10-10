@@ -9,7 +9,7 @@
     "url": "git://github.com/decentralized-identity/presentation-exchange"
   },
   "dependencies": {
-    "spec-up": "0.9.98"
+    "spec-up": "0.9.101"
   },
   "devDependencies": {
     "ajv": "^6.12.5",
