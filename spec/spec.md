@@ -1,7 +1,7 @@
 Presentation Exchange
 ==================
 
-**Specification Status:** Strawman
+**Specification Status:** Draft
 
 **Latest Draft:**
   [identity.foundation/presentation-exchange](https://identity.foundation/presentation-exchange)
