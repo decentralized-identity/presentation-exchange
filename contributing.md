@@ -80,6 +80,7 @@ In addition to a version number, the specification has a status:
 A specification with the `Working Group Approved` status indicates that all of
 the following conditions are met: 
    * There is quality code that demonstrates the concepts it describes.
+   * There are test vectors which may be used to test implementations.
    * There are no outstanding issues that the Working Group Participants
      consider substantive.
    * There are at least 2 conforming implementations, at least 1 of which
