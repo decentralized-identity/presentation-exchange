@@ -1,9 +1,7 @@
-
 name: render-specs
 
 on:
   push:
-  pull_request:
     branches:
       - master
 
@@ -24,7 +22,7 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_BRANCH: master
-          BRANCH: master
+          BRANCH: gh-pages
           FOLDER: .
