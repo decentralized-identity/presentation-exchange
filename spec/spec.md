@@ -248,7 +248,7 @@ proofs may satisfy an input requirement.
               "filter": {
                 "type": "string",
                 "format": "date",
-                "maximum": "1999-5-16"
+                "maximum": "1999-5-15"
               }
             }
           ]
