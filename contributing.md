@@ -59,7 +59,7 @@ some future version). Triage should roughly follow these guiding principles:
   specification should also be the one to propose concrete changes and work to
   bring the group to consensus about the changes.
 
-#### Speciation Status and Publishing
+#### Specification Status and Publishing
 In addition to a version number, the specification has a status:
 1. `Pre-Draft` - The status of the specification is `Pre-Draft` until changed by
   the Working Group.
