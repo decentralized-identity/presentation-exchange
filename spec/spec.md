@@ -127,7 +127,7 @@ conjunction with the
     "locale": "de-DE",
     "descriptor_map": [{
       "id": "name_input",
-      "path": "$.verifiableCredential.[0]"
+      "path": "$.verifiableCredential[0]"
     }]
   }
 }
@@ -1552,15 +1552,15 @@ composed and embedded as follows:
       { 
         "id": "banking_input_2",
         "format": "jwt_vp",
-        "path": "$.outerCredential.[0]",
+        "path": "$.outerCredential[0]",
         "path_nested": {
             "id": "banking_input_2",
             "format": "ldp_vc",
-            "path": "$.innerCredential.[1]",
+            "path": "$.innerCredential[1]",
             "path_nested": {
                 "id": "banking_input_2",
                 "format": "jwt_vc",
-                "path": "$.mostInnerCredential.[2]"
+                "path": "$.mostInnerCredential[2]"
             }
         }
     }
@@ -1642,6 +1642,54 @@ OpenID     | top-level
 DIDComms   | `$.presentations~attach.data.json`
 VP         | top-level
 CHAPI      | `$.data`
+
+### JSON Schema
+The following JSON Schema Draft 7 definition summarizes the rules above:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Presentation Submission",
+  "type": "object",
+  "properties": {
+    "presentation_submission": {
+      "type": "object",
+      "properties": {
+        "locale": {
+          "type": "string"
+        },
+        "descriptor_map": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/descriptor" }
+        }
+      },
+      "required": ["descriptor_map"],
+      "additionalProperties": false
+    }
+  },
+  "definitions": {
+    "descriptor": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "path": { "type": "string" },
+        "path_nested": { 
+          "type": "object",
+            "$ref": "#/definitions/descriptor"
+        },
+        "format": { 
+          "type": "string",
+          "enum": ["jwt", "jwt_vc", "jwt_vp", "ldp", "ldp_vc", "ldp_vp"]
+        }
+      },
+      "required": ["id", "path", "format"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["presentation_submission"],
+  "additionalProperties": false
+}
+```
 
 ## Credential Format Designations
 
@@ -1824,17 +1872,17 @@ JSONPath                      | Description
       {
         "id": "banking_input_2",
         "format": "jwt_vc",
-        "path": "$.verifiableCredential.[0]"
+        "path": "$.verifiableCredential[0]"
       },
       {
         "id": "employment_input",
         "format": "ldp_vc",
-        "path": "$.verifiableCredential.[1]"
+        "path": "$.verifiableCredential[1]"
       },
       {
         "id": "citizenship_input_1",
         "format": "ldp_vc",
-        "path": "$.verifiableCredential.[2]"
+        "path": "$.verifiableCredential[2]"
       }
     ]
   },
@@ -2056,54 +2104,6 @@ JSONPath                      | Description
 :::
 
 </section>
-
-### JSON Schema
-The following JSON Schema Draft 7 definition summarizes the rules above:
-
-```json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Presentation Submission",
-  "type": "object",
-  "properties": {
-    "presentation_submission": {
-      "type": "object",
-      "properties": {
-        "locale": {
-          "type": "string"
-        },
-        "descriptor_map": {
-          "type": "array",
-          "items": { "$ref": "#/definitions/descriptor" }
-        }
-      },
-      "required": ["descriptor_map"],
-      "additionalProperties": false
-    }
-  },
-  "definitions": {
-    "descriptor": {
-      "type": "object",
-      "properties": {
-        "id": { "type": "string" },
-        "path": { "type": "string" },
-        "path_nested": { 
-          "type": "object",
-            "$ref": "#/definitions/descriptor"
-        },
-        "format": { 
-          "type": "string",
-          "enum": ["jwt", "jwt_vc", "jwt_vp", "ldp", "ldp_vc", "ldp_vp"]
-        }
-      },
-      "required": ["id", "path", "format"],
-      "additionalProperties": false
-    }
-  },
-  "required": ["presentation_submission"],
-  "additionalProperties": false
-}
-```
 
 </tab-panels>
 
