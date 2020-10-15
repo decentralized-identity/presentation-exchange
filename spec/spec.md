@@ -75,6 +75,9 @@ work is being done.
 [[def:Verifier, Verifiers]]
 ~ The entity that defines what proofs they require from a [[ref:Holder]] (via a Presentation Definition) in order to proceed with an interaction.
 
+[[def:Presentation Definition]]
+~ Presentation Definitions are objects that articulate what proofs a Verifier requires. These help the Verifier to decide how or whether to interact with a Holder. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and optional sets of selection rules, to allow Holders flexibility in cases where many different types of proofs may satisfy an input requirement.
+
 [[def:Input Descriptor, Input Descriptors]]
 ~ Input Descriptors are objects used to describe the information a Verifier requires of a Holder before they will proceed with an interaction. 
 
