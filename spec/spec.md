@@ -66,7 +66,7 @@ work is being done.
 
 ## Terminology
 
-[[def:Decentralized Identifiers, Decentralized Identifiers, DID]]
+[[def:Decentralized Identifiers, Decentralized Identifier, DID]]
 ~ Unique ID URI string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).
 
 [[def:Holder, Holders]]
@@ -77,6 +77,9 @@ work is being done.
 
 [[def:Presentation Definition]]
 ~ Presentation Definitions are objects that articulate what proofs a Verifier requires. These help the Verifier to decide how or whether to interact with a Holder. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and optional sets of selection rules, to allow Holders flexibility in cases where many different types of proofs may satisfy an input requirement.
+
+[[def:Presentation Submission]]
+~ Presentation Submissions are objects embedded within target credential negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in accordance with the requirements a [[ref:Verifier]] specified in a [[ref:Presentation Definition]].
 
 [[def:Input Descriptor, Input Descriptors]]
 ~ Input Descriptors are objects used to describe the information a Verifier requires of a Holder before they will proceed with an interaction. 
