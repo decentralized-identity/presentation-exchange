@@ -2053,5 +2053,6 @@ Presentation Submission                      | Values
 ------------------------------|------------
 Claim Name: | `presentation_submission`
 Claim Description: | Presentation Submission
-Change Controller: | DIF Claims & Credentials - Working Group - TBD@email.com
+Change Controller: | DIF Claims & Credentials - Working Group - https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS
+
 Specification Document(s): | Section 6 of this document
