@@ -84,6 +84,9 @@ work is being done.
 [[def:Input Descriptor, Input Descriptors]]
 ~ Input Descriptors are objects used to describe the information a Verifier requires of a Holder before they will proceed with an interaction. 
 
+[[def:Submission Requirement, Submission Requirements]]
+~ Submission Requirements are objects that define what combinations of inputs must be submitted to comply with the requirements a Verifier has for proceeding in a flow (e.g. credential issuance, allowing entry, accepting an application).
+
 ## Localization
 
 To support localization, [IETF BCP 47](https://tools.ietf.org/html/bcp47) one
