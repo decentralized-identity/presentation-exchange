@@ -2046,7 +2046,8 @@ Presentation Definition | Values
 ------------------------------|------------
 Claim Name: | `presentation_definition`
 Claim Description: | Presentation Definition
-Change Controller: | DIF Claims & Credentials - Working Group - TBD@email.com
+Change Controller: | DIF Claims & Credentials - Working Group - https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS
+
 Reference | Section 5 of this document
 
 Presentation Submission                      | Values
