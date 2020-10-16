@@ -2047,7 +2047,7 @@ Presentation Definition | Values
 Claim Name: | `presentation_definition`
 Claim Description: | Presentation Definition
 Change Controller: | DIF Claims & Credentials - Working Group - TBD@email.com
-Reference | Section XXX of this document
+Reference | Section 5 of this document
 
 Presentation Submission                      | Values
 ------------------------------|------------
