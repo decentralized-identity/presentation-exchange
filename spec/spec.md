@@ -2054,4 +2054,4 @@ Presentation Submission                      | Values
 Claim Name: | `presentation_submission`
 Claim Description: | Presentation Submission
 Change Controller: | DIF Claims & Credentials - Working Group - TBD@email.com
-Specification Document(s): | Section XXX of this document
+Specification Document(s): | Section 6 of this document
