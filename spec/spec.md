@@ -37,11 +37,11 @@ To address these needs, this Presentation Exchange specification codifies the
 `Presentation Definition` data format Verifiers can use to articulate proof
 requirements, as well as the `Presentation Submission` data format Holders can
 use to submit proofs in accordance with them. The specification is designed to 
-be both credential format and transport envelope agnostic, meaning an implementer 
+be both claim format and transport envelope agnostic, meaning an implementer 
 can use [JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519), 
 [Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/), 
 [JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions), 
-or any other credential format, and convey them 
+or any other claim format, and convey them 
 via [Open ID Connect](https://openid.net/connect/), [DIDComm](https://identity.foundation/didcomm-messaging/spec/), 
 [Credential Handler API](https://w3c-ccg.github.io/credential-handler-api/), 
 or any other transport envelope. The goal of 
@@ -75,11 +75,14 @@ work is being done.
 [[def:Verifier, Verifiers]]
 ~ The entity that defines what proofs they require from a [[ref:Holder]] (via a Presentation Definition) in order to proceed with an interaction.
 
+[[def:Claim, Claims]]
+~ An assertion made about a given entity. Used as an umbrella term for Credential, Assertion, Attestation, etc.  
+
 [[def:Presentation Definition]]
 ~ Presentation Definitions are objects that articulate what proofs a Verifier requires. These help the Verifier to decide how or whether to interact with a Holder. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and optional sets of selection rules, to allow Holders flexibility in cases where many different types of proofs may satisfy an input requirement.
 
 [[def:Presentation Submission]]
-~ Presentation Submissions are objects embedded within target credential negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in accordance with the requirements a [[ref:Verifier]] specified in a [[ref:Presentation Definition]].
+~ Presentation Submissions are objects embedded within target claim negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in accordance with the requirements a [[ref:Verifier]] specified in a [[ref:Presentation Definition]].
 
 [[def:Input Descriptor, Input Descriptors]]
 ~ Input Descriptors are objects used to describe the information a Verifier requires of a Holder before they will proceed with an interaction. 
@@ -181,7 +184,7 @@ proofs may satisfy an input requirement.
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The credential must be from one of the specified issuers",
+              "purpose": "The claim must be from one of the specified issuers",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
@@ -243,7 +246,7 @@ proofs may satisfy an input requirement.
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The credential must be from one of the specified issuers",
+              "purpose": "The claim must be from one of the specified issuers",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:gov1|did:example:gov2"
@@ -330,7 +333,7 @@ proofs may satisfy an input requirement.
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The credential must be from one of the specified issuers",
+              "purpose": "The claim must be from one of the specified issuers",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
@@ -371,7 +374,7 @@ proofs may satisfy an input requirement.
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The credential must be from one of the specified issuers",
+              "purpose": "The claim must be from one of the specified issuers",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
@@ -428,7 +431,7 @@ proofs may satisfy an input requirement.
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The credential must be from one of the specified issuers",
+              "purpose": "The claim must be from one of the specified issuers",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:gov1|did:example:gov2"
@@ -486,15 +489,15 @@ other properties that are not defined below MUST be ignored:
   Presentation Definition's inputs are being requested.
 - The resource ****MAY**** include a `format` property, and its value 
   ****MUST**** be an object with one or more properties matching the registered 
-  [Credential Format Designations](#credential-format-designations) (`jwt`, 
-  `jwt_vc`, `jwt_vp`, etc.) to inform the Holder of the credential format 
+  [Claim Format Designations](#claim-format-designations) (`jwt`, 
+  `jwt_vc`, `jwt_vp`, etc.) to inform the Holder of the claim format 
   configurations the [[ref:Verifier]] can process. The value for each property included 
   ****MUST**** be an object composed as follows:
     - The object ****MAY**** include a format-specific property (i.e. `alg`, 
       `proof_type`) that expresses which algorithms the [[ref:Verifier]] supports for the 
       format, and if present, its value ****MUST**** be an array of one or more 
       of the format-specific algorithmic identifier references, as noted in the 
-      [Credential Format Designations](#credential-format-designations) section.
+      [Claim Format Designations](#claim-format-designations) section.
 
       ```json
       {
@@ -544,7 +547,7 @@ other properties that are not defined below MUST be ignored:
 _Presentation Definitions_ ****MAY**** include _Submission Requirements_,
 which are objects that define what combinations of inputs must be submitted
 to comply with the requirements a [[ref:Verifier]] has for proceeding in a flow (e.g.
-credential issuance, allowing entry, accepting an application).
+claim issuance, allowing entry, accepting an application).
 _Submission Requirements_ introduce a set of rule types and mapping instructions
 a User Agent can ingest to present requirement optionality to the user, and
 subsequently submit inputs in a way that maps back to the rules the verifying
@@ -857,7 +860,7 @@ why a certain item or set of data is being requested:
       "fields": [
         {
           "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-          "purpose": "The credential must be from one of the specified issuers",
+          "purpose": "The claim must be from one of the specified issuers",
           "filter": {
             "type": "string",
             "pattern": "did:example:123|did:example:456"
@@ -925,7 +928,7 @@ why a certain item or set of data is being requested:
 
 #### Input Descriptor Objects
 
-[[ref:Input Descriptors]] are objects that describe what type of input data/credential, 
+[[ref:Input Descriptors]] are objects that describe what type of input data/claim, 
 or sub-fields thereof, is required for submission to the [[ref:Verifier]]. _Input
 Descriptor Objects_ are composed as follows:
 
@@ -940,8 +943,8 @@ Descriptor Objects_ are composed as follows:
     ****MUST**** be an object composed as follows:
       - The object ****MUST**** contain a `uri` property, and its value
         ****MUST**** be an array consisting of one or more valid URI strings for
-        the acceptable credential schemas. A common use of multiple entries in
-        the `uri` array is when multiple versions of a credential schema exist
+        the acceptable claim schemas. A common use of multiple entries in
+        the `uri` array is when multiple versions of a claim schema exist
         and there is a desire to express support for more than one version. 
         This field allowing multiple URIs is not intended to be used as 
         a mechanism for including references to fundamentally different schemas, 
@@ -951,11 +954,11 @@ Descriptor Objects_ are composed as follows:
         target schema represents.
       - The object ****MAY**** contain a `purpose` property, and if present its
         value ****MUST**** be a string that describes the purpose for which the
-        credential's data is being requested.
+        claim's data is being requested.
       - The object ****MAY**** contain a `metadata` property, and if present its
         value ****MUST**** be an object with metadata properties that describe
         any information specific to the acquisition, formulation, or details of
-        the credential in question.
+        the claim in question.
   - The object ****MAY**** contain a `constraints` property, and its value
     ****MUST**** be an object composed as follows: 
       - The object ****MAY**** contain a `limit_disclosure` property, and if
@@ -968,13 +971,13 @@ Descriptor Objects_ are composed as follows:
       - The object ****MAY**** contain a `subject_is_issuer` property, and if
         present its value ****MUST**** be one of the following strings:
         - `required` - This indicates that the processing entity ****MUST****
-          submit a response that has been _self-attested_, i.e., the credential
+          submit a response that has been _self-attested_, i.e., the claim
           used in the presentation has been 'issued' by the subject of the
-          credential.
+          claim.
         - `preferred` - This indicates that it is ****RECOMMENDED**** that the
           processing entity submit a response that has been _self-attested_,
-          i.e., the credential used in the presentation has been 'issued' by the
-          subject of the credential.
+          i.e., the claim used in the presentation has been 'issued' by the
+          subject of the claim.
       
         The `subject_is_issuer` property could be used by a [[ref:Verifier]] to require
         that certain inputs be _self_attested_. For example, a college
@@ -984,17 +987,17 @@ Descriptor Objects_ are composed as follows:
       - The object ****MAY**** contain a `subject_is_holder` property, and if
         present its value ****MUST**** be one of the following strings:
         - `required` - This indicates that the processing entity ****MUST****
-          include proof that the subject of the credential is the same as the
+          include proof that the subject of the claim is the same as the
           entity submitting the response.
         - `preferred` - This indicates that it is ****RECOMMENDED**** that the
-          processing entity include proof that the subject of the credential is
+          processing entity include proof that the subject of the claim is
           the same as the entity submitting the response, i.e., the holder.
       
         The `subject_is_holder` property could be used by a [[ref:Verifier]] to require
         that certain inputs be provided by e subject. For example, an identity
         verification `presentation definition` might contain an _Input
         Descriptor_ object for a passport number. In this case, the [[ref:Verifier]]
-        would be able to require that the passport credential was issued to the
+        would be able to require that the passport claim was issued to the
         one who submits the identity verification. 
         
       - The object ****MAY**** contain a `fields` property, and its value
@@ -1130,7 +1133,7 @@ Descriptor Objects_ are composed as follows:
 ### Input Evaluation
 
 A consumer of a _Presentation Definition_ must filter inputs they hold (signed
-credentials, raw data, etc.) to determine whether they possess the inputs
+claims, raw data, etc.) to determine whether they possess the inputs
 required to fulfill the demands of the Verifying party. A consumer of a
 _Presentation Definition_ ****SHOULD**** use the following process to validate
 whether or not its candidate inputs meet the requirements it describes:
@@ -1176,18 +1179,18 @@ Evaluate each candidate input as follows:
     input is limited to the entries specified in the `fields` property. If the
     `fields` property ****is not**** present, or contains zero
     [_Input Descriptor Field Entries_](#input-descriptor-field-entry),
-    submission ****SHOULD NOT**** include any claim data from the credential.
+    submission ****SHOULD NOT**** include any claim data from the claim.
     (for example: a [[ref:Verifier]] may simply want to know a Holder has a valid,
-    signed credential of a particular type, without disclosing any of the
+    signed claims of a particular type, without disclosing any of the
     data it contains).
   5. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
     contains a `subject_is_issuer` property set to the value `required`, ensure
     that any submission of data in relation to the candidate input is fulfilled
-    using a _self_attested_ credential.
+    using a _self_attested_ claims.
   6. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
     contains a `subject_is_holder` property set to the value `required`, ensure
     that any submission of data in relation to the candidate input is fulfilled
-    by the subject of the credential
+    by the subject of the claim.
 
 ::: note
 The above evaluation process assumes the User Agent will test each candidate
@@ -1200,14 +1203,14 @@ of the implementer.
 
 #### Expired and Revoked Data
 
-Certain types of credentials have concepts of _expiration_ and _revocation_.
+Certain types of claims have concepts of _expiration_ and _revocation_.
 _Expiration_ is mechanism normally used to communicate a time bound up until
-which a credential is valid. _Revocation_ is a mechanism normally used to give
-an issuer control over the status of a credential after issuance. Different
-credential specifications handle these concepts in different ways. 
+which a claim is valid. _Revocation_ is a mechanism normally used to give
+an issuer control over the status of a claim after issuance. Different
+claim specifications handle these concepts in different ways. 
 
 `Presentation Definitions` have a need to specify whether expired, revoked,
-or credentials of other statuses can be accepted. For credentials that have
+or claims of other statuses can be accepted. For claims that have
 simple status properties [Input Descriptor Filters](#input-descriptor-objects)
 JSON Schema can be used to write specify acceptable criteria.
 
@@ -1216,7 +1219,7 @@ The first example demonstrates _expiry_ using the [VC Data Model's
 The second demonstrates _revocation_, or more generally, _credential status_
 using the [VC Data Model's `credentialStatus` property](https://w3c.github.io/vc-data-model/#status-0).
 Using the syntax provided in the example a [[ref:Verifier]] will have all requisite
-information to resolve the status of a credential.
+information to resolve the status of a claim.
 
 <tab-panels selected-index="0">
 
@@ -1497,7 +1500,7 @@ format-related rules above:
 
 ### Presentation Requests
 Presentation Definitions may be sent from a [[ref:Verifier]] to a Holder using a wide
-variety of transport mechanisms or credentials exchange protocols. This
+variety of transport mechanisms or claim exchange protocols. This
 specification does not define a transport mechanism for `Presentation
 Definitions` (or `Presentation Request`), but does note that different use
 cases, supported signature schemes, protocols, and threat models may require a
@@ -1515,7 +1518,7 @@ cases, supported signature schemes, protocols, and threat models may require a
 
 ## Presentation Submission
 
-_Presentation Submissions_ are objects embedded within target credential
+_Presentation Submissions_ are objects embedded within target claim
 negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in
 accordance with the requirements a [[ref:Verifier]] specified in a _Presentation
 Definition_. Embedded _Presentation Submission_ objects ****MUST**** be located
@@ -1533,17 +1536,17 @@ composed and embedded as follows:
       Descriptor_ in the _Presentation Definition_ the submission is related to.
     - The object ****MUST**** include a `format` property, and its value 
       ****MUST**** be a string value matching one of the 
-      [Credential Format Designation](#credential-format-designations) (`jwt`, 
-      `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`), to denote what data format the credential is being 
+      [Claim Format Designation](#claim-format-designations) (`jwt`, 
+      `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`), to denote what data format the claim is being 
       submitted in.
     - The object ****MUST**** include a `path` property, and its value
       ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
-      string expression that selects the credential to be submit in relation
+      string expression that selects the claim to be submit in relation
       to the identified [[ref:Input Descriptor]] identified, when executed against
       the top-level of the object the _Presentation Submission_ is embedded
       within.
     - The object ****MAY**** include a `path_nested` object to specify the
-      presence of a multi-credential envelope format, meaning the credential indending to be selected must be decoded separately from its parent enclosure.
+      presence of a multi-claim envelope format, meaning the claim indending to be selected must be decoded separately from its parent enclosure.
       + The format of a `path_nested` object mirrors that of a `descriptor_map` property. The nesting may be any number of levels deep. The `id` property ****MUST**** be the same for each level of nesting.
       + The `path` property inside each `path_nested` property provides a _relative path_ within a given nested value.
 
@@ -1558,15 +1561,15 @@ composed and embedded as follows:
       { 
         "id": "banking_input_2",
         "format": "jwt_vp",
-        "path": "$.outerCredential[0]",
+        "path": "$.outerClaim[0]",
         "path_nested": {
             "id": "banking_input_2",
             "format": "ldp_vc",
-            "path": "$.innerCredential[1]",
+            "path": "$.innerClaim[1]",
             "path_nested": {
                 "id": "banking_input_2",
                 "format": "jwt_vc",
-                "path": "$.mostInnerCredential[2]"
+                "path": "$.mostInnerClaim[2]"
             }
         }
     }
@@ -1583,9 +1586,9 @@ process as follows:
       on the [_Current Traversal Object_](#current-traversal-object){id="current-traversal-object"}, or if none is designated, 
       the top level of the Embed Target.
     b. Decode and parse the value returned from [JSONPath](https://goessner.net/articles/JsonPath/) 
-      execution in accordance with the [Credential Format Designation](#credential-format-designations) 
+      execution in accordance with the [Claim Format Designation](#claim-format-designations) 
       specified in the object's `format` property. If value parses and validates in accordance 
-      with the [Credential Format Designation](#credential-format-designations) specified, let 
+      with the [Claim Format Designation](#claim-format-designations) specified, let 
       the resulting object be the [_Current Traversal Object_](#current-traversal-object)
     c. If present, process the next Nested Submission Traversal Object in the 
        current `path_nested` property.
@@ -1596,25 +1599,25 @@ process as follows:
 
 ### Limited Disclosure Submissions
 
-If for all credentials submitted in relation to
+If for all claims submitted in relation to
 [_Input Descriptor Objects_](#input-descriptor-objects) that include a
 `constraints` object with a `limit_disclosure` property set to the boolean value
 `true`, ensure that the data submitted is limited to the entries specified in
 the `fields` property of the `constraints` object. If the `fields` property
 ****is not**** present, or contains zero
 [_Input Descriptor Field Entries_](#input-descriptor-field-entry), the
-submission ****SHOULD NOT**** include any claim data from the credential. (for
+submission ****SHOULD NOT**** include any claim data from the claim. (for
 example: a Verifier may simply want to know a Holder has a valid, signed
-credential of a particular type, without disclosing any of the data it contains).
+claim of a particular type, without disclosing any of the data it contains).
 
-### Validation of Credentials
+### Validation of Claims
 
-Once a credential has been ingested via a Presentation Submission, any validation 
+Once a claim has been ingested via a Presentation Submission, any validation 
 beyond the process of evaluation defined by the [Input Evaluation](#input-evaluation) 
 section is outside the scope of Presentation Exchange. Validation of signatures 
-and other cryptographic proofs are a function of a given credential format, and 
-should be evaluated in accordance with a given credential format's standardized 
-processing steps. Additional verification of credential data or subsequent 
+and other cryptographic proofs are a function of a given claim format, and 
+should be evaluated in accordance with a given claim format's standardized 
+processing steps. Additional verification of claim data or subsequent 
 validation required by a given [[ref:Verifier]] are left to the Verifier's systems, code 
 and business processes to define and execute.
 
@@ -1634,7 +1637,7 @@ _Input Descriptor Object_ also come from the same container.
 The following section details where the _Presentation Submission_ is to be
 embedded within a target data structure, as well as how to formulate the
 [JSONPath](https://goessner.net/articles/JsonPath/) expressions to select the
-credentials within the target data structure.
+claims within the target data structure.
 
 #### Embed Locations
 
@@ -1697,10 +1700,10 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
 }
 ```
 
-## Credential Format Designations
+## Claim Format Designations
 
 Within the _Presentation Exchange_ specification, there are numerous sections 
-where [[ref:Verifiers]] and Holders convey what credential variants they support and 
+where [[ref:Verifiers]] and Holders convey what claim variants they support and 
 are submitting. The following are the normalized references used within the 
 specification:
 
