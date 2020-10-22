@@ -940,7 +940,7 @@ Descriptor Objects_ are composed as follows:
     with the `id` of another [[ref:Input Descriptor]] in the same _Presentation
     Definition_ object.
   - The object ****MAY**** contain a `group` property, and if present, its value
-    ****MUST**** match one of the grouping strings listed the `from` values of a
+    ****MUST**** match one of the grouping strings listed in the `from` values of a
     [_Requirement Rule Object_](#requirement-rule-objects).
   - The object ****MUST**** contain a `schema` property, and its value
     ****MUST**** be an object composed as follows:
