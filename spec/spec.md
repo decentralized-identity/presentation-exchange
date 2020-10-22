@@ -1412,7 +1412,7 @@ format-related rules above:
             },
             "name": { "type": "string" },
             "purpose": { "type": "string" },
-            "metadata": { "type": "string" }
+            "metadata": { "type": "object" }
           },
           "required": ["uri", "name"],
           "additionalProperties": false
