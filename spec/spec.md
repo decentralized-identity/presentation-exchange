@@ -533,14 +533,14 @@ other properties that are not defined below MUST be ignored:
         }
       }
       ```
-- `submission_requirement` - The resource ****MAY**** contain this property,
+- `submission_requirements` - The resource ****MAY**** contain this property,
   and if present, its value ****MUST**** conform to the Submission Requirement
   Format. If not present, all inputs listed in the `input_descriptors` array are
   required for submission. The description for the format of this property is in
   the [`Submission Requirement`](#submission-requirement) section below.
 - `input_descriptors` - The resource ****MUST**** contain this property, and
   its value ****MUST**** be an array of [[ref:[[ref:Input Descriptor]]]] objects. If no
-  `submission_requirement` is present, all inputs listed in the
+  `submission_requirements` is present, all inputs listed in the
   `input_descriptors` array are required for submission. The composition of
   values under this property are described in the [`Input
   Descriptors`](#input-descriptors) section below.
@@ -829,7 +829,7 @@ processing-related rules above:
 
 [[ref:Input Descriptors]] are objects used to describe the information a [[ref:Verifier]]
 requires of a Holder before they will proceed with an interaction. If no 
-`submission_requirement` objects are present, all `input_descriptor` objects 
+`submission_requirements` objects are present, all `input_descriptor` objects 
 ****MUST**** be satisfied.
 
 _Input Descriptor Objects_ contain a schema URI that links to the schema 
