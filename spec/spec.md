@@ -539,7 +539,7 @@ other properties that are not defined below MUST be ignored:
   required for submission. The description for the format of this property is in
   the [`Submission Requirement`](#submission-requirement) section below.
 - `input_descriptors` - The resource ****MUST**** contain this property, and
-  its value ****MUST**** be an array of [[ref:[[ref:Input Descriptor]]]] objects. If no
+  its value ****MUST**** be an array of [[ref:Input Descriptor]] objects. If no
   `submission_requirements` is present, all inputs listed in the
   `input_descriptors` array are required for submission. The composition of
   values under this property are described in the [`Input
@@ -612,7 +612,7 @@ constructed as follows:
 1. The object  ****MUST**** contain a `rule` property, and its value
    ****MUST**** be a string matching one of the [Submission Requirement
    Rules](#submission-requirement-rules) values listed in the section below.
-2. The object ****MUST**** contain either a `from` 'or `from_nested` property. 
+2. The object ****MUST**** contain either a `from` or `from_nested` property. 
   If both properties are present, the implementation ***MUST*** produce an 
   error. The values of the `from` and `from_nested` properties are defined as
   follows:
