@@ -941,7 +941,7 @@ Descriptor Objects_ are composed as follows:
     Definition_ object.
   - The object ****MAY**** contain a `group` property, and if present, its value
     ****MUST**** match one of the grouping strings listed in the `from` values of a
-    [_Requirement Rule Object_](#requirement-rule-objects).
+    [_Submission Requirement Rule Object_](#submission-requirement-rules).
   - The object ****MUST**** contain a `schema` property, and its value
     ****MUST**** be an object composed as follows:
       - The object ****MUST**** contain a `uri` property, and its value
