@@ -533,14 +533,14 @@ other properties that are not defined below MUST be ignored:
         }
       }
       ```
-- `submission_requirement` - The resource ****MAY**** contain this property,
+- `submission_requirements` - The resource ****MAY**** contain this property,
   and if present, its value ****MUST**** conform to the Submission Requirement
   Format. If not present, all inputs listed in the `input_descriptors` array are
   required for submission. The description for the format of this property is in
   the [`Submission Requirement`](#submission-requirement) section below.
 - `input_descriptors` - The resource ****MUST**** contain this property, and
-  its value ****MUST**** be an array of [[ref:[[ref:Input Descriptor]]]] objects. If no
-  `submission_requirement` is present, all inputs listed in the
+  its value ****MUST**** be an array of [[ref:Input Descriptor]] objects. If no
+  `submission_requirements` is present, all inputs listed in the
   `input_descriptors` array are required for submission. The composition of
   values under this property are described in the [`Input
   Descriptors`](#input-descriptors) section below.
@@ -612,7 +612,7 @@ constructed as follows:
 1. The object  ****MUST**** contain a `rule` property, and its value
    ****MUST**** be a string matching one of the [Submission Requirement
    Rules](#submission-requirement-rules) values listed in the section below.
-2. The object ****MUST**** contain either a `from` 'or `from_nested` property. 
+2. The object ****MUST**** contain either a `from` or `from_nested` property. 
   If both properties are present, the implementation ***MUST*** produce an 
   error. The values of the `from` and `from_nested` properties are defined as
   follows:
@@ -829,7 +829,7 @@ processing-related rules above:
 
 [[ref:Input Descriptors]] are objects used to describe the information a [[ref:Verifier]]
 requires of a Holder before they will proceed with an interaction. If no 
-`submission_requirement` objects are present, all `input_descriptor` objects 
+`submission_requirements` objects are present, all `input_descriptor` objects 
 ****MUST**** be satisfied.
 
 _Input Descriptor Objects_ contain a schema URI that links to the schema 
@@ -940,8 +940,8 @@ Descriptor Objects_ are composed as follows:
     with the `id` of another [[ref:Input Descriptor]] in the same _Presentation
     Definition_ object.
   - The object ****MAY**** contain a `group` property, and if present, its value
-    ****MUST**** match one of the grouping strings listed the `from` values of a
-    [_Requirement Rule Object_](#requirement-rule-objects).
+    ****MUST**** match one of the grouping strings listed in the `from` values of a
+    [_Submission Requirement Rule Object_](#submission-requirement-rules).
   - The object ****MUST**** contain a `schema` property, and its value
     ****MUST**** be an object composed as follows:
       - The object ****MUST**** contain a `uri` property, and its value
@@ -1412,7 +1412,7 @@ format-related rules above:
             },
             "name": { "type": "string" },
             "purpose": { "type": "string" },
-            "metadata": { "type": "string" }
+            "metadata": { "type": "object" }
           },
           "required": ["uri", "name"],
           "additionalProperties": false
