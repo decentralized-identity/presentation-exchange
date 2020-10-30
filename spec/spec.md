@@ -2153,3 +2153,25 @@ JSONPath                      | Description
     - https://github.com/Stranger6667/jsonschema-rs
 - **Go**
     - https://github.com/xeipuuv/gojsonschema
+
+### IANA Considerations
+
+#### JSON Web Token Claims Registration
+
+This specification registers the claims in section [Registry Contents]() in the IANA JSON Web Token Claims registry defined in [RFC 751 JSON Web Token (JWT)](https://tools.ietf.org/html/rfc7519).
+
+##### Registry Contents
+
+Presentation Definition | Values
+------------------------------|------------
+Claim Name: | `presentation_definition`
+Claim Description: | Presentation Definition
+Change Controller: | DIF Claims & Credentials - Working Group - https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS
+Specification Document(s): | Section 5 of this document
+
+Presentation Submission                      | Values
+------------------------------|------------
+Claim Name: | `presentation_submission`
+Claim Description: | Presentation Submission
+Change Controller: | DIF Claims & Credentials - Working Group - https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS
+Specification Document(s): | Section 6 of this document
