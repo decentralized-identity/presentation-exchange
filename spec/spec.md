@@ -118,11 +118,14 @@ conjunction with the
     "locale": "en-US",
     "input_descriptors": [{
       "id": "name_input",
-      "schema": {
-        "uri": ["https://name-standards.com/name.json"],
-        "name": "Full Legal Name",
-        "purpose": "We need your full legal name."
-      }
+      "schema": [
+        {
+          "uri": ["https://name-standards.com/name.json"],
+          "name": "Full Legal Name",
+          "purpose": "We need your full legal name.",
+          "required": true
+        }
+      ]
     }]
   }
 }
@@ -177,11 +180,13 @@ proofs may satisfy an input requirement.
     "input_descriptors": [
       {
         "id": "banking_input",
-        "schema": {
-          "uri": ["https://bank-standards.com/customer.json"],
-          "name": "Bank Account Information",
-          "purpose": "We need your bank and account information."
-        },
+        "schema": [
+          {
+            "uri": ["https://bank-standards.com/customer.json"],
+            "name": "Bank Account Information",
+            "purpose": "We need your bank and account information."
+          }
+        ],
         "constraints": {
           "limit_disclosure": true,
           "fields": [
@@ -198,10 +203,12 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input",
-        "schema": {
-          "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
-          "name": "US Passport"
-        },
+        "schema": [
+          {
+            "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
+            "name": "US Passport"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -241,10 +248,12 @@ proofs may satisfy an input requirement.
       {
         "id": "citizenship_input_1",
         "group": ["A"],
-        "schema": {
-          "uri": ["https://eu.com/claims/DriversLicense.json"],
-          "name": "EU Driver's License"
-        },
+        "schema": [
+          {
+            "uri": ["https://eu.com/claims/DriversLicense.json"],
+            "name": "EU Driver's License"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -269,10 +278,12 @@ proofs may satisfy an input requirement.
       {
         "id": "citizenship_input_2",
         "group": ["A"],
-        "schema": {
-          "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
-          "name": "US Passport"
-        },
+        "schema": [
+          {
+            "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
+            "name": "US Passport"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -326,11 +337,13 @@ proofs may satisfy an input requirement.
       {
         "id": "banking_input_1",
         "group": ["A"],
-        "schema": {
-          "uri": ["https://bank-standards.com/customer.json"],
-          "name": "Bank Account Information",
-          "purpose": "We need your bank and account information."
-        },
+        "schema": [
+          {
+            "uri": ["https://bank-standards.com/customer.json"],
+            "name": "Bank Account Information",
+            "purpose": "We need your bank and account information."
+          }
+        ],
         "constraints": {
           "limit_disclosure": true,
           "fields": [
@@ -365,14 +378,16 @@ proofs may satisfy an input requirement.
       {
         "id": "banking_input_2",
         "group": ["A"],
-        "schema": {
-          "uri": [
-            "https://bank-schemas.org/1.0.0/accounts.json",
-            "https://bank-schemas.org/2.0.0/accounts.json"
-          ],
-          "name": "Bank Account Information",
-          "purpose": "We need your bank and account information."
-        },
+        "schema": [
+          {
+            "uri": [
+              "https://bank-schemas.org/1.0.0/accounts.json",
+              "https://bank-schemas.org/2.0.0/accounts.json"
+            ],
+            "name": "Bank Account Information",
+            "purpose": "We need your bank and account information."
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -406,11 +421,13 @@ proofs may satisfy an input requirement.
       {
         "id": "employment_input",
         "group": ["B"],
-        "schema": {
-          "uri": ["https://business-standards.org/schemas/employment-history.json"],
-          "name": "Employment History",
-          "purpose": "We need to know your work history."
-        },
+        "schema": [
+          {
+            "uri": ["https://business-standards.org/schemas/employment-history.json"],
+            "name": "Employment History",
+            "purpose": "We need to know your work history."
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -426,10 +443,12 @@ proofs may satisfy an input requirement.
       {
         "id": "citizenship_input_1",
         "group": ["C"],
-        "schema": {
-          "uri": ["https://eu.com/claims/DriversLicense.json"],
-          "name": "EU Driver's License"
-        },
+        "schema": [
+          {
+            "uri": ["https://eu.com/claims/DriversLicense.json"],
+            "name": "EU Driver's License"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -454,10 +473,12 @@ proofs may satisfy an input requirement.
       {
         "id": "citizenship_input_2",
         "group": ["C"],
-        "schema": {
-          "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
-          "name": "US Passport"
-        },
+        "schema": [
+          {
+            "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
+            "name": "US Passport"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -851,14 +872,16 @@ why a certain item or set of data is being requested:
   {
     "id": "banking_input_1",
     "group": ["A"],
-    "schema": {
-      "uri": [
-        "https://bank-schemas.org/1.0.0/accounts.json",
-        "https://bank-schemas.org/2.0.0/accounts.json"
-      ],
-      "name": "Bank Account Information",
-      "purpose": "We need your bank and account information."
-    },
+    "schema": [
+      {
+        "uri": [
+          "https://bank-schemas.org/1.0.0/accounts.json",
+          "https://bank-schemas.org/2.0.0/accounts.json"
+        ],
+        "name": "Bank Account Information",
+        "purpose": "We need your bank and account information."
+      }
+    ],
     "constraints": {
       "fields": [
         {
@@ -902,15 +925,17 @@ why a certain item or set of data is being requested:
 {
   "id": "employment_input_xyz_gov",
   "group": ["B"],
-  "schema": {
-    "uri": ["https://login.idp.com/xyz.gov/.well-known/openid-configuration"],
-    "name": "Verify XYZ Government Employment",
-    "purpose": "We need to know if you currently work at an agency in the XYZ government",
-    "metadata": {
-      "client_id": "40be4fb5-7f3a-470b-aa37-66ed43821bd7",
-      "redirect_uri": "https://tokens.xyz.gov/verify"
+  "schema": [
+    {
+      "uri": ["https://login.idp.com/xyz.gov/.well-known/openid-configuration"],
+      "name": "Verify XYZ Government Employment",
+      "purpose": "We need to know if you currently work at an agency in the XYZ government",
+      "metadata": {
+        "client_id": "40be4fb5-7f3a-470b-aa37-66ed43821bd7",
+        "redirect_uri": "https://tokens.xyz.gov/verify"
+      }
     }
-  },
+  ],
   "constraints": {
     "fields": [
       {
@@ -943,7 +968,7 @@ Descriptor Objects_ are composed as follows:
     ****MUST**** match one of the grouping strings listed in the `from` values of a
     [_Submission Requirement Rule Object_](#submission-requirement-rules).
   - The object ****MUST**** contain a `schema` property, and its value
-    ****MUST**** be an object composed as follows:
+    ****MUST**** be an array composed of objects as follows:
       - The object ****MUST**** contain a `uri` property, and its value
         ****MUST**** be an array consisting of one or more valid URI strings for
         the acceptable claim schemas. A common use of multiple entries in
@@ -962,6 +987,9 @@ Descriptor Objects_ are composed as follows:
         value ****MUST**** be an object with metadata properties that describe
         any information specific to the acquisition, formulation, or details of
         the claim in question.
+      - The object ****MAY**** contain a boolean `required` property, and 
+        if present it signifies that the given schema object is required to 
+        fulfill the given [[ref:Submission Requirement]].
   - The object ****MAY**** contain a `constraints` property, and its value
     ****MUST**** be an object composed as follows: 
       - The object ****MAY**** contain a `limit_disclosure` property, and if
@@ -1237,15 +1265,18 @@ information to resolve the status of a claim.
 ```json
 {
   "id": "drivers_license_information",
-  "schema": {
-    "uri": ["https://yourwatchful.gov/drivers-license-schema.json"],
-    "name": "Verify Valid License",
-    "purpose": "We need to know you have a license valid through December.",
-    "metadata": {
-      "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
-      "redirect_uri": "https://yourwatchful.gov/verify"
+  "schema": [
+    {
+      "uri": ["https://yourwatchful.gov/drivers-license-schema.json"],
+      "name": "Verify Valid License",
+      "purpose": "We need to know you have a license valid through December.",
+      "metadata": {
+        "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
+        "redirect_uri": "https://yourwatchful.gov/verify"
+      },
+      "required": true
     }
-  },
+  ],
   "constraints": {
     "fields": [
       {
@@ -1270,15 +1301,17 @@ information to resolve the status of a claim.
 ```json
 {
   "id": "drivers_license_information",
-  "schema": {
-    "uri": ["https://yourwatchful.gov/drivers-license-schema.json"],
-    "name": "Verify Valid License",
-    "purpose": "We need to know that your license has not been revoked.",
-    "metadata": {
-      "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
-      "redirect_uri": "https://yourwatchful.gov/verify"
+  "schema": [
+    {
+      "uri": ["https://yourwatchful.gov/drivers-license-schema.json"],
+      "name": "Verify Valid License",
+      "purpose": "We need to know that your license has not been revoked.",
+      "metadata": {
+        "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
+        "redirect_uri": "https://yourwatchful.gov/verify"
+      }
     }
-  },
+  ],
   "constraints": {
     "fields": [
       {
@@ -1302,6 +1335,21 @@ format-related rules above:
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "name": { "type": "string" },
+        "purpose": { "type": "string" },
+        "metadata": { "type": "string" },
+        "required": { "type": "boolean" }
+      },
+      "required": ["uri", "name"],
+      "additionalProperties": false
+    },
     "filter": {
       "type": "object",
       "properties": {
@@ -1404,18 +1452,8 @@ format-related rules above:
           "items": { "type": "string" }
         },
         "schema": {
-          "type": "object",
-          "properties": {
-            "uri": {
-              "type": "array",
-              "items": { "type": "string" }
-            },
-            "name": { "type": "string" },
-            "purpose": { "type": "string" },
-            "metadata": { "type": "object" }
-          },
-          "required": ["uri", "name"],
-          "additionalProperties": false
+          "type": "array",
+          "items": { "$ref": "#/definitions/schema" }
         },
         "constraints": {
           "type": "object",
@@ -1784,7 +1822,7 @@ JSONPath              | Description
         "isbn": "0-553-21311-3",
         "price": 8.99
       }, {
-         "category": "fiction",
+        "category": "fiction",
         "author": "J. R. R. Tolkien",
         "title": "The Lord of the Rings",
         "isbn": "0-395-19395-8",
