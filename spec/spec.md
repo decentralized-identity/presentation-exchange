@@ -988,20 +988,28 @@ Descriptor Objects_ are composed as follows:
         object for an essay submission. In this case, the [[ref:Verifier]] would be able
         to require that the essay be provided by the one submits the application. 
       - The object ****MAY**** contain a `subject_is_holder` property, and if
-        present its value ****MUST**** be one of the following strings:
-        - `required` - This indicates that the processing entity ****MUST****
-          include proof that the subject of the claim is the same as the
-          entity submitting the response.
-        - `preferred` - This indicates that it is ****RECOMMENDED**** that the
-          processing entity include proof that the subject of the claim is
-          the same as the entity submitting the response, i.e., the holder.
+        present its value ****MUST**** be an object composed as follows:
+        - The object ****MAY**** contain an `subject` property, and if present
+          its value ****MUST**** be a string which indicates the `type` value
+          of the claim subject which must be the same as the entity submitting
+          the response. When requesting presentation of a claim with only one
+          subject, the verifier may omit this property. 
+        - The object ****MUST**** contain a `status` property and its value
+          ****MUST**** be one of the following strings:
+          - `required` - This indicates that the processing entity ****MUST****
+            include proof that the subject of the claim is the same as the
+            entity submitting the response.
+          - `preferred` - This indicates that it is ****RECOMMENDED**** that the
+            processing entity include proof that the subject of the claim is
+            the same as the entity submitting the response, i.e., the holder.
       
-        The `subject_is_holder` property could be used by a [[ref:Verifier]] to require
-        that certain inputs be provided by e subject. For example, an identity
-        verification `presentation definition` might contain an _Input
-        Descriptor_ object for a passport number. In this case, the [[ref:Verifier]]
-        would be able to require that the passport claim was issued to the
-        one who submits the identity verification. 
+        The `subject_is_holder` property would be used by a [[ref:Verifier]] to
+        require that certain inputs be provided by a certain subject. For
+        example, an identity verification `presentation definition` might
+        contain an _Input Descriptor_ object for a birthdate. In this case, the
+        [[ref:Verifier]] would be able to require that the birth certificate
+        claim was issued to the claim subject with `type` "mother", who is the
+        same as the one who submits the identity verification. 
         
       - The object ****MAY**** contain a `fields` property, and its value
         ****MUST**** be an array of
@@ -1190,10 +1198,11 @@ Evaluate each candidate input as follows:
     contains a `subject_is_issuer` property set to the value `required`, ensure
     that any submission of data in relation to the candidate input is fulfilled
     using a _self_attested_ claims.
-  6. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
-    contains a `subject_is_holder` property set to the value `required`, ensure
-    that any submission of data in relation to the candidate input is fulfilled
-    by the subject of the claim.
+  6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+    and it contains a `subject_is_holder` property with a `status` property set
+    to the value `required`, ensure that any submission of data in relation to
+    the candidate input is fulfilled by the subject of the claim indicated by
+    the value of the `subject` property.
 
 ::: note
 The above evaluation process assumes the User Agent will test each candidate
@@ -1294,52 +1303,44 @@ information to resolve the status of a claim.
 </tab-panel>
 
 #### Holder Binding
-Credential often rely on proofs of holder binding for their validity. For
-example, a credential may be bound to a holder through the use of an identifier,
-knowledge of a secret, or via a biometric. A verifier may wish to determine that
-a particular credential, or set of credentials is bound to the credential
-holder. This can help the verifier to determine the legitimacy of the presented
-proofs.
+Credentials often rely on proofs of holder binding for their validity. A
+verifier may wish to determine that a particular claim, or set of claims is
+bound to the claim holder. This can help the verifier to determine the
+legitimacy of the presented proofs. Some examples of holder binding include
+proof of identifier control, proof the holder knows a secret, or biometrics.
+
+The claim issuer makes proofs of holder binding possible by including holder
+information either in the claim or the claim signature. 
 
 ##### Proof of Identifier Control
-A number of credential types include an identifier for the credential subject.
-A verifier may wish to ascertain that the subject identified in the credential
-is the one submitting the proof, or has consented to the proof submission.
+A number of claim types include an identifier for the claim subject. A verifier
+may wish to ascertain that one of the subject identified in the claim is the one
+submitting the proof, or has consented to the proof submission. A claim may also
+include an identifier for the holder, independent of the subject identifiers. 
 
 One mechanism for providing such proofs is the use of a DID as the identifier
-for the credential subject. DIDs enable an entity to provide a cryptographic
-proof of control of the identifier, usually through a demonstration that the
-holder knows some secret value, such as a private key. The holder can
-demonstrate the same proof of control when presenting the credential. In
-addition to verifying the authenticity and origin of the credential itself, a
-verifier can verify that the presenter of the credential still controls the
-identifier.
+for the claim subject or holder. DIDs enable an entity to provide a
+cryptographic proof of control of the identifier, usually through a
+demonstration that the holder knows some secret value, such as a private key.
+The holder can demonstrate the same proof of control when presenting the claim.
+In addition to verifying the authenticity and origin of the claim itself, a
+verifier can verify that the holder of the claim still controls the identifier.
 
 ##### Link Secrets
-Some credential signatures support the inclusion of holder-provided information
-that becomes incorporated into the signature, but remains hidden from the
-credential issuer. One common use of this capability is known as a link secret.
-A `link secret` is a value known only to the credential holder that is embedded
-in the signature of each issued credential. Upon presentation to a verifier, the
-holder demonstrates knowledge of the random value without revealing it, and
-proves that the same value is contained in every credential included in the
-proof presentation. The verifier can verify that the presenter of the
-credentials knows the link secret, and that the `link secret` is the same in
-each credential.
-
-###### Common values across credentials
-Though not of itself a means of binding to a holder, multiple credentials with
-common values may be taken by a verifier as an indication that the credentials
-are about the same subject. For example, if multiple banking credentials contain
-the same account number, and one of those credentials may be bound to the holder
-using any of the mechanisms described here, a verifier could rely on the
-demonstration of common values to bind all of the credentials to the holder.
+Some claim signatures support the inclusion of holder-provided secrets that
+become incorporated into the signature, but remain hidden from the claim issuer.
+One common use of this capability is to bind the claim to the holder. This is
+sometimes called a link secret. Just as with proof of control of an identifier,
+link secret proofs demonstrate that the holder knows some secret value. Upon
+presentation to a verifier, the holder demonstrates knowledge of the secret
+without revealing it. The verifier can verify that the holder knows the link
+secret, and that the link secret is contained in the claim signature.
 
 ##### Biometrics
 This type of holder binding, instead of relying on demonstrating knowledge of
 some secret value, relies on the evaluation of biometric data. There are a
-number of mechanisms for safely embedding biometric information in a credential
-such that only a person who can confirm the biometric may use the credential. 
+number of mechanisms for safely embedding biometric information in a claim such
+that only a person who can confirm the biometric may present the claim. 
 
 ### JSON Schema
 
@@ -1478,8 +1479,17 @@ format-related rules above:
               "enum": ["required", "preferred"]
             },
             "subject_is_holder": {
-              "type": "string",
-              "enum": ["required", "preferred"]
+              "type": "object",
+                "properties":  {
+                  "status": {
+                    "type": "string",
+                    "enum": ["required", "preferred"]
+                  },
+                  "subject": { "type": "string" }
+                },
+                "required": ["status"],
+                "additionalProperties": false
+              }
             }
           },
           "additionalProperties": false
