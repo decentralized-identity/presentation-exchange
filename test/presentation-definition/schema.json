@@ -4,16 +4,10 @@
     "schema": {
       "type": "object",
       "properties": {
-        "uri": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "name": { "type": "string" },
-        "purpose": { "type": "string" },
-        "metadata": { "type": "string" },
+        "uri": {"type": "string" },
         "required": { "type": "boolean" }
       },
-      "required": ["uri", "name"],
+      "required": ["uri"],
       "additionalProperties": false
     },
     "filter": {
@@ -113,6 +107,9 @@
       "type": "object",
       "properties": {
         "id": { "type": "string" },
+        "name": { "type": "string" },
+        "purpose": { "type": "string" },
+        "metadata": { "type": "string" },
         "group": {
           "type": "array",
           "items": { "type": "string" }

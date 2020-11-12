@@ -118,11 +118,11 @@ conjunction with the
     "locale": "en-US",
     "input_descriptors": [{
       "id": "name_input",
+      "name": "Full Legal Name",
+      "purpose": "We need your full legal name.",
       "schema": [
         {
-          "uri": ["https://name-standards.com/name.json"],
-          "name": "Full Legal Name",
-          "purpose": "We need your full legal name.",
+          "uri": "https://name-standards.com/name.json",
           "required": true
         }
       ]
@@ -180,11 +180,11 @@ proofs may satisfy an input requirement.
     "input_descriptors": [
       {
         "id": "banking_input",
+        "name": "Bank Account Information",
+        "purpose": "We need your bank and account information.",
         "schema": [
           {
-            "uri": ["https://bank-standards.com/customer.json"],
-            "name": "Bank Account Information",
-            "purpose": "We need your bank and account information."
+            "uri": "https://bank-standards.com/customer.json"
           }
         ],
         "constraints": {
@@ -247,11 +247,11 @@ proofs may satisfy an input requirement.
     "input_descriptors": [
       {
         "id": "citizenship_input_1",
+        "name": "EU Driver's License",
         "group": ["A"],
         "schema": [
           {
-            "uri": ["https://eu.com/claims/DriversLicense.json"],
-            "name": "EU Driver's License"
+            "uri": "https://eu.com/claims/DriversLicense.json"
           }
         ],
         "constraints": {
@@ -277,11 +277,11 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input_2",
+        "name": "US Passport",
         "group": ["A"],
         "schema": [
           {
-            "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
-            "name": "US Passport"
+            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
           }
         ],
         "constraints": {
@@ -336,12 +336,12 @@ proofs may satisfy an input requirement.
     "input_descriptors": [
       {
         "id": "banking_input_1",
+        "name": "Bank Account Information",
+        "purpose": "We need your bank and account information.",
         "group": ["A"],
         "schema": [
           {
-            "uri": ["https://bank-standards.com/customer.json"],
-            "name": "Bank Account Information",
-            "purpose": "We need your bank and account information."
+            "uri": "https://bank-standards.com/customer.json"
           }
         ],
         "constraints": {
@@ -377,15 +377,15 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "banking_input_2",
+        "name": "Bank Account Information",
+        "purpose": "We need your bank and account information.",
         "group": ["A"],
         "schema": [
           {
-            "uri": [
-              "https://bank-schemas.org/1.0.0/accounts.json",
-              "https://bank-schemas.org/2.0.0/accounts.json"
-            ],
-            "name": "Bank Account Information",
-            "purpose": "We need your bank and account information."
+            "uri": "https://bank-schemas.org/1.0.0/accounts.json"
+          },
+          {
+            "uri": "https://bank-schemas.org/2.0.0/accounts.json"
           }
         ],
         "constraints": {
@@ -420,12 +420,12 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "employment_input",
+        "name": "Employment History",
+        "purpose": "We need to know your work history.",
         "group": ["B"],
         "schema": [
           {
-            "uri": ["https://business-standards.org/schemas/employment-history.json"],
-            "name": "Employment History",
-            "purpose": "We need to know your work history."
+            "uri": "https://business-standards.org/schemas/employment-history.json"
           }
         ],
         "constraints": {
@@ -442,11 +442,11 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input_1",
+        "name": "EU Driver's License",
         "group": ["C"],
         "schema": [
           {
-            "uri": ["https://eu.com/claims/DriversLicense.json"],
-            "name": "EU Driver's License"
+            "uri": "https://eu.com/claims/DriversLicense.json"
           }
         ],
         "constraints": {
@@ -472,11 +472,11 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input_2",
+        "name": "US Passport",
         "group": ["C"],
         "schema": [
           {
-            "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
-            "name": "US Passport"
+            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
           }
         ],
         "constraints": {
@@ -871,15 +871,15 @@ why a certain item or set of data is being requested:
 "input_descriptors": [
   {
     "id": "banking_input_1",
+    "name": "Bank Account Information",
+    "purpose": "We need your bank and account information.",
     "group": ["A"],
     "schema": [
       {
-        "uri": [
-          "https://bank-schemas.org/1.0.0/accounts.json",
-          "https://bank-schemas.org/2.0.0/accounts.json"
-        ],
-        "name": "Bank Account Information",
-        "purpose": "We need your bank and account information."
+        "uri": "https://bank-schemas.org/1.0.0/accounts.json"
+      },
+      {
+        "uri": "https://bank-schemas.org/2.0.0/accounts.json"
       }
     ],
     "constraints": {
@@ -967,26 +967,26 @@ Descriptor Objects_ are composed as follows:
   - The object ****MAY**** contain a `group` property, and if present, its value
     ****MUST**** match one of the grouping strings listed in the `from` values of a
     [_Submission Requirement Rule Object_](#submission-requirement-rules).
+  - The object ****MAY**** contain a `name` property, and if present its
+    value ****SHOULD**** be a human-friendly name that describes what the
+    target schema represents.
+  - The object ****MAY**** contain a `purpose` property, and if present its
+    value ****MUST**** be a string that describes the purpose for which the
+    claim's data is being requested.
+  - The object ****MAY**** contain a `metadata` property, and if present its
+    value ****MUST**** be an object with metadata properties that describe
+    any information specific to the acquisition, formulation, or details of
+    the claim in question.
   - The object ****MUST**** contain a `schema` property, and its value
     ****MUST**** be an array composed of objects as follows:
       - The object ****MUST**** contain a `uri` property, and its value
-        ****MUST**** be an array consisting of one or more valid URI strings for
-        the acceptable claim schemas. A common use of multiple entries in
-        the `uri` array is when multiple versions of a claim schema exist
+        ****MUST**** be an string consisting of a valid URI string for
+        the acceptable claim schemas. Multiple array objects may be present
+        for multiple schemas. A common use of multiple entries in
+        the `schema` array is when multiple versions of a claim schema exist
         and there is a desire to express support for more than one version. 
         This field allowing multiple URIs is not intended to be used as 
-        a mechanism for including references to fundamentally different schemas, 
-        and ****SHOULD NOT**** be used by the implementer this way.
-      - The object ****MAY**** contain a `name` property, and if present its
-        value ****SHOULD**** be a human-friendly name that describes what the
-        target schema represents.
-      - The object ****MAY**** contain a `purpose` property, and if present its
-        value ****MUST**** be a string that describes the purpose for which the
-        claim's data is being requested.
-      - The object ****MAY**** contain a `metadata` property, and if present its
-        value ****MUST**** be an object with metadata properties that describe
-        any information specific to the acquisition, formulation, or details of
-        the claim in question.
+        a mechanism for including references to fundamentally different schemas, and ****SHOULD NOT**** be used by the implementer this way.
       - The object ****MAY**** contain a boolean `required` property, and 
         if present it signifies that the given schema object is required to 
         fulfill the given [[ref:Submission Requirement]].
@@ -1338,16 +1338,10 @@ format-related rules above:
     "schema": {
       "type": "object",
       "properties": {
-        "uri": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "name": { "type": "string" },
-        "purpose": { "type": "string" },
-        "metadata": { "type": "string" },
+        "uri": {"type": "string" },
         "required": { "type": "boolean" }
       },
-      "required": ["uri", "name"],
+      "required": ["uri"],
       "additionalProperties": false
     },
     "filter": {
@@ -1447,6 +1441,9 @@ format-related rules above:
       "type": "object",
       "properties": {
         "id": { "type": "string" },
+        "name": { "type": "string" },
+        "purpose": { "type": "string" },
+        "metadata": { "type": "string" },
         "group": {
           "type": "array",
           "items": { "type": "string" }
