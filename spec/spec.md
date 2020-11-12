@@ -203,10 +203,10 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input",
+        "name": "US Passport",
         "schema": [
           {
-            "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
-            "name": "US Passport"
+            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
           }
         ],
         "constraints": {
@@ -1265,15 +1265,15 @@ information to resolve the status of a claim.
 ```json
 {
   "id": "drivers_license_information",
+  "name": "Verify Valid License",
+  "purpose": "We need to know you have a license valid through December.",
+  "metadata": {
+    "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
+    "redirect_uri": "https://yourwatchful.gov/verify"
+  },
   "schema": [
     {
-      "uri": ["https://yourwatchful.gov/drivers-license-schema.json"],
-      "name": "Verify Valid License",
-      "purpose": "We need to know you have a license valid through December.",
-      "metadata": {
-        "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
-        "redirect_uri": "https://yourwatchful.gov/verify"
-      },
+      "uri": "https://yourwatchful.gov/drivers-license-schema.json",
       "required": true
     }
   ],
@@ -1301,15 +1301,15 @@ information to resolve the status of a claim.
 ```json
 {
   "id": "drivers_license_information",
+  "name": "Verify Valid License",
+  "purpose": "We need to know that your license has not been revoked.",
+  "metadata": {
+    "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
+    "redirect_uri": "https://yourwatchful.gov/verify"
+  },
   "schema": [
     {
-      "uri": ["https://yourwatchful.gov/drivers-license-schema.json"],
-      "name": "Verify Valid License",
-      "purpose": "We need to know that your license has not been revoked.",
-      "metadata": {
-        "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
-        "redirect_uri": "https://yourwatchful.gov/verify"
-      }
+      "uri": "https://yourwatchful.gov/drivers-license-schema.json"
     }
   ],
   "constraints": {
@@ -1338,7 +1338,7 @@ format-related rules above:
     "schema": {
       "type": "object",
       "properties": {
-        "uri": {"type": "string" },
+        "uri": { "type": "string" },
         "required": { "type": "boolean" }
       },
       "required": ["uri"],

@@ -4,7 +4,7 @@
     "schema": {
       "type": "object",
       "properties": {
-        "uri": {"type": "string" },
+        "uri": { "type": "string" },
         "required": { "type": "boolean" }
       },
       "required": ["uri"],

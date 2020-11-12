@@ -3,12 +3,10 @@
     "input_descriptors": [
       {
         "id": "banking_input",
+        "name": "Bank Account Information",
+        "purpose": "We need your bank and account information.",
         "schema": [{
-          "uri": [
-            "https://bank-standards.com/customer.json"
-          ],
-          "name": "Bank Account Information",
-          "purpose": "We need your bank and account information."
+          "uri": "https://bank-standards.com/customer.json"
         }],
         "constraints": {
           "limit_disclosure": true,
@@ -30,11 +28,9 @@
       },
       {
         "id": "citizenship_input",
+        "name": "US Passport",
         "schema": [{
-          "uri": [
-            "hub://did:foo:123/Collections/schema.us.gov/passport.json"
-          ],
-          "name": "US Passport"
+          "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
         }],
         "constraints": {
           "subject_is_holder": "required",
