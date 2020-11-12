@@ -987,29 +987,33 @@ Descriptor Objects_ are composed as follows:
         application `presentation definition` might contain an [[ref:Input Descriptor]]
         object for an essay submission. In this case, the [[ref:Verifier]] would be able
         to require that the essay be provided by the one submits the application. 
-      - The object ****MAY**** contain a `subject_is_holder` property, and if
-        present its value ****MUST**** be an object composed as follows:
-        - The object ****MAY**** contain an `subject` property, and if present
-          its value ****MUST**** be a string which indicates the `type` value
-          of the claim subject which must be the same as the entity submitting
-          the response. When requesting presentation of a claim with only one
-          subject, the verifier may omit this property. 
-        - The object ****MUST**** contain a `status` property and its value
-          ****MUST**** be one of the following strings:
+      - The object ****MAY**** contain an `is_holder` property, and if
+        present its value ****MUST**** be an object of key-value pairs composed
+        as follows:
+        - Each key ****MUST**** be the string value from a 
+          [_Input Descriptor Field Entry_](#input-descriptor-field-entry)
+          object's `id` property. This identifies the attribute whose subject is
+          of concern to the verifier.  
+        - The corresponding value ****MUST**** be one of the following strings:
           - `required` - This indicates that the processing entity ****MUST****
-            include proof that the subject of the claim is the same as the
-            entity submitting the response.
+            include proof that the subject of the attribute identified by the
+            key is the same as the entity submitting the response.
           - `preferred` - This indicates that it is ****RECOMMENDED**** that the
-            processing entity include proof that the subject of the claim is
-            the same as the entity submitting the response, i.e., the holder.
-      
-        The `subject_is_holder` property would be used by a [[ref:Verifier]] to
+            processing entity include proof that the subject of the attribute
+            identified by the key is the same as the entity submitting the
+            response.
+                                          
+        The `is_holder` property would be used by a [[ref:Verifier]] to
         require that certain inputs be provided by a certain subject. For
         example, an identity verification `presentation definition` might
-        contain an _Input Descriptor_ object for a birthdate. In this case, the
-        [[ref:Verifier]] would be able to require that the birth certificate
-        claim was issued to the claim subject with `type` "mother", who is the
-        same as the one who submits the identity verification. 
+        contain an _Input Descriptor_ object for a birthdate from a birth
+        certificate. In this case, the [[ref:Verifier]] would be able to require
+        that the holder of the birth certificate claim is the same as the
+        subject of the birthdate attribute. This is useful in cases where a
+        claim may have multiple subjects.
+        
+        For more information about techniques used to prove binding to a holder,
+        please see [_Holder Binding_](#holder-binding). 
         
       - The object ****MAY**** contain a `fields` property, and its value
         ****MUST**** be an array of
@@ -1029,6 +1033,9 @@ Descriptor Objects_ are composed as follows:
             JSON-LD/JWT-based
             [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
             vanilla JSON Web Tokens (JWTs) [[spec:rfc7797]].
+          - The object ****MAY**** contain an `id` property, and if present
+            its value ****MUST**** be a string that is unique from any other
+            field object's `id` property.
           - The object ****MAY**** contain a `purpose` property, and if present
             its value ****MUST**** be a string that describes the purpose for
             which the field is being requested.
@@ -1197,12 +1204,11 @@ Evaluate each candidate input as follows:
   5. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
     contains a `subject_is_issuer` property set to the value `required`, ensure
     that any submission of data in relation to the candidate input is fulfilled
-    using a _self_attested_ claims.
+    using a _self_attested_ claim.
   6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-    and it contains a `subject_is_holder` property with a `status` property set
-    to the value `required`, ensure that any submission of data in relation to
-    the candidate input is fulfilled by the subject of the claim indicated by
-    the value of the `subject` property.
+    and it contains an `is_holder` property, ensure that for each key in the
+    array, any submission of data in relation to the candidate input is
+    fulfilled by the subject of the attribute so identified.
 
 ::: note
 The above evaluation process assumes the User Agent will test each candidate
@@ -1478,7 +1484,7 @@ format-related rules above:
               "type": "string",
               "enum": ["required", "preferred"]
             },
-            "subject_is_holder": {
+            "is_holder": {
               "type": "object",
                 "properties":  {
                   "status": {
