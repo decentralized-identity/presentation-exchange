@@ -948,8 +948,8 @@ and there is a desire to express support for more than one version.
 This field allowing multiple URIs is not intended to be used as
 a mechanism for including references to fundamentally different schemas, and <strong><strong>SHOULD NOT</strong></strong> be used by the implementer this way.</li>
 <li>The object <strong><strong>MAY</strong></strong> contain a boolean <code>required</code> property, and
-if present it signifies that the given schema object is required to
-fulfill the given [[ref:Submission Requirement]].</li>
+if present and <code>true</code> it signifies that the given schema object
+is required to fulfill the given [[ref:Submission Requirement]].</li>
 </ul>
 </li>
 <li>The object <strong><strong>MAY</strong></strong> contain a <code>constraints</code> property, and its value

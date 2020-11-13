@@ -988,8 +988,8 @@ Descriptor Objects_ are composed as follows:
         This field allowing multiple URIs is not intended to be used as 
         a mechanism for including references to fundamentally different schemas, and ****SHOULD NOT**** be used by the implementer this way.
       - The object ****MAY**** contain a boolean `required` property, and 
-        if present it signifies that the given schema object is required to 
-        fulfill the given [[ref:Submission Requirement]].
+        if present and `true` it signifies that the given schema object 
+        is required to fulfill the given [[ref:Submission Requirement]].
   - The object ****MAY**** contain a `constraints` property, and its value
     ****MUST**** be an object composed as follows: 
       - The object ****MAY**** contain a `limit_disclosure` property, and if
