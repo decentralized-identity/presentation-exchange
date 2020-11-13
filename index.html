@@ -107,6 +107,8 @@ work is being done.</p>
 <dd>Presentation Submissions are objects embedded within target claim negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in accordance with the requirements a [[ref:Verifier]] specified in a [[ref:Presentation Definition]].</dd>
 <dt>[[def:Input Descriptor, Input Descriptors]]</dt>
 <dd>Input Descriptors are objects used to describe the information a Verifier requires of a Holder before they will proceed with an interaction.</dd>
+<dt>[[def:Submission Requirement, Submission Requirements]]</dt>
+<dd>Submission Requirements are objects that define what combinations of inputs must be submitted to comply with the requirements a Verifier has for proceeding in a flow (e.g. credential issuance, allowing entry, accepting an application).</dd>
 </dl>
 <h2 id="localization"><a class="toc-anchor" href="#localization">§</a> Localization</h2>
 <p>To support localization, <a href="https://tools.ietf.org/html/bcp47">IETF BCP 47</a> one
@@ -127,11 +129,14 @@ conjunction with the
     <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token string">"en-US"</span><span class="token punctuation">,</span>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
       <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"name_input"</span><span class="token punctuation">,</span>
-      <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://name-standards.com/name.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Full Legal Name"</span><span class="token punctuation">,</span>
-        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your full legal name."</span>
-      <span class="token punctuation">}</span>
+      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Full Legal Name"</span><span class="token punctuation">,</span>
+      <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your full legal name."</span><span class="token punctuation">,</span>
+      <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+          <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://name-standards.com/name.json"</span><span class="token punctuation">,</span>
+          <span class="token property">"required"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">]</span>
     <span class="token punctuation">}</span><span class="token punctuation">]</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
@@ -171,11 +176,13 @@ proofs may satisfy an input requirement.</p>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input"</span><span class="token punctuation">,</span>
-        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://bank-standards.com/customer.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
-          <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span><span class="token punctuation">,</span>
+        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-standards.com/customer.json"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"limit_disclosure"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
           <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -192,10 +199,12 @@ proofs may satisfy an input requirement.</p>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"citizenship_input"</span><span class="token punctuation">,</span>
-        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"hub://did:foo:123/Collections/schema.us.gov/passport.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"US Passport"</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"US Passport"</span><span class="token punctuation">,</span>
+        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"hub://did:foo:123/Collections/schema.us.gov/passport.json"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
             <span class="token punctuation">{</span>
@@ -229,11 +238,13 @@ proofs may satisfy an input requirement.</p>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"citizenship_input_1"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"EU Driver's License"</span><span class="token punctuation">,</span>
         <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://eu.com/claims/DriversLicense.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"EU Driver's License"</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://eu.com/claims/DriversLicense.json"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
             <span class="token punctuation">{</span>
@@ -257,11 +268,13 @@ proofs may satisfy an input requirement.</p>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"citizenship_input_2"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"US Passport"</span><span class="token punctuation">,</span>
         <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"hub://did:foo:123/Collections/schema.us.gov/passport.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"US Passport"</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"hub://did:foo:123/Collections/schema.us.gov/passport.json"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
             <span class="token punctuation">{</span>
@@ -309,12 +322,14 @@ proofs may satisfy an input requirement.</p>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span><span class="token punctuation">,</span>
         <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://bank-standards.com/customer.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
-          <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-standards.com/customer.json"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"limit_disclosure"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
           <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -348,15 +363,17 @@ proofs may satisfy an input requirement.</p>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span><span class="token punctuation">,</span>
         <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-            <span class="token string">"https://bank-schemas.org/1.0.0/accounts.json"</span><span class="token punctuation">,</span>
-            <span class="token string">"https://bank-schemas.org/2.0.0/accounts.json"</span>
-          <span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
-          <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-schemas.org/1.0.0/accounts.json"</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-schemas.org/2.0.0/accounts.json"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
             <span class="token punctuation">{</span>
@@ -389,12 +406,14 @@ proofs may satisfy an input requirement.</p>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Employment History"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know your work history."</span><span class="token punctuation">,</span>
         <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://business-standards.org/schemas/employment-history.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Employment History"</span><span class="token punctuation">,</span>
-          <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know your work history."</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://business-standards.org/schemas/employment-history.json"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
             <span class="token punctuation">{</span>
@@ -409,11 +428,13 @@ proofs may satisfy an input requirement.</p>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"citizenship_input_1"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"EU Driver's License"</span><span class="token punctuation">,</span>
         <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"C"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://eu.com/claims/DriversLicense.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"EU Driver's License"</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://eu.com/claims/DriversLicense.json"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
             <span class="token punctuation">{</span>
@@ -437,11 +458,13 @@ proofs may satisfy an input requirement.</p>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"citizenship_input_2"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"US Passport"</span><span class="token punctuation">,</span>
         <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"C"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"hub://did:foo:123/Collections/schema.us.gov/passport.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"US Passport"</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"hub://did:foo:123/Collections/schema.us.gov/passport.json"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
             <span class="token punctuation">{</span>
@@ -521,14 +544,14 @@ of the format-specific algorithmic identifier references, as noted in the
 </li>
 </ul>
 </li>
-<li><code>submission_requirement</code> - The resource <strong><strong>MAY</strong></strong> contain this property,
+<li><code>submission_requirements</code> - The resource <strong><strong>MAY</strong></strong> contain this property,
 and if present, its value <strong><strong>MUST</strong></strong> conform to the Submission Requirement
 Format. If not present, all inputs listed in the <code>input_descriptors</code> array are
 required for submission. The description for the format of this property is in
 the <a href="#submission-requirement"><code>Submission Requirement</code></a> section below.</li>
 <li><code>input_descriptors</code> - The resource <strong><strong>MUST</strong></strong> contain this property, and
-its value <strong><strong>MUST</strong></strong> be an array of [[ref:[[ref:Input Descriptor]]]] objects. If no
-<code>submission_requirement</code> is present, all inputs listed in the
+its value <strong><strong>MUST</strong></strong> be an array of [[ref:Input Descriptor]] objects. If no
+<code>submission_requirements</code> is present, all inputs listed in the
 <code>input_descriptors</code> array are required for submission. The composition of
 values under this property are described in the <a href="#input-descriptors"><code>Input Descriptors</code></a> section below.</li>
 </ul>
@@ -592,7 +615,7 @@ constructed as follows:</p>
 <li>The object  <strong><strong>MUST</strong></strong> contain a <code>rule</code> property, and its value
 <strong><strong>MUST</strong></strong> be a string matching one of the <a href="#submission-requirement-rules">Submission Requirement
 Rules</a> values listed in the section below.</li>
-<li>The object <strong><strong>MUST</strong></strong> contain either a <code>from</code> 'or <code>from_nested</code> property.
+<li>The object <strong><strong>MUST</strong></strong> contain either a <code>from</code> or <code>from_nested</code> property.
 If both properties are present, the implementation <em><strong>MUST</strong></em> produce an
 error. The values of the <code>from</code> and <code>from_nested</code> properties are defined as
 follows:
@@ -802,7 +825,7 @@ or less than the value of the <code>max</code> property.</li>
 <h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors">§</a> Input Descriptors</h3>
 <p>[[ref:Input Descriptors]] are objects used to describe the information a [[ref:Verifier]]
 requires of a Holder before they will proceed with an interaction. If no
-<code>submission_requirement</code> objects are present, all <code>input_descriptor</code> objects
+<code>submission_requirements</code> objects are present, all <code>input_descriptor</code> objects
 <strong><strong>MUST</strong></strong> be satisfied.</p>
 <p><em>Input Descriptor Objects</em> contain a schema URI that links to the schema
 of the required input data, constraints on data values, and an explanation
@@ -816,15 +839,17 @@ why a certain item or set of data is being requested:</p>
 <div id="example-1" class="notice example"><a class="notice-link" href="#example-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
+    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token string">"https://bank-schemas.org/1.0.0/accounts.json"</span><span class="token punctuation">,</span>
-        <span class="token string">"https://bank-schemas.org/2.0.0/accounts.json"</span>
-      <span class="token punctuation">]</span><span class="token punctuation">,</span>
-      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
-      <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-schemas.org/1.0.0/accounts.json"</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-schemas.org/2.0.0/accounts.json"</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
     <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
         <span class="token punctuation">{</span>
@@ -863,15 +888,17 @@ why a certain item or set of data is being requested:</p>
 <div id="example-2" class="notice example"><a class="notice-link" href="#example-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
   <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://login.idp.com/xyz.gov/.well-known/openid-configuration"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify XYZ Government Employment"</span><span class="token punctuation">,</span>
-    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you currently work at an agency in the XYZ government"</span><span class="token punctuation">,</span>
-    <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"40be4fb5-7f3a-470b-aa37-66ed43821bd7"</span><span class="token punctuation">,</span>
-      <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://tokens.xyz.gov/verify"</span>
+  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://login.idp.com/xyz.gov/.well-known/openid-configuration"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify XYZ Government Employment"</span><span class="token punctuation">,</span>
+      <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you currently work at an agency in the XYZ government"</span><span class="token punctuation">,</span>
+      <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"40be4fb5-7f3a-470b-aa37-66ed43821bd7"</span><span class="token punctuation">,</span>
+        <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://tokens.xyz.gov/verify"</span>
+      <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
@@ -897,19 +924,8 @@ property <strong><strong>MUST</strong></strong> be a unique identifying string t
 with the <code>id</code> of another [[ref:Input Descriptor]] in the same <em>Presentation
 Definition</em> object.</li>
 <li>The object <strong><strong>MAY</strong></strong> contain a <code>group</code> property, and if present, its value
-<strong><strong>MUST</strong></strong> match one of the grouping strings listed the <code>from</code> values of a
-<a href="#requirement-rule-objects"><em>Requirement Rule Object</em></a>.</li>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>schema</code> property, and its value
-<strong><strong>MUST</strong></strong> be an object composed as follows:
-<ul>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>uri</code> property, and its value
-<strong><strong>MUST</strong></strong> be an array consisting of one or more valid URI strings for
-the acceptable claim schemas. A common use of multiple entries in
-the <code>uri</code> array is when multiple versions of a claim schema exist
-and there is a desire to express support for more than one version.
-This field allowing multiple URIs is not intended to be used as
-a mechanism for including references to fundamentally different schemas,
-and <strong><strong>SHOULD NOT</strong></strong> be used by the implementer this way.</li>
+<strong><strong>MUST</strong></strong> match one of the grouping strings listed in the <code>from</code> values of a
+<a href="#submission-requirement-rules"><em>Submission Requirement Rule Object</em></a>.</li>
 <li>The object <strong><strong>MAY</strong></strong> contain a <code>name</code> property, and if present its
 value <strong><strong>SHOULD</strong></strong> be a human-friendly name that describes what the
 target schema represents.</li>
@@ -920,6 +936,20 @@ claim’s data is being requested.</li>
 value <strong><strong>MUST</strong></strong> be an object with metadata properties that describe
 any information specific to the acquisition, formulation, or details of
 the claim in question.</li>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>schema</code> property, and its value
+<strong><strong>MUST</strong></strong> be an array composed of objects as follows:
+<ul>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>uri</code> property, and its value
+<strong><strong>MUST</strong></strong> be an string consisting of a valid URI string for
+the acceptable claim schemas. Multiple array objects may be present
+for multiple schemas. A common use of multiple entries in
+the <code>schema</code> array is when multiple versions of a claim schema exist
+and there is a desire to express support for more than one version.
+This field allowing multiple URIs is not intended to be used as
+a mechanism for including references to fundamentally different schemas, and <strong><strong>SHOULD NOT</strong></strong> be used by the implementer this way.</li>
+<li>The object <strong><strong>MAY</strong></strong> contain a boolean <code>required</code> property, and
+if present and <code>true</code> it signifies that the given schema object
+is required to fulfill the given [[ref:Submission Requirement]].</li>
 </ul>
 </li>
 <li>The object <strong><strong>MAY</strong></strong> contain a <code>constraints</code> property, and its value
@@ -1214,15 +1244,18 @@ information to resolve the status of a claim.</p>
 <section>
 <div id="drivers-license-expiry" class="notice example"><a class="notice-link" href="#drivers-license-expiry">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"drivers_license_information"</span><span class="token punctuation">,</span>
-  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://yourwatchful.gov/drivers-license-schema.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify Valid License"</span><span class="token punctuation">,</span>
-    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know you have a license valid through December."</span><span class="token punctuation">,</span>
-    <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"4fb540be-3a7f-0b47-bb37-3821bd766ed4"</span><span class="token punctuation">,</span>
-      <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://yourwatchful.gov/verify"</span>
-    <span class="token punctuation">}</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify Valid License"</span><span class="token punctuation">,</span>
+  <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know you have a license valid through December."</span><span class="token punctuation">,</span>
+  <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"4fb540be-3a7f-0b47-bb37-3821bd766ed4"</span><span class="token punctuation">,</span>
+    <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://yourwatchful.gov/verify"</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://yourwatchful.gov/drivers-license-schema.json"</span><span class="token punctuation">,</span>
+      <span class="token property">"required"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
@@ -1242,15 +1275,17 @@ information to resolve the status of a claim.</p>
 <section>
 <div id="drivers-license-revocation" class="notice example"><a class="notice-link" href="#drivers-license-revocation">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"drivers_license_information"</span><span class="token punctuation">,</span>
-  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://yourwatchful.gov/drivers-license-schema.json"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify Valid License"</span><span class="token punctuation">,</span>
-    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know that your license has not been revoked."</span><span class="token punctuation">,</span>
-    <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"4fb540be-3a7f-0b47-bb37-3821bd766ed4"</span><span class="token punctuation">,</span>
-      <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://yourwatchful.gov/verify"</span>
-    <span class="token punctuation">}</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify Valid License"</span><span class="token punctuation">,</span>
+  <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know that your license has not been revoked."</span><span class="token punctuation">,</span>
+  <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"4fb540be-3a7f-0b47-bb37-3821bd766ed4"</span><span class="token punctuation">,</span>
+    <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://yourwatchful.gov/verify"</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://yourwatchful.gov/drivers-license-schema.json"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
@@ -1269,6 +1304,15 @@ format-related rules above:</p>
 <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"$schema"</span><span class="token operator">:</span> <span class="token string">"http://json-schema.org/draft-07/schema#"</span><span class="token punctuation">,</span>
   <span class="token property">"definitions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
+      <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"boolean"</span> <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"uri"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
       <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -1366,23 +1410,16 @@ format-related rules above:</p>
       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
       <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
           <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span>
         <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
-          <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-            <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
-              <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span>
-            <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span>
-          <span class="token punctuation">}</span><span class="token punctuation">,</span>
-          <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"uri"</span><span class="token punctuation">,</span> <span class="token string">"name"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
+          <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/schema"</span> <span class="token punctuation">}</span>
         <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
@@ -1787,7 +1824,7 @@ specification that call for JSONPath expression execution.</p>
         <span class="token string">"isbn"</span><span class="token operator">:</span> <span class="token string">"0-553-21311-3"</span><span class="token punctuation">,</span>
         <span class="token string">"price"</span><span class="token operator">:</span> <span class="token number">8.99</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-         <span class="token string">"category"</span><span class="token operator">:</span> <span class="token string">"fiction"</span><span class="token punctuation">,</span>
+        <span class="token string">"category"</span><span class="token operator">:</span> <span class="token string">"fiction"</span><span class="token punctuation">,</span>
         <span class="token string">"author"</span><span class="token operator">:</span> <span class="token string">"J. R. R. Tolkien"</span><span class="token punctuation">,</span>
         <span class="token string">"title"</span><span class="token operator">:</span> <span class="token string">"The Lord of the Rings"</span><span class="token punctuation">,</span>
         <span class="token string">"isbn"</span><span class="token operator">:</span> <span class="token string">"0-395-19395-8"</span><span class="token punctuation">,</span>
@@ -2211,6 +2248,62 @@ specification that call for JSONPath expression execution.</p>
 </ul>
 </li>
 </ul>
+<h3 id="iana-considerations"><a class="toc-anchor" href="#iana-considerations">§</a> IANA Considerations</h3>
+<h4 id="json-web-token-claims-registration"><a class="toc-anchor" href="#json-web-token-claims-registration">§</a> JSON Web Token Claims Registration</h4>
+<p>This specification registers the claims in section <a href="">Registry Contents</a> in the IANA JSON Web Token Claims registry defined in <a href="https://tools.ietf.org/html/rfc7519">RFC 751 JSON Web Token (JWT)</a>.</p>
+<h5 id="registry-contents"><a class="toc-anchor" href="#registry-contents">§</a> Registry Contents</h5>
+<table>
+<thead>
+<tr>
+<th>Presentation Definition</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claim Name:</td>
+<td><code>presentation_definition</code></td>
+</tr>
+<tr>
+<td>Claim Description:</td>
+<td>Presentation Definition</td>
+</tr>
+<tr>
+<td>Change Controller:</td>
+<td>DIF Claims &amp; Credentials - Working Group - <a href="https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS">https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS</a></td>
+</tr>
+<tr>
+<td>Specification Document(s):</td>
+<td>Section 5 of this document</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>Presentation Submission</td>
+<td>Values</td>
+</tr>
+<tr>
+<td>------------------------------</td>
+<td>------------</td>
+</tr>
+<tr>
+<td>Claim Name:</td>
+<td><code>presentation_submission</code></td>
+</tr>
+<tr>
+<td>Claim Description:</td>
+<td>Presentation Submission</td>
+</tr>
+<tr>
+<td>Change Controller:</td>
+<td>DIF Claims &amp; Credentials - Working Group - <a href="https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS">https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS</a></td>
+</tr>
+<tr>
+<td>Specification Document(s):</td>
+<td>Section 6 of this document</td>
+</tr>
+</tbody>
+</table>
 
               </article>    
 
@@ -2291,6 +2384,11 @@ specification that call for JSONPath expression execution.</p>
 <ul>
 <li><a href="#jsonpath">JSONPath</a></li>
 <li><a href="#json-schema-4">JSON Schema</a></li>
+</ul>
+</li>
+<li><a href="#iana-considerations">IANA Considerations</a>
+<ul>
+<li><a href="#json-web-token-claims-registration">JSON Web Token Claims Registration</a></li>
 </ul>
 </li>
 </ul>
