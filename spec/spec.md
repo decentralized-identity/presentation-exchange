@@ -82,7 +82,10 @@ work is being done.
 ~ Presentation Definitions are objects that articulate what proofs a Verifier requires. These help the Verifier to decide how or whether to interact with a Holder. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and optional sets of selection rules, to allow Holders flexibility in cases where many different types of proofs may satisfy an input requirement.
 
 [[def:Presentation Request]]
-~ Presentation Requests are transport mechanisms for Presentation Definitions. Presentation Requests can take multiple shapes, using a variety of protocols and signature schemes not defined in this specification. They are sent by a [[ref:Verifier]] to a [[def:Holder]].
+~ Presentation Requests are transport mechanisms for Presentation Definitions.
+Presentation Requests can take multiple shapes, using a variety of protocols
+and signature schemes not defined in this specification. They are sent by 
+a [[ref:Verifier]] to a [[def:Holder]].
 
 [[def:Presentation Submission]]
 ~ Presentation Submissions are objects embedded within target claim negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in accordance with the requirements a [[ref:Verifier]] specified in a [[ref:Presentation Definition]].
@@ -1544,7 +1547,8 @@ Presentation Definitions may be sent from a [[ref:Verifier]] to a Holder using
 a wide variety of transport mechanisms or claim exchange protocols. This
 specification does not define a transport mechanism for `Presentation
 Definitions` (or `[[ref:Presentation Request]]`), but does note that different 
-use cases, supported signature schemes, protocols, and threat models may require a [[ref:Presentation Request]]to have certain properties:
+use cases, supported signature schemes, protocols, and threat models may
+require a [[ref:Presentation Request]]to have certain properties:
 - Signature verification - A Holder may wish to have assurances as to the
   provenance, identity, or status of a [[ref:Presentation Definition]]. In this case,
   a [[ref:Presentation Request]] that uses digital signatures may be required. 
