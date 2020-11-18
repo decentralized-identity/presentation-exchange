@@ -102,7 +102,12 @@ work is being done.</p>
 <dt>[[def:Claim, Claims]]</dt>
 <dd>An assertion made about a given entity. Used as an umbrella term for Credential, Assertion, Attestation, etc.</dd>
 <dt>[[def:Presentation Definition]]</dt>
-<dd>Presentation Definitions are objects that articulate what proofs a Verifier requires. These help the Verifier to decide how or whether to interact with a Holder. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and optional sets of selection rules, to allow Holders flexibility in cases where many different types of proofs may satisfy an input requirement.</dd>
+<dd>Presentation Definitions are objects that articulate what proofs a Verifier
+requires. These help the Verifier to decide how or whether to interact with a
+Holder. Presentation Definitions are composed of inputs, which describe the
+forms and details of the proofs they require, and optional sets of selection
+rules, to allow Holders flexibility in cases where many different types of
+proofs may satisfy an input requirement.</dd>
 <dt>[[def:Presentation Request]]</dt>
 <dd>Presentation Requests are transport mechanisms for Presentation Definitions.
 Presentation Requests can take multiple shapes, using a variety of protocols
@@ -1530,9 +1535,9 @@ session. In these cases, a [[ref:Presentation Request]] that provides a <code>do
 <p><em>Presentation Submissions</em> are objects embedded within target claim
 negotiation formats that unify the presentation of proofs to a [[ref:Verifier]]
 in accordance with the requirements a [[ref:Verifier]] specified in a
-[[ref:Presentation Definition]]. Embedded [[ref:Presentation Submission]] objects <strong><strong>MUST</strong></strong> be located
-within target data format as a <code>presentation_submission</code> property, which are
-composed and embedded as follows:</p>
+[[ref:Presentation Definition]]. Embedded [[ref:Presentation Submission]]
+objects <strong><strong>MUST</strong></strong> be located within target data format as a
+<code>presentation_submission</code> property, which are composed and embedded as follows:</p>
 <ol>
 <li>The <code>presentation_submission</code> object <strong><strong>MUST</strong></strong> be included at the top-level
 of an Embed Target, or in the specific location described in the

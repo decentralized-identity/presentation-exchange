@@ -79,7 +79,12 @@ work is being done.
 ~ An assertion made about a given entity. Used as an umbrella term for Credential, Assertion, Attestation, etc.  
 
 [[def:Presentation Definition]]
-~ Presentation Definitions are objects that articulate what proofs a Verifier requires. These help the Verifier to decide how or whether to interact with a Holder. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and optional sets of selection rules, to allow Holders flexibility in cases where many different types of proofs may satisfy an input requirement.
+~ Presentation Definitions are objects that articulate what proofs a Verifier
+requires. These help the Verifier to decide how or whether to interact with a
+Holder. Presentation Definitions are composed of inputs, which describe the
+forms and details of the proofs they require, and optional sets of selection
+rules, to allow Holders flexibility in cases where many different types of
+proofs may satisfy an input requirement.
 
 [[def:Presentation Request]]
 ~ Presentation Requests are transport mechanisms for Presentation Definitions.
@@ -1565,9 +1570,9 @@ require a [[ref:Presentation Request]]to have certain properties:
 _Presentation Submissions_ are objects embedded within target claim
 negotiation formats that unify the presentation of proofs to a [[ref:Verifier]]
 in accordance with the requirements a [[ref:Verifier]] specified in a 
-[[ref:Presentation Definition]]. Embedded [[ref:Presentation Submission]] objects ****MUST**** be located
-within target data format as a `presentation_submission` property, which are
-composed and embedded as follows:
+[[ref:Presentation Definition]]. Embedded [[ref:Presentation Submission]] 
+objects ****MUST**** be located within target data format as a 
+`presentation_submission` property, which are composed and embedded as follows:
 
 1. The `presentation_submission` object ****MUST**** be included at the top-level 
   of an Embed Target, or in the specific location described in the 
