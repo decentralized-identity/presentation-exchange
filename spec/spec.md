@@ -79,7 +79,18 @@ work is being done.
 ~ An assertion made about a given entity. Used as an umbrella term for Credential, Assertion, Attestation, etc.  
 
 [[def:Presentation Definition]]
-~ Presentation Definitions are objects that articulate what proofs a Verifier requires. These help the Verifier to decide how or whether to interact with a Holder. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and optional sets of selection rules, to allow Holders flexibility in cases where many different types of proofs may satisfy an input requirement.
+~ Presentation Definitions are objects that articulate what proofs a Verifier
+requires. These help the Verifier to decide how or whether to interact with a
+Holder. Presentation Definitions are composed of inputs, which describe the
+forms and details of the proofs they require, and optional sets of selection
+rules, to allow Holders flexibility in cases where many different types of
+proofs may satisfy an input requirement.
+
+[[def:Presentation Request]]
+~ Presentation Requests are transport mechanisms for Presentation Definitions.
+Presentation Requests can take multiple shapes, using a variety of protocols
+and signature schemes not defined in this specification. They are sent by 
+a [[ref:Verifier]] to a [[def:Holder]].
 
 [[def:Presentation Submission]]
 ~ Presentation Submissions are objects embedded within target claim negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in accordance with the requirements a [[ref:Verifier]] specified in a [[ref:Presentation Definition]].
@@ -118,11 +129,14 @@ conjunction with the
     "locale": "en-US",
     "input_descriptors": [{
       "id": "name_input",
-      "schema": {
-        "uri": ["https://name-standards.com/name.json"],
-        "name": "Full Legal Name",
-        "purpose": "We need your full legal name."
-      }
+      "name": "Full Legal Name",
+      "purpose": "We need your full legal name.",
+      "schema": [
+        {
+          "uri": "https://name-standards.com/name.json",
+          "required": true
+        }
+      ]
     }]
   }
 }
@@ -177,11 +191,13 @@ proofs may satisfy an input requirement.
     "input_descriptors": [
       {
         "id": "banking_input",
-        "schema": {
-          "uri": ["https://bank-standards.com/customer.json"],
-          "name": "Bank Account Information",
-          "purpose": "We need your bank and account information."
-        },
+        "name": "Bank Account Information",
+        "purpose": "We need your bank and account information.",
+        "schema": [
+          {
+            "uri": "https://bank-standards.com/customer.json"
+          }
+        ],
         "constraints": {
           "limit_disclosure": true,
           "fields": [
@@ -198,10 +214,12 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input",
-        "schema": {
-          "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
-          "name": "US Passport"
-        },
+        "name": "US Passport",
+        "schema": [
+          {
+            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -240,11 +258,13 @@ proofs may satisfy an input requirement.
     "input_descriptors": [
       {
         "id": "citizenship_input_1",
+        "name": "EU Driver's License",
         "group": ["A"],
-        "schema": {
-          "uri": ["https://eu.com/claims/DriversLicense.json"],
-          "name": "EU Driver's License"
-        },
+        "schema": [
+          {
+            "uri": "https://eu.com/claims/DriversLicense.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -268,11 +288,13 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input_2",
+        "name": "US Passport",
         "group": ["A"],
-        "schema": {
-          "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
-          "name": "US Passport"
-        },
+        "schema": [
+          {
+            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -325,12 +347,14 @@ proofs may satisfy an input requirement.
     "input_descriptors": [
       {
         "id": "banking_input_1",
+        "name": "Bank Account Information",
+        "purpose": "We need your bank and account information.",
         "group": ["A"],
-        "schema": {
-          "uri": ["https://bank-standards.com/customer.json"],
-          "name": "Bank Account Information",
-          "purpose": "We need your bank and account information."
-        },
+        "schema": [
+          {
+            "uri": "https://bank-standards.com/customer.json"
+          }
+        ],
         "constraints": {
           "limit_disclosure": true,
           "fields": [
@@ -364,15 +388,17 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "banking_input_2",
+        "name": "Bank Account Information",
+        "purpose": "We need your bank and account information.",
         "group": ["A"],
-        "schema": {
-          "uri": [
-            "https://bank-schemas.org/1.0.0/accounts.json",
-            "https://bank-schemas.org/2.0.0/accounts.json"
-          ],
-          "name": "Bank Account Information",
-          "purpose": "We need your bank and account information."
-        },
+        "schema": [
+          {
+            "uri": "https://bank-schemas.org/1.0.0/accounts.json"
+          },
+          {
+            "uri": "https://bank-schemas.org/2.0.0/accounts.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -405,12 +431,14 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "employment_input",
+        "name": "Employment History",
+        "purpose": "We need to know your work history.",
         "group": ["B"],
-        "schema": {
-          "uri": ["https://business-standards.org/schemas/employment-history.json"],
-          "name": "Employment History",
-          "purpose": "We need to know your work history."
-        },
+        "schema": [
+          {
+            "uri": "https://business-standards.org/schemas/employment-history.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -425,11 +453,13 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input_1",
+        "name": "EU Driver's License",
         "group": ["C"],
-        "schema": {
-          "uri": ["https://eu.com/claims/DriversLicense.json"],
-          "name": "EU Driver's License"
-        },
+        "schema": [
+          {
+            "uri": "https://eu.com/claims/DriversLicense.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -453,11 +483,13 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input_2",
+        "name": "US Passport",
         "group": ["C"],
-        "schema": {
-          "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
-          "name": "US Passport"
-        },
+        "schema": [
+          {
+            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -850,15 +882,17 @@ why a certain item or set of data is being requested:
 "input_descriptors": [
   {
     "id": "banking_input_1",
+    "name": "Bank Account Information",
+    "purpose": "We need your bank and account information.",
     "group": ["A"],
-    "schema": {
-      "uri": [
-        "https://bank-schemas.org/1.0.0/accounts.json",
-        "https://bank-schemas.org/2.0.0/accounts.json"
-      ],
-      "name": "Bank Account Information",
-      "purpose": "We need your bank and account information."
-    },
+    "schema": [
+      {
+        "uri": "https://bank-schemas.org/1.0.0/accounts.json"
+      },
+      {
+        "uri": "https://bank-schemas.org/2.0.0/accounts.json"
+      }
+    ],
     "constraints": {
       "fields": [
         {
@@ -902,15 +936,17 @@ why a certain item or set of data is being requested:
 {
   "id": "employment_input_xyz_gov",
   "group": ["B"],
-  "schema": {
-    "uri": ["https://login.idp.com/xyz.gov/.well-known/openid-configuration"],
-    "name": "Verify XYZ Government Employment",
-    "purpose": "We need to know if you currently work at an agency in the XYZ government",
-    "metadata": {
-      "client_id": "40be4fb5-7f3a-470b-aa37-66ed43821bd7",
-      "redirect_uri": "https://tokens.xyz.gov/verify"
+  "schema": [
+    {
+      "uri": ["https://login.idp.com/xyz.gov/.well-known/openid-configuration"],
+      "name": "Verify XYZ Government Employment",
+      "purpose": "We need to know if you currently work at an agency in the XYZ government",
+      "metadata": {
+        "client_id": "40be4fb5-7f3a-470b-aa37-66ed43821bd7",
+        "redirect_uri": "https://tokens.xyz.gov/verify"
+      }
     }
-  },
+  ],
   "constraints": {
     "fields": [
       {
@@ -942,26 +978,29 @@ Descriptor Objects_ are composed as follows:
   - The object ****MAY**** contain a `group` property, and if present, its value
     ****MUST**** match one of the grouping strings listed in the `from` values of a
     [_Submission Requirement Rule Object_](#submission-requirement-rules).
+  - The object ****MAY**** contain a `name` property, and if present its
+    value ****SHOULD**** be a human-friendly name that describes what the
+    target schema represents.
+  - The object ****MAY**** contain a `purpose` property, and if present its
+    value ****MUST**** be a string that describes the purpose for which the
+    claim's data is being requested.
+  - The object ****MAY**** contain a `metadata` property, and if present its
+    value ****MUST**** be an object with metadata properties that describe
+    any information specific to the acquisition, formulation, or details of
+    the claim in question.
   - The object ****MUST**** contain a `schema` property, and its value
-    ****MUST**** be an object composed as follows:
+    ****MUST**** be an array composed of objects as follows:
       - The object ****MUST**** contain a `uri` property, and its value
-        ****MUST**** be an array consisting of one or more valid URI strings for
-        the acceptable claim schemas. A common use of multiple entries in
-        the `uri` array is when multiple versions of a claim schema exist
+        ****MUST**** be an string consisting of a valid URI string for
+        the acceptable claim schemas. Multiple array objects may be present
+        for multiple schemas. A common use of multiple entries in
+        the `schema` array is when multiple versions of a claim schema exist
         and there is a desire to express support for more than one version. 
         This field allowing multiple URIs is not intended to be used as 
-        a mechanism for including references to fundamentally different schemas, 
-        and ****SHOULD NOT**** be used by the implementer this way.
-      - The object ****MAY**** contain a `name` property, and if present its
-        value ****SHOULD**** be a human-friendly name that describes what the
-        target schema represents.
-      - The object ****MAY**** contain a `purpose` property, and if present its
-        value ****MUST**** be a string that describes the purpose for which the
-        claim's data is being requested.
-      - The object ****MAY**** contain a `metadata` property, and if present its
-        value ****MUST**** be an object with metadata properties that describe
-        any information specific to the acquisition, formulation, or details of
-        the claim in question.
+        a mechanism for including references to fundamentally different schemas, and ****SHOULD NOT**** be used by the implementer this way.
+      - The object ****MAY**** contain a boolean `required` property, and 
+        if present and `true` it signifies that the given schema object 
+        is required to fulfill the given [[ref:Submission Requirement]].
   - The object ****MAY**** contain a `constraints` property, and its value
     ****MUST**** be an object composed as follows: 
       - The object ****MAY**** contain a `limit_disclosure` property, and if
@@ -1252,15 +1291,18 @@ information to resolve the status of a claim.
 ```json
 {
   "id": "drivers_license_information",
-  "schema": {
-    "uri": ["https://yourwatchful.gov/drivers-license-schema.json"],
-    "name": "Verify Valid License",
-    "purpose": "We need to know you have a license valid through December.",
-    "metadata": {
-      "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
-      "redirect_uri": "https://yourwatchful.gov/verify"
-    }
+  "name": "Verify Valid License",
+  "purpose": "We need to know you have a license valid through December.",
+  "metadata": {
+    "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
+    "redirect_uri": "https://yourwatchful.gov/verify"
   },
+  "schema": [
+    {
+      "uri": "https://yourwatchful.gov/drivers-license-schema.json",
+      "required": true
+    }
+  ],
   "constraints": {
     "fields": [
       {
@@ -1285,15 +1327,17 @@ information to resolve the status of a claim.
 ```json
 {
   "id": "drivers_license_information",
-  "schema": {
-    "uri": ["https://yourwatchful.gov/drivers-license-schema.json"],
-    "name": "Verify Valid License",
-    "purpose": "We need to know that your license has not been revoked.",
-    "metadata": {
-      "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
-      "redirect_uri": "https://yourwatchful.gov/verify"
-    }
+  "name": "Verify Valid License",
+  "purpose": "We need to know that your license has not been revoked.",
+  "metadata": {
+    "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
+    "redirect_uri": "https://yourwatchful.gov/verify"
   },
+  "schema": [
+    {
+      "uri": "https://yourwatchful.gov/drivers-license-schema.json"
+    }
+  ],
   "constraints": {
     "fields": [
       {
@@ -1357,6 +1401,15 @@ format-related rules above:
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "uri": { "type": "string" },
+        "required": { "type": "boolean" }
+      },
+      "required": ["uri"],
+      "additionalProperties": false
+    },
     "filter": {
       "type": "object",
       "properties": {
@@ -1454,23 +1507,16 @@ format-related rules above:
       "type": "object",
       "properties": {
         "id": { "type": "string" },
+        "name": { "type": "string" },
+        "purpose": { "type": "string" },
+        "metadata": { "type": "string" },
         "group": {
           "type": "array",
           "items": { "type": "string" }
         },
         "schema": {
-          "type": "object",
-          "properties": {
-            "uri": {
-              "type": "array",
-              "items": { "type": "string" }
-            },
-            "name": { "type": "string" },
-            "purpose": { "type": "string" },
-            "metadata": { "type": "object" }
-          },
-          "required": ["uri", "name"],
-          "additionalProperties": false
+          "type": "array",
+          "items": { "$ref": "#/definitions/schema" }
         },
         "constraints": {
           "type": "object",
@@ -1566,31 +1612,31 @@ format-related rules above:
 ```
 
 ### Presentation Requests
-Presentation Definitions may be sent from a [[ref:Verifier]] to a Holder using a wide
-variety of transport mechanisms or claim exchange protocols. This
+Presentation Definitions may be sent from a [[ref:Verifier]] to a Holder using 
+a wide variety of transport mechanisms or claim exchange protocols. This
 specification does not define a transport mechanism for `Presentation
-Definitions` (or `Presentation Request`), but does note that different use
-cases, supported signature schemes, protocols, and threat models may require a
-`Presentation Request` to have certain properties:
+Definitions` (or `[[ref:Presentation Request]]`), but does note that different 
+use cases, supported signature schemes, protocols, and threat models may
+require a [[ref:Presentation Request]]to have certain properties:
 - Signature verification - A Holder may wish to have assurances as to the
-  provenance, identity, or status of a `Presentation Definition`. In this case,
-  a `Presentation Request` that uses digital signatures may be required. 
+  provenance, identity, or status of a [[ref:Presentation Definition]]. In this case,
+  a [[ref:Presentation Request]] that uses digital signatures may be required. 
 - `domain`, `challenge`, or `nonce` - Some presentation protocols may require
   that presentations be unique, i.e., it should be possible for a [[ref:Verifier]] to
   detect if a presentation has been used before. Other protocols may require
   that a presentation to be bound to a particular communication exchange, or
-  session. In these cases, a `Presentation Request` that provides a `domain`,
+  session. In these cases, a [[ref:Presentation Request]] that provides a `domain`,
   `challenge`,or `nonce` property may be required.
 
 
 ## Presentation Submission
 
 _Presentation Submissions_ are objects embedded within target claim
-negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in
-accordance with the requirements a [[ref:Verifier]] specified in a _Presentation
-Definition_. Embedded _Presentation Submission_ objects ****MUST**** be located
-within target data format as a `presentation_submission` property, which are
-composed and embedded as follows:
+negotiation formats that unify the presentation of proofs to a [[ref:Verifier]]
+in accordance with the requirements a [[ref:Verifier]] specified in a 
+[[ref:Presentation Definition]]. Embedded [[ref:Presentation Submission]] 
+objects ****MUST**** be located within target data format as a 
+`presentation_submission` property, which are composed and embedded as follows:
 
 1. The `presentation_submission` object ****MUST**** be included at the top-level 
   of an Embed Target, or in the specific location described in the 
@@ -1848,7 +1894,7 @@ JSONPath              | Description
         "isbn": "0-553-21311-3",
         "price": 8.99
       }, {
-         "category": "fiction",
+        "category": "fiction",
         "author": "J. R. R. Tolkien",
         "title": "The Lord of the Rings",
         "isbn": "0-395-19395-8",
