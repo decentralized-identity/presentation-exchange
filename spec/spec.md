@@ -1027,20 +1027,24 @@ Descriptor Objects_ are composed as follows:
         object for an essay submission. In this case, the [[ref:Verifier]] would be able
         to require that the essay be provided by the one submits the application. 
       - The object ****MAY**** contain an `is_holder` property, and if
-        present its value ****MUST**** be an object of key-value pairs composed
-        as follows:
-        - Each key ****MUST**** be the string value from a 
+        present its value ****MUST**** be an array of objects composed as
+        follows:
+        - The object ****MUST**** contain a `field_id` property. The value of
+           this property ****MUST**** be an array of strings, with each string
+           matching the string value from a 
           [_Input Descriptor Field Entry_](#input-descriptor-field-entry)
           object's `id` property. This identifies the attribute whose subject is
           of concern to the verifier.  
-        - The corresponding value ****MUST**** be one of the following strings:
+        - The object ****MUST**** contain a `directive` property. The value of
+          this property ****MUST****  be one of the following strings:
           - `required` - This indicates that the processing entity ****MUST****
-            include proof that the subject of the attribute identified by the
-            key is the same as the entity submitting the response.
+            include proof that the subject of each attribute identified by a
+            value in the `field_id` array is the same as the entity submitting
+            the response.
           - `preferred` - This indicates that it is ****RECOMMENDED**** that the
-            processing entity include proof that the subject of the attribute
-            identified by the key is the same as the entity submitting the
-            response.
+            processing entity include proof that the subject of each attribute
+            identified by a value in the `field_id` array is the same as the
+            entity submitting the response.
                                           
         The `is_holder` property would be used by a [[ref:Verifier]] to
         require that certain inputs be provided by a certain subject. For
@@ -1048,8 +1052,8 @@ Descriptor Objects_ are composed as follows:
         contain an _Input Descriptor_ object for a birthdate from a birth
         certificate. In this case, the [[ref:Verifier]] would be able to require
         that the holder of the birth certificate claim is the same as the
-        subject of the birthdate attribute. This is useful in cases where a
-        claim may have multiple subjects.
+        subject of the birthdate attribute. This is especially useful in cases
+        where a claim may have multiple subjects.
         
         For more information about techniques used to prove binding to a holder,
         please see [_Holder Binding_](#holder-binding). 
@@ -1245,9 +1249,10 @@ Evaluate each candidate input as follows:
     that any submission of data in relation to the candidate input is fulfilled
     using a _self_attested_ claim.
   6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-    and it contains an `is_holder` property, ensure that for each key in the
+    and it contains an `is_holder` property, ensure that for each object in the
     array, any submission of data in relation to the candidate input is
-    fulfilled by the subject of the attribute so identified.
+    fulfilled by the subject of the attributes so identified by the strings in
+    the `field_id` array.
 
 ::: note
 The above evaluation process assumes the User Agent will test each candidate
@@ -1531,15 +1536,20 @@ format-related rules above:
               "enum": ["required", "preferred"]
             },
             "is_holder": {
-              "type": "object",
+              "type": "array",
+              "items": {
+                "type": "object",
                 "properties":  {
-                  "status": {
+                  "field_id": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "directive": {
                     "type": "string",
                     "enum": ["required", "preferred"]
-                  },
-                  "subject": { "type": "string" }
+                  }
                 },
-                "required": ["status"],
+                "required": ["field_id", "directive"],
                 "additionalProperties": false
               }
             }
@@ -1555,6 +1565,7 @@ format-related rules above:
       "oneOf": [
         {
           "properties": {
+            "id": { "type": "string" },
             "path": {
               "type": "array",
               "items": { "type": "string" }
@@ -1567,6 +1578,7 @@ format-related rules above:
         },
         {
           "properties": {
+            "id": { "type": "string" },
             "path": {
               "type": "array",
               "items": { "type": "string" }
