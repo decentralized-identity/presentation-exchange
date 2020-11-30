@@ -136,6 +136,7 @@ conjunction with the
 <section>
 <div id="presentation-definition-with-locale" class="notice example"><a class="notice-link" href="#presentation-definition-with-locale">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token string">"en-US"</span><span class="token punctuation">,</span>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
       <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"name_input"</span><span class="token punctuation">,</span>
@@ -155,6 +156,8 @@ conjunction with the
 <section>
 <div id="presentation-submission-with-locale" class="notice example"><a class="notice-link" href="#presentation-submission-with-locale">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"a30e3b91-fb77-4d22-95fa-871689c322e2"</span><span class="token punctuation">,</span>
+    <span class="token property">"definition_id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token string">"de-DE"</span><span class="token punctuation">,</span>
     <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
       <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"name_input"</span><span class="token punctuation">,</span>
@@ -181,8 +184,8 @@ proofs may satisfy an input requirement.</p>
 <section>
 <div id="presentation-definition---basic-example" class="notice example"><a class="notice-link" href="#presentation-definition---basic-example">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token comment">// VP, OIDC, DIDComm, or CHAPI outer wrapper</span>
-
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input"</span><span class="token punctuation">,</span>
@@ -237,8 +240,8 @@ proofs may satisfy an input requirement.</p>
 <section>
 <div id="presentation-definition---single-group-example" class="notice example"><a class="notice-link" href="#presentation-definition---single-group-example">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token comment">// VP, OIDC, DIDComm, or CHAPI outer wrapper</span>
-
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
       <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Citizenship Information"</span><span class="token punctuation">,</span>
       <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token string">"pick"</span><span class="token punctuation">,</span>
@@ -306,8 +309,8 @@ proofs may satisfy an input requirement.</p>
 <section>
 <div id="presentation-definition---multi-group-example" class="notice example"><a class="notice-link" href="#presentation-definition---multi-group-example">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token comment">// VP, OIDC, DIDComm, or CHAPI outer wrapper</span>
-  
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
         <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Banking Information"</span><span class="token punctuation">,</span>
@@ -502,6 +505,8 @@ proofs may satisfy an input requirement.</p>
 <p>The following properties are for use at the top-level of the resource — all
 other properties that are not defined below MUST be ignored:</p>
 <ul>
+<li><code>id</code> - The resource <strong><strong>MUST</strong></strong> contain this property uniquely identifying
+the resource. The property <strong><strong>MUST</strong></strong> be a unique identifier, such as a <a href="https://tools.ietf.org/html/rfc4122">UUID</a>.</li>
 <li><code>name</code> - The resource <strong><strong>MAY</strong></strong> contain this property, and if present its
 value <strong><strong>SHOULD</strong></strong> be a human-friendly name that describes what the
 Presentation Definition pertains to.</li>
@@ -803,17 +808,13 @@ processing-related rules above:</p>
 implementation <strong><strong>MUST</strong></strong> produce an error if an unknown <code>rule</code> value is
 present.</li>
 <li>The <em>Submission Requirement</em>  <strong><strong>MUST</strong></strong> contain a <code>from</code> property or a
-<code>from_nested</code> property, not both, and if present their values must be a string
-or an array, respectively. If any of these conditions are not met, the
-implementation <strong><strong>MUST</strong></strong> produce an error.</li>
+<code>from_nested</code> property, not both, and if present their values must be a string or an array, respectively. If any of these conditions are not met,
+the implementation <strong><strong>MUST</strong></strong> produce an error.</li>
 <li>To determine whether a <em>Submission Requirement</em> is satisfied, used the
 following algorithm:
 <ul>
-<li>If the <code>rule</code> is <code>&quot;all&quot;</code>, then the <em>Submission Requirement</em> MUST contain a
-<code>from</code> property or a <code>from_nested</code> property, and of whichever are present,
-all inputs from the <code>from</code> group string specified or <em>Submission
-Requirements</em> in the <code>from_nested</code> array <strong><strong>MUST</strong></strong> be submitted or
-satisfied, respectively.</li>
+<li>If the <code>rule</code> is <code>&quot;all&quot;</code>, then the <em>Submission Requirement</em> MUST
+contain a <code>from</code> property or a <code>from_nested</code> property, and of whichever are present, all inputs from the <code>from</code> group string specified or <em>Submission Requirements</em> in the <code>from_nested</code> array <strong><strong>MUST</strong></strong> be submitted or satisfied, respectively.</li>
 <li>If the <code>rule</code> is <code>&quot;pick&quot;</code>, then the <em>Submission Requirement</em> MUST contain
 a <code>from</code> property or a <code>from_nested</code> property, and of whichever are
 present, they must be evaluated as follows:
@@ -925,9 +926,9 @@ why a certain item or set of data is being requested:</p>
 </section>
 </tab-panels>
 <h4 id="input-descriptor-objects"><a class="toc-anchor" href="#input-descriptor-objects">§</a> Input Descriptor Objects</h4>
-<p>[[ref:Input Descriptors]] are objects that describe what type of input data/claim,
-or sub-fields thereof, is required for submission to the [[ref:Verifier]]. <em>Input
-Descriptor Objects</em> are composed as follows:</p>
+<p>[[ref:Input Descriptors]] are objects that describe what type of input
+data/claim,  or sub-fields thereof, is required for submission to the [[ref:Verifier]].
+<em>Input Descriptor Objects</em> are composed as follows:</p>
 <ul>
 <li>The object <strong><strong>MUST</strong></strong> contain an <code>id</code> property. The value of the <code>id</code>
 property <strong><strong>MUST</strong></strong> be a unique identifying string that does not conflict
@@ -1493,6 +1494,7 @@ format-related rules above:</p>
     <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
       <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
@@ -1508,7 +1510,7 @@ format-related rules above:</p>
           <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/input_descriptors"</span> <span class="token punctuation">}</span>
         <span class="token punctuation">}</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
-      <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"input_descriptors"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"id"</span><span class="token punctuation">,</span> <span class="token string">"input_descriptors"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
       <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
@@ -1517,7 +1519,7 @@ format-related rules above:</p>
 <h3 id="presentation-requests"><a class="toc-anchor" href="#presentation-requests">§</a> Presentation Requests</h3>
 <p>Presentation Definitions may be sent from a [[ref:Verifier]] to a Holder using
 a wide variety of transport mechanisms or claim exchange protocols. This
-specification does not define a transport mechanism for <code>Presentation Definitions</code> (or <code>[[ref:Presentation Request]]</code>), but does note that different
+specification does not define a transport mechanism for <code>Presentation Definitions</code> (or [[ref:Presentation Request]]), but does note that different
 use cases, supported signature schemes, protocols, and threat models may
 require a [[ref:Presentation Request]]to have certain properties:</p>
 <ul>
@@ -1539,9 +1541,18 @@ in accordance with the requirements a [[ref:Verifier]] specified in a
 objects <strong><strong>MUST</strong></strong> be located within target data format as a
 <code>presentation_submission</code> property, which are composed and embedded as follows:</p>
 <ol>
-<li>The <code>presentation_submission</code> object <strong><strong>MUST</strong></strong> be included at the top-level
-of an Embed Target, or in the specific location described in the
-<a href="#embed-locations">Embed Locations table</a> in the <a href="#embed-target">Embed Target</a> section below.</li>
+<li>The <code>presentation_submission</code> object <strong><strong>MUST</strong></strong> be included at the top-level of an Embed Target, or in the specific location described in the
+<a href="#embed-locations">Embed Locations table</a> in the <a href="#embed-target">Embed Target</a>
+section below.</li>
+<li>The object <strong><strong>MUST</strong></strong> include <code>id</code> and <code>definition_id</code> properties.
+<ul>
+<li>The <code>id</code> property exists to uniquely identify the resource. The property
+<strong><strong>MUST</strong></strong> be a unique identifier, such as a <a href="https://tools.ietf.org/html/rfc4122">UUID</a>.</li>
+<li>The <code>definition_id</code> property exists to link the submission to
+its definition and <strong><strong>MUST</strong></strong> be the <code>id</code> value of a valid
+[[ref:Presentation Definition]].</li>
+</ul>
+</li>
 <li>The object <strong><strong>MUST</strong></strong> include a <code>descriptor_map</code> property, and its value
 <strong><strong>MUST</strong></strong> be an array of <em>Input Descriptor Mapping Objects</em>, each being
 composed as follows:
@@ -1574,6 +1585,8 @@ presence of a multi-claim envelope format, meaning the claim indending to be sel
 <p><strong><strong>Example Nested Submission</strong></strong></p>
 <pre class="language-javascript"><code class="language-javascript"><span class="token punctuation">{</span>
   <span class="token string">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token string">"id"</span><span class="token operator">:</span> <span class="token string">"a30e3b91-fb77-4d22-95fa-871689c322e2"</span><span class="token punctuation">,</span>
+    <span class="token string">"definition_id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token string">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span> 
         <span class="token string">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
@@ -1688,15 +1701,15 @@ the top level of the embed target, the location is described in JSONPath syntax.
     <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
       <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"definition_id"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
           <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/descriptor"</span> <span class="token punctuation">}</span>
         <span class="token punctuation">}</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
-      <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"descriptor_map"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"id"</span><span class="token punctuation">,</span> <span class="token string">"definition_id"</span><span class="token punctuation">,</span> <span class="token string">"descriptor_map"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
       <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
@@ -1966,6 +1979,8 @@ specification that call for JSONPath expression execution.</p>
     <span class="token string">"PresentationSubmission"</span>
   <span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"a30e3b91-fb77-4d22-95fa-871689c322e2"</span><span class="token punctuation">,</span>
+    <span class="token property">"definition_id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
@@ -2066,6 +2081,8 @@ specification that call for JSONPath expression execution.</p>
   <span class="token property">"sub"</span><span class="token operator">:</span> <span class="token string">"248289761001"</span><span class="token punctuation">,</span>
   <span class="token property">"preferred_username"</span><span class="token operator">:</span> <span class="token string">"superman445"</span><span class="token punctuation">,</span>
   <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"a30e3b91-fb77-4d22-95fa-871689c322e2"</span><span class="token punctuation">,</span>
+    <span class="token property">"definition_id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
@@ -2287,15 +2304,15 @@ specification that call for JSONPath expression execution.</p>
 <td>Section 5 of this document</td>
 </tr>
 </tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Presentation Submission</th>
+<th>Values</th>
+</tr>
+</thead>
 <tbody>
-<tr>
-<td>Presentation Submission</td>
-<td>Values</td>
-</tr>
-<tr>
-<td>------------------------------</td>
-<td>------------</td>
-</tr>
 <tr>
 <td>Claim Name:</td>
 <td><code>presentation_submission</code></td>

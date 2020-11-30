@@ -126,6 +126,7 @@ conjunction with the
 ```json
 {
   "presentation_definition": {
+    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "locale": "en-US",
     "input_descriptors": [{
       "id": "name_input",
@@ -150,6 +151,8 @@ conjunction with the
 ```json
 {
   "presentation_submission": {
+    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
+    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "locale": "de-DE",
     "descriptor_map": [{
       "id": "name_input",
@@ -186,8 +189,8 @@ proofs may satisfy an input requirement.
 ```json
 {
   // VP, OIDC, DIDComm, or CHAPI outer wrapper
-
   "presentation_definition": {
+    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "input_descriptors": [
       {
         "id": "banking_input",
@@ -247,8 +250,8 @@ proofs may satisfy an input requirement.
 ```json
 {
   // VP, OIDC, DIDComm, or CHAPI outer wrapper
-
   "presentation_definition": {
+    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "submission_requirements": [{
       "name": "Citizenship Information",
       "rule": "pick",
@@ -321,8 +324,8 @@ proofs may satisfy an input requirement.
 ```json
 {
   // VP, OIDC, DIDComm, or CHAPI outer wrapper
-  
   "presentation_definition": {
+    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "submission_requirements": [
       {
         "name": "Banking Information",
@@ -516,6 +519,8 @@ proofs may satisfy an input requirement.
 The following properties are for use at the top-level of the resource — all
 other properties that are not defined below MUST be ignored:
 
+- `id` - The resource ****MUST**** contain this property uniquely identifying
+the resource. The property ****MUST**** be a unique identifier, such as a [UUID](https://tools.ietf.org/html/rfc4122).
 - `name` - The resource ****MAY**** contain this property, and if present its
   value ****SHOULD**** be a human-friendly name that describes what the
   Presentation Definition pertains to.
@@ -834,16 +839,12 @@ processing-related rules above:
   implementation ****MUST**** produce an error if an unknown `rule` value is
   present.
 2. The _Submission Requirement_  ****MUST**** contain a `from` property or a
-  `from_nested` property, not both, and if present their values must be a string
-  or an array, respectively. If any of these conditions are not met, the
-  implementation ****MUST**** produce an error.
+  `from_nested` property, not both, and if present their values must be a string or an array, respectively. If any of these conditions are not met, 
+  the implementation ****MUST**** produce an error.
 3. To determine whether a _Submission Requirement_ is satisfied, used the
   following algorithm:
-    - If the `rule` is `"all"`, then the _Submission Requirement_ MUST contain a
-      `from` property or a `from_nested` property, and of whichever are present,
-      all inputs from the `from` group string specified or _Submission
-      Requirements_ in the `from_nested` array ****MUST**** be submitted or
-      satisfied, respectively.
+    - If the `rule` is `"all"`, then the _Submission Requirement_ MUST 
+      contain a `from` property or a `from_nested` property, and of whichever are present, all inputs from the `from` group string specified or _Submission Requirements_ in the `from_nested` array ****MUST**** be submitted or satisfied, respectively.
     - If the `rule` is `"pick"`, then the _Submission Requirement_ MUST contain
       a `from` property or a `from_nested` property, and of whichever are
       present, they must be evaluated as follows:
@@ -858,7 +859,6 @@ processing-related rules above:
           or less than the value of the `max` property.
 
 ### Input Descriptors
-
 [[ref:Input Descriptors]] are objects used to describe the information a [[ref:Verifier]]
 requires of a Holder before they will proceed with an interaction. If no 
 `submission_requirements` objects are present, all `input_descriptor` objects 
@@ -967,9 +967,9 @@ why a certain item or set of data is being requested:
 
 #### Input Descriptor Objects
 
-[[ref:Input Descriptors]] are objects that describe what type of input data/claim, 
-or sub-fields thereof, is required for submission to the [[ref:Verifier]]. _Input
-Descriptor Objects_ are composed as follows:
+[[ref:Input Descriptors]] are objects that describe what type of input 
+data/claim,  or sub-fields thereof, is required for submission to the [[ref:Verifier]].
+ _Input Descriptor Objects_ are composed as follows:
 
   - The object ****MUST**** contain an `id` property. The value of the `id`
     property ****MUST**** be a unique identifying string that does not conflict
@@ -1525,6 +1525,7 @@ format-related rules above:
     "presentation_definition": {
       "type": "object",
       "properties": {
+        "id": { "type": "string" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
         "locale": { "type": "string" },
@@ -1540,7 +1541,7 @@ format-related rules above:
           "items": { "$ref": "#/definitions/input_descriptors" }
         }
       },
-      "required": ["input_descriptors"],
+      "required": ["id", "input_descriptors"],
       "additionalProperties": false
     }
   }
@@ -1551,7 +1552,7 @@ format-related rules above:
 Presentation Definitions may be sent from a [[ref:Verifier]] to a Holder using 
 a wide variety of transport mechanisms or claim exchange protocols. This
 specification does not define a transport mechanism for `Presentation
-Definitions` (or `[[ref:Presentation Request]]`), but does note that different 
+Definitions` (or [[ref:Presentation Request]]), but does note that different 
 use cases, supported signature schemes, protocols, and threat models may
 require a [[ref:Presentation Request]]to have certain properties:
 - Signature verification - A Holder may wish to have assurances as to the
@@ -1574,10 +1575,16 @@ in accordance with the requirements a [[ref:Verifier]] specified in a
 objects ****MUST**** be located within target data format as a 
 `presentation_submission` property, which are composed and embedded as follows:
 
-1. The `presentation_submission` object ****MUST**** be included at the top-level 
-  of an Embed Target, or in the specific location described in the 
-  [Embed Locations table](#embed-locations) in the [Embed Target](#embed-target) section below.
-2. The object ****MUST**** include a `descriptor_map` property, and its value
+1. The `presentation_submission` object ****MUST**** be included at the top-level of an Embed Target, or in the specific location described in the 
+[Embed Locations table](#embed-locations) in the [Embed Target](#embed-target)
+section below.
+2. The object ****MUST**** include `id` and `definition_id` properties.
+    - The `id` property exists to uniquely identify the resource. The property 
+  ****MUST**** be a unique identifier, such as a [UUID](https://tools.ietf.org/html/rfc4122). 
+    - The `definition_id` property exists to link the submission to 
+    its definition and ****MUST**** be the `id` value of a valid
+    [[ref:Presentation Definition]].
+3. The object ****MUST**** include a `descriptor_map` property, and its value
   ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being
   composed as follows:
     - The object ****MUST**** include an `id` property, and its value
@@ -1606,6 +1613,8 @@ objects ****MUST**** be located within target data format as a
 ```javascript
 {
   "presentation_submission": {
+    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
+    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "descriptor_map": [
       { 
         "id": "banking_input_2",
@@ -1713,15 +1722,15 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
     "presentation_submission": {
       "type": "object",
       "properties": {
-        "locale": {
-          "type": "string"
-        },
+        "id": { "type": "string" },
+        "definition_id": { "type": "string" },
+        "locale": { "type": "string" },
         "descriptor_map": {
           "type": "array",
           "items": { "$ref": "#/definitions/descriptor" }
         }
       },
-      "required": ["descriptor_map"],
+      "required": ["id", "definition_id", "descriptor_map"],
       "additionalProperties": false
     }
   },
@@ -1803,7 +1812,7 @@ JSONPath              | Description
 `*`	                  | Wildcard matching all objects/elements regardless their names
 `[]`	                | Subscript operator
 `[,]`	                | Union operator for alternate names or array indices as a set
-`[start:end:step]` | Array slice operator borrowed from ES4 / Python
+`[start:end:step]`    | Array slice operator borrowed from ES4 / Python
 `?()`                 | Applies a filter (script) expression via static evaluation
 `()`	                | Script expression via static evaluation 
 
@@ -1849,20 +1858,20 @@ JSONPath              | Description
 
 JSONPath                      | Description
 ------------------------------|------------
-`$.store.book[*].author`       | The authors of all books in the store
-`$..author`                     | All authors
-`$.store.*`                    | All things in store, which are some books and a red bicycle
-`$.store..price`                | The price of everything in the store
-`$..book[2]`                    | The third book
-`$..book[(@.length-1)]`         | The last book via script subscript
-`$..book[-1:]`                  | The last book via slice
-`$..book[0,1]`                  | The first two books via subscript union
-`$..book[:2]`                  | The first two books via subscript array slice
-`$..book[?(@.isbn)]`            | Filter all books with isbn number
-`$..book[?(@.price<10)]`        | Filter all books cheaper than 10
-`$..book[?(@.price==8.95)]`        | Filter all books that cost 8.95
+`$.store.book[*].author`      | The authors of all books in the store
+`$..author`                   | All authors
+`$.store.*`                   | All things in store, which are some books and a red bicycle
+`$.store..price`              | The price of everything in the store
+`$..book[2]`                  | The third book
+`$..book[(@.length-1)]`       | The last book via script subscript
+`$..book[-1:]`                | The last book via slice
+`$..book[0,1]`                | The first two books via subscript union
+`$..book[:2]`                 | The first two books via subscript array slice
+`$..book[?(@.isbn)]`          | Filter all books with isbn number
+`$..book[?(@.price<10)]`      | Filter all books cheaper than 10
+`$..book[?(@.price==8.95)]`   | Filter all books that cost 8.95
 `$..book[?(@.price<30 && @.category=="fiction")]`        | Filter all fiction books cheaper than 30
-`$..*`                         | All members of JSON structure
+`$..*`                        | All members of JSON structure
 
 ## External References
 
@@ -1926,6 +1935,8 @@ JSONPath                      | Description
     "PresentationSubmission"
   ],
   "presentation_submission": {
+    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
+    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "descriptor_map": [
       {
         "id": "banking_input_2",
@@ -2031,6 +2042,8 @@ JSONPath                      | Description
   "sub": "248289761001",
   "preferred_username": "superman445",
   "presentation_submission": {
+    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
+    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "descriptor_map": [
       {
         "id": "banking_input_2",
@@ -2209,14 +2222,15 @@ This specification registers the claims in section [Registry Contents]() in the 
 ##### Registry Contents
 
 Presentation Definition | Values
-------------------------------|------------
+------------------------|------------
 Claim Name: | `presentation_definition`
 Claim Description: | Presentation Definition
 Change Controller: | DIF Claims & Credentials - Working Group - https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS
 Specification Document(s): | Section 5 of this document
 
-Presentation Submission                      | Values
-------------------------------|------------
+
+Presentation Submission | Values
+------------------------|------------
 Claim Name: | `presentation_submission`
 Claim Description: | Presentation Submission
 Change Controller: | DIF Claims & Credentials - Working Group - https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS

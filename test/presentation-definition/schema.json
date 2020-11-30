@@ -180,6 +180,7 @@
     "presentation_definition": {
       "type": "object",
       "properties": {
+        "id": { "type": "string" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
         "locale": { "type": "string" },
@@ -195,7 +196,7 @@
           "items": { "$ref": "#/definitions/input_descriptors" }
         }
       },
-      "required": ["input_descriptors"],
+      "required": ["id", "input_descriptors"],
       "additionalProperties": false
     }
   }
