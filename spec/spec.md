@@ -1026,21 +1026,37 @@ data/claim,  or sub-fields thereof, is required for submission to the [[ref:Veri
         application `presentation definition` might contain an [[ref:Input Descriptor]]
         object for an essay submission. In this case, the [[ref:Verifier]] would be able
         to require that the essay be provided by the one submits the application. 
-      - The object ****MAY**** contain a `subject_is_holder` property, and if
-        present its value ****MUST**** be one of the following strings:
-        - `required` - This indicates that the processing entity ****MUST****
-          include proof that the subject of the claim is the same as the
-          entity submitting the response.
-        - `preferred` - This indicates that it is ****RECOMMENDED**** that the
-          processing entity include proof that the subject of the claim is
-          the same as the entity submitting the response, i.e., the holder.
-      
-        The `subject_is_holder` property could be used by a [[ref:Verifier]] to require
-        that certain inputs be provided by e subject. For example, an identity
-        verification `presentation definition` might contain an _Input
-        Descriptor_ object for a passport number. In this case, the [[ref:Verifier]]
-        would be able to require that the passport claim was issued to the
-        one who submits the identity verification. 
+      - The object ****MAY**** contain an `is_holder` property, and if
+        present its value ****MUST**** be an array of objects composed as
+        follows:
+        - The object ****MUST**** contain a `field_id` property. The value of
+           this property ****MUST**** be an array of strings, with each string
+           matching the string value from a 
+          [_Input Descriptor Field Entry_](#input-descriptor-field-entry)
+          object's `id` property. This identifies the attribute whose subject is
+          of concern to the verifier.  
+        - The object ****MUST**** contain a `directive` property. The value of
+          this property ****MUST****  be one of the following strings:
+          - `required` - This indicates that the processing entity ****MUST****
+            include proof that the subject of each attribute identified by a
+            value in the `field_id` array is the same as the entity submitting
+            the response.
+          - `preferred` - This indicates that it is ****RECOMMENDED**** that the
+            processing entity include proof that the subject of each attribute
+            identified by a value in the `field_id` array is the same as the
+            entity submitting the response.
+                                          
+        The `is_holder` property would be used by a [[ref:Verifier]] to
+        require that certain inputs be provided by a certain subject. For
+        example, an identity verification `presentation definition` might
+        contain an _Input Descriptor_ object for a birthdate from a birth
+        certificate. In this case, the [[ref:Verifier]] would be able to require
+        that the holder of the birth certificate claim is the same as the
+        subject of the birthdate attribute. This is especially useful in cases
+        where a claim may have multiple subjects.
+        
+        For more information about techniques used to prove binding to a holder,
+        please see [_Holder Binding_](#holder-binding). 
         
       - The object ****MAY**** contain a `fields` property, and its value
         ****MUST**** be an array of
@@ -1060,6 +1076,9 @@ data/claim,  or sub-fields thereof, is required for submission to the [[ref:Veri
             JSON-LD/JWT-based
             [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
             vanilla JSON Web Tokens (JWTs) [[spec:rfc7797]].
+          - The object ****MAY**** contain an `id` property, and if present
+            its value ****MUST**** be a string that is unique from any other
+            field object's `id` property.
           - The object ****MAY**** contain a `purpose` property, and if present
             its value ****MUST**** be a string that describes the purpose for
             which the field is being requested.
@@ -1228,11 +1247,12 @@ Evaluate each candidate input as follows:
   5. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
     contains a `subject_is_issuer` property set to the value `required`, ensure
     that any submission of data in relation to the candidate input is fulfilled
-    using a _self_attested_ claims.
-  6. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
-    contains a `subject_is_holder` property set to the value `required`, ensure
-    that any submission of data in relation to the candidate input is fulfilled
-    by the subject of the claim.
+    using a _self_attested_ claim.
+  6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+    and it contains an `is_holder` property, ensure that for each object in the
+    array, any submission of data in relation to the candidate input is
+    fulfilled by the subject of the attributes so identified by the strings in
+    the `field_id` array.
 
 ::: note
 The above evaluation process assumes the User Agent will test each candidate
@@ -1336,6 +1356,46 @@ information to resolve the status of a claim.
 </section>
 
 </tab-panel>
+
+#### Holder Binding
+Credentials often rely on proofs of holder binding for their validity. A
+verifier may wish to determine that a particular claim, or set of claims is
+bound to the claim holder. This can help the verifier to determine the
+legitimacy of the presented proofs. Some examples of holder binding include
+proof of identifier control, proof the holder knows a secret, or biometrics.
+
+The claim issuer makes proofs of holder binding possible by including holder
+information either in the claim or the claim signature. 
+
+##### Proof of Identifier Control
+A number of claim types include an identifier for the claim subject. A verifier
+may wish to ascertain that one of the subject identified in the claim is the one
+submitting the proof, or has consented to the proof submission. A claim may also
+include an identifier for the holder, independent of the subject identifiers. 
+
+One mechanism for providing such proofs is the use of a DID as the identifier
+for the claim subject or holder. DIDs enable an entity to provide a
+cryptographic proof of control of the identifier, usually through a
+demonstration that the holder knows some secret value, such as a private key.
+The holder can demonstrate the same proof of control when presenting the claim.
+In addition to verifying the authenticity and origin of the claim itself, a
+verifier can verify that the holder of the claim still controls the identifier.
+
+##### Link Secrets
+Some claim signatures support the inclusion of holder-provided secrets that
+become incorporated into the signature, but remain hidden from the claim issuer.
+One common use of this capability is to bind the claim to the holder. This is
+sometimes called a link secret. Just as with proof of control of an identifier,
+link secret proofs demonstrate that the holder knows some secret value. Upon
+presentation to a verifier, the holder demonstrates knowledge of the secret
+without revealing it. The verifier can verify that the holder knows the link
+secret, and that the link secret is contained in the claim signature.
+
+##### Biometrics
+This type of holder binding, instead of relying on demonstrating knowledge of
+some secret value, relies on the evaluation of biometric data. There are a
+number of mechanisms for safely embedding biometric information in a claim such
+that only a person who can confirm the biometric may present the claim. 
 
 ### JSON Schema
 
@@ -1475,9 +1535,23 @@ format-related rules above:
               "type": "string",
               "enum": ["required", "preferred"]
             },
-            "subject_is_holder": {
-              "type": "string",
-              "enum": ["required", "preferred"]
+            "is_holder": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties":  {
+                  "field_id": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "directive": {
+                    "type": "string",
+                    "enum": ["required", "preferred"]
+                  }
+                },
+                "required": ["field_id", "directive"],
+                "additionalProperties": false
+              }
             }
           },
           "additionalProperties": false
@@ -1491,6 +1565,7 @@ format-related rules above:
       "oneOf": [
         {
           "properties": {
+            "id": { "type": "string" },
             "path": {
               "type": "array",
               "items": { "type": "string" }
@@ -1503,6 +1578,7 @@ format-related rules above:
         },
         {
           "properties": {
+            "id": { "type": "string" },
             "path": {
               "type": "array",
               "items": { "type": "string" }
