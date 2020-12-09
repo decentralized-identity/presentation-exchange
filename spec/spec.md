@@ -965,6 +965,42 @@ Descriptor Objects_ are composed as follows:
         Setting the property to `false`, or omitting the property, indicates
         the processing entity ****MAY**** submit a response that contains more
         than the data described in the `fields` array.
+      - The object ****MAY**** contain a `statuses` property, and if present, its value 
+        ****MUST**** be an object that includes one or more of the following status 
+        properties: `active`, `preliminary`, `suspended`, `revoked`. If not present, 
+        the Verifier is not imposing any status considerations. The values for all 
+        status properties are objects, defined as follows:
+        - `active` - a credential that is not revoked, expired, suspended, or in any 
+          type of deactivated state.
+          - The object ****MUST**** contain a `state` property, and its value ****MUST**** 
+          be one of the following strings:
+            - `required`: the credential ****MUST**** be active.
+            - `allowed`: the credential ****MAY**** be active.
+            - `disallowed`: the credential ****MUST NOT**** be active.
+        - `preliminary` - a credential is in an interim state of approval or awaiting 
+          some additional steps to be fully activated.
+          - The object ****MUST**** contain a `state` property, and its value ****MUST**** 
+          be one of the following strings:
+            - `required`: the credential ****MUST**** be in a preliminary state.
+            - `allowed`: the credential ****MAY**** be in a preliminary state.
+            - `disallowed`: the credential ****MUST NOT**** be in a preliminary state.
+        - `suspended` - a credential is suspended if the Issuer has published an explicit signal 
+          that the credential is in an inactive state and ****should not**** currently be relied 
+          upon, but may become active again in the future.
+          - The object ****MUST**** contain a `state` property, and its value ****MUST**** 
+          be one of the following strings:
+            - `required`: the credential ****MUST**** be in a suspended state.
+            - `allowed`: the credential ****MAY**** be in a suspended state.
+            - `disallowed`: the credential ****MUST NOT**** be in a suspended state.
+        - `revoked` - a credential is revoked if the Issuer has published an explicit signal 
+          that the credential in question ****should not**** be relied upon going forward 
+          as an accurate, secure reflection of the Issuer's statements about the Subject 
+          within the scope of the credential.
+          - The object ****MUST**** contain a `state` property, and its value ****MUST**** 
+          be one of the following strings:
+            - `required`: the credential ****MUST**** be in a revoked state.
+            - `allowed`: the credential ****MAY**** be in a revoked state.
+            - `disallowed`: the credential ****MUST NOT**** be in a revoked state.
       - The object ****MAY**** contain a `subject_is_issuer` property, and if
         present its value ****MUST**** be one of the following strings:
         - `required` - This indicates that the processing entity ****MUST****
@@ -1415,6 +1451,47 @@ format-related rules above:
           "type": "object",
           "properties": {
             "limit_disclosure": { "type": "boolean" },
+            "statuses": {
+              "type": "object",
+              "properties": {
+                "active": {
+                  "type": "object",
+                  "properties": {
+                    "state": {
+                      "type": "string",
+                      "enum": ["required", "allowed", "disallowed"]
+                    }
+                  }
+                },
+                "preliminary": {
+                  "type": "object",
+                  "properties": {
+                    "state": {
+                      "type": "string",
+                      "enum": ["required", "allowed", "disallowed"]
+                    }
+                  }
+                },
+                "suspended": {
+                  "type": "object",
+                  "properties": {
+                    "state": {
+                      "type": "string",
+                      "enum": ["required", "allowed", "disallowed"]
+                    }
+                  }
+                },
+                "revoked": {
+                  "type": "object",
+                  "properties": {
+                    "state": {
+                      "type": "string",
+                      "enum": ["required", "allowed", "disallowed"]
+                    }
+                  }
+                }
+              }
+            },
             "fields": {
               "type": "array",
               "items": { "$ref": "#/definitions/field" }
