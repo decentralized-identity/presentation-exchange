@@ -490,7 +490,7 @@ other properties that are not defined below MUST be ignored:
   `jwt_vc`, `jwt_vp`, etc.) to inform the Holder of the credential format 
   configurations the [[ref:Verifier]] can process. The value for each property included 
   ****MUST**** be an object composed as follows:
-    - The object ****MAY**** include a format-specific property (i.e. `alg`, 
+    - The object ****MUST**** include a format-specific property (i.e. `alg`, 
       `proof_type`) that expresses which algorithms the [[ref:Verifier]] supports for the 
       format, and if present, its value ****MUST**** be an array of one or more 
       of the format-specific algorithmic identifier references, as noted in the 
@@ -967,7 +967,7 @@ Descriptor Objects_ are composed as follows:
         than the data described in the `fields` array.
       - The object ****MAY**** contain a `statuses` property, and if present, its value 
         ****MUST**** be an object that includes one or more of the following status 
-        properties: `active`, `preliminary`, `suspended`, `revoked`. If not present, 
+        properties: `active`, `suspended`, `revoked`. If not present, 
         the Verifier is not imposing any status considerations. The values for all 
         status properties are objects, defined as follows:
         - `active` - a credential that is not revoked, expired, suspended, or in any 
@@ -1033,15 +1033,15 @@ Descriptor Objects_ are composed as follows:
           - The object ****MUST**** contain a `path` property, and its value
             ****MUST**** be an array of one or more
             [JSONPath](https://goessner.net/articles/JsonPath/) string
-            expressions, as defined in the
-            [JSONPath Syntax Definition](#jsonpath-syntax-definition) section,
-            that select some subset of values from the target input. The array
-            ****MUST**** be evaluated from 0-index forward, and the first
-            expressions to return a value will be used for the rest of the
-            entry's evaluation. The ability to declare multiple expressions this
-            way allows the [[ref:Verifier]] to account for format differences - for
-            example: normalizing the differences in structure between
-            JSON-LD/JWT-based
+            expressions, as defined in the 
+            [JSONPath Syntax Definition](#jsonpath-syntax-definition) section, 
+            that select a target value from the input. The array ****MUST**** 
+            be evaluated from 0-index forward, and the first expressions to 
+            return a value will be used for the rest of the entry's evaluation. 
+            The ability to declare multiple expressions this way allows the 
+            [[ref:Verifier]] to account for format differences - for 
+            example: normalizing the differences in structure between 
+            JSON-LD/JWT-based 
             [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
             vanilla JSON Web Tokens (JWTs) [[spec:rfc7797]].
           - The object ****MAY**** contain a `purpose` property, and if present

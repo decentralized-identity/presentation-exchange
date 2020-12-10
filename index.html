@@ -490,7 +490,7 @@ configurations the <a class="term-reference" href="#term:verifier">Verifier</a> 
 <strong><strong>MUST</strong></strong> be an object composed as follows:
 <ul>
 <li>
-<p>The object <strong><strong>MAY</strong></strong> include a format-specific property (i.e. <code>alg</code>,
+<p>The object <strong><strong>MUST</strong></strong> include a format-specific property (i.e. <code>alg</code>,
 <code>proof_type</code>) that expresses which algorithms the <a class="term-reference" href="#term:verifier">Verifier</a> supports for the
 format, and if present, its value <strong><strong>MUST</strong></strong> be an array of one or more
 of the format-specific algorithmic identifier references, as noted in the
@@ -820,7 +820,7 @@ why a certain item or set of data is being requested:</p>
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-11" class="notice example"><a class="notice-link" href="#example-11">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="example-21" class="notice example"><a class="notice-link" href="#example-21">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -867,7 +867,7 @@ why a certain item or set of data is being requested:</p>
 </div>
 </section>
 <section>
-<div id="example-12" class="notice example"><a class="notice-link" href="#example-12">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-22" class="notice example"><a class="notice-link" href="#example-22">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
   <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -944,7 +944,7 @@ than the data described in the <code>fields</code> array.</p>
 <li>
 <p>The object <strong><strong>MAY</strong></strong> contain a <code>statuses</code> property, and if present, its value
 <strong><strong>MUST</strong></strong> be an object that includes one or more of the following status
-properties: <code>active</code>, <code>preliminary</code>, <code>suspended</code>, <code>revoked</code>. If not present,
+properties: <code>active</code>, <code>suspended</code>, <code>revoked</code>. If not present,
 the Verifier is not imposing any status considerations. The values for all
 status properties are objects, defined as follows:</p>
 <ul>
@@ -1041,11 +1041,11 @@ each being composed as follows:</p>
 <a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> string
 expressions, as defined in the
 <a href="#jsonpath-syntax-definition" >JSONPath Syntax Definition</a> section,
-that select some subset of values from the target input. The array
-<strong><strong>MUST</strong></strong> be evaluated from 0-index forward, and the first
-expressions to return a value will be used for the rest of the
-entry’s evaluation. The ability to declare multiple expressions this
-way allows the <a class="term-reference" href="#term:verifier">Verifier</a> to account for format differences - for
+that select a target value from the input. The array <strong><strong>MUST</strong></strong>
+be evaluated from 0-index forward, and the first expressions to
+return a value will be used for the rest of the entry’s evaluation.
+The ability to declare multiple expressions this way allows the
+<a class="term-reference" href="#term:verifier">Verifier</a> to account for format differences - for
 example: normalizing the differences in structure between
 JSON-LD/JWT-based
 <a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3=""href="https://www.w3.org/TR/vc-data-model/" >Verifiable Credentials</a> and
@@ -1240,7 +1240,7 @@ contains a <code>subject_is_holder</code> property set to the value <code>requir
 that any submission of data in relation to the candidate input is fulfilled
 by the subject of the credential</li>
 </ol>
-<div id="note-6" class="notice note"><a class="notice-link" href="#note-6">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
+<div id="note-11" class="notice note"><a class="notice-link" href="#note-11">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
 criteria for inclusion in submission. Any additional testing of a candidate
 input for a schema match beyond comparison of the schema <code>uri</code> (e.g. specific
