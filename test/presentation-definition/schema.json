@@ -1,6 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "uri": { "type": "string" },
+        "required": { "type": "boolean" }
+      },
+      "required": ["uri"],
+      "additionalProperties": false
+    },
     "filter": {
       "type": "object",
       "properties": {
@@ -98,23 +107,16 @@
       "type": "object",
       "properties": {
         "id": { "type": "string" },
+        "name": { "type": "string" },
+        "purpose": { "type": "string" },
+        "metadata": { "type": "object" },
         "group": {
           "type": "array",
           "items": { "type": "string" }
         },
         "schema": {
-          "type": "object",
-          "properties": {
-            "uri": {
-              "type": "array",
-              "items": { "type": "string" }
-            },
-            "name": { "type": "string" },
-            "purpose": { "type": "string" },
-            "metadata": { "type": "string" }
-          },
-          "required": ["uri", "name"],
-          "additionalProperties": false
+          "type": "array",
+          "items": { "$ref": "#/definitions/schema" }
         },
         "constraints": {
           "type": "object",
@@ -178,6 +180,7 @@
     "presentation_definition": {
       "type": "object",
       "properties": {
+        "id": { "type": "string" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
         "locale": { "type": "string" },
@@ -193,7 +196,7 @@
           "items": { "$ref": "#/definitions/input_descriptors" }
         }
       },
-      "required": ["input_descriptors"],
+      "required": ["id", "input_descriptors"],
       "additionalProperties": false
     }
   }

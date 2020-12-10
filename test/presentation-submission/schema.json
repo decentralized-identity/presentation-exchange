@@ -6,15 +6,15 @@
     "presentation_submission": {
       "type": "object",
       "properties": {
-        "locale": {
-          "type": "string"
-        },
+        "id": { "type": "string" },
+        "definition_id": { "type": "string" },
+        "locale": { "type": "string" },
         "descriptor_map": {
           "type": "array",
           "items": { "$ref": "#/definitions/descriptor" }
         }
       },
-      "required": ["descriptor_map"],
+      "required": ["id", "definition_id", "descriptor_map"],
       "additionalProperties": false
     }
   },

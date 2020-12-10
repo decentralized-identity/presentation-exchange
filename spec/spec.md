@@ -37,11 +37,11 @@ To address these needs, this Presentation Exchange specification codifies the
 `Presentation Definition` data format Verifiers can use to articulate proof
 requirements, as well as the `Presentation Submission` data format Holders can
 use to submit proofs in accordance with them. The specification is designed to 
-be both credential format and transport envelope agnostic, meaning an implementer 
+be both claim format and transport envelope agnostic, meaning an implementer 
 can use [JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519), 
 [Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/), 
 [JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions), 
-or any other credential format, and convey them 
+or any other claim format, and convey them 
 via [Open ID Connect](https://openid.net/connect/), [DIDComm](https://identity.foundation/didcomm-messaging/spec/), 
 [Credential Handler API](https://w3c-ccg.github.io/credential-handler-api/), 
 or any other transport envelope. The goal of 
@@ -75,14 +75,31 @@ work is being done.
 [[def:Verifier, Verifiers]]
 ~ The entity that defines what proofs they require from a [[ref:Holder]] (via a Presentation Definition) in order to proceed with an interaction.
 
+[[def:Claim, Claims]]
+~ An assertion made about a given entity. Used as an umbrella term for Credential, Assertion, Attestation, etc.  
+
 [[def:Presentation Definition]]
-~ Presentation Definitions are objects that articulate what proofs a Verifier requires. These help the Verifier to decide how or whether to interact with a Holder. Presentation Definitions are composed of inputs, which describe the forms and details of the proofs they require, and optional sets of selection rules, to allow Holders flexibility in cases where many different types of proofs may satisfy an input requirement.
+~ Presentation Definitions are objects that articulate what proofs a Verifier
+requires. These help the Verifier to decide how or whether to interact with a
+Holder. Presentation Definitions are composed of inputs, which describe the
+forms and details of the proofs they require, and optional sets of selection
+rules, to allow Holders flexibility in cases where many different types of
+proofs may satisfy an input requirement.
+
+[[def:Presentation Request]]
+~ Presentation Requests are transport mechanisms for Presentation Definitions.
+Presentation Requests can take multiple shapes, using a variety of protocols
+and signature schemes not defined in this specification. They are sent by 
+a [[ref:Verifier]] to a [[def:Holder]].
 
 [[def:Presentation Submission]]
-~ Presentation Submissions are objects embedded within target credential negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in accordance with the requirements a [[ref:Verifier]] specified in a [[ref:Presentation Definition]].
+~ Presentation Submissions are objects embedded within target claim negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in accordance with the requirements a [[ref:Verifier]] specified in a [[ref:Presentation Definition]].
 
 [[def:Input Descriptor, Input Descriptors]]
 ~ Input Descriptors are objects used to describe the information a Verifier requires of a Holder before they will proceed with an interaction. 
+
+[[def:Submission Requirement, Submission Requirements]]
+~ Submission Requirements are objects that define what combinations of inputs must be submitted to comply with the requirements a Verifier has for proceeding in a flow (e.g. credential issuance, allowing entry, accepting an application).
 
 ## Localization
 
@@ -109,14 +126,18 @@ conjunction with the
 ```json
 {
   "presentation_definition": {
+    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "locale": "en-US",
     "input_descriptors": [{
       "id": "name_input",
-      "schema": {
-        "uri": ["https://name-standards.com/name.json"],
-        "name": "Full Legal Name",
-        "purpose": "We need your full legal name."
-      }
+      "name": "Full Legal Name",
+      "purpose": "We need your full legal name.",
+      "schema": [
+        {
+          "uri": "https://name-standards.com/name.json",
+          "required": true
+        }
+      ]
     }]
   }
 }
@@ -130,6 +151,8 @@ conjunction with the
 ```json
 {
   "presentation_submission": {
+    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
+    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "locale": "de-DE",
     "descriptor_map": [{
       "id": "name_input",
@@ -166,22 +189,24 @@ proofs may satisfy an input requirement.
 ```json
 {
   // VP, OIDC, DIDComm, or CHAPI outer wrapper
-
   "presentation_definition": {
+    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "input_descriptors": [
       {
         "id": "banking_input",
-        "schema": {
-          "uri": ["https://bank-standards.com/customer.json"],
-          "name": "Bank Account Information",
-          "purpose": "We need your bank and account information."
-        },
+        "name": "Bank Account Information",
+        "purpose": "We need your bank and account information.",
+        "schema": [
+          {
+            "uri": "https://bank-standards.com/customer.json"
+          }
+        ],
         "constraints": {
           "limit_disclosure": true,
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The credential must be from one of the specified issuers",
+              "purpose": "The claim must be from one of the specified issuers",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
@@ -192,10 +217,12 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input",
-        "schema": {
-          "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
-          "name": "US Passport"
-        },
+        "name": "US Passport",
+        "schema": [
+          {
+            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -223,8 +250,8 @@ proofs may satisfy an input requirement.
 ```json
 {
   // VP, OIDC, DIDComm, or CHAPI outer wrapper
-
   "presentation_definition": {
+    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "submission_requirements": [{
       "name": "Citizenship Information",
       "rule": "pick",
@@ -234,16 +261,18 @@ proofs may satisfy an input requirement.
     "input_descriptors": [
       {
         "id": "citizenship_input_1",
+        "name": "EU Driver's License",
         "group": ["A"],
-        "schema": {
-          "uri": ["https://eu.com/claims/DriversLicense.json"],
-          "name": "EU Driver's License"
-        },
+        "schema": [
+          {
+            "uri": "https://eu.com/claims/DriversLicense.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The credential must be from one of the specified issuers",
+              "purpose": "The claim must be from one of the specified issuers",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:gov1|did:example:gov2"
@@ -262,11 +291,13 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input_2",
+        "name": "US Passport",
         "group": ["A"],
-        "schema": {
-          "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
-          "name": "US Passport"
-        },
+        "schema": [
+          {
+            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -293,8 +324,8 @@ proofs may satisfy an input requirement.
 ```json
 {
   // VP, OIDC, DIDComm, or CHAPI outer wrapper
-  
   "presentation_definition": {
+    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "submission_requirements": [
       {
         "name": "Banking Information",
@@ -319,18 +350,20 @@ proofs may satisfy an input requirement.
     "input_descriptors": [
       {
         "id": "banking_input_1",
+        "name": "Bank Account Information",
+        "purpose": "We need your bank and account information.",
         "group": ["A"],
-        "schema": {
-          "uri": ["https://bank-standards.com/customer.json"],
-          "name": "Bank Account Information",
-          "purpose": "We need your bank and account information."
-        },
+        "schema": [
+          {
+            "uri": "https://bank-standards.com/customer.json"
+          }
+        ],
         "constraints": {
           "limit_disclosure": true,
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The credential must be from one of the specified issuers",
+              "purpose": "The claim must be from one of the specified issuers",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
@@ -358,20 +391,22 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "banking_input_2",
+        "name": "Bank Account Information",
+        "purpose": "We need your bank and account information.",
         "group": ["A"],
-        "schema": {
-          "uri": [
-            "https://bank-schemas.org/1.0.0/accounts.json",
-            "https://bank-schemas.org/2.0.0/accounts.json"
-          ],
-          "name": "Bank Account Information",
-          "purpose": "We need your bank and account information."
-        },
+        "schema": [
+          {
+            "uri": "https://bank-schemas.org/1.0.0/accounts.json"
+          },
+          {
+            "uri": "https://bank-schemas.org/2.0.0/accounts.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The credential must be from one of the specified issuers",
+              "purpose": "The claim must be from one of the specified issuers",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
@@ -399,12 +434,14 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "employment_input",
+        "name": "Employment History",
+        "purpose": "We need to know your work history.",
         "group": ["B"],
-        "schema": {
-          "uri": ["https://business-standards.org/schemas/employment-history.json"],
-          "name": "Employment History",
-          "purpose": "We need to know your work history."
-        },
+        "schema": [
+          {
+            "uri": "https://business-standards.org/schemas/employment-history.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -419,16 +456,18 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input_1",
+        "name": "EU Driver's License",
         "group": ["C"],
-        "schema": {
-          "uri": ["https://eu.com/claims/DriversLicense.json"],
-          "name": "EU Driver's License"
-        },
+        "schema": [
+          {
+            "uri": "https://eu.com/claims/DriversLicense.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The credential must be from one of the specified issuers",
+              "purpose": "The claim must be from one of the specified issuers",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:gov1|did:example:gov2"
@@ -447,11 +486,13 @@ proofs may satisfy an input requirement.
       },
       {
         "id": "citizenship_input_2",
+        "name": "US Passport",
         "group": ["C"],
-        "schema": {
-          "uri": ["hub://did:foo:123/Collections/schema.us.gov/passport.json"],
-          "name": "US Passport"
-        },
+        "schema": [
+          {
+            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
+          }
+        ],
         "constraints": {
           "fields": [
             {
@@ -478,6 +519,8 @@ proofs may satisfy an input requirement.
 The following properties are for use at the top-level of the resource — all
 other properties that are not defined below MUST be ignored:
 
+- `id` - The resource ****MUST**** contain this property uniquely identifying
+the resource. The property ****MUST**** be a unique identifier, such as a [UUID](https://tools.ietf.org/html/rfc4122).
 - `name` - The resource ****MAY**** contain this property, and if present its
   value ****SHOULD**** be a human-friendly name that describes what the
   Presentation Definition pertains to.
@@ -486,15 +529,15 @@ other properties that are not defined below MUST be ignored:
   Presentation Definition's inputs are being requested.
 - The resource ****MAY**** include a `format` property, and its value 
   ****MUST**** be an object with one or more properties matching the registered 
-  [Credential Format Designations](#credential-format-designations) (`jwt`, 
-  `jwt_vc`, `jwt_vp`, etc.) to inform the Holder of the credential format 
+  [Claim Format Designations](#claim-format-designations) (`jwt`, 
+  `jwt_vc`, `jwt_vp`, etc.) to inform the Holder of the claim format 
   configurations the [[ref:Verifier]] can process. The value for each property included 
   ****MUST**** be an object composed as follows:
     - The object ****MUST**** include a format-specific property (i.e. `alg`, 
       `proof_type`) that expresses which algorithms the [[ref:Verifier]] supports for the 
       format, and if present, its value ****MUST**** be an array of one or more 
       of the format-specific algorithmic identifier references, as noted in the 
-      [Credential Format Designations](#credential-format-designations) section.
+      [Claim Format Designations](#claim-format-designations) section.
 
       ```json
       {
@@ -527,14 +570,14 @@ other properties that are not defined below MUST be ignored:
         }
       }
       ```
-- `submission_requirement` - The resource ****MAY**** contain this property,
+- `submission_requirements` - The resource ****MAY**** contain this property,
   and if present, its value ****MUST**** conform to the Submission Requirement
   Format. If not present, all inputs listed in the `input_descriptors` array are
   required for submission. The description for the format of this property is in
   the [`Submission Requirement`](#submission-requirement) section below.
 - `input_descriptors` - The resource ****MUST**** contain this property, and
-  its value ****MUST**** be an array of [[ref:[[ref:Input Descriptor]]]] objects. If no
-  `submission_requirement` is present, all inputs listed in the
+  its value ****MUST**** be an array of [[ref:Input Descriptor]] objects. If no
+  `submission_requirements` is present, all inputs listed in the
   `input_descriptors` array are required for submission. The composition of
   values under this property are described in the [`Input
   Descriptors`](#input-descriptors) section below.
@@ -544,7 +587,7 @@ other properties that are not defined below MUST be ignored:
 _Presentation Definitions_ ****MAY**** include _Submission Requirements_,
 which are objects that define what combinations of inputs must be submitted
 to comply with the requirements a [[ref:Verifier]] has for proceeding in a flow (e.g.
-credential issuance, allowing entry, accepting an application).
+claim issuance, allowing entry, accepting an application).
 _Submission Requirements_ introduce a set of rule types and mapping instructions
 a User Agent can ingest to present requirement optionality to the user, and
 subsequently submit inputs in a way that maps back to the rules the verifying
@@ -606,7 +649,7 @@ constructed as follows:
 1. The object  ****MUST**** contain a `rule` property, and its value
    ****MUST**** be a string matching one of the [Submission Requirement
    Rules](#submission-requirement-rules) values listed in the section below.
-2. The object ****MUST**** contain either a `from` 'or `from_nested` property. 
+2. The object ****MUST**** contain either a `from` or `from_nested` property. 
   If both properties are present, the implementation ***MUST*** produce an 
   error. The values of the `from` and `from_nested` properties are defined as
   follows:
@@ -796,16 +839,12 @@ processing-related rules above:
   implementation ****MUST**** produce an error if an unknown `rule` value is
   present.
 2. The _Submission Requirement_  ****MUST**** contain a `from` property or a
-  `from_nested` property, not both, and if present their values must be a string
-  or an array, respectively. If any of these conditions are not met, the
-  implementation ****MUST**** produce an error.
+  `from_nested` property, not both, and if present their values must be a string or an array, respectively. If any of these conditions are not met, 
+  the implementation ****MUST**** produce an error.
 3. To determine whether a _Submission Requirement_ is satisfied, used the
   following algorithm:
-    - If the `rule` is `"all"`, then the _Submission Requirement_ MUST contain a
-      `from` property or a `from_nested` property, and of whichever are present,
-      all inputs from the `from` group string specified or _Submission
-      Requirements_ in the `from_nested` array ****MUST**** be submitted or
-      satisfied, respectively.
+    - If the `rule` is `"all"`, then the _Submission Requirement_ MUST 
+      contain a `from` property or a `from_nested` property, and of whichever are present, all inputs from the `from` group string specified or _Submission Requirements_ in the `from_nested` array ****MUST**** be submitted or satisfied, respectively.
     - If the `rule` is `"pick"`, then the _Submission Requirement_ MUST contain
       a `from` property or a `from_nested` property, and of whichever are
       present, they must be evaluated as follows:
@@ -820,10 +859,9 @@ processing-related rules above:
           or less than the value of the `max` property.
 
 ### Input Descriptors
-
 [[ref:Input Descriptors]] are objects used to describe the information a [[ref:Verifier]]
 requires of a Holder before they will proceed with an interaction. If no 
-`submission_requirement` objects are present, all `input_descriptor` objects 
+`submission_requirements` objects are present, all `input_descriptor` objects 
 ****MUST**** be satisfied.
 
 _Input Descriptor Objects_ contain a schema URI that links to the schema 
@@ -844,20 +882,22 @@ why a certain item or set of data is being requested:
 "input_descriptors": [
   {
     "id": "banking_input_1",
+    "name": "Bank Account Information",
+    "purpose": "We need your bank and account information.",
     "group": ["A"],
-    "schema": {
-      "uri": [
-        "https://bank-schemas.org/1.0.0/accounts.json",
-        "https://bank-schemas.org/2.0.0/accounts.json"
-      ],
-      "name": "Bank Account Information",
-      "purpose": "We need your bank and account information."
-    },
+    "schema": [
+      {
+        "uri": "https://bank-schemas.org/1.0.0/accounts.json"
+      },
+      {
+        "uri": "https://bank-schemas.org/2.0.0/accounts.json"
+      }
+    ],
     "constraints": {
       "fields": [
         {
           "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-          "purpose": "The credential must be from one of the specified issuers",
+          "purpose": "The claim must be from one of the specified issuers",
           "filter": {
             "type": "string",
             "pattern": "did:example:123|did:example:456"
@@ -896,15 +936,17 @@ why a certain item or set of data is being requested:
 {
   "id": "employment_input_xyz_gov",
   "group": ["B"],
-  "schema": {
-    "uri": ["https://login.idp.com/xyz.gov/.well-known/openid-configuration"],
-    "name": "Verify XYZ Government Employment",
-    "purpose": "We need to know if you currently work at an agency in the XYZ government",
-    "metadata": {
-      "client_id": "40be4fb5-7f3a-470b-aa37-66ed43821bd7",
-      "redirect_uri": "https://tokens.xyz.gov/verify"
+  "schema": [
+    {
+      "uri": ["https://login.idp.com/xyz.gov/.well-known/openid-configuration"],
+      "name": "Verify XYZ Government Employment",
+      "purpose": "We need to know if you currently work at an agency in the XYZ government",
+      "metadata": {
+        "client_id": "40be4fb5-7f3a-470b-aa37-66ed43821bd7",
+        "redirect_uri": "https://tokens.xyz.gov/verify"
+      }
     }
-  },
+  ],
   "constraints": {
     "fields": [
       {
@@ -925,37 +967,40 @@ why a certain item or set of data is being requested:
 
 #### Input Descriptor Objects
 
-[[ref:Input Descriptors]] are objects that describe what type of input data/credential, 
-or sub-fields thereof, is required for submission to the [[ref:Verifier]]. _Input
-Descriptor Objects_ are composed as follows:
+[[ref:Input Descriptors]] are objects that describe what type of input 
+data/claim,  or sub-fields thereof, is required for submission to the [[ref:Verifier]].
+ _Input Descriptor Objects_ are composed as follows:
 
   - The object ****MUST**** contain an `id` property. The value of the `id`
     property ****MUST**** be a unique identifying string that does not conflict
     with the `id` of another [[ref:Input Descriptor]] in the same _Presentation
     Definition_ object.
   - The object ****MAY**** contain a `group` property, and if present, its value
-    ****MUST**** match one of the grouping strings listed the `from` values of a
-    [_Requirement Rule Object_](#requirement-rule-objects).
+    ****MUST**** match one of the grouping strings listed in the `from` values of a
+    [_Submission Requirement Rule Object_](#submission-requirement-rules).
+  - The object ****MAY**** contain a `name` property, and if present its
+    value ****SHOULD**** be a human-friendly name that describes what the
+    target schema represents.
+  - The object ****MAY**** contain a `purpose` property, and if present its
+    value ****MUST**** be a string that describes the purpose for which the
+    claim's data is being requested.
+  - The object ****MAY**** contain a `metadata` property, and if present its
+    value ****MUST**** be an object with metadata properties that describe
+    any information specific to the acquisition, formulation, or details of
+    the claim in question.
   - The object ****MUST**** contain a `schema` property, and its value
-    ****MUST**** be an object composed as follows:
+    ****MUST**** be an array composed of objects as follows:
       - The object ****MUST**** contain a `uri` property, and its value
-        ****MUST**** be an array consisting of one or more valid URI strings for
-        the acceptable credential schemas. A common use of multiple entries in
-        the `uri` array is when multiple versions of a credential schema exist
+        ****MUST**** be an string consisting of a valid URI string for
+        the acceptable claim schemas. Multiple array objects may be present
+        for multiple schemas. A common use of multiple entries in
+        the `schema` array is when multiple versions of a claim schema exist
         and there is a desire to express support for more than one version. 
         This field allowing multiple URIs is not intended to be used as 
-        a mechanism for including references to fundamentally different schemas, 
-        and ****SHOULD NOT**** be used by the implementer this way.
-      - The object ****MAY**** contain a `name` property, and if present its
-        value ****SHOULD**** be a human-friendly name that describes what the
-        target schema represents.
-      - The object ****MAY**** contain a `purpose` property, and if present its
-        value ****MUST**** be a string that describes the purpose for which the
-        credential's data is being requested.
-      - The object ****MAY**** contain a `metadata` property, and if present its
-        value ****MUST**** be an object with metadata properties that describe
-        any information specific to the acquisition, formulation, or details of
-        the credential in question.
+        a mechanism for including references to fundamentally different schemas, and ****SHOULD NOT**** be used by the implementer this way.
+      - The object ****MAY**** contain a boolean `required` property, and 
+        if present and `true` it signifies that the given schema object 
+        is required to fulfill the given [[ref:Submission Requirement]].
   - The object ****MAY**** contain a `constraints` property, and its value
     ****MUST**** be an object composed as follows: 
       - The object ****MAY**** contain a `limit_disclosure` property, and if
@@ -997,34 +1042,50 @@ Descriptor Objects_ are composed as follows:
       - The object ****MAY**** contain a `subject_is_issuer` property, and if
         present its value ****MUST**** be one of the following strings:
         - `required` - This indicates that the processing entity ****MUST****
-          submit a response that has been _self-attested_, i.e., the credential
+          submit a response that has been _self-attested_, i.e., the claim
           used in the presentation has been 'issued' by the subject of the
-          credential.
+          claim.
         - `preferred` - This indicates that it is ****RECOMMENDED**** that the
           processing entity submit a response that has been _self-attested_,
-          i.e., the credential used in the presentation has been 'issued' by the
-          subject of the credential.
+          i.e., the claim used in the presentation has been 'issued' by the
+          subject of the claim.
       
         The `subject_is_issuer` property could be used by a [[ref:Verifier]] to require
         that certain inputs be _self_attested_. For example, a college
         application `presentation definition` might contain an [[ref:Input Descriptor]]
         object for an essay submission. In this case, the [[ref:Verifier]] would be able
         to require that the essay be provided by the one submits the application. 
-      - The object ****MAY**** contain a `subject_is_holder` property, and if
-        present its value ****MUST**** be one of the following strings:
-        - `required` - This indicates that the processing entity ****MUST****
-          include proof that the subject of the credential is the same as the
-          entity submitting the response.
-        - `preferred` - This indicates that it is ****RECOMMENDED**** that the
-          processing entity include proof that the subject of the credential is
-          the same as the entity submitting the response, i.e., the holder.
-      
-        The `subject_is_holder` property could be used by a [[ref:Verifier]] to require
-        that certain inputs be provided by e subject. For example, an identity
-        verification `presentation definition` might contain an _Input
-        Descriptor_ object for a passport number. In this case, the [[ref:Verifier]]
-        would be able to require that the passport credential was issued to the
-        one who submits the identity verification. 
+      - The object ****MAY**** contain an `is_holder` property, and if
+        present its value ****MUST**** be an array of objects composed as
+        follows:
+        - The object ****MUST**** contain a `field_id` property. The value of
+           this property ****MUST**** be an array of strings, with each string
+           matching the string value from a 
+          [_Input Descriptor Field Entry_](#input-descriptor-field-entry)
+          object's `id` property. This identifies the attribute whose subject is
+          of concern to the verifier.  
+        - The object ****MUST**** contain a `directive` property. The value of
+          this property ****MUST****  be one of the following strings:
+          - `required` - This indicates that the processing entity ****MUST****
+            include proof that the subject of each attribute identified by a
+            value in the `field_id` array is the same as the entity submitting
+            the response.
+          - `preferred` - This indicates that it is ****RECOMMENDED**** that the
+            processing entity include proof that the subject of each attribute
+            identified by a value in the `field_id` array is the same as the
+            entity submitting the response.
+                                          
+        The `is_holder` property would be used by a [[ref:Verifier]] to
+        require that certain inputs be provided by a certain subject. For
+        example, an identity verification `presentation definition` might
+        contain an _Input Descriptor_ object for a birthdate from a birth
+        certificate. In this case, the [[ref:Verifier]] would be able to require
+        that the holder of the birth certificate claim is the same as the
+        subject of the birthdate attribute. This is especially useful in cases
+        where a claim may have multiple subjects.
+        
+        For more information about techniques used to prove binding to a holder,
+        please see [_Holder Binding_](#holder-binding). 
         
       - The object ****MAY**** contain a `fields` property, and its value
         ****MUST**** be an array of
@@ -1044,6 +1105,9 @@ Descriptor Objects_ are composed as follows:
             JSON-LD/JWT-based 
             [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
             vanilla JSON Web Tokens (JWTs) [[spec:rfc7797]].
+          - The object ****MAY**** contain an `id` property, and if present
+            its value ****MUST**** be a string that is unique from any other
+            field object's `id` property.
           - The object ****MAY**** contain a `purpose` property, and if present
             its value ****MUST**** be a string that describes the purpose for
             which the field is being requested.
@@ -1159,7 +1223,7 @@ Descriptor Objects_ are composed as follows:
 ### Input Evaluation
 
 A consumer of a _Presentation Definition_ must filter inputs they hold (signed
-credentials, raw data, etc.) to determine whether they possess the inputs
+claims, raw data, etc.) to determine whether they possess the inputs
 required to fulfill the demands of the Verifying party. A consumer of a
 _Presentation Definition_ ****SHOULD**** use the following process to validate
 whether or not its candidate inputs meet the requirements it describes:
@@ -1205,18 +1269,19 @@ Evaluate each candidate input as follows:
     input is limited to the entries specified in the `fields` property. If the
     `fields` property ****is not**** present, or contains zero
     [_Input Descriptor Field Entries_](#input-descriptor-field-entry),
-    submission ****SHOULD NOT**** include any claim data from the credential.
+    submission ****SHOULD NOT**** include any claim data from the claim.
     (for example: a [[ref:Verifier]] may simply want to know a Holder has a valid,
-    signed credential of a particular type, without disclosing any of the
+    signed claims of a particular type, without disclosing any of the
     data it contains).
   5. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
     contains a `subject_is_issuer` property set to the value `required`, ensure
     that any submission of data in relation to the candidate input is fulfilled
-    using a _self_attested_ credential.
-  6. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
-    contains a `subject_is_holder` property set to the value `required`, ensure
-    that any submission of data in relation to the candidate input is fulfilled
-    by the subject of the credential
+    using a _self_attested_ claim.
+  6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+    and it contains an `is_holder` property, ensure that for each object in the
+    array, any submission of data in relation to the candidate input is
+    fulfilled by the subject of the attributes so identified by the strings in
+    the `field_id` array.
 
 ::: note
 The above evaluation process assumes the User Agent will test each candidate
@@ -1229,14 +1294,14 @@ of the implementer.
 
 #### Expired and Revoked Data
 
-Certain types of credentials have concepts of _expiration_ and _revocation_.
+Certain types of claims have concepts of _expiration_ and _revocation_.
 _Expiration_ is mechanism normally used to communicate a time bound up until
-which a credential is valid. _Revocation_ is a mechanism normally used to give
-an issuer control over the status of a credential after issuance. Different
-credential specifications handle these concepts in different ways. 
+which a claim is valid. _Revocation_ is a mechanism normally used to give
+an issuer control over the status of a claim after issuance. Different
+claim specifications handle these concepts in different ways. 
 
 `Presentation Definitions` have a need to specify whether expired, revoked,
-or credentials of other statuses can be accepted. For credentials that have
+or claims of other statuses can be accepted. For claims that have
 simple status properties [Input Descriptor Filters](#input-descriptor-objects)
 JSON Schema can be used to write specify acceptable criteria.
 
@@ -1245,7 +1310,7 @@ The first example demonstrates _expiry_ using the [VC Data Model's
 The second demonstrates _revocation_, or more generally, _credential status_
 using the [VC Data Model's `credentialStatus` property](https://w3c.github.io/vc-data-model/#status-0).
 Using the syntax provided in the example a [[ref:Verifier]] will have all requisite
-information to resolve the status of a credential.
+information to resolve the status of a claim.
 
 <tab-panels selected-index="0">
 
@@ -1260,15 +1325,18 @@ information to resolve the status of a credential.
 ```json
 {
   "id": "drivers_license_information",
-  "schema": {
-    "uri": ["https://yourwatchful.gov/drivers-license-schema.json"],
-    "name": "Verify Valid License",
-    "purpose": "We need to know you have a license valid through December.",
-    "metadata": {
-      "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
-      "redirect_uri": "https://yourwatchful.gov/verify"
-    }
+  "name": "Verify Valid License",
+  "purpose": "We need to know you have a license valid through December.",
+  "metadata": {
+    "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
+    "redirect_uri": "https://yourwatchful.gov/verify"
   },
+  "schema": [
+    {
+      "uri": "https://yourwatchful.gov/drivers-license-schema.json",
+      "required": true
+    }
+  ],
   "constraints": {
     "fields": [
       {
@@ -1293,15 +1361,17 @@ information to resolve the status of a credential.
 ```json
 {
   "id": "drivers_license_information",
-  "schema": {
-    "uri": ["https://yourwatchful.gov/drivers-license-schema.json"],
-    "name": "Verify Valid License",
-    "purpose": "We need to know that your license has not been revoked.",
-    "metadata": {
-      "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
-      "redirect_uri": "https://yourwatchful.gov/verify"
-    }
+  "name": "Verify Valid License",
+  "purpose": "We need to know that your license has not been revoked.",
+  "metadata": {
+    "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
+    "redirect_uri": "https://yourwatchful.gov/verify"
   },
+  "schema": [
+    {
+      "uri": "https://yourwatchful.gov/drivers-license-schema.json"
+    }
+  ],
   "constraints": {
     "fields": [
       {
@@ -1316,6 +1386,46 @@ information to resolve the status of a credential.
 
 </tab-panel>
 
+#### Holder Binding
+Credentials often rely on proofs of holder binding for their validity. A
+verifier may wish to determine that a particular claim, or set of claims is
+bound to the claim holder. This can help the verifier to determine the
+legitimacy of the presented proofs. Some examples of holder binding include
+proof of identifier control, proof the holder knows a secret, or biometrics.
+
+The claim issuer makes proofs of holder binding possible by including holder
+information either in the claim or the claim signature. 
+
+##### Proof of Identifier Control
+A number of claim types include an identifier for the claim subject. A verifier
+may wish to ascertain that one of the subject identified in the claim is the one
+submitting the proof, or has consented to the proof submission. A claim may also
+include an identifier for the holder, independent of the subject identifiers. 
+
+One mechanism for providing such proofs is the use of a DID as the identifier
+for the claim subject or holder. DIDs enable an entity to provide a
+cryptographic proof of control of the identifier, usually through a
+demonstration that the holder knows some secret value, such as a private key.
+The holder can demonstrate the same proof of control when presenting the claim.
+In addition to verifying the authenticity and origin of the claim itself, a
+verifier can verify that the holder of the claim still controls the identifier.
+
+##### Link Secrets
+Some claim signatures support the inclusion of holder-provided secrets that
+become incorporated into the signature, but remain hidden from the claim issuer.
+One common use of this capability is to bind the claim to the holder. This is
+sometimes called a link secret. Just as with proof of control of an identifier,
+link secret proofs demonstrate that the holder knows some secret value. Upon
+presentation to a verifier, the holder demonstrates knowledge of the secret
+without revealing it. The verifier can verify that the holder knows the link
+secret, and that the link secret is contained in the claim signature.
+
+##### Biometrics
+This type of holder binding, instead of relying on demonstrating knowledge of
+some secret value, relies on the evaluation of biometric data. There are a
+number of mechanisms for safely embedding biometric information in a claim such
+that only a person who can confirm the biometric may present the claim. 
+
 ### JSON Schema
 
 The following JSON Schema Draft 7 definition summarizes the
@@ -1325,6 +1435,15 @@ format-related rules above:
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "uri": { "type": "string" },
+        "required": { "type": "boolean" }
+      },
+      "required": ["uri"],
+      "additionalProperties": false
+    },
     "filter": {
       "type": "object",
       "properties": {
@@ -1422,23 +1541,16 @@ format-related rules above:
       "type": "object",
       "properties": {
         "id": { "type": "string" },
+        "name": { "type": "string" },
+        "purpose": { "type": "string" },
+        "metadata": { "type": "object" },
         "group": {
           "type": "array",
           "items": { "type": "string" }
         },
         "schema": {
-          "type": "object",
-          "properties": {
-            "uri": {
-              "type": "array",
-              "items": { "type": "string" }
-            },
-            "name": { "type": "string" },
-            "purpose": { "type": "string" },
-            "metadata": { "type": "string" }
-          },
-          "required": ["uri", "name"],
-          "additionalProperties": false
+          "type": "array",
+          "items": { "$ref": "#/definitions/schema" }
         },
         "constraints": {
           "type": "object",
@@ -1484,9 +1596,23 @@ format-related rules above:
               "type": "string",
               "enum": ["required", "preferred"]
             },
-            "subject_is_holder": {
-              "type": "string",
-              "enum": ["required", "preferred"]
+            "is_holder": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties":  {
+                  "field_id": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "directive": {
+                    "type": "string",
+                    "enum": ["required", "preferred"]
+                  }
+                },
+                "required": ["field_id", "directive"],
+                "additionalProperties": false
+              }
             }
           },
           "additionalProperties": false
@@ -1500,6 +1626,7 @@ format-related rules above:
       "oneOf": [
         {
           "properties": {
+            "id": { "type": "string" },
             "path": {
               "type": "array",
               "items": { "type": "string" }
@@ -1512,6 +1639,7 @@ format-related rules above:
         },
         {
           "properties": {
+            "id": { "type": "string" },
             "path": {
               "type": "array",
               "items": { "type": "string" }
@@ -1534,6 +1662,7 @@ format-related rules above:
     "presentation_definition": {
       "type": "object",
       "properties": {
+        "id": { "type": "string" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
         "locale": { "type": "string" },
@@ -1549,7 +1678,7 @@ format-related rules above:
           "items": { "$ref": "#/definitions/input_descriptors" }
         }
       },
-      "required": ["input_descriptors"],
+      "required": ["id", "input_descriptors"],
       "additionalProperties": false
     }
   }
@@ -1557,36 +1686,42 @@ format-related rules above:
 ```
 
 ### Presentation Requests
-Presentation Definitions may be sent from a [[ref:Verifier]] to a Holder using a wide
-variety of transport mechanisms or credentials exchange protocols. This
+Presentation Definitions may be sent from a [[ref:Verifier]] to a Holder using 
+a wide variety of transport mechanisms or claim exchange protocols. This
 specification does not define a transport mechanism for `Presentation
-Definitions` (or `Presentation Request`), but does note that different use
-cases, supported signature schemes, protocols, and threat models may require a
-`Presentation Request` to have certain properties:
+Definitions` (or [[ref:Presentation Request]]), but does note that different 
+use cases, supported signature schemes, protocols, and threat models may
+require a [[ref:Presentation Request]]to have certain properties:
 - Signature verification - A Holder may wish to have assurances as to the
-  provenance, identity, or status of a `Presentation Definition`. In this case,
-  a `Presentation Request` that uses digital signatures may be required. 
+  provenance, identity, or status of a [[ref:Presentation Definition]]. In this case,
+  a [[ref:Presentation Request]] that uses digital signatures may be required. 
 - `domain`, `challenge`, or `nonce` - Some presentation protocols may require
   that presentations be unique, i.e., it should be possible for a [[ref:Verifier]] to
   detect if a presentation has been used before. Other protocols may require
   that a presentation to be bound to a particular communication exchange, or
-  session. In these cases, a `Presentation Request` that provides a `domain`,
+  session. In these cases, a [[ref:Presentation Request]] that provides a `domain`,
   `challenge`,or `nonce` property may be required.
 
 
 ## Presentation Submission
 
-_Presentation Submissions_ are objects embedded within target credential
-negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in
-accordance with the requirements a [[ref:Verifier]] specified in a _Presentation
-Definition_. Embedded _Presentation Submission_ objects ****MUST**** be located
-within target data format as a `presentation_submission` property, which are
-composed and embedded as follows:
+_Presentation Submissions_ are objects embedded within target claim
+negotiation formats that unify the presentation of proofs to a [[ref:Verifier]]
+in accordance with the requirements a [[ref:Verifier]] specified in a 
+[[ref:Presentation Definition]]. Embedded [[ref:Presentation Submission]] 
+objects ****MUST**** be located within target data format as a 
+`presentation_submission` property, which are composed and embedded as follows:
 
-1. The `presentation_submission` object ****MUST**** be included at the top-level 
-  of an Embed Target, or in the specific location described in the 
-  [Embed Locations table](#embed-locations) in the [Embed Target](#embed-target) section below.
-2. The object ****MUST**** include a `descriptor_map` property, and its value
+1. The `presentation_submission` object ****MUST**** be included at the top-level of an Embed Target, or in the specific location described in the 
+[Embed Locations table](#embed-locations) in the [Embed Target](#embed-target)
+section below.
+2. The object ****MUST**** include `id` and `definition_id` properties.
+    - The `id` property exists to uniquely identify the resource. The property 
+  ****MUST**** be a unique identifier, such as a [UUID](https://tools.ietf.org/html/rfc4122). 
+    - The `definition_id` property exists to link the submission to 
+    its definition and ****MUST**** be the `id` value of a valid
+    [[ref:Presentation Definition]].
+3. The object ****MUST**** include a `descriptor_map` property, and its value
   ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being
   composed as follows:
     - The object ****MUST**** include an `id` property, and its value
@@ -1594,17 +1729,17 @@ composed and embedded as follows:
       Descriptor_ in the _Presentation Definition_ the submission is related to.
     - The object ****MUST**** include a `format` property, and its value 
       ****MUST**** be a string value matching one of the 
-      [Credential Format Designation](#credential-format-designations) (`jwt`, 
-      `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`), to denote what data format the credential is being 
+      [Claim Format Designation](#claim-format-designations) (`jwt`, 
+      `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`), to denote what data format the claim is being 
       submitted in.
     - The object ****MUST**** include a `path` property, and its value
       ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
-      string expression that selects the credential to be submit in relation
+      string expression that selects the claim to be submit in relation
       to the identified [[ref:Input Descriptor]] identified, when executed against
       the top-level of the object the _Presentation Submission_ is embedded
       within.
     - The object ****MAY**** include a `path_nested` object to specify the
-      presence of a multi-credential envelope format, meaning the credential indending to be selected must be decoded separately from its parent enclosure.
+      presence of a multi-claim envelope format, meaning the claim indending to be selected must be decoded separately from its parent enclosure.
       + The format of a `path_nested` object mirrors that of a `descriptor_map` property. The nesting may be any number of levels deep. The `id` property ****MUST**** be the same for each level of nesting.
       + The `path` property inside each `path_nested` property provides a _relative path_ within a given nested value.
 
@@ -1615,19 +1750,21 @@ composed and embedded as follows:
 ```javascript
 {
   "presentation_submission": {
+    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
+    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "descriptor_map": [
       { 
         "id": "banking_input_2",
         "format": "jwt_vp",
-        "path": "$.outerCredential[0]",
+        "path": "$.outerClaim[0]",
         "path_nested": {
             "id": "banking_input_2",
             "format": "ldp_vc",
-            "path": "$.innerCredential[1]",
+            "path": "$.innerClaim[1]",
             "path_nested": {
                 "id": "banking_input_2",
                 "format": "jwt_vc",
-                "path": "$.mostInnerCredential[2]"
+                "path": "$.mostInnerClaim[2]"
             }
         }
     }
@@ -1644,9 +1781,9 @@ process as follows:
       on the [_Current Traversal Object_](#current-traversal-object){id="current-traversal-object"}, or if none is designated, 
       the top level of the Embed Target.
     b. Decode and parse the value returned from [JSONPath](https://goessner.net/articles/JsonPath/) 
-      execution in accordance with the [Credential Format Designation](#credential-format-designations) 
+      execution in accordance with the [Claim Format Designation](#claim-format-designations) 
       specified in the object's `format` property. If value parses and validates in accordance 
-      with the [Credential Format Designation](#credential-format-designations) specified, let 
+      with the [Claim Format Designation](#claim-format-designations) specified, let 
       the resulting object be the [_Current Traversal Object_](#current-traversal-object)
     c. If present, process the next Nested Submission Traversal Object in the 
        current `path_nested` property.
@@ -1657,25 +1794,25 @@ process as follows:
 
 ### Limited Disclosure Submissions
 
-If for all credentials submitted in relation to
+If for all claims submitted in relation to
 [_Input Descriptor Objects_](#input-descriptor-objects) that include a
 `constraints` object with a `limit_disclosure` property set to the boolean value
 `true`, ensure that the data submitted is limited to the entries specified in
 the `fields` property of the `constraints` object. If the `fields` property
 ****is not**** present, or contains zero
 [_Input Descriptor Field Entries_](#input-descriptor-field-entry), the
-submission ****SHOULD NOT**** include any claim data from the credential. (for
+submission ****SHOULD NOT**** include any claim data from the claim. (for
 example: a Verifier may simply want to know a Holder has a valid, signed
-credential of a particular type, without disclosing any of the data it contains).
+claim of a particular type, without disclosing any of the data it contains).
 
-### Validation of Credentials
+### Validation of Claims
 
-Once a credential has been ingested via a Presentation Submission, any validation 
+Once a claim has been ingested via a Presentation Submission, any validation 
 beyond the process of evaluation defined by the [Input Evaluation](#input-evaluation) 
 section is outside the scope of Presentation Exchange. Validation of signatures 
-and other cryptographic proofs are a function of a given credential format, and 
-should be evaluated in accordance with a given credential format's standardized 
-processing steps. Additional verification of credential data or subsequent 
+and other cryptographic proofs are a function of a given claim format, and 
+should be evaluated in accordance with a given claim format's standardized 
+processing steps. Additional verification of claim data or subsequent 
 validation required by a given [[ref:Verifier]] are left to the Verifier's systems, code 
 and business processes to define and execute.
 
@@ -1695,7 +1832,7 @@ _Input Descriptor Object_ also come from the same container.
 The following section details where the _Presentation Submission_ is to be
 embedded within a target data structure, as well as how to formulate the
 [JSONPath](https://goessner.net/articles/JsonPath/) expressions to select the
-credentials within the target data structure.
+claims within the target data structure.
 
 #### Embed Locations
 
@@ -1722,15 +1859,15 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
     "presentation_submission": {
       "type": "object",
       "properties": {
-        "locale": {
-          "type": "string"
-        },
+        "id": { "type": "string" },
+        "definition_id": { "type": "string" },
+        "locale": { "type": "string" },
         "descriptor_map": {
           "type": "array",
           "items": { "$ref": "#/definitions/descriptor" }
         }
       },
-      "required": ["descriptor_map"],
+      "required": ["id", "definition_id", "descriptor_map"],
       "additionalProperties": false
     }
   },
@@ -1758,10 +1895,10 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
 }
 ```
 
-## Credential Format Designations
+## Claim Format Designations
 
 Within the _Presentation Exchange_ specification, there are numerous sections 
-where [[ref:Verifiers]] and Holders convey what credential variants they support and 
+where [[ref:Verifiers]] and Holders convey what claim variants they support and 
 are submitting. The following are the normalized references used within the 
 specification:
 
@@ -1812,7 +1949,7 @@ JSONPath              | Description
 `*`	                  | Wildcard matching all objects/elements regardless their names
 `[]`	                | Subscript operator
 `[,]`	                | Union operator for alternate names or array indices as a set
-`[start:end:step]` | Array slice operator borrowed from ES4 / Python
+`[start:end:step]`    | Array slice operator borrowed from ES4 / Python
 `?()`                 | Applies a filter (script) expression via static evaluation
 `()`	                | Script expression via static evaluation 
 
@@ -1839,7 +1976,7 @@ JSONPath              | Description
         "isbn": "0-553-21311-3",
         "price": 8.99
       }, {
-         "category": "fiction",
+        "category": "fiction",
         "author": "J. R. R. Tolkien",
         "title": "The Lord of the Rings",
         "isbn": "0-395-19395-8",
@@ -1858,20 +1995,20 @@ JSONPath              | Description
 
 JSONPath                      | Description
 ------------------------------|------------
-`$.store.book[*].author`       | The authors of all books in the store
-`$..author`                     | All authors
-`$.store.*`                    | All things in store, which are some books and a red bicycle
-`$.store..price`                | The price of everything in the store
-`$..book[2]`                    | The third book
-`$..book[(@.length-1)]`         | The last book via script subscript
-`$..book[-1:]`                  | The last book via slice
-`$..book[0,1]`                  | The first two books via subscript union
-`$..book[:2]`                  | The first two books via subscript array slice
-`$..book[?(@.isbn)]`            | Filter all books with isbn number
-`$..book[?(@.price<10)]`        | Filter all books cheaper than 10
-`$..book[?(@.price==8.95)]`        | Filter all books that cost 8.95
+`$.store.book[*].author`      | The authors of all books in the store
+`$..author`                   | All authors
+`$.store.*`                   | All things in store, which are some books and a red bicycle
+`$.store..price`              | The price of everything in the store
+`$..book[2]`                  | The third book
+`$..book[(@.length-1)]`       | The last book via script subscript
+`$..book[-1:]`                | The last book via slice
+`$..book[0,1]`                | The first two books via subscript union
+`$..book[:2]`                 | The first two books via subscript array slice
+`$..book[?(@.isbn)]`          | Filter all books with isbn number
+`$..book[?(@.price<10)]`      | Filter all books cheaper than 10
+`$..book[?(@.price==8.95)]`   | Filter all books that cost 8.95
 `$..book[?(@.price<30 && @.category=="fiction")]`        | Filter all fiction books cheaper than 30
-`$..*`                         | All members of JSON structure
+`$..*`                        | All members of JSON structure
 
 ## External References
 
@@ -1935,6 +2072,8 @@ JSONPath                      | Description
     "PresentationSubmission"
   ],
   "presentation_submission": {
+    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
+    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "descriptor_map": [
       {
         "id": "banking_input_2",
@@ -2040,6 +2179,8 @@ JSONPath                      | Description
   "sub": "248289761001",
   "preferred_username": "superman445",
   "presentation_submission": {
+    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
+    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "descriptor_map": [
       {
         "id": "banking_input_2",
@@ -2208,3 +2349,26 @@ JSONPath                      | Description
     - https://github.com/Stranger6667/jsonschema-rs
 - **Go**
     - https://github.com/xeipuuv/gojsonschema
+
+### IANA Considerations
+
+#### JSON Web Token Claims Registration
+
+This specification registers the claims in section [Registry Contents]() in the IANA JSON Web Token Claims registry defined in [RFC 751 JSON Web Token (JWT)](https://tools.ietf.org/html/rfc7519).
+
+##### Registry Contents
+
+Presentation Definition | Values
+------------------------|------------
+Claim Name: | `presentation_definition`
+Claim Description: | Presentation Definition
+Change Controller: | DIF Claims & Credentials - Working Group - https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS
+Specification Document(s): | Section 5 of this document
+
+
+Presentation Submission | Values
+------------------------|------------
+Claim Name: | `presentation_submission`
+Claim Description: | Presentation Submission
+Change Controller: | DIF Claims & Credentials - Working Group - https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS
+Specification Document(s): | Section 6 of this document
