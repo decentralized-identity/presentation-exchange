@@ -995,22 +995,40 @@ object for an essay submission. In this case, the [[ref:Verifier]] would be able
 to require that the essay be provided by the one submits the application.</p>
 </li>
 <li>
-<p>The object <strong><strong>MAY</strong></strong> contain a <code>subject_is_holder</code> property, and if
-present its value <strong><strong>MUST</strong></strong> be one of the following strings:</p>
+<p>The object <strong><strong>MAY</strong></strong> contain an <code>is_holder</code> property, and if
+present its value <strong><strong>MUST</strong></strong> be an array of objects composed as
+follows:</p>
+<ul>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>field_id</code> property. The value of
+this property <strong><strong>MUST</strong></strong> be an array of strings, with each string
+matching the string value from a
+<a href="#input-descriptor-field-entry"><em>Input Descriptor Field Entry</em></a>
+object’s <code>id</code> property. This identifies the attribute whose subject is
+of concern to the verifier.</li>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>directive</code> property. The value of
+this property <strong><strong>MUST</strong></strong>  be one of the following strings:
 <ul>
 <li><code>required</code> - This indicates that the processing entity <strong><strong>MUST</strong></strong>
-include proof that the subject of the claim is the same as the
-entity submitting the response.</li>
+include proof that the subject of each attribute identified by a
+value in the <code>field_id</code> array is the same as the entity submitting
+the response.</li>
 <li><code>preferred</code> - This indicates that it is <strong><strong>RECOMMENDED</strong></strong> that the
-processing entity include proof that the subject of the claim is
-the same as the entity submitting the response, i.e., the holder.</li>
+processing entity include proof that the subject of each attribute
+identified by a value in the <code>field_id</code> array is the same as the
+entity submitting the response.</li>
 </ul>
-<p>The <code>subject_is_holder</code> property could be used by a [[ref:Verifier]] to require
-that certain inputs be provided by e subject. For example, an identity
-verification <code>presentation definition</code> might contain an <em>Input
-Descriptor</em> object for a passport number. In this case, the [[ref:Verifier]]
-would be able to require that the passport claim was issued to the
-one who submits the identity verification.</p>
+</li>
+</ul>
+<p>The <code>is_holder</code> property would be used by a [[ref:Verifier]] to
+require that certain inputs be provided by a certain subject. For
+example, an identity verification <code>presentation definition</code> might
+contain an <em>Input Descriptor</em> object for a birthdate from a birth
+certificate. In this case, the [[ref:Verifier]] would be able to require
+that the holder of the birth certificate claim is the same as the
+subject of the birthdate attribute. This is especially useful in cases
+where a claim may have multiple subjects.</p>
+<p>For more information about techniques used to prove binding to a holder,
+please see <a href="#holder-binding"><em>Holder Binding</em></a>.</p>
 </li>
 <li>
 <p>The object <strong><strong>MAY</strong></strong> contain a <code>fields</code> property, and its value
@@ -1033,6 +1051,11 @@ example: normalizing the differences in structure between
 JSON-LD/JWT-based
 <a href="https://www.w3.org/TR/vc-data-model/">Verifiable Credentials</a> and
 vanilla JSON Web Tokens (JWTs) [[spec:rfc7797]].</p>
+</li>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain an <code>id</code> property, and if present
+its value <strong><strong>MUST</strong></strong> be a string that is unique from any other
+field object’s <code>id</code> property.</p>
 </li>
 <li>
 <p>The object <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property, and if present
@@ -1217,11 +1240,12 @@ data it contains).</li>
 <li>If the <code>constraints</code> property of the [[ref:Input Descriptor]] is present, and it
 contains a <code>subject_is_issuer</code> property set to the value <code>required</code>, ensure
 that any submission of data in relation to the candidate input is fulfilled
-using a <em>self_attested</em> claims.</li>
-<li>If the <code>constraints</code> property of the [[ref:Input Descriptor]] is present, and it
-contains a <code>subject_is_holder</code> property set to the value <code>required</code>, ensure
-that any submission of data in relation to the candidate input is fulfilled
-by the subject of the claim.</li>
+using a <em>self_attested</em> claim.</li>
+<li>If the <code>constraints</code> property of the [[ref:Input Descriptor]] is present,
+and it contains an <code>is_holder</code> property, ensure that for each object in the
+array, any submission of data in relation to the candidate input is
+fulfilled by the subject of the attributes so identified by the strings in
+the <code>field_id</code> array.</li>
 </ol>
 <div id="note-1" class="notice note"><a class="notice-link" href="#note-1">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
@@ -1310,47 +1334,39 @@ information to resolve the status of a claim.</p>
 </section>
 </tab-panel>
 <h4 id="holder-binding"><a class="toc-anchor" href="#holder-binding">§</a> Holder Binding</h4>
-<p>Credential often rely on proofs of holder binding for their validity. For
-example, a credential may be bound to a holder through the use of an identifier,
-knowledge of a secret, or via a biometric. A verifier may wish to determine that
-a particular credential, or set of credentials is bound to the credential
-holder. This can help the verifier to determine the legitimacy of the presented
-proofs.</p>
+<p>Credentials often rely on proofs of holder binding for their validity. A
+verifier may wish to determine that a particular claim, or set of claims is
+bound to the claim holder. This can help the verifier to determine the
+legitimacy of the presented proofs. Some examples of holder binding include
+proof of identifier control, proof the holder knows a secret, or biometrics.</p>
+<p>The claim issuer makes proofs of holder binding possible by including holder
+information either in the claim or the claim signature.</p>
 <h5 id="proof-of-identifier-control"><a class="toc-anchor" href="#proof-of-identifier-control">§</a> Proof of Identifier Control</h5>
-<p>A number of credential types include an identifier for the credential subject.
-A verifier may wish to ascertain that the subject identified in the credential
-is the one submitting the proof, or has consented to the proof submission.</p>
+<p>A number of claim types include an identifier for the claim subject. A verifier
+may wish to ascertain that one of the subject identified in the claim is the one
+submitting the proof, or has consented to the proof submission. A claim may also
+include an identifier for the holder, independent of the subject identifiers.</p>
 <p>One mechanism for providing such proofs is the use of a DID as the identifier
-for the credential subject. DIDs enable an entity to provide a cryptographic
-proof of control of the identifier, usually through a demonstration that the
-holder knows some secret value, such as a private key. The holder can
-demonstrate the same proof of control when presenting the credential. In
-addition to verifying the authenticity and origin of the credential itself, a
-verifier can verify that the presenter of the credential still controls the
-identifier.</p>
+for the claim subject or holder. DIDs enable an entity to provide a
+cryptographic proof of control of the identifier, usually through a
+demonstration that the holder knows some secret value, such as a private key.
+The holder can demonstrate the same proof of control when presenting the claim.
+In addition to verifying the authenticity and origin of the claim itself, a
+verifier can verify that the holder of the claim still controls the identifier.</p>
 <h5 id="link-secrets"><a class="toc-anchor" href="#link-secrets">§</a> Link Secrets</h5>
-<p>Some credential signatures support the inclusion of holder-provided information
-that becomes incorporated into the signature, but remains hidden from the
-credential issuer. One common use of this capability is known as a link secret.
-A <code>link secret</code> is a value known only to the credential holder that is embedded
-in the signature of each issued credential. Upon presentation to a verifier, the
-holder demonstrates knowledge of the random value without revealing it, and
-proves that the same value is contained in every credential included in the
-proof presentation. The verifier can verify that the presenter of the
-credentials knows the link secret, and that the <code>link secret</code> is the same in
-each credential.</p>
-<h6 id="common-values-across-credentials"><a class="toc-anchor" href="#common-values-across-credentials">§</a> Common values across credentials</h6>
-<p>Though not of itself a means of binding to a holder, multiple credentials with
-common values may be taken by a verifier as an indication that the credentials
-are about the same subject. For example, if multiple banking credentials contain
-the same account number, and one of those credentials may be bound to the holder
-using any of the mechanisms described here, a verifier could rely on the
-demonstration of common values to bind all of the credentials to the holder.</p>
+<p>Some claim signatures support the inclusion of holder-provided secrets that
+become incorporated into the signature, but remain hidden from the claim issuer.
+One common use of this capability is to bind the claim to the holder. This is
+sometimes called a link secret. Just as with proof of control of an identifier,
+link secret proofs demonstrate that the holder knows some secret value. Upon
+presentation to a verifier, the holder demonstrates knowledge of the secret
+without revealing it. The verifier can verify that the holder knows the link
+secret, and that the link secret is contained in the claim signature.</p>
 <h5 id="biometrics"><a class="toc-anchor" href="#biometrics">§</a> Biometrics</h5>
 <p>This type of holder binding, instead of relying on demonstrating knowledge of
 some secret value, relies on the evaluation of biometric data. There are a
-number of mechanisms for safely embedding biometric information in a credential
-such that only a person who can confirm the biometric may use the credential.</p>
+number of mechanisms for safely embedding biometric information in a claim such
+that only a person who can confirm the biometric may present the claim.</p>
 <h3 id="json-schema-2"><a class="toc-anchor" href="#json-schema-2">§</a> JSON Schema</h3>
 <p>The following JSON Schema Draft 7 definition summarizes the
 format-related rules above:</p>
@@ -1465,7 +1481,7 @@ format-related rules above:</p>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-        <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
           <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span>
@@ -1486,9 +1502,23 @@ format-related rules above:</p>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
               <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"preferred"</span><span class="token punctuation">]</span>
             <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token property">"subject_is_holder"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
-              <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"preferred"</span><span class="token punctuation">]</span>
+            <span class="token property">"is_holder"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
+              <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
+                <span class="token property">"properties"</span><span class="token operator">:</span>  <span class="token punctuation">{</span>
+                  <span class="token property">"field_id"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
+                    <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span>
+                  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                  <span class="token property">"directive"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+                    <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"preferred"</span><span class="token punctuation">]</span>
+                  <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"field_id"</span><span class="token punctuation">,</span> <span class="token string">"directive"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+              <span class="token punctuation">}</span>
             <span class="token punctuation">}</span>
           <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
@@ -1502,6 +1532,7 @@ format-related rules above:</p>
       <span class="token property">"oneOf"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
         <span class="token punctuation">{</span>
           <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"id"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
               <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span>
@@ -1514,6 +1545,7 @@ format-related rules above:</p>
         <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token punctuation">{</span>
           <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"id"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
               <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span>

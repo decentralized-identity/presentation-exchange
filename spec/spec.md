@@ -1514,7 +1514,7 @@ format-related rules above:
         "id": { "type": "string" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
-        "metadata": { "type": "string" },
+        "metadata": { "type": "object" },
         "group": {
           "type": "array",
           "items": { "type": "string" }
