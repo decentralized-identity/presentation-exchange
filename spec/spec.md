@@ -977,13 +977,6 @@ Descriptor Objects_ are composed as follows:
             - `required`: the credential ****MUST**** be active.
             - `allowed`: the credential ****MAY**** be active.
             - `disallowed`: the credential ****MUST NOT**** be active.
-        - `preliminary` - a credential is in an interim state of approval or awaiting 
-          some additional steps to be fully activated.
-          - The object ****MUST**** contain a `state` property, and its value ****MUST**** 
-          be one of the following strings:
-            - `required`: the credential ****MUST**** be in a preliminary state.
-            - `allowed`: the credential ****MAY**** be in a preliminary state.
-            - `disallowed`: the credential ****MUST NOT**** be in a preliminary state.
         - `suspended` - a credential is suspended if the Issuer has published an explicit signal 
           that the credential is in an inactive state and ****should not**** currently be relied 
           upon, but may become active again in the future.
@@ -1455,15 +1448,6 @@ format-related rules above:
               "type": "object",
               "properties": {
                 "active": {
-                  "type": "object",
-                  "properties": {
-                    "state": {
-                      "type": "string",
-                      "enum": ["required", "allowed", "disallowed"]
-                    }
-                  }
-                },
-                "preliminary": {
                   "type": "object",
                   "properties": {
                     "state": {
