@@ -856,7 +856,7 @@ why a certain item or set of data is being requested:</p>
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-23" class="notice example"><a class="notice-link" href="#example-23">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="example-45" class="notice example"><a class="notice-link" href="#example-45">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
     <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
@@ -905,7 +905,7 @@ why a certain item or set of data is being requested:</p>
 </div>
 </section>
 <section>
-<div id="example-24" class="notice example"><a class="notice-link" href="#example-24">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-46" class="notice example"><a class="notice-link" href="#example-46">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
   <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -987,50 +987,35 @@ than the data described in the <code>fields</code> array.</p>
 <li>
 <p>The object <strong><strong>MAY</strong></strong> contain a <code>statuses</code> property, and if present, its value
 <strong><strong>MUST</strong></strong> be an object that includes one or more of the following status
-properties: <code>active</code>, <code>suspended</code>, <code>revoked</code>. If not present,
-the Verifier is not imposing any status considerations. The values for all
-status properties are objects, defined as follows:</p>
+properties: <code>active</code>, <code>suspended</code>, <code>revoked</code>. These statuses are defined
+as follows:</p>
 <ul>
 <li><code>active</code> - a credential that is not revoked, expired, suspended, or in any
-type of deactivated state.
-<ul>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>state</code> property, and its value <strong><strong>MUST</strong></strong>
-be one of the following strings:
-<ul>
-<li><code>required</code>: the credential <strong><strong>MUST</strong></strong> be active.</li>
-<li><code>allowed</code>: the credential <strong><strong>MAY</strong></strong> be active.</li>
-<li><code>disallowed</code>: the credential <strong><strong>MUST NOT</strong></strong> be active.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><code>suspended</code> - a credential is suspended if the Issuer has published an explicit signal
-that the credential is in an inactive state and <strong><strong>should not</strong></strong> currently be relied
-upon, but may become active again in the future.
-<ul>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>state</code> property, and its value <strong><strong>MUST</strong></strong>
-be one of the following strings:
-<ul>
-<li><code>required</code>: the credential <strong><strong>MUST</strong></strong> be in a suspended state.</li>
-<li><code>allowed</code>: the credential <strong><strong>MAY</strong></strong> be in a suspended state.</li>
-<li><code>disallowed</code>: the credential <strong><strong>MUST NOT</strong></strong> be in a suspended state.</li>
-</ul>
-</li>
-</ul>
-</li>
+type of deactivated state.</li>
+<li><code>suspended</code> - a credential is suspended if the Issuer has published an explicit
+signal that the credential is in an inactive state and <strong><strong>should not</strong></strong>
+currently be relied upon, but may become active again in the future.</li>
 <li><code>revoked</code> - a credential is revoked if the Issuer has published an explicit signal
 that the credential in question <strong><strong>should not</strong></strong> be relied upon going forward
-as an accurate, secure reflection of the Issuer’s statements about the Subject
-within the scope of the credential.
-<ul>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>state</code> property, and its value <strong><strong>MUST</strong></strong>
-be one of the following strings:
-<ul>
-<li><code>required</code>: the credential <strong><strong>MUST</strong></strong> be in a revoked state.</li>
-<li><code>allowed</code>: the credential <strong><strong>MAY</strong></strong> be in a revoked state.</li>
-<li><code>disallowed</code>: the credential <strong><strong>MUST NOT</strong></strong> be in a revoked state.</li>
+as an accurate reflection of the Issuer’s statements about the Subject within
+the scope of the credential.</li>
 </ul>
-</li>
+<pre class="language-json"><code class="language-json">  <span class="token property">"statuses"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"active"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"directive"</span><span class="token operator">:</span> <span class="token string">"required"</span>  <span class="token comment">// other values: "allowed", "disallowed"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"suspended"</span><span class="token operator">:</span> <span class="token punctuation">{</span>...<span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"revoked"</span><span class="token operator">:</span> <span class="token punctuation">{</span>...<span class="token punctuation">}</span>
+  <span class="token punctuation">}</span> 
+</code></pre>
+<p>The values of all status properties are objects, composed as follows:</p>
+<ul>
+<li>Status objects <strong><strong>MUST</strong></strong> include a <code>directive</code> property, and its
+value <strong><strong>MUST</strong></strong> be one of the following strings:
+<ul>
+<li><code>required</code>: the credential <strong><strong>MUST</strong></strong> be of the specified status.</li>
+<li><code>allowed</code>: the credential <strong><strong>MAY</strong></strong> be of the specified status.</li>
+<li><code>disallowed</code>: the credential <strong><strong>MUST NOT</strong></strong> be of the specified status.</li>
 </ul>
 </li>
 </ul>
@@ -1307,7 +1292,7 @@ array, any submission of data in relation to the candidate input is
 fulfilled by the subject of the attributes so identified by the strings in
 the <code>field_id</code> array.</li>
 </ol>
-<div id="note-12" class="notice note"><a class="notice-link" href="#note-12">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
+<div id="note-23" class="notice note"><a class="notice-link" href="#note-23">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
 criteria for inclusion in submission. Any additional testing of a candidate
 input for a schema match beyond comparison of the schema <code>uri</code> (e.g. specific
@@ -1560,7 +1545,7 @@ format-related rules above:</p>
                 <span class="token property">"active"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
                   <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
                   <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-                    <span class="token property">"state"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"directive"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
                       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
                       <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"allowed"</span><span class="token punctuation">,</span> <span class="token string">"disallowed"</span><span class="token punctuation">]</span>
                     <span class="token punctuation">}</span>
@@ -1569,7 +1554,7 @@ format-related rules above:</p>
                 <span class="token property">"suspended"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
                   <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
                   <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-                    <span class="token property">"state"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"directive"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
                       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
                       <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"allowed"</span><span class="token punctuation">,</span> <span class="token string">"disallowed"</span><span class="token punctuation">]</span>
                     <span class="token punctuation">}</span>
@@ -1578,7 +1563,7 @@ format-related rules above:</p>
                 <span class="token property">"revoked"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
                   <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
                   <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-                    <span class="token property">"state"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"directive"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
                       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
                       <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"allowed"</span><span class="token punctuation">,</span> <span class="token string">"disallowed"</span><span class="token punctuation">]</span>
                     <span class="token punctuation">}</span>
