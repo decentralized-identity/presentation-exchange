@@ -316,6 +316,7 @@ proofs may satisfy an input requirement.
 }
 ```
 
+
 </section>
 
 <section>
@@ -533,7 +534,7 @@ the resource. The property ****MUST**** be a unique identifier, such as a [UUID]
   `jwt_vc`, `jwt_vp`, etc.) to inform the Holder of the claim format 
   configurations the [[ref:Verifier]] can process. The value for each property included 
   ****MUST**** be an object composed as follows:
-    - The object ****MAY**** include a format-specific property (i.e. `alg`, 
+    - The object ****MUST**** include a format-specific property (i.e. `alg`, 
       `proof_type`) that expresses which algorithms the [[ref:Verifier]] supports for the 
       format, and if present, its value ****MUST**** be an array of one or more 
       of the format-specific algorithmic identifier references, as noted in the 
@@ -1010,6 +1011,34 @@ data/claim,  or sub-fields thereof, is required for submission to the [[ref:Veri
         Setting the property to `false`, or omitting the property, indicates
         the processing entity ****MAY**** submit a response that contains more
         than the data described in the `fields` array.
+      - The object ****MAY**** contain a `statuses` property, and if present, its value 
+        ****MUST**** be an object that includes one or more of the following status 
+        properties: `active`, `suspended`, `revoked`. These statuses are defined 
+        as follows:
+          - `active` - a credential that is not revoked, expired, suspended, or in any 
+            type of deactivated state.
+          - `suspended` - a credential is suspended if the Issuer has published an explicit 
+            signal that the credential is in an inactive state and ****should not**** 
+            currently be relied upon, but may become active again in the future.
+          - `revoked` - a credential is revoked if the Issuer has published an explicit signal 
+            that the credential in question ****should not**** be relied upon going forward 
+            as an accurate reflection of the Issuer's statements about the Subject within 
+            the scope of the credential. 
+        ```json
+          "statuses": {
+            "active": {
+              "directive": "required"  // other values: "allowed", "disallowed"
+            },
+            "suspended": {...},
+            "revoked": {...}
+          } 
+        ```
+        The values of all status properties are objects, composed as follows:
+        - Status objects ****MUST**** include a `directive` property, and its 
+          value ****MUST**** be one of the following strings:
+            - `required`: the credential ****MUST**** be of the specified status.
+            - `allowed`: the credential ****MAY**** be of the specified status.
+            - `disallowed`: the credential ****MUST NOT**** be of the specified status.
       - The object ****MAY**** contain a `subject_is_issuer` property, and if
         present its value ****MUST**** be one of the following strings:
         - `required` - This indicates that the processing entity ****MUST****
@@ -1065,15 +1094,15 @@ data/claim,  or sub-fields thereof, is required for submission to the [[ref:Veri
           - The object ****MUST**** contain a `path` property, and its value
             ****MUST**** be an array of one or more
             [JSONPath](https://goessner.net/articles/JsonPath/) string
-            expressions, as defined in the
-            [JSONPath Syntax Definition](#jsonpath-syntax-definition) section,
-            that select some subset of values from the target input. The array
-            ****MUST**** be evaluated from 0-index forward, and the first
-            expressions to return a value will be used for the rest of the
-            entry's evaluation. The ability to declare multiple expressions this
-            way allows the [[ref:Verifier]] to account for format differences - for
-            example: normalizing the differences in structure between
-            JSON-LD/JWT-based
+            expressions, as defined in the 
+            [JSONPath Syntax Definition](#jsonpath-syntax-definition) section, 
+            that select a target value from the input. The array ****MUST**** 
+            be evaluated from 0-index forward, and the first expressions to 
+            return a value will be used for the rest of the entry's evaluation. 
+            The ability to declare multiple expressions this way allows the 
+            [[ref:Verifier]] to account for format differences - for 
+            example: normalizing the differences in structure between 
+            JSON-LD/JWT-based 
             [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
             vanilla JSON Web Tokens (JWTs) [[spec:rfc7797]].
           - The object ****MAY**** contain an `id` property, and if present
@@ -1527,6 +1556,38 @@ format-related rules above:
           "type": "object",
           "properties": {
             "limit_disclosure": { "type": "boolean" },
+            "statuses": {
+              "type": "object",
+              "properties": {
+                "active": {
+                  "type": "object",
+                  "properties": {
+                    "directive": {
+                      "type": "string",
+                      "enum": ["required", "allowed", "disallowed"]
+                    }
+                  }
+                },
+                "suspended": {
+                  "type": "object",
+                  "properties": {
+                    "directive": {
+                      "type": "string",
+                      "enum": ["required", "allowed", "disallowed"]
+                    }
+                  }
+                },
+                "revoked": {
+                  "type": "object",
+                  "properties": {
+                    "directive": {
+                      "type": "string",
+                      "enum": ["required", "allowed", "disallowed"]
+                    }
+                  }
+                }
+              }
+            },
             "fields": {
               "type": "array",
               "items": { "$ref": "#/definitions/field" }
