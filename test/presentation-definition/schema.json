@@ -136,9 +136,23 @@
               "type": "string",
               "enum": ["required", "preferred"]
             },
-            "subject_is_holder": {
-              "type": "string",
-              "enum": ["required", "preferred"]
+            "is_holder": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties":  {
+                  "field_id": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "directive": {
+                    "type": "string",
+                    "enum": ["required", "preferred"]
+                  }
+                },
+                "required": ["field_id", "directive"],
+                "additionalProperties": false
+              }
             }
           },
           "additionalProperties": false
