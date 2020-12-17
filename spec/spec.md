@@ -792,7 +792,10 @@ format-related rules above:
           "properties": {
             "name": { "type": "string" },
             "purpose": { "type": "string" },
-            "rule": { "type": "string" },
+            "rule": {
+              "type": "string",
+              "enum": ["all", "pick"]
+            },
             "count": { "type": "integer", "minimum": 1 },
             "from": { "type": "string" }
           },
@@ -803,7 +806,10 @@ format-related rules above:
           "properties": {
             "name": { "type": "string" },
             "purpose": { "type": "string" },
-            "rule": { "type": "string" },
+            "rule": {
+              "type": "string",
+              "enum": ["all", "pick"]
+            },
             "count": { "type": "integer", "minimum": 1 },
             "from_nested": {
               "type": "array",
@@ -1507,7 +1513,10 @@ format-related rules above:
           "properties": {
             "name": { "type": "string" },
             "purpose": { "type": "string" },
-            "rule": { "type": "string" },
+            "rule": {
+              "type": "string",
+              "enum": ["all", "pick"]
+            },
             "count": { "type": "integer", "minimum": 1 },
             "min": { "type": "integer", "minimum": 0 },
             "max": { "type": "integer", "minimum": 0 },
@@ -1520,7 +1529,10 @@ format-related rules above:
           "properties": {
             "name": { "type": "string" },
             "purpose": { "type": "string" },
-            "rule": { "type": "string" },
+            "rule": {
+              "type": "string",
+              "enum": ["all", "pick"]
+            },
             "count": { "type": "integer", "minimum": 1 },
             "min": { "type": "integer", "minimum": 0 },
             "max": { "type": "integer", "minimum": 0 },
