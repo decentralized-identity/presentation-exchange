@@ -16,6 +16,7 @@
     "mocha": "^8.1.3"
   },
   "scripts": {
+    "render": "node -e \"require('spec-up')({ nowatch: true })\"",
     "edit": "node -e \"require('spec-up')()\"",
     "test": "mocha 'test/**/*.js'"
   }
