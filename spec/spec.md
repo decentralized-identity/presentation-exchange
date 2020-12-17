@@ -1085,8 +1085,41 @@ data/claim,  or sub-fields thereof, is required for submission to the [[ref:Veri
         where a claim may have multiple subjects.
         
         For more information about techniques used to prove binding to a holder,
-        please see [_Holder Binding_](#holder-binding). 
+        please see [_Holder Binding_](#holder-binding).
         
+      - The object ****MAY**** contain a `same_subject` property, and if present
+        its value ****MUST**** be an array of objects composed as follows:
+        - The object ****MUST**** contain a `field_id` property. The value of
+          this property ****MUST**** be an array of strings, with each string
+          matching the string value from a
+          [_Input Descriptor Field Entry_](#input-descriptor-field-entry)
+          object's `id` property. This identifies the attributes whose subject
+          is of concern to the verifier. It is important to note that the
+          attributes ****MAY**** be identified in an
+          [_Input Descriptor Field Entry_](#input-descriptor-field-entry) of a
+          different [_Input Descriptor_](#input-descriptors) object.
+        - The object ****MUST**** contain a `directive` property. The value of
+          this property ****MUST****  be one of the following strings:
+          - `required` - This indicates that the processing entity ****MUST****
+            include proof that the subject of each attribute identified by a
+            value in the `field_id` array is the same as the subject of the
+            attributes identified by the other values in the `field_id` array.
+          - `preferred` - This indicates that it is ****RECOMMENDED**** that the
+            processing entity include proof that the subject of each attribute
+            identified by a value in the `field_id` array is the same as the
+            subject of the attributes identified by the other values in the
+            `field_id` array.
+
+        The `same_subject` property would be used by a [[ref:Verifier]] to
+        require that certain provided inputs be about the same subject. For
+        example, a `presentation definition` might contain an
+        [_Input Descriptor_](#input-descriptors) object which calls for a street
+        address from a driver license claim and another
+        [_Input Descriptor_](#input-descriptors) object which calls for a name
+        from a birth certificate claim. The [[ref:Verifier]] would be able to
+        require that the subject of the street address attribute claim is the
+        same as the subject of the name attribute.
+
       - The object ****MAY**** contain a `fields` property, and its value
         ****MUST**** be an array of
         [_Input Descriptor Field Entry_](#input-descriptor-field-entry) objects,
@@ -1282,6 +1315,10 @@ Evaluate each candidate input as follows:
     array, any submission of data in relation to the candidate input is
     fulfilled by the subject of the attributes so identified by the strings in
     the `field_id` array.
+  7. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+    and it contains a `same_subject` property, ensure that for each object in
+    the array, all of the attributes so identified by the strings in the
+    `field_id` array are about the same subject.
 
 ::: note
 The above evaluation process assumes the User Agent will test each candidate
@@ -1598,6 +1635,24 @@ format-related rules above:
             },
             "is_holder": {
               "type": "array",
+              "items": {
+                "type": "object",
+                "properties":  {
+                  "field_id": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "directive": {
+                    "type": "string",
+                    "enum": ["required", "preferred"]
+                  }
+                },
+                "required": ["field_id", "directive"],
+                "additionalProperties": false
+              }
+            },
+            "same_subject": {
+              "type":  "array",
               "items": {
                 "type": "object",
                 "properties":  {
