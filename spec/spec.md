@@ -67,39 +67,91 @@ work is being done.
 ## Terminology
 
 [[def:Decentralized Identifiers, Decentralized Identifier, DID]]
-~ Unique ID URI string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).
+~ Unique ID URI string and PKI metadata document format for describing the
+cryptographic keys and other fundamental PKI values linked to a unique,
+user-controlled, self-sovereign identifier in a target system (i.e. blockchain,
+distributed ledger).
 
 [[def:Holder, Holders]]
-~ The entity that submits proofs to a [[ref:Verifier]] to satisfy the requirements described in a Presentation Definition
+~ Holders are entities that submit proofs to [[ref:Verifiers]] to satisfy the
+requirements described in a [[def:Presentation Definition]].
 
 [[def:Verifier, Verifiers]]
-~ The entity that defines what proofs they require from a [[ref:Holder]] (via a Presentation Definition) in order to proceed with an interaction.
+~ Verifiers are entities that define what proofs they require from a
+[[ref:Holder]] (via a [[ref:Presentation Definition]]) in order to proceed with
+an interaction.
 
 [[def:Claim, Claims]]
-~ An assertion made about a given entity. Used as an umbrella term for Credential, Assertion, Attestation, etc.  
+~ An assertion made about a given entity. Used as an umbrella term for
+Credential, Assertion, Attestation, etc.  
 
 [[def:Presentation Definition]]
 ~ Presentation Definitions are objects that articulate what proofs a Verifier
 requires. These help the Verifier to decide how or whether to interact with a
-Holder. Presentation Definitions are composed of inputs, which describe the
-forms and details of the proofs they require, and optional sets of selection
-rules, to allow Holders flexibility in cases where many different types of
-proofs may satisfy an input requirement.
-
-[[def:Presentation Request]]
-~ Presentation Requests are transport mechanisms for Presentation Definitions.
-Presentation Requests can take multiple shapes, using a variety of protocols
-and signature schemes not defined in this specification. They are sent by 
-a [[ref:Verifier]] to a [[def:Holder]].
-
-[[def:Presentation Submission]]
-~ Presentation Submissions are objects embedded within target claim negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in accordance with the requirements a [[ref:Verifier]] specified in a [[ref:Presentation Definition]].
-
-[[def:Input Descriptor, Input Descriptors]]
-~ Input Descriptors are objects used to describe the information a Verifier requires of a Holder before they will proceed with an interaction. 
+[[ref:Holder]]. Presentation Definitions are composed of inputs, which describe
+the forms and details of the proofs they require, and optional sets of
+selection rules, to allow Holders flexibility in cases where many different
+types of proofs may satisfy an input requirement.
 
 [[def:Submission Requirement, Submission Requirements]]
-~ Submission Requirements are objects that define what combinations of inputs must be submitted to comply with the requirements a Verifier has for proceeding in a flow (e.g. credential issuance, allowing entry, accepting an application).
+~ Submission Requirements are objects that define what combinations of inputs
+must be submitted to comply with the requirements a [[ref:Verifier]] has for
+proceeding in a flow (e.g. credential issuance, allowing entry, accepting an
+application).
+
+[[def:Submission Requirement Object, Submission Requirement Objects]]
+~ Submission Requirement Objects describe valid combinations of inputs in a
+[[ref:Presentation Submission]].
+
+[[def:Submission Requirement Rule, Submission Requirement Rules]]
+~ Submission Requirement Rules describe combinatorical rules within a
+[[ref:Submission Requirement Object]] when processing inputs. They may be
+nested.
+
+[[def:Input Descriptor, Input Descriptors]]
+~ Input Descriptors are used by a Verifier to describe the information required
+of a [[ref:Holder]] before an interaction can proceed.
+
+[[def:Input Descriptor Object, Input Descriptor Objects]]
+~ Input Descriptors Objects are populated with properties describing what type
+of input data/[[ref:Claim]], or sub-fields thereof, are required for submission
+to the [[ref:Verifier]].
+
+[[def:Field Query Result]]
+~ Field Query Results are values returned from paths specified in an
+[[ref:Input Descriptor Object]].
+
+[[def:Holder Binding]]
+~ Holder Bindings are requirements of a certain type of relationship between
+the [[ref:Holder]] and the [[ref:Claims]] within the [[ref:Presentation
+Submission]].
+
+[[def:Link Secrets]]
+~ Link Secrets are values held by the [[ref:Holder]] but hidden from other
+parties. They are typically incorporated into cryptographic signatures used in
+claims to demonstrate correlation while preventing replay attacks. An Issuer
+may ascertain that a Holder possesses a link secret without its disclosure.
+
+[[def:Presentation Request]]
+~ Presentation Requests are transport mechanisms for [[ref:Presentation
+Definitions]].  Presentation Requests can take multiple shapes, using a variety
+of protocols and signature schemes not refined in this specification. They are
+sent by a [[ref:Verifier]] to a [[ref:Holder]].
+
+[[def:Presentation Submission]]
+~ Presentation Submissions are objects embedded within target claim negotiation
+formats that unify the presentation of proofs to a [[ref:Verifier]] in
+accordance with the requirements a [[ref:Verifier]] specified in a
+[[ref:Presentation Definition]].
+
+[[def:Embed Target, Embed Targets]]
+~ Embed Targets are data formats used in messaging protocols that may be used
+to transport a [[ref:Presentation Submission]].
+
+[[def:Embed Locations]]
+~ Embed Locations are the specific paths and indexes per [[ref:Embed Target]]
+where the [[ref:Verifier]] can expect to find the [[ref:Presentation
+Submission]].
 
 ## Localization
 
@@ -670,12 +722,12 @@ constructed as follows:
 
 #### Submission Requirement Rules
 
-[_Submission Requirement Rules_](#submission-requirement-rules)
-{id="requirement-rules"} are used within _Submission Requirement Objects_ to
-describe the specific combinatorial rule that must be applied to submit a
-particular subset of required inputs. Rules are selected by populating the
-`rule` property with the corresponding string. An implementation ****MUST****
-support the following standard types:
+[_Submission Requirement Rules_](#submission-requirement-rules){id="requirement-rules"}
+are used within _Submission Requirement Objects_ to describe the specific
+combinatorial rule that must be applied to submit a particular subset of
+required inputs. Rules are selected by populating the `rule` property with the
+corresponding string. An implementation ****MUST**** support the following
+standard types:
 
 ##### `all` rule
 
