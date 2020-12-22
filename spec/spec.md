@@ -92,7 +92,7 @@ rules, to allow [[ref:Holders]] flexibility in cases where many different types 
 proofs may satisfy an input requirement.
 
 [[def:Presentation Request]]
-~ Presentation Requests are transport mechanisms for [[ref:Presentation Definition]]s.
+~ Presentation Requests are transport mechanisms for [[ref:Presentation Definitions]].
 Presentation Requests can take multiple shapes, using a variety of protocols
 and signature schemes not defined in this specification. They are sent by 
 a [[ref:Verifier]] to a [[def:Holder]].
@@ -109,8 +109,8 @@ a [[ref:Verifier]] to a [[def:Holder]].
 ## Localization
 
 To support localization, [IETF BCP 47](https://tools.ietf.org/html/bcp47) one
-****MAY**** use language tags under the `locale` property in both a `Presentation
-Definition` and [[ref:Presentation Submission]]. If a Definition has a language tag,
+****MAY**** use language tags under the `locale` property in both a
+[[ref:Presentation Definition]] and [[ref:Presentation Submission]]. If a Definition has a language tag,
 so should the corresponding Submission. A Submission may have a language tag
 regardless of the presence of one in the corresponding Definition.
 
@@ -590,7 +590,7 @@ the resource. The property ****MUST**** be a unique identifier, such as a [UUID]
 
 ### Submission Requirements
 
-[[ref:Presentation Definition]]s ****MAY**** include _Submission Requirements_,
+[[ref:Presentation Definitions]] ****MAY**** include [[ref:Submission Requirements]],
 which are objects that define what combinations of inputs must be submitted
 to comply with the requirements a [[ref:Verifier]] has for proceeding in a flow (e.g.
 [[ref:Claim]] issuance, allowing entry, accepting an application).
@@ -1348,7 +1348,7 @@ which a [[ref:Claim]] is valid. _Revocation_ is a mechanism normally used to giv
 an issuer control over the status of a [[ref:Claim]] after issuance. Different
 [[ref:Claim]] specifications handle these concepts in different ways. 
 
-[[ref:Presentation Definition]]s have a need to specify whether expired, revoked,
+[[ref:Presentation Definitions]] have a need to specify whether expired, revoked,
 or [[ref:Claims]] of other statuses can be accepted. For [[ref:Claims]] that have
 simple status properties [Input Descriptor Filters](#input-descriptor-objects)
 JSON Schema can be used to write specify acceptable criteria.
@@ -1760,8 +1760,8 @@ format-related rules above:
 ### Presentation Requests
 [[ref:Presentation Definition]]s may be sent from a [[ref:Verifier]] to a [[ref:Holder]] using 
 a wide variety of transport mechanisms or [[ref:Claim]] exchange protocols. This
-specification does not define a transport mechanism for `Presentation
-Definitions` (or [[ref:Presentation Request]]), but does note that different 
+specification does not define a transport mechanism for
+[[ref:Presentation Definitions]] (or [[ref:Presentation Request]]), but does note that different 
 use cases, supported signature schemes, protocols, and threat models may
 require a [[ref:Presentation Request]]to have certain properties:
 - Signature verification - A [[ref:Holder]] may wish to have assurances as to the
