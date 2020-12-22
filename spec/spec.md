@@ -28,31 +28,33 @@ Presentation Exchange
 A common activity between peers in identity systems that feature the ability to
 generate self-asserted and third-party issued claims is the demand and
 submission of proofs from a Holder to a Verifier. This flow implicitly requires
-the Holder and Verifier have a known mechanism to facilitate the two primary
-steps in a proving exchange: the way Verifiers define the proof requirements,
-and how Holders must encode submissions of proof to align with those
-requirements.
+the Holder and Verifier have a mechanism to facilitate the two primary steps in
+a proving exchange: a way for Verifiers to describe proof requirements, and for
+Holders to describe submissions of proof which align with those requirements.
 
-To address these needs, this Presentation Exchange specification codifies the
+To address these needs, this Presentation Exchange specification codifies a
 `Presentation Definition` data format Verifiers can use to articulate proof
-requirements, as well as the `Presentation Submission` data format Holders can
-use to submit proofs in accordance with them. The specification is designed to 
-be both claim format and transport envelope agnostic, meaning an implementer 
-can use [JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519), 
+requirements, and a `Presentation Submission` data format Holders can use to
+describe proofs submitted in accordance with them. 
+
+This specification is designed to be both claim format and transport envelope
+agnostic, meaning an implementer can use
+[JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519), 
 [Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/), 
 [JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions), 
-or any other claim format, and convey them 
-via [Open ID Connect](https://openid.net/connect/), [DIDComm](https://identity.foundation/didcomm-messaging/spec/), 
+or any other claim format, and convey them via
+[Open ID Connect](https://openid.net/connect/),
+[DIDComm](https://identity.foundation/didcomm-messaging/spec/), 
 [Credential Handler API](https://w3c-ccg.github.io/credential-handler-api/), 
-or any other transport envelope. The goal of 
-this flexible format and transport agnostic mechanism is to nullify the 
-redundant handling, code, and hassle involved in presenting and satisfying 
-logical requirements across formats and transport envelopes.
+or any other transport envelope. The goal of this flexible format- and
+transport-agnostic mechanism is to nullify the redundant handling, code, and
+hassle involved in presenting and satisfying logical requirements across formats
+and transport envelopes.
 
-This specification does not endeavor to define transport protocols, specific
-endpoints, or other means for conveying the formatted objects it codifies, but
-encourages other specifications and projects that do define such mechanisms to
-utilize these data formats within their flows.
+This specification does not define transport protocols, specific endpoints, or
+other means for conveying the formatted objects it codifies, but encourages
+other specifications and projects that do define such mechanisms to utilize
+these data formats within their flows.
 
 ## Status of This Document
 
