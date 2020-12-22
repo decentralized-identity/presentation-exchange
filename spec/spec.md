@@ -26,23 +26,23 @@ Presentation Exchange
 ## Abstract
 
 A common activity between peers in identity systems that feature the ability to
-generate self-asserted and third-party issued claims is the demand and
-submission of proofs from a Holder to a Verifier. This flow implicitly requires
-the Holder and Verifier have a mechanism to facilitate the two primary steps in
-a proving exchange: a way for Verifiers to describe proof requirements, and for
-Holders to describe submissions of proof which align with those requirements.
+generate self-asserted and third-party issued [[ref:Claims]] is the demand and
+submission of proofs from a [[ref:Holder]] to a [[ref:Verifier]]. This flow implicitly requires
+the [[ref:Holder]] and [[ref:Verifier]] have a mechanism to facilitate the two primary steps in
+a proving exchange: a way for [[ref:Verifiers]] to describe proof requirements, and for
+[[ref:Holders]] to describe submissions of proof which align with those requirements.
 
 To address these needs, this Presentation Exchange specification codifies a
-`Presentation Definition` data format Verifiers can use to articulate proof
-requirements, and a `Presentation Submission` data format Holders can use to
+[[ref:Presentation Definition]] data format [[ref:Verifiers]] can use to articulate proof
+requirements, and a [[ref:Presentation Submission]] data format [[ref:Holders]] can use to
 describe proofs submitted in accordance with them. 
 
-This specification is designed to be both claim format and transport envelope
+This specification is designed to be both [[ref:Claim]] format and transport envelope
 agnostic, meaning an implementer can use
 [JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519), 
 [Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/), 
 [JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions), 
-or any other claim format, and convey them via
+or any other [[ref:Claim]] format, and convey them via
 [Open ID Connect](https://openid.net/connect/),
 [DIDComm](https://identity.foundation/didcomm-messaging/spec/), 
 [Credential Handler API](https://w3c-ccg.github.io/credential-handler-api/), 
@@ -75,42 +75,42 @@ on [GitHub](https://github.com/decentralized-identity/presentation-exchange/issu
 ~ Unique ID URI string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).
 
 [[def:Holder, Holders]]
-~ The entity that submits proofs to a [[ref:Verifier]] to satisfy the requirements described in a Presentation Definition
+~ The entity that submits proofs to a [[ref:Verifier]] to satisfy the requirements described in a [[ref:Presentation Definition]]
 
 [[def:Verifier, Verifiers]]
-~ The entity that defines what proofs they require from a [[ref:Holder]] (via a Presentation Definition) in order to proceed with an interaction.
+~ The entity that defines what proofs they require from a [[ref:Holder]] (via a [[ref:Presentation Definition]]) in order to proceed with an interaction.
 
 [[def:Claim, Claims]]
 ~ An assertion made about a given entity. Used as an umbrella term for Credential, Assertion, Attestation, etc.  
 
 [[def:Presentation Definition]]
-~ Presentation Definitions are objects that articulate what proofs a Verifier
-requires. These help the Verifier to decide how or whether to interact with a
-Holder. Presentation Definitions are composed of inputs, which describe the
+~ Presentation Definitions are objects that articulate what proofs a [[ref:Verifier]]
+requires. These help the [[ref:Verifier]] to decide how or whether to interact with a
+[[ref:Holder]]. Presentation Definitions are composed of inputs, which describe the
 forms and details of the proofs they require, and optional sets of selection
-rules, to allow Holders flexibility in cases where many different types of
+rules, to allow [[ref:Holders]] flexibility in cases where many different types of
 proofs may satisfy an input requirement.
 
 [[def:Presentation Request]]
-~ Presentation Requests are transport mechanisms for Presentation Definitions.
+~ Presentation Requests are transport mechanisms for [[ref:Presentation Definition]]s.
 Presentation Requests can take multiple shapes, using a variety of protocols
 and signature schemes not defined in this specification. They are sent by 
 a [[ref:Verifier]] to a [[def:Holder]].
 
 [[def:Presentation Submission]]
-~ Presentation Submissions are objects embedded within target claim negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in accordance with the requirements a [[ref:Verifier]] specified in a [[ref:Presentation Definition]].
+~ Presentation Submissions are objects embedded within target [[ref:Claim]] negotiation formats that unify the presentation of proofs to a [[ref:Verifier]] in accordance with the requirements a [[ref:Verifier]] specified in a [[ref:Presentation Definition]].
 
 [[def:Input Descriptor, Input Descriptors]]
-~ Input Descriptors are objects used to describe the information a Verifier requires of a Holder before they will proceed with an interaction. 
+~ Input Descriptors are objects used to describe the information a [[ref:Verifier]] requires of a [[ref:Holder]] before they will proceed with an interaction. 
 
 [[def:Submission Requirement, Submission Requirements]]
-~ Submission Requirements are objects that define what combinations of inputs must be submitted to comply with the requirements a Verifier has for proceeding in a flow (e.g. credential issuance, allowing entry, accepting an application).
+~ Submission Requirements are objects that define what combinations of inputs must be submitted to comply with the requirements a [[ref:Verifier]] has for proceeding in a flow (e.g. credential issuance, allowing entry, accepting an application).
 
 ## Localization
 
 To support localization, [IETF BCP 47](https://tools.ietf.org/html/bcp47) one
 ****MAY**** use language tags under the `locale` property in both a `Presentation
-Definition` and `Presentation Submission`. If a Definition has a language tag,
+Definition` and [[ref:Presentation Submission]]. If a Definition has a language tag,
 so should the corresponding Submission. A Submission may have a language tag
 regardless of the presence of one in the corresponding Definition.
 
@@ -173,11 +173,11 @@ conjunction with the
 
 ## Presentation Definition
 
-Presentation Definitions are objects that articulate what proofs a [[ref:Verifier]]
+[[ref:Presentation Definition]]s are objects that articulate what proofs a [[ref:Verifier]]
 requires. These help the [[ref:Verifier]] to decide how or whether to interact with a
-Holder. Presentation Definitions are composed of inputs, which describe the
+[[ref:Holder]]. [[ref:Presentation Definition]]s are composed of inputs, which describe the
 forms and details of the proofs they require, and optional sets of selection
-rules, to allow Holders flexibility in cases where many different types of
+rules, to allow [[ref:Holders]] flexibility in cases where many different types of
 proofs may satisfy an input requirement.
 
 <tab-panels selected-index="0">
@@ -529,14 +529,14 @@ other properties that are not defined below MUST be ignored:
 the resource. The property ****MUST**** be a unique identifier, such as a [UUID](https://tools.ietf.org/html/rfc4122).
 - `name` - The resource ****MAY**** contain this property, and if present its
   value ****SHOULD**** be a human-friendly name that describes what the
-  Presentation Definition pertains to.
+  [[ref:Presentation Definition]] pertains to.
 - `purpose` - The resource ****MAY**** contain this property, and if present its
   value ****MUST**** be a string that describes the purpose for which the
-  Presentation Definition's inputs are being requested.
+  [[ref:Presentation Definition]]'s inputs are being requested.
 - The resource ****MAY**** include a `format` property, and its value 
   ****MUST**** be an object with one or more properties matching the registered 
   [Claim Format Designations](#claim-format-designations) (`jwt`, 
-  `jwt_vc`, `jwt_vp`, etc.) to inform the Holder of the claim format 
+  `jwt_vc`, `jwt_vp`, etc.) to inform the [[ref:Holder]] of the [[ref:Claim]] format 
   configurations the [[ref:Verifier]] can process. The value for each property included 
   ****MUST**** be an object composed as follows:
     - The object ****MUST**** include a format-specific property (i.e. `alg`, 
@@ -577,7 +577,7 @@ the resource. The property ****MUST**** be a unique identifier, such as a [UUID]
       }
       ```
 - `submission_requirements` - The resource ****MAY**** contain this property,
-  and if present, its value ****MUST**** conform to the Submission Requirement
+  and if present, its value ****MUST**** conform to the [[ref:Submission Requirement]]
   Format. If not present, all inputs listed in the `input_descriptors` array are
   required for submission. The description for the format of this property is in
   the [`Submission Requirement`](#submission-requirement) section below.
@@ -590,10 +590,10 @@ the resource. The property ****MUST**** be a unique identifier, such as a [UUID]
 
 ### Submission Requirements
 
-_Presentation Definitions_ ****MAY**** include _Submission Requirements_,
+[[ref:Presentation Definition]]s ****MAY**** include _Submission Requirements_,
 which are objects that define what combinations of inputs must be submitted
 to comply with the requirements a [[ref:Verifier]] has for proceeding in a flow (e.g.
-claim issuance, allowing entry, accepting an application).
+[[ref:Claim]] issuance, allowing entry, accepting an application).
 _Submission Requirements_ introduce a set of rule types and mapping instructions
 a User Agent can ingest to present requirement optionality to the user, and
 subsequently submit inputs in a way that maps back to the rules the verifying
@@ -648,7 +648,7 @@ input_descriptors that remain after satisfying all submission_requirements
 #### Submission Requirement Objects
 
 _Submission Requirement Objects_ describe combinations of inputs that
-****must**** be submitted via a [Presentation Submission](#presentation-submission)
+****must**** be submitted via a [[ref:Presentation Submission]]
 to satisfy [[ref:Verifier]] demands. _Submission Requirement Objects_ are JSON objects
 constructed as follows:
 
@@ -693,7 +693,7 @@ be the string `"all"`.
     - `from_nested` - when used within an `all` rule, all the _Submission
     Requirement Objects_ specified in the `from_nested` array must be satisfied
     by the inputs submitted in a subsequent
-    [Presentation Submission](#presentation-submission).
+    [[ref:Presentation Submission]].
 
 ::: example Submission Requirement, all, group
 ```json
@@ -725,7 +725,7 @@ be the string `"all"`.
   `from_nested` array ****MUST**** be submitted or satisfied.
 
 If the `from` property contains a `group` string, it directs the consumer of
-the _Presentation Definition_ to submit all members of the matching `group`
+the [[ref:Presentation Definition]] to submit all members of the matching `group`
 string. In the following example, the `from` property contains a `group`
 string to require a single member of group `"B"`:
 
@@ -759,7 +759,7 @@ string to require a single member of group `"B"`:
 :::
 
 If the `from` property contains an array of nested _Submission Requirement_
-objects, it directs the consumer of the _Presentation Definition_ to submit
+objects, it directs the consumer of the [[ref:Presentation Definition]] to submit
 members such that the number of satisfied _Submission Requirement_ objects is
 exactly `count`. In the following example, the `from` property contains an
 array of nested _Submission Requirement_ objects to require either all members
@@ -872,7 +872,7 @@ processing-related rules above:
 
 ### Input Descriptors
 [[ref:Input Descriptors]] are objects used to describe the information a [[ref:Verifier]]
-requires of a Holder before they will proceed with an interaction. If no 
+requires of a [[ref:Holder]] before they will proceed with an interaction. If no 
 `submission_requirements` objects are present, all `input_descriptor` objects 
 ****MUST**** be satisfied.
 
@@ -980,7 +980,7 @@ why a certain item or set of data is being requested:
 #### Input Descriptor Objects
 
 [[ref:Input Descriptors]] are objects that describe what type of input 
-data/claim,  or sub-fields thereof, is required for submission to the [[ref:Verifier]].
+data/[[ref:Claim]],  or sub-fields thereof, is required for submission to the [[ref:Verifier]].
  _Input Descriptor Objects_ are composed as follows:
 
   - The object ****MUST**** contain an `id` property. The value of the `id`
@@ -995,18 +995,18 @@ data/claim,  or sub-fields thereof, is required for submission to the [[ref:Veri
     target schema represents.
   - The object ****MAY**** contain a `purpose` property, and if present its
     value ****MUST**** be a string that describes the purpose for which the
-    claim's data is being requested.
+    [[ref:Claim]]'s data is being requested.
   - The object ****MAY**** contain a `metadata` property, and if present its
     value ****MUST**** be an object with metadata properties that describe
     any information specific to the acquisition, formulation, or details of
-    the claim in question.
+    the [[ref:Claim]] in question.
   - The object ****MUST**** contain a `schema` property, and its value
     ****MUST**** be an array composed of objects as follows:
       - The object ****MUST**** contain a `uri` property, and its value
         ****MUST**** be an string consisting of a valid URI string for
-        the acceptable claim schemas. Multiple array objects may be present
+        the acceptable [[ref:Claim]] schemas. Multiple array objects may be present
         for multiple schemas. A common use of multiple entries in
-        the `schema` array is when multiple versions of a claim schema exist
+        the `schema` array is when multiple versions of a [[ref:Claim]] schema exist
         and there is a desire to express support for more than one version. 
         This field allowing multiple URIs is not intended to be used as 
         a mechanism for including references to fundamentally different schemas, and ****SHOULD NOT**** be used by the implementer this way.
@@ -1053,17 +1053,17 @@ data/claim,  or sub-fields thereof, is required for submission to the [[ref:Veri
       - The object ****MAY**** contain a `subject_is_issuer` property, and if
         present its value ****MUST**** be one of the following strings:
         - `required` - This indicates that the processing entity ****MUST****
-          submit a response that has been _self-attested_, i.e., the claim
+          submit a response that has been _self-attested_, i.e., the [[ref:Claim]]
           used in the presentation has been 'issued' by the subject of the
-          claim.
+          [[ref:Claim]].
         - `preferred` - This indicates that it is ****RECOMMENDED**** that the
           processing entity submit a response that has been _self-attested_,
-          i.e., the claim used in the presentation has been 'issued' by the
-          subject of the claim.
+          i.e., the [[ref:Claim]] used in the presentation has been 'issued' by the
+          subject of the [[ref:Claim]].
       
         The `subject_is_issuer` property could be used by a [[ref:Verifier]] to require
         that certain inputs be _self_attested_. For example, a college
-        application `presentation definition` might contain an [[ref:Input Descriptor]]
+        application [[ref:Presentation Definition]] might contain an [[ref:Input Descriptor]]
         object for an essay submission. In this case, the [[ref:Verifier]] would be able
         to require that the essay be provided by the one submits the application. 
       - The object ****MAY**** contain an `is_holder` property, and if
@@ -1074,7 +1074,7 @@ data/claim,  or sub-fields thereof, is required for submission to the [[ref:Veri
            matching the string value from a 
           [_Input Descriptor Field Entry_](#input-descriptor-field-entry)
           object's `id` property. This identifies the attribute whose subject is
-          of concern to the verifier.  
+          of concern to the [[ref:Verifier]].  
         - The object ****MUST**** contain a `directive` property. The value of
           this property ****MUST****  be one of the following strings:
           - `required` - This indicates that the processing entity ****MUST****
@@ -1088,14 +1088,14 @@ data/claim,  or sub-fields thereof, is required for submission to the [[ref:Veri
                                           
         The `is_holder` property would be used by a [[ref:Verifier]] to
         require that certain inputs be provided by a certain subject. For
-        example, an identity verification `presentation definition` might
+        example, an identity verification [[ref:Presentation Definition]] might
         contain an _Input Descriptor_ object for a birthdate from a birth
         certificate. In this case, the [[ref:Verifier]] would be able to require
-        that the holder of the birth certificate claim is the same as the
+        that the [[ref:Holder]] of the birth certificate [[ref:Claim]] is the same as the
         subject of the birthdate attribute. This is especially useful in cases
-        where a claim may have multiple subjects.
+        where a [[ref:Claim]] may have multiple subjects.
         
-        For more information about techniques used to prove binding to a holder,
+        For more information about techniques used to prove binding to a [[ref:Holder]],
         please see [_Holder Binding_](#holder-binding).
         
       - The object ****MAY**** contain a `same_subject` property, and if present
@@ -1105,7 +1105,7 @@ data/claim,  or sub-fields thereof, is required for submission to the [[ref:Veri
           matching the string value from a
           [_Input Descriptor Field Entry_](#input-descriptor-field-entry)
           object's `id` property. This identifies the attributes whose subject
-          is of concern to the verifier. It is important to note that the
+          is of concern to the [[ref:Verifier]]. It is important to note that the
           attributes ****MAY**** be identified in an
           [_Input Descriptor Field Entry_](#input-descriptor-field-entry) of a
           different [_Input Descriptor_](#input-descriptors) object.
@@ -1123,12 +1123,12 @@ data/claim,  or sub-fields thereof, is required for submission to the [[ref:Veri
 
         The `same_subject` property would be used by a [[ref:Verifier]] to
         require that certain provided inputs be about the same subject. For
-        example, a `presentation definition` might contain an
+        example, a [[ref:Presentation Definition]] might contain an
         [_Input Descriptor_](#input-descriptors) object which calls for a street
-        address from a driver license claim and another
+        address from a driver license [[ref:Claim]] and another
         [_Input Descriptor_](#input-descriptors) object which calls for a name
-        from a birth certificate claim. The [[ref:Verifier]] would be able to
-        require that the subject of the street address attribute claim is the
+        from a birth certificate [[ref:Claim]]. The [[ref:Verifier]] would be able to
+        require that the subject of the street address attribute [[ref:Claim]] is the
         same as the subject of the name attribute.
 
       - The object ****MAY**** contain a `fields` property, and its value
@@ -1266,14 +1266,14 @@ data/claim,  or sub-fields thereof, is required for submission to the [[ref:Veri
 
 ### Input Evaluation
 
-A consumer of a _Presentation Definition_ must filter inputs they hold (signed
-claims, raw data, etc.) to determine whether they possess the inputs
+A consumer of a [[ref:Presentation Definition]] must filter inputs they hold (signed
+[[ref:Claims]], raw data, etc.) to determine whether they possess the inputs
 required to fulfill the demands of the Verifying party. A consumer of a
-_Presentation Definition_ ****SHOULD**** use the following process to validate
+[[ref:Presentation Definition]] ****SHOULD**** use the following process to validate
 whether or not its candidate inputs meet the requirements it describes:
 
-For each [[ref:Input Descriptor]] in the `input_descriptors` array of a _Presentation
-Definition_, a User Agent ****should**** compare each candidate input (JWT,
+For each [[ref:Input Descriptor]] in the `input_descriptors` array of a
+[[ref:Presentation Definition]], a User Agent ****should**** compare each candidate input (JWT,
 Verifiable Credential, etc.) it holds to determine whether there is a match.
 Evaluate each candidate input as follows:
   1. The schema of the candidate input ****must**** match one of the _Input
@@ -1304,7 +1304,7 @@ Evaluate each candidate input as follows:
         value of the `filter` property.         
       4. If the result is valid, proceed iterating the rest of the `fields` entries.
   3. If all of the previous validation steps are successful, mark the candidate
-    input as a match for use in a _Presentation Submission_, and if present at
+    input as a match for use in a [[ref:Presentation Submission]], and if present at
     the top level of the [[ref:Input Descriptor]], keep a relative reference to the
     `group` values the input is designated for.
   4. If the `constraints` property of the [[ref:Input Descriptor]] is present and it
@@ -1313,14 +1313,14 @@ Evaluate each candidate input as follows:
     input is limited to the entries specified in the `fields` property. If the
     `fields` property ****is not**** present, or contains zero
     [_Input Descriptor Field Entries_](#input-descriptor-field-entry),
-    submission ****SHOULD NOT**** include any claim data from the claim.
-    (for example: a [[ref:Verifier]] may simply want to know a Holder has a valid,
-    signed claims of a particular type, without disclosing any of the
+    submission ****SHOULD NOT**** include any [[ref:Claim]] data from the [[ref:Claim]].
+    (for example: a [[ref:Verifier]] may simply want to know a [[ref:Holder]] has a valid,
+    signed [[ref:Claims]] of a particular type, without disclosing any of the
     data it contains).
   5. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
     contains a `subject_is_issuer` property set to the value `required`, ensure
     that any submission of data in relation to the candidate input is fulfilled
-    using a _self_attested_ claim.
+    using a _self_attested_ [[ref:Claim]].
   6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
     and it contains an `is_holder` property, ensure that for each object in the
     array, any submission of data in relation to the candidate input is
@@ -1342,14 +1342,14 @@ of the implementer.
 
 #### Expired and Revoked Data
 
-Certain types of claims have concepts of _expiration_ and _revocation_.
+Certain types of [[ref:Claims]] have concepts of _expiration_ and _revocation_.
 _Expiration_ is mechanism normally used to communicate a time bound up until
-which a claim is valid. _Revocation_ is a mechanism normally used to give
-an issuer control over the status of a claim after issuance. Different
-claim specifications handle these concepts in different ways. 
+which a [[ref:Claim]] is valid. _Revocation_ is a mechanism normally used to give
+an issuer control over the status of a [[ref:Claim]] after issuance. Different
+[[ref:Claim]] specifications handle these concepts in different ways. 
 
-`Presentation Definitions` have a need to specify whether expired, revoked,
-or claims of other statuses can be accepted. For claims that have
+[[ref:Presentation Definition]]s have a need to specify whether expired, revoked,
+or [[ref:Claims]] of other statuses can be accepted. For [[ref:Claims]] that have
 simple status properties [Input Descriptor Filters](#input-descriptor-objects)
 JSON Schema can be used to write specify acceptable criteria.
 
@@ -1358,7 +1358,7 @@ The first example demonstrates _expiry_ using the [VC Data Model's
 The second demonstrates _revocation_, or more generally, _credential status_
 using the [VC Data Model's `credentialStatus` property](https://w3c.github.io/vc-data-model/#status-0).
 Using the syntax provided in the example a [[ref:Verifier]] will have all requisite
-information to resolve the status of a claim.
+information to resolve the status of a [[ref:Claim]].
 
 <tab-panels selected-index="0">
 
@@ -1435,44 +1435,44 @@ information to resolve the status of a claim.
 </tab-panel>
 
 #### Holder Binding
-Credentials often rely on proofs of holder binding for their validity. A
-verifier may wish to determine that a particular claim, or set of claims is
-bound to the claim holder. This can help the verifier to determine the
-legitimacy of the presented proofs. Some examples of holder binding include
-proof of identifier control, proof the holder knows a secret, or biometrics.
+Credentials often rely on proofs of [[ref:Holder]] binding for their validity. A
+[[ref:Verifier]] may wish to determine that a particular [[ref:Claim]], or set of [[ref:Claims]] is
+bound to the [[ref:Claim]] [[ref:Holder]]. This can help the [[ref:Verifier]] to determine the
+legitimacy of the presented proofs. Some examples of [[ref:Holder]] binding include
+proof of identifier control, proof the [[ref:Holder]] knows a secret, or biometrics.
 
-The claim issuer makes proofs of holder binding possible by including holder
-information either in the claim or the claim signature. 
+The [[ref:Claim]] issuer makes proofs of [[ref:Holder]] binding possible by including [[ref:Holder]]
+information either in the [[ref:Claim]] or the [[ref:Claim]] signature. 
 
 ##### Proof of Identifier Control
-A number of claim types include an identifier for the claim subject. A verifier
-may wish to ascertain that one of the subject identified in the claim is the one
-submitting the proof, or has consented to the proof submission. A claim may also
-include an identifier for the holder, independent of the subject identifiers. 
+A number of [[ref:Claim]] types include an identifier for the [[ref:Claim]] subject. A [[ref:Verifier]]
+may wish to ascertain that one of the subject identified in the [[ref:Claim]] is the one
+submitting the proof, or has consented to the proof submission. A [[ref:Claim]] may also
+include an identifier for the [[ref:Holder]], independent of the subject identifiers. 
 
-One mechanism for providing such proofs is the use of a DID as the identifier
-for the claim subject or holder. DIDs enable an entity to provide a
+One mechanism for providing such proofs is the use of a [[ref:DID]] as the identifier
+for the [[ref:Claim]] subject or [[ref:Holder]]. DIDs enable an entity to provide a
 cryptographic proof of control of the identifier, usually through a
-demonstration that the holder knows some secret value, such as a private key.
-The holder can demonstrate the same proof of control when presenting the claim.
-In addition to verifying the authenticity and origin of the claim itself, a
-verifier can verify that the holder of the claim still controls the identifier.
+demonstration that the [[ref:Holder]] knows some secret value, such as a private key.
+The [[ref:Holder]] can demonstrate the same proof of control when presenting the [[ref:Claim]].
+In addition to verifying the authenticity and origin of the [[ref:Claim]] itself, a
+[[ref:Verifier]] can verify that the [[ref:Holder]] of the [[ref:Claim]] still controls the identifier.
 
 ##### Link Secrets
-Some claim signatures support the inclusion of holder-provided secrets that
-become incorporated into the signature, but remain hidden from the claim issuer.
-One common use of this capability is to bind the claim to the holder. This is
+Some [[ref:Claim]] signatures support the inclusion of [[ref:Holder]]-provided secrets that
+become incorporated into the signature, but remain hidden from the [[ref:Claim]] issuer.
+One common use of this capability is to bind the [[ref:Claim]] to the [[ref:Holder]]. This is
 sometimes called a link secret. Just as with proof of control of an identifier,
-link secret proofs demonstrate that the holder knows some secret value. Upon
-presentation to a verifier, the holder demonstrates knowledge of the secret
-without revealing it. The verifier can verify that the holder knows the link
-secret, and that the link secret is contained in the claim signature.
+link secret proofs demonstrate that the [[ref:Holder]] knows some secret value. Upon
+presentation to a [[ref:Verifier]], the [[ref:Holder]] demonstrates knowledge of the secret
+without revealing it. The [[ref:Verifier]] can verify that the [[ref:Holder]] knows the link
+secret, and that the link secret is contained in the [[ref:Claim]] signature.
 
 ##### Biometrics
-This type of holder binding, instead of relying on demonstrating knowledge of
+This type of [[ref:Holder]] binding, instead of relying on demonstrating knowledge of
 some secret value, relies on the evaluation of biometric data. There are a
-number of mechanisms for safely embedding biometric information in a claim such
-that only a person who can confirm the biometric may present the claim. 
+number of mechanisms for safely embedding biometric information in a [[ref:Claim]] such
+that only a person who can confirm the biometric may present the [[ref:Claim]]. 
 
 ### JSON Schema
 
@@ -1758,13 +1758,13 @@ format-related rules above:
 ```
 
 ### Presentation Requests
-Presentation Definitions may be sent from a [[ref:Verifier]] to a Holder using 
-a wide variety of transport mechanisms or claim exchange protocols. This
+[[ref:Presentation Definition]]s may be sent from a [[ref:Verifier]] to a [[ref:Holder]] using 
+a wide variety of transport mechanisms or [[ref:Claim]] exchange protocols. This
 specification does not define a transport mechanism for `Presentation
 Definitions` (or [[ref:Presentation Request]]), but does note that different 
 use cases, supported signature schemes, protocols, and threat models may
 require a [[ref:Presentation Request]]to have certain properties:
-- Signature verification - A Holder may wish to have assurances as to the
+- Signature verification - A [[ref:Holder]] may wish to have assurances as to the
   provenance, identity, or status of a [[ref:Presentation Definition]]. In this case,
   a [[ref:Presentation Request]] that uses digital signatures may be required. 
 - `domain`, `challenge`, or `nonce` - Some presentation protocols may require
@@ -1777,7 +1777,7 @@ require a [[ref:Presentation Request]]to have certain properties:
 
 ## Presentation Submission
 
-_Presentation Submissions_ are objects embedded within target claim
+_Presentation Submissions_ are objects embedded within target [[ref:Claim]]
 negotiation formats that unify the presentation of proofs to a [[ref:Verifier]]
 in accordance with the requirements a [[ref:Verifier]] specified in a 
 [[ref:Presentation Definition]]. Embedded [[ref:Presentation Submission]] 
@@ -1798,20 +1798,20 @@ section below.
   composed as follows:
     - The object ****MUST**** include an `id` property, and its value
       ****MUST**** be a string matching the `id` property of the _Input
-      Descriptor_ in the _Presentation Definition_ the submission is related to.
+      Descriptor_ in the [[ref:Presentation Definition]] the submission is related to.
     - The object ****MUST**** include a `format` property, and its value 
       ****MUST**** be a string value matching one of the 
       [Claim Format Designation](#claim-format-designations) (`jwt`, 
-      `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`), to denote what data format the claim is being 
+      `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`), to denote what data format the [[ref:Claim]] is being 
       submitted in.
     - The object ****MUST**** include a `path` property, and its value
       ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
-      string expression that selects the claim to be submit in relation
+      string expression that selects the [[ref:Claim]] to be submit in relation
       to the identified [[ref:Input Descriptor]] identified, when executed against
       the top-level of the object the _Presentation Submission_ is embedded
       within.
     - The object ****MAY**** include a `path_nested` object to specify the
-      presence of a multi-claim envelope format, meaning the claim indending to be selected must be decoded separately from its parent enclosure.
+      presence of a multi-[[ref:Claim]] envelope format, meaning the [[ref:Claim]] indending to be selected must be decoded separately from its parent enclosure.
       + The format of a `path_nested` object mirrors that of a `descriptor_map` property. The nesting may be any number of levels deep. The `id` property ****MUST**** be the same for each level of nesting.
       + The `path` property inside each `path_nested` property provides a _relative path_ within a given nested value.
 
@@ -1866,29 +1866,29 @@ process as follows:
 
 ### Limited Disclosure Submissions
 
-If for all claims submitted in relation to
+If for all [[ref:Claims]] submitted in relation to
 [_Input Descriptor Objects_](#input-descriptor-objects) that include a
 `constraints` object with a `limit_disclosure` property set to the boolean value
 `true`, ensure that the data submitted is limited to the entries specified in
 the `fields` property of the `constraints` object. If the `fields` property
 ****is not**** present, or contains zero
 [_Input Descriptor Field Entries_](#input-descriptor-field-entry), the
-submission ****SHOULD NOT**** include any claim data from the claim. (for
-example: a Verifier may simply want to know a Holder has a valid, signed
-claim of a particular type, without disclosing any of the data it contains).
+submission ****SHOULD NOT**** include any [[ref:Claim]] data from the [[ref:Claim]]. (for
+example: a [[ref:Verifier]] may simply want to know a [[ref:Holder]] has a valid, signed
+[[ref:Claim]] of a particular type, without disclosing any of the data it contains).
 
 ### Validation of Claims
 
-Once a claim has been ingested via a Presentation Submission, any validation 
+Once a [[ref:Claim]] has been ingested via a [[ref:Presentation Submission]], any validation 
 beyond the process of evaluation defined by the [Input Evaluation](#input-evaluation) 
 section is outside the scope of Presentation Exchange. Validation of signatures 
-and other cryptographic proofs are a function of a given claim format, and 
-should be evaluated in accordance with a given claim format's standardized 
-processing steps. Additional verification of claim data or subsequent 
-validation required by a given [[ref:Verifier]] are left to the Verifier's systems, code 
+and other cryptographic proofs are a function of a given [[ref:Claim]] format, and 
+should be evaluated in accordance with a given [[ref:Claim]] format's standardized 
+processing steps. Additional verification of [[ref:Claim]] data or subsequent 
+validation required by a given [[ref:Verifier]] are left to the [[ref:Verifier]]'s systems, code 
 and business processes to define and execute.
 
-During validation, each Input Descriptor Object ****MUST**** refer to only a
+During validation, each [[ref:Input Descriptor]] Object ****MUST**** refer to only a
 single discrete container within a _Presentation Submission_, such that all
 checks refer to properties within the same container and are protected by the
 same digital signature, if the container format supports digital signatures.
@@ -1904,7 +1904,7 @@ _Input Descriptor Object_ also come from the same container.
 The following section details where the _Presentation Submission_ is to be
 embedded within a target data structure, as well as how to formulate the
 [JSONPath](https://goessner.net/articles/JsonPath/) expressions to select the
-claims within the target data structure.
+[[ref:Claims]] within the target data structure.
 
 #### Embed Locations
 
@@ -1970,7 +1970,7 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
 ## Claim Format Designations
 
 Within the _Presentation Exchange_ specification, there are numerous sections 
-where [[ref:Verifiers]] and Holders convey what claim variants they support and 
+where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] variants they support and 
 are submitting. The following are the normalized references used within the 
 specification:
 
@@ -2426,7 +2426,7 @@ JSONPath                      | Description
 
 #### JSON Web Token Claims Registration
 
-This specification registers the claims in section [Registry Contents]() in the IANA JSON Web Token Claims registry defined in [RFC 751 JSON Web Token (JWT)](https://tools.ietf.org/html/rfc7519).
+This specification registers the [[ref:Claims]] in section [Registry Contents]() in the IANA JSON Web Token [[ref:Claims]] registry defined in [RFC 751 JSON Web Token (JWT)](https://tools.ietf.org/html/rfc7519).
 
 ##### Registry Contents
 
