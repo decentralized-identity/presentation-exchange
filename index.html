@@ -75,7 +75,7 @@ and how Holders must encode submissions of proof to align with those
 requirements.</p>
 <p>To address these needs, this Presentation Exchange specification codifies the
 <code>Presentation Definition</code> data format Verifiers can use to articulate proof
-requirements, as well as the <code>Presentation Submission</code> data format Holders can
+requirements, as well as the <code>Presentation Manifest</code> data format Holders can
 use to submit proofs in accordance with them. The specification is designed to
 be both claim format and transport envelope agnostic, meaning an implementer
 can use <a path-0="tools.ietf.org"path-1="html"path-2="rfc7519"href="https://tools.ietf.org/html/rfc7519" >JSON Web Tokens (JWTs)</a>,
@@ -131,7 +131,7 @@ proceeding in a flow (e.g. credential issuance, allowing entry, accepting an
 application).</dd>
 <dt><span id="term:submission-requirement-objects"><span id="term:submission-requirement-object">Submission Requirement Object</span></span></dt>
 <dd>Submission Requirement Objects describe valid combinations of inputs in a
-<a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>.</dd>
+<a class="term-reference" href="#term:presentation-manifest">Presentation Manifest</a>.</dd>
 <dt><span id="term:submission-requirement-rules"><span id="term:submission-requirement-rule">Submission Requirement Rule</span></span></dt>
 <dd>Submission Requirement Rules describe combinatorical rules within a
 <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a> when processing inputs. They may be
@@ -158,21 +158,21 @@ may ascertain that a Holder possesses a link secret without its disclosure.</dd>
 <dd>Presentation Requests are transport mechanisms for <a class="term-reference" href="#term:presentation">Presentation</a>.  Presentation Requests can take multiple shapes, using a variety
 of protocols and signature schemes not refined in this specification. They are
 sent by a <a class="term-reference" href="#term:verifier">Verifier</a> to a <a class="term-reference" href="#term:holder">Holder</a>.</dd>
-<dt><span id="term:presentation-submission">Presentation Submission</span></dt>
-<dd>Presentation Submissions are objects embedded within target claim negotiation
+<dt><span id="term:presentation-manifest">Presentation Manifest</span></dt>
+<dd>Presentation Manifests are objects embedded within target claim negotiation
 formats that unify the presentation of proofs to a <a class="term-reference" href="#term:verifier">Verifier</a> in
 accordance with the requirements a <a class="term-reference" href="#term:verifier">Verifier</a> specified in a
 <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>.</dd>
 <dt><span id="term:embed-targets"><span id="term:embed-target">Embed Target</span></span></dt>
 <dd>Embed Targets are data formats used in messaging protocols that may be used
-to transport a <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>.</dd>
+to transport a <a class="term-reference" href="#term:presentation-manifest">Presentation Manifest</a>.</dd>
 <dt><span id="term:embed-locations">Embed Locations</span></dt>
 <dd>Embed Locations are the specific paths and indexes per <a class="term-reference" href="#term:embed-target">Embed Target</a>
 where the <a class="term-reference" href="#term:verifier">Verifier</a> can expect to find the <a class="term-reference" href="#term:presentation">Presentation</a>.</dd>
 </dl>
 <h2 id="localization"><a class="toc-anchor" href="#localization" >§</a> Localization</h2>
 <p>To support localization, <a path-0="tools.ietf.org"path-1="html"path-2="bcp47"href="https://tools.ietf.org/html/bcp47" >IETF BCP 47</a> one
-<strong><strong>MAY</strong></strong> use language tags under the <code>locale</code> property in both a <code>Presentation Definition</code> and <code>Presentation Submission</code>. If a Definition has a language tag,
+<strong><strong>MAY</strong></strong> use language tags under the <code>locale</code> property in both a <code>Presentation Definition</code> and <code>Presentation Manifest</code>. If a Definition has a language tag,
 so should the corresponding Submission. A Submission may have a language tag
 regardless of the presence of one in the corresponding Definition.</p>
 <p>Wrapping transports such as HTTP may choose to utlilize the <code>locale</code> property in
@@ -181,7 +181,7 @@ conjunction with the
 <tab-panels selected-index="0">
 <nav>
   <button type="button">Presentation Definition with Locale</button>
-  <button type="button">Presentation Submission with Locale</button>
+  <button type="button">Presentation Manifest with Locale</button>
 </nav>
 <section>
 <div id="presentation-definition-with-locale" class="notice example"><a class="notice-link" href="#presentation-definition-with-locale">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
@@ -204,8 +204,8 @@ conjunction with the
 </code></pre>
 </section>
 <section>
-<div id="presentation-submission-with-locale" class="notice example"><a class="notice-link" href="#presentation-submission-with-locale">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+<div id="presentation-manifest-with-locale" class="notice example"><a class="notice-link" href="#presentation-manifest-with-locale">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"presentation_manifest"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"a30e3b91-fb77-4d22-95fa-871689c322e2"</span><span class="token punctuation">,</span>
     <span class="token property">"definition_id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token string">"de-DE"</span><span class="token punctuation">,</span>
@@ -673,7 +673,7 @@ input_descriptors that remain after satisfying all submission_requirements
 </div>
 <h4 id="submission-requirement-objects"><a class="toc-anchor" href="#submission-requirement-objects" >§</a> Submission Requirement Objects</h4>
 <p><em>Submission Requirement Objects</em> describe combinations of inputs that
-<strong><strong>must</strong></strong> be submitted via a <a href="#presentation-submission" >Presentation Submission</a>
+<strong><strong>must</strong></strong> be submitted via a <a href="#presentation-manifest" >Presentation Manifest</a>
 to satisfy <a class="term-reference" href="#term:verifier">Verifier</a> demands. <em>Submission Requirement Objects</em> are JSON objects
 constructed as follows:</p>
 <ol>
@@ -720,7 +720,7 @@ the group string of the <code>from</code> value must be submitted to the <a clas
 <li><code>from_nested</code> - when used within an <code>all</code> rule, all the <em>Submission
 Requirement Objects</em> specified in the <code>from_nested</code> array must be satisfied
 by the inputs submitted in a subsequent
-<a href="#presentation-submission" >Presentation Submission</a>.</li>
+<a href="#presentation-manifests" >Presentation Manifest</a>.</li>
 </ul>
 </li>
 </ul>
@@ -1354,7 +1354,7 @@ value of the <code>filter</code> property.</li>
 </ol>
 </li>
 <li>If all of the previous validation steps are successful, mark the candidate
-input as a match for use in a <em>Presentation Submission</em>, and if present at
+input as a match for use in a <em>Presentation Manifest</em>, and if present at
 the top level of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a>, keep a relative reference to the
 <code>group</code> values the input is designated for.</li>
 <li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present and it
@@ -1797,15 +1797,15 @@ that a presentation to be bound to a particular communication exchange, or
 session. In these cases, a <a class="term-reference" href="#term:presentation-request">Presentation Request</a> that provides a <code>domain</code>,
 <code>challenge</code>,or <code>nonce</code> property may be required.</li>
 </ul>
-<h2 id="presentation-submission"><a class="toc-anchor" href="#presentation-submission" >§</a> Presentation Submission</h2>
-<p><em>Presentation Submissions</em> are objects embedded within target claim
+<h2 id="presentation-manifest"><a class="toc-anchor" href="#presentation-manifest" >§</a> Presentation Manifest</h2>
+<p><em>Presentation Manifests</em> are objects embedded within target claim
 negotiation formats that unify the presentation of proofs to a <a class="term-reference" href="#term:verifier">Verifier</a>
 in accordance with the requirements a <a class="term-reference" href="#term:verifier">Verifier</a> specified in a
-<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>. Embedded <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>
+<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>. Embedded <a class="term-reference" href="#term:presentation-manifest">Presentation Manifest</a>
 objects <strong><strong>MUST</strong></strong> be located within target data format as a
-<code>presentation_submission</code> property, which are composed and embedded as follows:</p>
+<code>presentation_manifest</code> property, which are composed and embedded as follows:</p>
 <ol>
-<li>The <code>presentation_submission</code> object <strong><strong>MUST</strong></strong> be included at the top-level of an Embed Target, or in the specific location described in the
+<li>The <code>presentation_manifest</code> object <strong><strong>MUST</strong></strong> be included at the top-level of an Embed Target, or in the specific location described in the
 <a href="#embed-locations" >Embed Locations table</a> in the <a href="#embed-target" >Embed Target</a>
 section below.</li>
 <li>The object <strong><strong>MUST</strong></strong> include <code>id</code> and <code>definition_id</code> properties.
@@ -1833,7 +1833,7 @@ submitted in.</li>
 <strong><strong>MUST</strong></strong> be a <a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a>
 string expression that selects the claim to be submit in relation
 to the identified <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> identified, when executed against
-the top-level of the object the <em>Presentation Submission</em> is embedded
+the top-level of the object the <em>Presentation Manifest</em> is embedded
 within.</li>
 <li>The object <strong><strong>MAY</strong></strong> include a <code>path_nested</code> object to specify the
 presence of a multi-claim envelope format, meaning the claim indending to be selected must be decoded separately from its parent enclosure.
@@ -1848,7 +1848,7 @@ presence of a multi-claim envelope format, meaning the claim indending to be sel
 <h3 id="processing-of-path_nested-entries"><a class="toc-anchor" href="#processing-of-path_nested-entries" >§</a> Processing of <code>path_nested</code> Entries</h3>
 <p><strong><strong>Example Nested Submission</strong></strong></p>
 <pre class="language-javascript"><code class="language-javascript"><span class="token punctuation">{</span>
-  <span class="token string">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token string">"presentation_manifest"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token string">"id"</span><span class="token operator">:</span> <span class="token string">"a30e3b91-fb77-4d22-95fa-871689c322e2"</span><span class="token punctuation">,</span>
     <span class="token string">"definition_id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token string">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -1870,7 +1870,7 @@ presence of a multi-claim envelope format, meaning the claim indending to be sel
   <span class="token punctuation">]</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p>When the <code>path_nested</code> property is present in a <em>Presentation Submission</em> object,
+<p>When the <code>path_nested</code> property is present in a <em>Presentation Manifest</em> object,
 process as follows:</p>
 <ol>
 <li>For each Nested Submission Traversal Object in the <code>path_nested</code> array,
@@ -1902,7 +1902,7 @@ submission <strong><strong>SHOULD NOT</strong></strong> include any claim data f
 example: a Verifier may simply want to know a Holder has a valid, signed
 claim of a particular type, without disclosing any of the data it contains).</p>
 <h3 id="validation-of-claims"><a class="toc-anchor" href="#validation-of-claims" >§</a> Validation of Claims</h3>
-<p>Once a claim has been ingested via a Presentation Submission, any validation
+<p>Once a claim has been ingested via a Presentation Manifest, any validation
 beyond the process of evaluation defined by the <a href="#input-evaluation" >Input Evaluation</a>
 section is outside the scope of Presentation Exchange. Validation of signatures
 and other cryptographic proofs are a function of a given claim format, and
@@ -1911,7 +1911,7 @@ processing steps. Additional verification of claim data or subsequent
 validation required by a given <a class="term-reference" href="#term:verifier">Verifier</a> are left to the Verifier’s systems, code
 and business processes to define and execute.</p>
 <p>During validation, each Input Descriptor Object <strong><strong>MUST</strong></strong> refer to only a
-single discrete container within a <em>Presentation Submission</em>, such that all
+single discrete container within a <em>Presentation Manifest</em>, such that all
 checks refer to properties within the same container and are protected by the
 same digital signature, if the container format supports digital signatures.
 Examples of discrete container formats include a single Verifiable Credential
@@ -1921,12 +1921,12 @@ Connect Tokens, and JSON Web Tokens. This is to ensure that related
 requirements, for example, “given name” and “family name” within the same
 <em>Input Descriptor Object</em> also come from the same container.</p>
 <h3 id="embed-targets"><a class="toc-anchor" href="#embed-targets" >§</a> Embed Targets</h3>
-<p>The following section details where the <em>Presentation Submission</em> is to be
+<p>The following section details where the <em>Presentation Manifest</em> is to be
 embedded within a target data structure, as well as how to formulate the
 <a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> expressions to select the
 claims within the target data structure.</p>
 <h4 id="embed-locations"><a class="toc-anchor" href="#embed-locations" >§</a> Embed Locations</h4>
-<p>The following are the locations at which the <code>presentation_submission</code> object
+<p>The following are the locations at which the <code>presentation_manifest</code> object
 <strong><strong>MUST</strong></strong> be embedded for known target formats. For any location besides
 the top level of the embed target, the location is described in JSONPath syntax.</p>
 <table>
@@ -1959,10 +1959,10 @@ the top level of the embed target, the location is described in JSONPath syntax.
 <p>The following JSON Schema Draft 7 definition summarizes the rules above:</p>
 <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"$schema"</span><span class="token operator">:</span> <span class="token string">"http://json-schema.org/draft-07/schema#"</span><span class="token punctuation">,</span>
-  <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"Presentation Submission"</span><span class="token punctuation">,</span>
+  <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"Presentation Manifest"</span><span class="token punctuation">,</span>
   <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
   <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"presentation_manifest"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
       <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
@@ -1996,7 +1996,7 @@ the top level of the embed target, the location is described in JSONPath syntax.
       <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"presentation_submission"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"presentation_manifest"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
 <span class="token punctuation">}</span>
 </code></pre>
@@ -2245,7 +2245,7 @@ specification that call for JSONPath expression execution.</p>
 </section>
 
 </tab-panels> -->
-<h4 id="presentation-submissions"><a class="toc-anchor" href="#presentation-submissions" >§</a> Presentation Submissions</h4>
+<h4 id="presentation-manifests"><a class="toc-anchor" href="#presentation-manifests" >§</a> Presentation Manifests</h4>
 <tab-panels selected-index="0">
 <nav>
   <button type="button">Verifiable Presentation</button>
@@ -2254,16 +2254,16 @@ specification that call for JSONPath expression execution.</p>
   <button type="button">DIDComm</button>
 </nav>
 <section>
-<div id="presentation-submission---verifiable-presentation" class="notice example"><a class="notice-link" href="#presentation-submission---verifiable-presentation">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-manifest---verifiable-presentation" class="notice example"><a class="notice-link" href="#presentation-manifest---verifiable-presentation">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
-    <span class="token string">"https://identity.foundation/presentation-exchange/submission/v1"</span>
+    <span class="token string">"https://identity.foundation/presentation-exchange/manifest/v1"</span>
   <span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"type"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token string">"VerifiablePresentation"</span><span class="token punctuation">,</span>
-    <span class="token string">"PresentationSubmission"</span>
+    <span class="token string">"PresentationManifest"</span>
   <span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token property">"presentation_manifest"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"a30e3b91-fb77-4d22-95fa-871689c322e2"</span><span class="token punctuation">,</span>
     <span class="token property">"definition_id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -2361,11 +2361,11 @@ specification that call for JSONPath expression execution.</p>
 </div>
 </section>
 <section>
-<div id="presentation-submission-with-oidc-jwt" class="notice example"><a class="notice-link" href="#presentation-submission-with-oidc-jwt">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-manifest-with-oidc-jwt" class="notice example"><a class="notice-link" href="#presentation-manifest-with-oidc-jwt">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"iss"</span><span class="token operator">:</span> <span class="token string">"https://self-issued.me"</span><span class="token punctuation">,</span>
   <span class="token property">"sub"</span><span class="token operator">:</span> <span class="token string">"248289761001"</span><span class="token punctuation">,</span>
   <span class="token property">"preferred_username"</span><span class="token operator">:</span> <span class="token string">"superman445"</span><span class="token punctuation">,</span>
-  <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token property">"presentation_manifest"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"a30e3b91-fb77-4d22-95fa-871689c322e2"</span><span class="token punctuation">,</span>
     <span class="token property">"definition_id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -2457,17 +2457,17 @@ specification that call for JSONPath expression execution.</p>
 </div>
 </section>
 <section>
-<div id="presentation-submission-using-chapi" class="notice example"><a class="notice-link" href="#presentation-submission-using-chapi">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-manifest-using-chapi" class="notice example"><a class="notice-link" href="#presentation-manifest-using-chapi">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"web"</span><span class="token punctuation">,</span>
   <span class="token property">"dataType"</span><span class="token operator">:</span> <span class="token string">"VerifiablePresentation"</span><span class="token punctuation">,</span>
   <span class="token property">"data"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token comment">// Presentation Submission goes here</span>
+    <span class="token comment">// Presentation Manifest goes here</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
 </section>
 <section>
-<div id="presentation-submission-using-didcomm" class="notice example"><a class="notice-link" href="#presentation-submission-using-didcomm">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="presentation-manifest-using-didcomm" class="notice example"><a class="notice-link" href="#presentation-manifest-using-didcomm">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
     <span class="token property">"@type"</span><span class="token operator">:</span> <span class="token string">"https://didcomm.org/present-proof/%VER/presentation"</span><span class="token punctuation">,</span>
     <span class="token property">"@id"</span><span class="token operator">:</span> <span class="token string">"f1ca8245-ab2d-4d9c-8d7d-94bf310314ef"</span><span class="token punctuation">,</span>
     <span class="token property">"comment"</span><span class="token operator">:</span> <span class="token string">"some comment"</span><span class="token punctuation">,</span>
@@ -2480,7 +2480,7 @@ specification that call for JSONPath expression execution.</p>
         <span class="token property">"mime-type"</span><span class="token operator">:</span> <span class="token string">"application/ld+json"</span><span class="token punctuation">,</span>
         <span class="token property">"data"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
             <span class="token property">"json"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-              <span class="token comment">// Presentation Submission goes here</span>
+              <span class="token comment">// Presentation Manifest goes here</span>
             <span class="token punctuation">}</span>
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span><span class="token punctuation">]</span>
@@ -2593,18 +2593,18 @@ specification that call for JSONPath expression execution.</p>
 <table>
 <thead>
 <tr>
-<th>Presentation Submission</th>
+<th>Presentation Manifest</th>
 <th>Values</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Claim Name:</td>
-<td><code>presentation_submission</code></td>
+<td><code>presentation_manifest</code></td>
 </tr>
 <tr>
 <td>Claim Description:</td>
-<td>Presentation Submission</td>
+<td>Presentation Manifest</td>
 </tr>
 <tr>
 <td>Change Controller:</td>
@@ -2669,7 +2669,7 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="#presentation-requests" >Presentation Requests</a></li>
 </ul>
 </li>
-<li><a href="#presentation-submission" >Presentation Submission</a>
+<li><a href="#presentation-manifest" >Presentation Manifest</a>
 <ul>
 <li><a href="#processing-of-path_nested-entries" >Processing of <code>path_nested</code> Entries</a></li>
 <li><a href="#limited-disclosure-submissions" >Limited Disclosure Submissions</a></li>
@@ -2690,7 +2690,7 @@ specification that call for JSONPath expression execution.</p>
 <ul>
 <li><a href="#embed-target-examples" >Embed Target Examples</a>
 <ul>
-<li><a href="#presentation-submissions" >Presentation Submissions</a></li>
+<li><a href="#presentation-manifests" >Presentation Manifests</a></li>
 </ul>
 </li>
 <li><a href="#developer-resources" >Developer Resources</a>

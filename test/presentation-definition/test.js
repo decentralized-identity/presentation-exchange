@@ -3,7 +3,7 @@ const assert = require('assert');
 const ajv = require('ajv');
 
 
-describe('Presentation Submission', function () {
+describe('Presentation Manifest', function () {
   describe('JSON Schema', function () {
     it('should validate the example object using JSON Schema Draft 7', function () {
       const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));

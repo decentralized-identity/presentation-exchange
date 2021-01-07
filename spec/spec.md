@@ -35,7 +35,7 @@ requirements.
 
 To address these needs, this Presentation Exchange specification codifies the
 `Presentation Definition` data format Verifiers can use to articulate proof
-requirements, as well as the `Presentation Submission` data format Holders can
+requirements, as well as the `Presentation Manifest` data format Holders can
 use to submit proofs in accordance with them. The specification is designed to 
 be both claim format and transport envelope agnostic, meaning an implementer 
 can use [JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519), 
@@ -101,7 +101,7 @@ application).
 
 [[def:Submission Requirement Object, Submission Requirement Objects]]
 ~ Submission Requirement Objects describe valid combinations of inputs in a
-[[ref:Presentation Submission]].
+[[ref:Presentation Manifest]].
 
 [[def:Submission Requirement Rule, Submission Requirement Rules]]
 ~ Submission Requirement Rules describe combinatorical rules within a
@@ -138,15 +138,15 @@ Definitions]].  Presentation Requests can take multiple shapes, using a variety
 of protocols and signature schemes not refined in this specification. They are
 sent by a [[ref:Verifier]] to a [[ref:Holder]].
 
-[[def:Presentation Submission]]
-~ Presentation Submissions are objects embedded within target claim negotiation
+[[def:Presentation Manifest]]
+~ Presentation Manifests are objects embedded within target claim negotiation
 formats that unify the presentation of proofs to a [[ref:Verifier]] in
 accordance with the requirements a [[ref:Verifier]] specified in a
 [[ref:Presentation Definition]].
 
 [[def:Embed Target, Embed Targets]]
 ~ Embed Targets are data formats used in messaging protocols that may be used
-to transport a [[ref:Presentation Submission]].
+to transport a [[ref:Presentation Manifest]].
 
 [[def:Embed Locations]]
 ~ Embed Locations are the specific paths and indexes per [[ref:Embed Target]]
@@ -157,7 +157,7 @@ Submission]].
 
 To support localization, [IETF BCP 47](https://tools.ietf.org/html/bcp47) one
 ****MAY**** use language tags under the `locale` property in both a `Presentation
-Definition` and `Presentation Submission`. If a Definition has a language tag,
+Definition` and `Presentation Manifest`. If a Definition has a language tag,
 so should the corresponding Submission. A Submission may have a language tag
 regardless of the presence of one in the corresponding Definition.
 
@@ -169,7 +169,7 @@ conjunction with the
 
 <nav>
   <button type="button">Presentation Definition with Locale</button>
-  <button type="button">Presentation Submission with Locale</button>
+  <button type="button">Presentation Manifest with Locale</button>
 </nav>
 
 <section>
@@ -199,10 +199,10 @@ conjunction with the
 
 <section>
 
-::: example Presentation Submission with Locale
+::: example Presentation Manifest with Locale
 ```json
 {
-  "presentation_submission": {
+  "presentation_manifest": {
     "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
     "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "locale": "de-DE",
@@ -695,7 +695,7 @@ input_descriptors that remain after satisfying all submission_requirements
 #### Submission Requirement Objects
 
 _Submission Requirement Objects_ describe combinations of inputs that
-****must**** be submitted via a [Presentation Submission](#presentation-submission)
+****must**** be submitted via a [Presentation Manifest](#presentation-manifest)
 to satisfy [[ref:Verifier]] demands. _Submission Requirement Objects_ are JSON objects
 constructed as follows:
 
@@ -740,7 +740,7 @@ be the string `"all"`.
     - `from_nested` - when used within an `all` rule, all the _Submission
     Requirement Objects_ specified in the `from_nested` array must be satisfied
     by the inputs submitted in a subsequent
-    [Presentation Submission](#presentation-submission).
+    [Presentation Manifest](#presentation-manifests).
 
 ::: example Submission Requirement, all, group
 ```json
@@ -1351,7 +1351,7 @@ Evaluate each candidate input as follows:
         value of the `filter` property.         
       4. If the result is valid, proceed iterating the rest of the `fields` entries.
   3. If all of the previous validation steps are successful, mark the candidate
-    input as a match for use in a _Presentation Submission_, and if present at
+    input as a match for use in a _Presentation Manifest_, and if present at
     the top level of the [[ref:Input Descriptor]], keep a relative reference to the
     `group` values the input is designated for.
   4. If the `constraints` property of the [[ref:Input Descriptor]] is present and it
@@ -1822,16 +1822,16 @@ require a [[ref:Presentation Request]]to have certain properties:
   `challenge`,or `nonce` property may be required.
 
 
-## Presentation Submission
+## Presentation Manifest
 
-_Presentation Submissions_ are objects embedded within target claim
+_Presentation Manifests_ are objects embedded within target claim
 negotiation formats that unify the presentation of proofs to a [[ref:Verifier]]
 in accordance with the requirements a [[ref:Verifier]] specified in a 
-[[ref:Presentation Definition]]. Embedded [[ref:Presentation Submission]] 
+[[ref:Presentation Definition]]. Embedded [[ref:Presentation Manifest]] 
 objects ****MUST**** be located within target data format as a 
-`presentation_submission` property, which are composed and embedded as follows:
+`presentation_manifest` property, which are composed and embedded as follows:
 
-1. The `presentation_submission` object ****MUST**** be included at the top-level of an Embed Target, or in the specific location described in the 
+1. The `presentation_manifest` object ****MUST**** be included at the top-level of an Embed Target, or in the specific location described in the 
 [Embed Locations table](#embed-locations) in the [Embed Target](#embed-target)
 section below.
 2. The object ****MUST**** include `id` and `definition_id` properties.
@@ -1855,7 +1855,7 @@ section below.
       ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
       string expression that selects the claim to be submit in relation
       to the identified [[ref:Input Descriptor]] identified, when executed against
-      the top-level of the object the _Presentation Submission_ is embedded
+      the top-level of the object the _Presentation Manifest_ is embedded
       within.
     - The object ****MAY**** include a `path_nested` object to specify the
       presence of a multi-claim envelope format, meaning the claim indending to be selected must be decoded separately from its parent enclosure.
@@ -1868,7 +1868,7 @@ section below.
 
 ```javascript
 {
-  "presentation_submission": {
+  "presentation_manifest": {
     "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
     "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "descriptor_map": [
@@ -1891,7 +1891,7 @@ section below.
 }
 ```
 
-When the `path_nested` property is present in a _Presentation Submission_ object, 
+When the `path_nested` property is present in a _Presentation Manifest_ object, 
 process as follows:
 
 1. For each Nested Submission Traversal Object in the `path_nested` array,
@@ -1926,7 +1926,7 @@ claim of a particular type, without disclosing any of the data it contains).
 
 ### Validation of Claims
 
-Once a claim has been ingested via a Presentation Submission, any validation 
+Once a claim has been ingested via a Presentation Manifest, any validation 
 beyond the process of evaluation defined by the [Input Evaluation](#input-evaluation) 
 section is outside the scope of Presentation Exchange. Validation of signatures 
 and other cryptographic proofs are a function of a given claim format, and 
@@ -1936,7 +1936,7 @@ validation required by a given [[ref:Verifier]] are left to the Verifier's syste
 and business processes to define and execute.
 
 During validation, each Input Descriptor Object ****MUST**** refer to only a
-single discrete container within a _Presentation Submission_, such that all
+single discrete container within a _Presentation Manifest_, such that all
 checks refer to properties within the same container and are protected by the
 same digital signature, if the container format supports digital signatures.
 Examples of discrete container formats include a single Verifiable Credential
@@ -1948,14 +1948,14 @@ _Input Descriptor Object_ also come from the same container.
 
 ### Embed Targets
 
-The following section details where the _Presentation Submission_ is to be
+The following section details where the _Presentation Manifest_ is to be
 embedded within a target data structure, as well as how to formulate the
 [JSONPath](https://goessner.net/articles/JsonPath/) expressions to select the
 claims within the target data structure.
 
 #### Embed Locations
 
-The following are the locations at which the `presentation_submission` object 
+The following are the locations at which the `presentation_manifest` object 
 ****MUST**** be embedded for known target formats. For any location besides 
 the top level of the embed target, the location is described in JSONPath syntax.
 
@@ -1972,10 +1972,10 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Presentation Submission",
+  "title": "Presentation Manifest",
   "type": "object",
   "properties": {
-    "presentation_submission": {
+    "presentation_manifest": {
       "type": "object",
       "properties": {
         "id": { "type": "string" },
@@ -2009,7 +2009,7 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
       "additionalProperties": false
     }
   },
-  "required": ["presentation_submission"],
+  "required": ["presentation_manifest"],
   "additionalProperties": false
 }
 ```
@@ -2166,7 +2166,7 @@ JSONPath                      | Description
 
 </tab-panels> -->
 
-#### Presentation Submissions
+#### Presentation Manifests
 
 <tab-panels selected-index="0">
 
@@ -2179,18 +2179,18 @@ JSONPath                      | Description
 
 <section>
 
-::: example Presentation Submission - Verifiable Presentation
+::: example Presentation Manifest - Verifiable Presentation
 ```json
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
-    "https://identity.foundation/presentation-exchange/submission/v1"
+    "https://identity.foundation/presentation-exchange/manifest/v1"
   ],
   "type": [
     "VerifiablePresentation",
-    "PresentationSubmission"
+    "PresentationManifest"
   ],
-  "presentation_submission": {
+  "presentation_manifest": {
     "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
     "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "descriptor_map": [
@@ -2291,13 +2291,13 @@ JSONPath                      | Description
 
 <section>
 
-::: example Presentation Submission with OIDC JWT
+::: example Presentation Manifest with OIDC JWT
 ```json
 {
   "iss": "https://self-issued.me",
   "sub": "248289761001",
   "preferred_username": "superman445",
-  "presentation_submission": {
+  "presentation_manifest": {
     "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
     "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "descriptor_map": [
@@ -2392,13 +2392,13 @@ JSONPath                      | Description
 
 <section>
 
-::: example Presentation Submission using CHAPI
+::: example Presentation Manifest using CHAPI
 ```json
 {
   "type": "web",
   "dataType": "VerifiablePresentation",
   "data": {
-    // Presentation Submission goes here
+    // Presentation Manifest goes here
   }
 }
 ```
@@ -2407,7 +2407,7 @@ JSONPath                      | Description
 
 <section>
 
-::: example Presentation Submission using DIDComm
+::: example Presentation Manifest using DIDComm
 ```json
 {
     "@type": "https://didcomm.org/present-proof/%VER/presentation",
@@ -2422,7 +2422,7 @@ JSONPath                      | Description
         "mime-type": "application/ld+json",
         "data": {
             "json": {
-              // Presentation Submission goes here
+              // Presentation Manifest goes here
             }
         }
     }]
@@ -2485,9 +2485,9 @@ Change Controller: | DIF Claims & Credentials - Working Group - https://github.c
 Specification Document(s): | Section 5 of this document
 
 
-Presentation Submission | Values
+Presentation Manifest | Values
 ------------------------|------------
-Claim Name: | `presentation_submission`
-Claim Description: | Presentation Submission
+Claim Name: | `presentation_manifest`
+Claim Description: | Presentation Manifest
 Change Controller: | DIF Claims & Credentials - Working Group - https://github.com/decentralized-identity/claims-credentials/blob/main/CODEOWNERS
 Specification Document(s): | Section 6 of this document
