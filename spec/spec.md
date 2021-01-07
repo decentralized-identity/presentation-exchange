@@ -9,7 +9,7 @@ Presentation Exchange
 **Editors:**
 ~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Microsoft)
 ~ [Brent Zundel](https://www.linkedin.com/in/bzundel/) (Evernym)
-~ [Martin Riedel](https://www.linkedin.com/in/rado0x54/) (Civic Technologies)
+~ [Martin Riedel](https://www.linkedin.com/in/rado0x54/) (Consensys)
 
 **Contributors:**
 ~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
