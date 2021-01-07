@@ -103,31 +103,72 @@ work is being done.</p>
 <h2 id="terminology"><a class="toc-anchor" href="#terminology" >§</a> Terminology</h2>
 <dl>
 <dt><span id="term:did"><span id="term:decentralized-identifier"><span id="term:decentralized-identifiers">Decentralized Identifiers</span></span></span></dt>
-<dd>Unique ID URI string and PKI metadata document format for describing the cryptographic keys and other fundamental PKI values linked to a unique, user-controlled, self-sovereign identifier in a target system (i.e. blockchain, distributed ledger).</dd>
+<dd>Unique ID URI string and PKI metadata document format for describing the
+cryptographic keys and other fundamental PKI values linked to a unique,
+user-controlled, self-sovereign identifier in a target system (i.e. blockchain,
+distributed ledger).</dd>
 <dt><span id="term:holders"><span id="term:holder">Holder</span></span></dt>
-<dd>The entity that submits proofs to a <a class="term-reference" href="#term:verifier">Verifier</a> to satisfy the requirements described in a Presentation Definition</dd>
+<dd>Holders are entities that submit proofs to <a class="term-reference" href="#term:verifiers">Verifiers</a> to satisfy the
+requirements described in a <span id="term:presentation-definition">Presentation Definition</span>.</dd>
 <dt><span id="term:verifiers"><span id="term:verifier">Verifier</span></span></dt>
-<dd>The entity that defines what proofs they require from a <a class="term-reference" href="#term:holder">Holder</a> (via a Presentation Definition) in order to proceed with an interaction.</dd>
+<dd>Verifiers are entities that define what proofs they require from a
+<a class="term-reference" href="#term:holder">Holder</a> (via a <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>) in order to proceed with
+an interaction.</dd>
 <dt><span id="term:claims"><span id="term:claim">Claim</span></span></dt>
-<dd>An assertion made about a given entity. Used as an umbrella term for Credential, Assertion, Attestation, etc.</dd>
+<dd>An assertion made about a given entity. Used as an umbrella term for
+Credential, Assertion, Attestation, etc.</dd>
 <dt><span id="term:presentation-definition">Presentation Definition</span></dt>
 <dd>Presentation Definitions are objects that articulate what proofs a Verifier
 requires. These help the Verifier to decide how or whether to interact with a
-Holder. Presentation Definitions are composed of inputs, which describe the
-forms and details of the proofs they require, and optional sets of selection
-rules, to allow Holders flexibility in cases where many different types of
-proofs may satisfy an input requirement.</dd>
-<dt><span id="term:presentation-request">Presentation Request</span></dt>
-<dd>Presentation Requests are transport mechanisms for Presentation Definitions.
-Presentation Requests can take multiple shapes, using a variety of protocols
-and signature schemes not defined in this specification. They are sent by
-a <a class="term-reference" href="#term:verifier">Verifier</a> to a <span id="term:holder">Holder</span>.</dd>
-<dt><span id="term:presentation-submission">Presentation Submission</span></dt>
-<dd>Presentation Submissions are objects embedded within target claim negotiation formats that unify the presentation of proofs to a <a class="term-reference" href="#term:verifier">Verifier</a> in accordance with the requirements a <a class="term-reference" href="#term:verifier">Verifier</a> specified in a <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>.</dd>
-<dt><span id="term:input-descriptors"><span id="term:input-descriptor">Input Descriptor</span></span></dt>
-<dd>Input Descriptors are objects used to describe the information a Verifier requires of a Holder before they will proceed with an interaction.</dd>
+<a class="term-reference" href="#term:holder">Holder</a>. Presentation Definitions are composed of inputs, which describe
+the forms and details of the proofs they require, and optional sets of
+selection rules, to allow Holders flexibility in cases where many different
+types of proofs may satisfy an input requirement.</dd>
 <dt><span id="term:submission-requirements"><span id="term:submission-requirement">Submission Requirement</span></span></dt>
-<dd>Submission Requirements are objects that define what combinations of inputs must be submitted to comply with the requirements a Verifier has for proceeding in a flow (e.g. credential issuance, allowing entry, accepting an application).</dd>
+<dd>Submission Requirements are objects that define what combinations of inputs
+must be submitted to comply with the requirements a <a class="term-reference" href="#term:verifier">Verifier</a> has for
+proceeding in a flow (e.g. credential issuance, allowing entry, accepting an
+application).</dd>
+<dt><span id="term:submission-requirement-objects"><span id="term:submission-requirement-object">Submission Requirement Object</span></span></dt>
+<dd>Submission Requirement Objects describe valid combinations of inputs in a
+<a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>.</dd>
+<dt><span id="term:submission-requirement-rules"><span id="term:submission-requirement-rule">Submission Requirement Rule</span></span></dt>
+<dd>Submission Requirement Rules describe combinatorical rules within a
+<a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a> when processing inputs. They may be
+nested.</dd>
+<dt><span id="term:input-descriptors"><span id="term:input-descriptor">Input Descriptor</span></span></dt>
+<dd>Input Descriptors are used by a Verifier to describe the information required
+of a <a class="term-reference" href="#term:holder">Holder</a> before an interaction can proceed.</dd>
+<dt><span id="term:input-descriptor-objects"><span id="term:input-descriptor-object">Input Descriptor Object</span></span></dt>
+<dd>Input Descriptors Objects are populated with properties describing what type
+of input data/<a class="term-reference" href="#term:claim">Claim</a>, or sub-fields thereof, are required for submission
+to the <a class="term-reference" href="#term:verifier">Verifier</a>.</dd>
+<dt><span id="term:field-query-result">Field Query Result</span></dt>
+<dd>Field Query Results are values returned from paths specified in an
+<a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a>.</dd>
+<dt><span id="term:holder-binding">Holder Binding</span></dt>
+<dd>Holder Bindings are requirements of a certain type of relationship between
+the <a class="term-reference" href="#term:holder">Holder</a> and the <a class="term-reference" href="#term:claims">Claims</a> within the <a class="term-reference" href="#term:presentation">Presentation</a>.</dd>
+<dt><span id="term:link-secrets">Link Secrets</span></dt>
+<dd>Link Secrets are values held by the <a class="term-reference" href="#term:holder">Holder</a> but hidden from other
+parties. They are typically incorporated into cryptographic signatures used in
+claims to demonstrate correlation while preventing replay attacks. An Issuer
+may ascertain that a Holder possesses a link secret without its disclosure.</dd>
+<dt><span id="term:presentation-request">Presentation Request</span></dt>
+<dd>Presentation Requests are transport mechanisms for <a class="term-reference" href="#term:presentation">Presentation</a>.  Presentation Requests can take multiple shapes, using a variety
+of protocols and signature schemes not refined in this specification. They are
+sent by a <a class="term-reference" href="#term:verifier">Verifier</a> to a <a class="term-reference" href="#term:holder">Holder</a>.</dd>
+<dt><span id="term:presentation-submission">Presentation Submission</span></dt>
+<dd>Presentation Submissions are objects embedded within target claim negotiation
+formats that unify the presentation of proofs to a <a class="term-reference" href="#term:verifier">Verifier</a> in
+accordance with the requirements a <a class="term-reference" href="#term:verifier">Verifier</a> specified in a
+<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>.</dd>
+<dt><span id="term:embed-targets"><span id="term:embed-target">Embed Target</span></span></dt>
+<dd>Embed Targets are data formats used in messaging protocols that may be used
+to transport a <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>.</dd>
+<dt><span id="term:embed-locations">Embed Locations</span></dt>
+<dd>Embed Locations are the specific paths and indexes per <a class="term-reference" href="#term:embed-target">Embed Target</a>
+where the <a class="term-reference" href="#term:verifier">Verifier</a> can expect to find the <a class="term-reference" href="#term:presentation">Presentation</a>.</dd>
 </dl>
 <h2 id="localization"><a class="toc-anchor" href="#localization" >§</a> Localization</h2>
 <p>To support localization, <a path-0="tools.ietf.org"path-1="html"path-2="bcp47"href="https://tools.ietf.org/html/bcp47" >IETF BCP 47</a> one
@@ -661,12 +702,12 @@ specified requirement is being asserted.</li>
 <code>count</code>, <code>min</code>, and <code>max</code> for the <code>&quot;pick&quot;</code> rule.</li>
 </ol>
 <h4 id="submission-requirement-rules"><a class="toc-anchor" href="#submission-requirement-rules" >§</a> Submission Requirement Rules</h4>
-<p><a href="#submission-requirement-rules" ><em>Submission Requirement Rules</em></a>
-{id=“requirement-rules”} are used within <em>Submission Requirement Objects</em> to
-describe the specific combinatorial rule that must be applied to submit a
-particular subset of required inputs. Rules are selected by populating the
-<code>rule</code> property with the corresponding string. An implementation <strong><strong>MUST</strong></strong>
-support the following standard types:</p>
+<p><a href="#submission-requirement-rules" id="requirement-rules" ><em>Submission Requirement Rules</em></a>
+are used within <em>Submission Requirement Objects</em> to describe the specific
+combinatorial rule that must be applied to submit a particular subset of
+required inputs. Rules are selected by populating the <code>rule</code> property with the
+corresponding string. An implementation <strong><strong>MUST</strong></strong> support the following
+standard types:</p>
 <h5 id="all-rule"><a class="toc-anchor" href="#all-rule" >§</a> <code>all</code> rule</h5>
 <ul>
 <li>The object <strong><strong>must</strong></strong> contain a <code>rule</code> property, and its value <strong><strong>MUST</strong></strong>
@@ -769,7 +810,10 @@ format-related rules above:</p>
           <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
             <span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+              <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"all"</span><span class="token punctuation">,</span> <span class="token string">"pick"</span><span class="token punctuation">]</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"count"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span>
           <span class="token punctuation">}</span><span class="token punctuation">,</span>
@@ -780,7 +824,10 @@ format-related rules above:</p>
           <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
             <span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+              <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"all"</span><span class="token punctuation">,</span> <span class="token string">"pick"</span><span class="token punctuation">]</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"count"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"from_nested"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
@@ -1076,6 +1123,44 @@ where a claim may have multiple subjects.</p>
 please see <a href="#holder-binding" ><em>Holder Binding</em></a>.</p>
 </li>
 <li>
+<p>The object <strong><strong>MAY</strong></strong> contain a <code>same_subject</code> property, and if present
+its value <strong><strong>MUST</strong></strong> be an array of objects composed as follows:</p>
+<ul>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>field_id</code> property. The value of
+this property <strong><strong>MUST</strong></strong> be an array of strings, with each string
+matching the string value from a
+<a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entry</em></a>
+object’s <code>id</code> property. This identifies the attributes whose subject
+is of concern to the verifier. It is important to note that the
+attributes <strong><strong>MAY</strong></strong> be identified in an
+<a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entry</em></a> of a
+different <a href="#input-descriptors" ><em>Input Descriptor</em></a> object.</li>
+<li>The object <strong><strong>MUST</strong></strong> contain a <code>directive</code> property. The value of
+this property <strong><strong>MUST</strong></strong>  be one of the following strings:
+<ul>
+<li><code>required</code> - This indicates that the processing entity <strong><strong>MUST</strong></strong>
+include proof that the subject of each attribute identified by a
+value in the <code>field_id</code> array is the same as the subject of the
+attributes identified by the other values in the <code>field_id</code> array.</li>
+<li><code>preferred</code> - This indicates that it is <strong><strong>RECOMMENDED</strong></strong> that the
+processing entity include proof that the subject of each attribute
+identified by a value in the <code>field_id</code> array is the same as the
+subject of the attributes identified by the other values in the
+<code>field_id</code> array.</li>
+</ul>
+</li>
+</ul>
+<p>The <code>same_subject</code> property would be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to
+require that certain provided inputs be about the same subject. For
+example, a <code>presentation definition</code> might contain an
+<a href="#input-descriptors" ><em>Input Descriptor</em></a> object which calls for a street
+address from a driver license claim and another
+<a href="#input-descriptors" ><em>Input Descriptor</em></a> object which calls for a name
+from a birth certificate claim. The <a class="term-reference" href="#term:verifier">Verifier</a> would be able to
+require that the subject of the street address attribute claim is the
+same as the subject of the name attribute.</p>
+</li>
+<li>
 <p>The object <strong><strong>MAY</strong></strong> contain a <code>fields</code> property, and its value
 <strong><strong>MUST</strong></strong> be an array of
 <a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entry</em></a> objects,
@@ -1291,6 +1376,10 @@ and it contains an <code>is_holder</code> property, ensure that for each object 
 array, any submission of data in relation to the candidate input is
 fulfilled by the subject of the attributes so identified by the strings in
 the <code>field_id</code> array.</li>
+<li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present,
+and it contains a <code>same_subject</code> property, ensure that for each object in
+the array, all of the attributes so identified by the strings in the
+<code>field_id</code> array are about the same subject.</li>
 </ol>
 <div id="note-1" class="notice note"><a class="notice-link" href="#note-1">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
@@ -1490,7 +1579,10 @@ format-related rules above:</p>
           <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
             <span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+              <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"all"</span><span class="token punctuation">,</span> <span class="token string">"pick"</span><span class="token punctuation">]</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"count"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"min"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"max"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
@@ -1503,7 +1595,10 @@ format-related rules above:</p>
           <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
             <span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"rule"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+              <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"all"</span><span class="token punctuation">,</span> <span class="token string">"pick"</span><span class="token punctuation">]</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"count"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"min"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"max"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
@@ -1581,6 +1676,24 @@ format-related rules above:</p>
             <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"is_holder"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
+              <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
+                <span class="token property">"properties"</span><span class="token operator">:</span>  <span class="token punctuation">{</span>
+                  <span class="token property">"field_id"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
+                    <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span>
+                  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                  <span class="token property">"directive"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+                    <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"preferred"</span><span class="token punctuation">]</span>
+                  <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"field_id"</span><span class="token punctuation">,</span> <span class="token string">"directive"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+              <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"same_subject"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span>  <span class="token string">"array"</span><span class="token punctuation">,</span>
               <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
                 <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
                 <span class="token property">"properties"</span><span class="token operator">:</span>  <span class="token punctuation">{</span>
