@@ -27,18 +27,19 @@ Presentation Exchange
 
 A common activity between peers in identity systems that feature the ability to
 generate self-asserted and third-party issued [[ref:Claims]] is the demand and
-submission of proofs from a [[ref:Holder]] to a [[ref:Verifier]]. This flow implicitly requires
-the [[ref:Holder]] and [[ref:Verifier]] have a mechanism to facilitate the two primary steps in
-a proving exchange: a way for [[ref:Verifiers]] to describe proof requirements, and for
-[[ref:Holders]] to describe submissions of proof which align with those requirements.
+submission of proofs from a [[ref:Holder]] to a [[ref:Verifier]]. This flow
+implicitly requires the [[ref:Holder]] and [[ref:Verifier]] have a mechanism to
+facilitate the two primary steps in a proving exchange: a way for
+[[ref:Verifiers]] to describe proof requirements, and for [[ref:Holders]] to
+describe submissions of proof which align with those requirements.
 
 To address these needs, this Presentation Exchange specification codifies a
-[[ref:Presentation Definition]] data format [[ref:Verifiers]] can use to articulate proof
-requirements, and a [[ref:Presentation Submission]] data format [[ref:Holders]] can use to
-describe proofs submitted in accordance with them. 
+[[ref:Presentation Definition]] data format [[ref:Verifiers]] can use to
+articulate proof requirements, and a [[ref:Presentation Submission]] data format
+[[ref:Holders]] can use to describe proofs submitted in accordance with them. 
 
-This specification is designed to be both [[ref:Claim]] format and transport envelope
-agnostic, meaning an implementer can use
+This specification is designed to be both [[ref:Claim]] format and transport
+envelope agnostic, meaning an implementer can use
 [JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519), 
 [Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/), 
 [JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions), 
