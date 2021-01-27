@@ -586,11 +586,11 @@ The following properties are for use at the top-level of a
 be ignored:
 
 - `id` - The [[ref:Presentation Definition]] ****MUST**** contain an `id`
-  property. The vue of this property ****MUST**** be a unique identifier, such
+  property. The value of this property ****MUST**** be a unique identifier, such
   as a [UUID](https://tools.ietf.org/html/rfc4122).
 - `input_descriptors` - The [[ref:Presentation Definition]]  ****MUST****
   contain an `input_descriptors` property. Its value ****MUST**** be an array of
-  [[ref:Input Descriptor]] objects, the composition of which are described in
+  [[ref:Input Descriptor Objects]], the composition of which are described in
   the [`Input Descriptors`](#input-descriptors) section below.
 
   The [[ref:Input Descriptors]] required for submission are described by the
@@ -775,8 +775,9 @@ values, and an explanation why a certain item or set of data is being requested:
   The value of the `id` property ****MUST**** be a string that does not conflict
   with the `id` of another [[ref:Input Descriptor Object]] in the same
   [[ref:Presentation Definition]].
-- The object ****MUST**** contain a `schema` property. The value of the `schema`
-  property ****MUST**** be an array composed of objects as follows:
+- The [[ref:Input Descriptor Object]] ****MUST**** contain a `schema` property.
+  The value of the `schema` property ****MUST**** be an array composed of
+  objects as follows:
     - The _schema object_ ****MUST**** contain a `uri` property, and its value
       ****MUST**** be a string consisting of a valid URI for an acceptable
       [[ref:Claim]] schema. 
@@ -784,26 +785,26 @@ values, and an explanation why a certain item or set of data is being requested:
       the value of this property ****MUST**** be a boolean. A value of `true`
       indicates that the given schema object is required to be the schema of the
       inputs used to fulfill the given [[ref:Submission Requirement]].
-- The object ****MAY**** contain a `group` property. If present, its value
-  ****MUST**** match one of the grouping strings listed in the `from` values of a
-  [_Submission Requirement Rule Object_](#submission-requirement-rules).
-- The object ****MAY**** contain a `name` property. If present, its value
-  ****SHOULD**** be a human-friendly name that describes what the target schema
-  represents.
-- The object ****MAY**** contain a `purpose` property. If present, its value
-  ****MUST**** be a string that describes the purpose for which the
-  [[ref:Claim]]'s data is being requested.
-- The object ****MAY**** contain a `metadata` property. If present, its value
-  ****MUST**** be an object with metadata properties that describe any
-  information specific to the acquisition, formulation, or details of the
-  [[ref:Claim]] in question.
+- The [[ref:Input Descriptor Object]] ****MAY**** contain a `group` property. If
+  present, its value ****MUST**** match one of the grouping strings listed in
+  the `from` values of a [[ref:Submission Requirement Rule]] object.
+- The [[ref:Input Descriptor Object]] ****MAY**** contain a `name` property. If
+  present, its value ****SHOULD**** be a human-friendly name that describes what
+  the target schema represents.
+- The [[ref:Input Descriptor Object]] ****MAY**** contain a `purpose` property.
+  If present, its value ****MUST**** be a string that describes the purpose for
+  which the [[ref:Claim]]'s data is being requested.
+- The [[ref:Input Descriptor Object]] ****MAY**** contain a `metadata` property.
+  If present, its value ****MUST**** be an object with metadata properties that
+  describe any information specific to the acquisition, formulation, or details
+  of the [[ref:Claim]] in question.
   
   Note: this specification does not specify the `metadata` property beyond
   stating that it is an object. This property is provided to implementers as a
   means of providing additional information that may be required by their
   implementation, but which does not fit within another property. 
-- The object ****MAY**** contain a `constraints` property. If present, its value
-  ****MUST**** be an object composed as follows:
+- The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
+  property. If present, its value ****MUST**** be an object composed as follows:
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
       property. If present, its value ****MUST**** be a boolean value. A value
       of `true` indicates that the processing entity ****SHOULD NOT**** submit
@@ -823,7 +824,8 @@ values, and an explanation why a certain item or set of data is being requested:
         - `revoked` - A credential is revoked if the Issuer has published an
           explicit signal that the credential in question ****should not**** be
           relied upon going forward as an accurate reflection of the Issuer's
-          statements about the Subject within the scope of the credential. 
+          statements about the [[Ref:Subject]] within the scope of the
+          credential. 
           
       The values of all status properties are objects, composed as follows:
         - _status objects_ ****MUST**** include a `directive` property, and its
@@ -847,47 +849,48 @@ values, and an explanation why a certain item or set of data is being requested:
       strings:
         - `required` - This indicates that the processing entity ****MUST****
           submit a response that has been _self-attested_, i.e., the
-          [[ref:Claim]] used in the presentation was 'issued' by the subject of
-          the [[ref:Claim]].
+          [[ref:Claim]] used in the presentation was 'issued' by the
+          [[Ref:Subject]] of the [[ref:Claim]].
         - `preferred` - This indicates that it is ****RECOMMENDED**** that the
           processing entity submit a response that has been _self-attested_,
           i.e., the [[ref:Claim]] used in the presentation was 'issued' by the
-          subject of the [[ref:Claim]].
+          [[Ref:Subject]] of the [[ref:Claim]].
 
       The `subject_is_issuer` property could be used by a [[ref:Verifier]] to
       require that certain inputs be _self_attested_. For example, a college
       application [[ref:Presentation Definition]] might contain an
-      [[ref:Input Descriptor]] object for an essay submission. In this case, the
+      [[ref:Input Descriptor]] for an essay submission. In this case, the
       [[ref:Verifier]] would be able to require that the essay be provided by
-      the same subject as any other [[ref:Claims]] in the presented application.
+      the same [[Ref:Subject]] as any other [[ref:Claims]] in the presented
+      application.
     - The object ****MAY**** contain an `is_holder` property. If present, its
       value ****MUST**** be an array of objects composed as follows:
         - The _is-holder object_ ****MUST**** contain a `field_id` property. The
           value of this property ****MUST**** be an array of strings, with each
           string matching the string value from an
           [_Input Descriptor Field Entry_](#input-descriptor-field-entry)
-          object's `id` property. This identifies the attribute whose subject is
-          of concern to the [[ref:Verifier]].
+          object's `id` property. This identifies the attribute whose
+          [[Ref:Subject]] is of concern to the [[ref:Verifier]].
         - The _is-holder object_ ****MUST**** contain a `directive` property.
           The value of this property ****MUST****  be one of the following
           strings:
             - `required` - This indicates that the processing entity
-              ****MUST**** include proof that the subject of each attribute
-              identified by a value in the `field_id` array is the same as the
-              entity submitting the response.
-            - `preferred` - This indicates that it is ****RECOMMENDED**** that
-              the processing entity include proof that the subject of each
+              ****MUST**** include proof that the [[Ref:Subject]] of each
               attribute identified by a value in the `field_id` array is the
               same as the entity submitting the response.
+            - `preferred` - This indicates that it is ****RECOMMENDED**** that
+              the processing entity include proof that the [[Ref:Subject]] of
+              each attribute identified by a value in the `field_id` array is
+              the same as the entity submitting the response.
 
       The `is_holder` property would be used by a [[ref:Verifier]] to require
-      that certain inputs be provided by a certain subject. For example, an
-      identity verification [[ref:Presentation Definition]] might contain an
-      [[ref:Input Descriptor]] object for a birthdate from a birth certificate.
-      Using `is_holder`, the [[ref:Verifier]] would be able to require that the
+      that certain inputs be provided by a certain [[Ref:Subject]]. For example,
+      an identity verification [[ref:Presentation Definition]] might contain an
+      [[ref:Input Descriptor]] for a birthdate from a birth certificate. Using
+      `is_holder`, the [[ref:Verifier]] would be able to require that the
       [[ref:Holder]] of the birth certificate [[ref:Claim]] is the same as the
-      subject of the birthdate attribute. This is especially useful in cases
-      where a [[ref:Claim]] may have multiple subjects.
+      [[Ref:Subject]] of the birthdate attribute. This is especially useful in
+      cases where a [[ref:Claim]] may have multiple [[Ref:Subjects]].
 
       For more information about techniques used to prove binding to a
       [[ref:Holder]], please see [_Holder Binding_](#holder-binding).
@@ -899,77 +902,85 @@ values, and an explanation why a certain item or set of data is being requested:
           The value of this property ****MUST**** be an array of strings, with
           each string matching the string value from a
           [_Input Descriptor Field Entry_](#input-descriptor-field-entry)
-          object's `id` property. This identifies the attributes whose subject
-          is of concern to the [[ref:Verifier]]. It is important to note that
-          the attributes whose subject is of concern to the [[ref:Verifier]]
-          ****MAY**** be identified in the
+          object's `id` property. This identifies the attributes whose
+          [[Ref:Subject]] is of concern to the [[ref:Verifier]]. It is important
+          to note that the attributes whose [[Ref:Subject]] is of concern to the
+          [[ref:Verifier]] ****MAY**** be identified in the
           [_Input Descriptor Field Entry_](#input-descriptor-field-entry) of a
-          different [_Input Descriptor_](#input-descriptors) object.
+          different [[ref:Input Descriptor Object]].
         - The _same-subject object_ ****MUST**** contain a `directive` property.
           The value of this property ****MUST****  be one of the following
           strings:
             - `required` - This indicates that the processing entity
-              ****MUST**** include proof that the subject of each attribute
-              identified by a value in the `field_id` array is the same as the
-              subject of the attributes identified by the other values in the
-              `field_id` array.
-            - `preferred` - This indicates that it is ****RECOMMENDED**** that
-              the processing entity include proof that the subject of each
+              ****MUST**** include proof that the [[Ref:Subject]] of each
               attribute identified by a value in the `field_id` array is the
-              same as the subject of the attributes identified by the other
-              values in the `field_id` array.
+              same as the [[Ref:Subject]] of the attributes identified by the
+              other values in the `field_id` array.
+            - `preferred` - This indicates that it is ****RECOMMENDED**** that
+              the processing entity include proof that the [[Ref:Subject]] of
+              each attribute identified by a value in the `field_id` array is
+              the same as the [[Ref:Subject]] of the attributes identified by
+              the other values in the `field_id` array.
 
       The `same_subject` property would be used by a [[ref:Verifier]] to require
-      that certain provided inputs be about the same subject. For example, a
-      [[ref:Presentation Definition]] might contain an
-      [_Input Descriptor_](#input-descriptors) object which calls for a street
-      address from a driver license [[ref:Claim]] and another
-      [_Input Descriptor_](#input-descriptors) object which calls for a name
-      from a birth certificate [[ref:Claim]]. The [[ref:Verifier]] would be
-      able to require that the subject of the street address attribute
-      [[ref:Claim]] is the same as the subject of the name attribute.
+      that certain provided inputs be about the same [[Ref:Subject]]. For
+      example, a [[ref:Presentation Definition]] might contain an
+      [[ref:Input Descriptor]] which calls for a street address from a driver
+      license [[ref:Claim]] and another [[ref:Input Descriptor]] which calls
+      for a name from a birth certificate [[ref:Claim]]. Using the
+      `same_subject` property, [[ref:Verifier]] would be able to require that
+      the [[Ref:Subject]] of the street address attribute [[ref:Claim]] is the
+      same as the [[Ref:Subject]] of the name attribute.
 
-    - The object ****MAY**** contain a `fields` property, and its value
-      ****MUST**** be an array of
+    - The _constraints object_ ****MAY**** contain a `fields` property. If
+      present, its value ****MUST**** be an array of
       [_Input Descriptor Field Entry_](#input-descriptor-field-entry) objects,
       each being composed as follows:
-        - The object ****MUST**** contain a `path` property, and its value
-          ****MUST**** be an array of one or more
+        - The _fields object_ ****MUST**** contain a `path` property. The value
+          of this property ****MUST**** be an array of one or more
           [JSONPath](https://goessner.net/articles/JsonPath/) string
-          expressions, as defined in the
-          [JSONPath Syntax Definition](#jsonpath-syntax-definition) section,
+          expressions (as defined in the
+          [JSONPath Syntax Definition](#jsonpath-syntax-definition) section)
           that select a target value from the input. The array ****MUST****
           be evaluated from 0-index forward, and the first expressions to
           return a value will be used for the rest of the entry's evaluation.
-          The ability to declare multiple expressions this way allows the
+          The ability to declare multiple expressions in this way allows the
           [[ref:Verifier]] to account for format differences - for
           example: normalizing the differences in structure between
           JSON-LD/JWT-based
           [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
           vanilla JSON Web Tokens (JWTs) [[spec:rfc7797]].
-        - The object ****MAY**** contain an `id` property, and if present
-          its value ****MUST**** be a string that is unique from any other
-          field object's `id` property.
-        - The object ****MAY**** contain a `purpose` property, and if present
-          its value ****MUST**** be a string that describes the purpose for
-          which the field is being requested.
-        - The object ****MAY**** contain a `filter` property, and if present
-          its value ****MUST**** be
+        - The _fields object_ ****MAY**** contain an `id` property. If present,
+          its value ****MUST**** be a string that is unique from every other
+          field object's `id` property, including those contained in other
+          [[ref:Input Descriptor Objects]].
+        - The _fields object_ ****MAY**** contain a `purpose` property. If
+          present, its value ****MUST**** be a string that describes the purpose
+          for which the field is being requested.
+        - The _fields object_ ****MAY**** contain a `filter` property, and if
+          present its value ****MUST**** be a
           [JSON Schema](https://json-schema.org/specification.html) descriptor
           used to filter against the values returned from evaluation of the
           [JSONPath](https://goessner.net/articles/JsonPath/) string
           expressions in the `path` array.
         - The object ****MAY**** contain a `predicate` property. If the
           `predicate` property is present, the `filter` property ****MUST****
-          also be present. The inclusion of the `predicate` property
-          indicates that the processing entity returns a boolean, rather than
-          a value returned from evaluation of the
+          also be present. 
+          
+          Note: The inclusion of the `predicate` property indicates that the
+          processing entity returns a boolean, rather than a value returned
+          from evaluation of the
           [JSONPath](https://goessner.net/articles/JsonPath/) string
           expressions in the `path` array. The boolean returned is the result
           of using the `filter` property's
           [JSON Schema](https://json-schema.org/specification.html)
-          descriptors against the evaluated value. The value of `predicate`
-          ****MUST**** be one of the following strings:
+          descriptors against the evaluated value. Exclusion of the `predicate`
+          property indicates that the processing entity returns the value
+          returned from evaluation of the
+          [JSONPath](https://goessner.net/articles/JsonPath/) string
+          expressions in the `path` array.
+          
+          The value of `predicate` ****MUST**** be one of the following strings:
             - `required` - This indicates that the returned value ****MUST****
               be the boolean result of applying the value of the `filter`
               property to the result of evaluating the `path` property.
@@ -986,7 +997,7 @@ values, and an explanation why a certain item or set of data is being requested:
               properties:
                 - `greater-than` - Use the `exclusiveMinimum` descriptor. For
                   example, to request a proof that an attribute is greater than
-                  10000:
+                  10000, use the following as the value of the `filter` object:
                   ```json             
                   {
                     "type": "number",
@@ -994,7 +1005,8 @@ values, and an explanation why a certain item or set of data is being requested:
                   }
                   ``` 
                 - `less-than` - Use the `exclusiveMaximum` descriptor. For
-                  example, to request a proof that an attribute is less than 85:
+                  example, to request a proof that an attribute is less than 85,
+                  use the following as the value of the `filter` object:
                   ```json             
                   {
                     "type": "number",
@@ -1003,7 +1015,8 @@ values, and an explanation why a certain item or set of data is being requested:
                   ```
                 - `greater-than or equal-to` - Use the `minimum` descriptor. For
                   example, to request a proof that an attribute is greater than or
-                  equal to 18:
+                  equal to 18, use the following as the value of the `filter`
+                  object:
                   ```json             
                   {
                     "type": "number",
@@ -1012,7 +1025,8 @@ values, and an explanation why a certain item or set of data is being requested:
                   ``` 
                 - `less-than or equal-to` - Use the `maximum` descriptor. For
                   example, to request a proof that an attribute is less than or
-                  equal to 65536:
+                  equal to 65536, use the following as the value of the `filter`
+                  object:
                   ```json             
                   {
                     "type": "number",
@@ -1021,8 +1035,9 @@ values, and an explanation why a certain item or set of data is being requested:
                   ```
             - to express the following equality proofs, use the JSON Schema
               `const` descriptor:
-                - `equal-to` - Use the `const` descriptor. For example to request
-                  proof that an attribute has the value "Chad":
+                - `equal-to` - Use the `const` descriptor. For example to
+                  request proof that an attribute has the value "Chad", use the
+                  following as the value of the `filter` object:
                   ```json
                   {
                     "const": "Chad"
@@ -1030,7 +1045,8 @@ values, and an explanation why a certain item or set of data is being requested:
                   ```
                 - `not equal-to` - Use the `const` descriptor with the `not`
                   operator. For example, to request proof that an attribute does
-                  not have the value "Karen":
+                  not have the value "Karen", use the following as the value of
+                  the `filter` object:
                   ```json
                   {
                     "not": {
@@ -1042,7 +1058,8 @@ values, and an explanation why a certain item or set of data is being requested:
               descriptor:
                 - `in-set` - Use the `enum` descriptor. For example, to
                   request proof that an attribute is contained in the set of
-                  rainbow colors:
+                  rainbow colors, use the following as the value of the `filter`
+                  object:
                   ```json
                   {
                     "type": "string",
@@ -1050,8 +1067,9 @@ values, and an explanation why a certain item or set of data is being requested:
                   }
                   ```
                 - `not-in-set` - Use the `enum` descriptor with the `not`
-                  operator. For example, to request proof that an attribute is not
-                  contained in the set of primary colors:
+                  operator. For example, to request proof that an attribute is
+                  not contained in the set of primary colors, use the following
+                  as the value of the `filter` object:
                   ```json
                   {
                     "not": { 
@@ -1061,7 +1079,7 @@ values, and an explanation why a certain item or set of data is being requested:
                   ```
 
           At this time, additional predicate operations are not supported.
-
+    
 ### Submission Requirements
 
 [[ref:Presentation Definitions]] ****MAY**** include
@@ -1404,12 +1422,12 @@ Evaluate each candidate input as follows:
   6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
     and it contains an `is_holder` property, ensure that for each object in the
     array, any submission of data in relation to the candidate input is
-    fulfilled by the subject of the attributes so identified by the strings in
+    fulfilled by the [[Ref:Subject]] of the attributes so identified by the strings in
     the `field_id` array.
   7. If the `constraints` property of the [[ref:Input Descriptor]] is present,
     and it contains a `same_subject` property, ensure that for each object in
     the array, all of the attributes so identified by the strings in the
-    `field_id` array are about the same subject.
+    `field_id` array are about the same [[Ref:Subject]].
 
 ::: note
 The above evaluation process assumes the User Agent will test each candidate
@@ -1525,13 +1543,13 @@ The [[ref:Claim]] issuer makes proofs of [[ref:Holder]] binding possible by incl
 information either in the [[ref:Claim]] or the [[ref:Claim]] signature. 
 
 ##### Proof of Identifier Control
-A number of [[ref:Claim]] types include an identifier for the [[ref:Claim]] subject. A [[ref:Verifier]]
-may wish to ascertain that one of the subject identified in the [[ref:Claim]] is the one
+A number of [[ref:Claim]] types include an identifier for the [[ref:Claim]] [[Ref:Subject]]. A [[ref:Verifier]]
+may wish to ascertain that one of the [[Ref:Subject]] identified in the [[ref:Claim]] is the one
 submitting the proof, or has consented to the proof submission. A [[ref:Claim]] may also
-include an identifier for the [[ref:Holder]], independent of the subject identifiers. 
+include an identifier for the [[ref:Holder]], independent of the [[Ref:Subject]] identifiers. 
 
 One mechanism for providing such proofs is the use of a [[ref:DID]] as the identifier
-for the [[ref:Claim]] subject or [[ref:Holder]]. DIDs enable an entity to provide a
+for the [[ref:Claim]] [[Ref:Subject]] or [[ref:Holder]]. DIDs enable an entity to provide a
 cryptographic proof of control of the identifier, usually through a
 demonstration that the [[ref:Holder]] knows some secret value, such as a private key.
 The [[ref:Holder]] can demonstrate the same proof of control when presenting the [[ref:Claim]].
