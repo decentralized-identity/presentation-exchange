@@ -1083,20 +1083,23 @@ values, and an explanation why a certain item or set of data is being requested:
 ### Submission Requirements
 
 [[ref:Presentation Definitions]] ****MAY**** include
-[[ref:Submission Requirements]] which define what combinations of inputs must be
-submitted to comply with the requirements of a [[ref:Verifier]]. If present, all
-members of the `submission_requirements` array ****MUST****
-be satisfied, and all input_descriptors ****MUST**** be grouped. Any unused
-input_descriptors that remain after satisfying all submission_requirements
-****MUST**** be ignored.
+[[ref:Submission Requirements]] which define what combinations of inputs a
+processing entity must submit to comply with the requirements of a
+[[ref:Verifier]].
+
 [[ref:Submission Requirements]] introduce a set of rule types and mapping
 instructions a processing entity can ingest to present requirement optionality
 to the user, and subsequently submit inputs in a way that maps back to the rules
-the [[ref:Verifier]] has asserted. 
+the [[ref:Verifier]] has asserted.
 
 The following section defines the format for [[ref:Submission Requirements]]
 and the selection syntax [[ref:Verifiers]] can use to specify which combinations
 of inputs are acceptable.
+
+If present, all [[ref:Submission Requirements]] ****MUST**** be satisfied, and
+all input_descriptors ****MUST**** be grouped. Any unused
+[ref:Input Descriptors]] that remain after satisfying all
+[[ref:Submission Requirements]] ****MUST**** be ignored.
 
 ::: example Submission Requirement
 ```json 12
@@ -1139,53 +1142,52 @@ of inputs are acceptable.
 
 #### Submission Requirement Objects
 
-_Submission Requirement Objects_ describe combinations of inputs that
-****must**** be submitted via a [[ref:Presentation Submission]]
-to satisfy [[ref:Verifier]] demands. _Submission Requirement Objects_ are JSON objects
-constructed as follows:
+[[ref:Submission Requirement Objects]] are JSON objects constructed as follows:
 
-1. The object  ****MUST**** contain a `rule` property, and its value
-   ****MUST**** be a string matching one of the [Submission Requirement
-   Rules](#submission-requirement-rules) values listed in the section below.
-2. The object ****MUST**** contain either a `from` or `from_nested` property. 
-  If both properties are present, the implementation ***MUST*** produce an 
-  error. The values of the `from` and `from_nested` properties are defined as
-  follows:
-    - `from` - the value of the `from` property ****must**** be a `group` string 
-    matching one of the `group` strings specified for one or more _Input
-    Descriptor_ objects.
-    - `from_nested` - an array of nested _Submission Requirement Objects_.
-3. The object  ****MAY**** contain a `name` property, and if present, its value
-   ****MUST**** be a string which ****MAY**** be used by a consuming User Agent
-   to display the general name of the requirement set to a user.
-4. The object ****MAY**** contain a `purpose` property and, if present, its
-   value ****MUST**** be a string that describes the purpose for which the
-   specified requirement is being asserted.
-5. The object ****MAY**** contain additional properties as required by
-   [Submission Requirement Rules](#submission-requirement-rules), such as
-   `count`, `min`, and `max` for the `"pick"` rule.
+- A [[ref:Submission Requirement Object]] ****MUST**** contain a `rule`
+  property. The value of this property ****MUST**** be a string that matches one
+  of the [[ref:Submission Requirement Rules]] values listed in the section
+  below.
+- A [[ref:Submission Requirement Object]] ****MUST**** contain either a
+  `from` or `from_nested` property. If both properties are present, the
+  implementation ***MUST*** produce an error. The values of the `from` and
+  `from_nested` properties are defined as follows:
+    - `from` - The value of the `from` property ****MUST**** be a `group` string 
+      matching one of the `group` strings specified for one or more
+      [[ref:Input Descriptor Objects].
+    - `from_nested` - The value of the `from_nested` property ****MUST**** be an
+      array [[ref:Submission Requirement Objects]].
+- The [[ref:Submission Requirement Object]]  ****MAY**** contain a `name`
+  property. If present, its value ****MUST**** be a string. The string
+  ****MAY**** be used by a consuming User Agent to display the general name of
+  the requirement set to a user.
+- The [[ref:Submission Requirement Objects]] ****MAY**** contain a `purpose`
+  property. If present, its value ****MUST**** be a string that describes the
+  purpose for which the submission is being requested.
+- The [[ref:Submission Requirement Objects]] ****MAY**** contain additional
+  properties as required by certain [[ref:Submission Requirement Rules]]. For
+  example, `count`, `min`, and `max` may be present with a `pick` rule.
 
 #### Submission Requirement Rules
 
-[_Submission Requirement Rules_](#submission-requirement-rules){id="requirement-rules"}
-are used within _Submission Requirement Objects_ to describe the specific
-combinatorial rule that must be applied to submit a particular subset of
-required inputs. Rules are selected by populating the `rule` property with the
-corresponding string. An implementation ****MUST**** support the following
-standard types:
+[[ref:Submission Requirement Rules]] are used within 
+[[ref:Submission Requirement Objects]] to describe the specific combinatorial
+rules that must be applied to submit a particular subset of reqested inputs. The
+specified [[ref:Submission Requirements Rule]] determines the behavior of the
+corresponding `from` or `from_nested` property, as described below. A conformant
+implementation ****MUST**** support the following rules:
 
 ##### `all` rule
 
-- The object ****must**** contain a `rule` property, and its value ****MUST****
-be the string `"all"`.
-- The object ****MUST**** contain either a `from` or `from_nested` property, 
-  which behave as follows when used in an `all` rule:
-    - `from` - when used within an `all` rule, every [[ref:Input Descriptor]] matching
-      the group string of the `from` value must be submitted to the [[ref:Verifier]].
-    - `from_nested` - when used within an `all` rule, all the _Submission
-    Requirement Objects_ specified in the `from_nested` array must be satisfied
-    by the inputs submitted in a subsequent
-    [[ref:Presentation Submission]].
+For an `all` rule [[ref:Submission Requirement Object]]:
+
+- The value of the `rule` property ****MUST**** be the string "all".
+- The following behavior is required for the `from` or `from_nested` property:
+  - `from` - All [[ref:Input Descriptors]] matching the `group` string of the
+    `from` value ****MUST**** be submitted to the [[ref:Verifier]].
+  - `from_nested` - All [[ref:Submission Requirement Objects]] specified in the
+    `from_nested` array must be satisfied by the inputs submitted to the
+    [[ref:Verifier]].
 
 ::: example Submission Requirement, all, group
 ```json
@@ -1202,24 +1204,37 @@ be the string `"all"`.
 
 ##### `pick` rule
 
-- The _Submission Requirement_ object's `rule` property ****MUST**** contain
-  the string value `"pick"`.
-- The _Submission Requirement_ object ****MAY**** contain a `count` property,
-  and if present, its value ****MUST**** be an integer greater than zero.
-- The _Submission Requirement_ object ****MAY**** contain a `min` property,
-  and if present, its value ****MUST**** be an integer greater than or equal to zero.
-- The _Submission Requirement_ object ****MAY**** contain a `max` property,
-  and if present, its value ****MUST**** be an integer greater than zero, and,
-  if also present, greater than the value of the `min` property.
-- The _Submission Requirement_ object ****MUST**** contain either a `from`
-  property or a `from_nested` property, and of whichever are present, all inputs
-  from the `from` group string specified or _Submission Requirements_ in the
-  `from_nested` array ****MUST**** be submitted or satisfied.
+For a `pick` rule [[ref:Submission Requirement Object]]:
 
-If the `from` property contains a `group` string, it directs the consumer of
-the [[ref:Presentation Definition]] to submit all members of the matching `group`
-string. In the following example, the `from` property contains a `group`
-string to require a single member of group `"B"`:
+- The value of the `rule` property ****MUST**** be the string "pick".
+- The [[ref:Submission Requirement Object]] ****MAY**** contain a `count`
+  property. If present, its value ****MUST**** be an integer greater than zero.
+  This indicates the number of [[ref:input Descriptors]] or
+  [[ref:Submission Requirements Objects]] to be submitted.
+- The [[ref:Submission Requirement Object]] ****MAY**** contain a `min`
+  property. If present, its value ****MUST**** be an integer greater than or
+  equal to zero. This indicates the minimum number of [[ref:input Descriptors]]
+  or [[ref:Submission Requirements Objects]] to be submitted.
+- The [[ref:Submission Requirement Object]] ****MAY**** contain a `max`
+  property. If present, its value ****MUST**** be an integer greater than zero
+  and, if also present, greater than the value of the `min` property. This
+  indicates the maximum number of [[ref:input Descriptors]] or
+  [[ref:Submission Requirements Objects]] to be submitted.
+- The following behavior is required for the `from` or `from_nested` property:
+    - `from` - The specified number of [[ref:Input Descriptors]] matching the
+      `group` string of the `from` value ****MUST**** be submitted to the
+      [[ref:Verifier]].
+    - `from_nested` - The specified number of
+      [[ref:Submission Requirement Objects]] in the `from_nested` array must be
+      satisfied by the inputs submitted to the [[ref:Verifier]].
+
+If [[ref:Submission Requirement Object]] has a `from` property, this directs the
+processing entity to submit inputs from the set of [[ref:Input Descriptors]]
+with a matching `group` string. In the first example that follows, the
+[[ref:Submission Requirement]] requests a single input from
+[[ref:Input Descriptor]] group `"B"`. In the second example, the
+[[ref:Submission Requirement]] requests from 2 to 4 inputs from
+[[ref:Input Descriptor]] group `"B"`.
 
 ::: example Submission Requirement, pick, group
 ```json
@@ -1250,11 +1265,11 @@ string to require a single member of group `"B"`:
 ```
 :::
 
-If the `from` property contains an array of nested _Submission Requirement_
-objects, it directs the consumer of the [[ref:Presentation Definition]] to submit
-members such that the number of satisfied _Submission Requirement_ objects is
-exactly `count`. In the following example, the `from` property contains an
-array of nested _Submission Requirement_ objects to require either all members
+If the [[ref:Submission Requirement Object]] has a `from_nested` property, this
+directs the processing entity to submit inputs such that the number of satisfied
+[[ref:Submission Requirement Objects]] matches the number requested. In the
+following example, the `from_nested` property contains an array of
+[[ref:Submission Requirement Objects]] which requests either all members
 from group `"A"` or two members from group `"B"`:
 
 ::: example Submission Requirement, pick, nested
