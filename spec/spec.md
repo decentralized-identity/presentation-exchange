@@ -1354,28 +1354,32 @@ format-related rules above:
 #### Property Values and Evaluation
 The following property value and evaluation guidelines summarize many of the
 processing-related rules above:
-1. The `rule` property value may be either `"all"` or `"pick"`, and the
+- The `rule` property value may be either `"all"` or `"pick"`, and a conformant
   implementation ****MUST**** produce an error if an unknown `rule` value is
   present.
-2. The _Submission Requirement_  ****MUST**** contain a `from` property or a
-  `from_nested` property, not both, and if present their values must be a string or an array, respectively. If any of these conditions are not met, 
-  the implementation ****MUST**** produce an error.
-3. To determine whether a _Submission Requirement_ is satisfied, used the
-  following algorithm:
-    - If the `rule` is `"all"`, then the _Submission Requirement_ MUST 
-      contain a `from` property or a `from_nested` property, and of whichever are present, all inputs from the `from` group string specified or _Submission Requirements_ in the `from_nested` array ****MUST**** be submitted or satisfied, respectively.
-    - If the `rule` is `"pick"`, then the _Submission Requirement_ MUST contain
-      a `from` property or a `from_nested` property, and of whichever are
-      present, they must be evaluated as follows:
-        - if a `count` property is present, the number of inputs submitted, or
-          nested _Submission Requirements_ satisfied, ****MUST**** be exactly
-          equal to the value of `count` property.
-        - if a `min` property is present, the number of inputs submitted, or
-          nested _Submission Requirements_ satisfied, ****MUST**** be equal to
-          or greater than the value of the `min` property.
-        - if a `max` property is present, the number of inputs submitted, or
-          nested _Submission Requirements_ satisfied, ****MUST**** be equal to
-          or less than the value of the `max` property.
+- The [[ref:Submission Requirement Object]] ****MUST**** contain a `from`
+   property or a `from_nested` property, not both. If present their values must
+   be a string or an array, respectively. If any of these conditions are not
+   met, a conformant implementation ****MUST**** produce an error.
+- A conformant implementation could use the following algorithm To determine
+  whether a [[ref:Submission Requirement]] is satisfied:
+  - If the `rule` is `"all"`, then the [[ref:Submission Requirement]]
+    ****MUST**** contain a `from` property or a `from_nested` property, and of
+    whichever are present, all inputs from the `from` group string or the
+    `from_nested` [[ref:Submission Requirements]] array ****MUST**** be
+    submitted or satisfied, respectively.
+  - If the `rule` is `"pick"`, then the [[ref:Submission Requirement]]
+    ****MUST**** contain a `from` property or a `from_nested` property, and of
+    whichever are present, they must be evaluated as follows:
+    - if a `count` property is present, the number of inputs submitted, or
+      nested [[ref:Submission Requirements]] satisfied, ****MUST**** be exactly
+      equal to the value of `count` property.
+    - if a `min` property is present, the number of inputs submitted, or
+      nested [[ref:Submission Requirements]] satisfied, ****MUST**** be equal to
+      or greater than the value of the `min` property.
+    - if a `max` property is present, the number of inputs submitted, or
+      nested [[ref:Submission Requirements]] satisfied, ****MUST**** be equal to
+      or less than the value of the `max` property.
 
 ### Input Evaluation
 
