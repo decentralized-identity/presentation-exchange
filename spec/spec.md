@@ -1383,76 +1383,84 @@ processing-related rules above:
 
 ### Input Evaluation
 
-A consumer of a [[ref:Presentation Definition]] must filter inputs they hold (signed
-[[ref:Claims]], raw data, etc.) to determine whether they possess the inputs
-required to fulfill the demands of the Verifying party. A consumer of a
-[[ref:Presentation Definition]] ****SHOULD**** use the following process to validate
-whether or not its candidate inputs meet the requirements it describes:
+A processing entity of a [[ref:Presentation Definition]] must filter inputs they
+hold (signed [[ref:Claims]], raw data, etc.) to determine whether they possess
+the inputs requested by the [[ref:Verifier]]. A processing entity of a
+[[ref:Presentation Definition]] ****SHOULD**** use the following process to
+validate whether or not its candidate inputs meet the requirements it describes:
 
 For each [[ref:Input Descriptor]] in the `input_descriptors` array of a
-[[ref:Presentation Definition]], a User Agent ****should**** compare each candidate input (JWT,
-Verifiable Credential, etc.) it holds to determine whether there is a match.
-Evaluate each candidate input as follows:
-  1. The schema of the candidate input ****must**** match one of the _Input
-    Descriptor_ `schema` object `uri` values exactly. If the scheme is a
-    hashlink or a similar value that points to immutable content, this means the
-    content of the schema, not just the URI from which it is downloaded, must
-    also match. If one of the values is an exact match, proceed, if there are no
-    exact matches, skip to the next candidate input.
-  2. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
-    contains a `fields` property with one or more
-    [_Input Descriptor Field Entries_](#input-descriptor-field-entry), evaluate
-    each against the candidate input as follows:
-      1. Iterate the [[ref:Input Descriptor]] `path` array of
+[[ref:Presentation Definition]], a processing entity ****SHOULD**** compare each
+candidate input (JWT, Verifiable Credential, etc.) it holds to determine whether
+there is a match.
+
+For each candidate input:
+  1. The URI for the schema of the candidate input ****MUST**** match one of the
+    [[ref:Input Descriptor]] `schema` object `uri` values exactly.
+     
+     If the [[ref:Input Descriptor]] `schema` object `uri` is a hashlink or
+     similar value that points to immutable content, then the content of the
+     retrieved schema must also match.
+     
+     If one of the values is an exact match, proceed, if there are no
+     exact matches, skip to the next candidate input.
+  2. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+     and it contains a `fields` property with one or more
+     [_Input Descriptor Field Entries_](#input-descriptor-field-entry), evaluate
+     each against the candidate input as follows:
+     1. Iterate the [[ref:Input Descriptor]] `path` array of
         [JSONPath](https://goessner.net/articles/JsonPath/) string expressions
         from 0-index, executing each expression against the candidate input.
         Cease iteration at the first expression that returns a matching _Field
         Query Result_ and use the result for the rest of the field's evaluation.
         If no result is returned for any of the expressions, skip to the next
         candidate input.
-      2. If the `filter` property of the field entry is present, validate the
+     2. If the `filter` property of the field entry is present, validate the
         _Field Query Result_ from the step above against the
-        [JSON Schema](https://json-schema.org/specification.html) descriptor value.
-      3. If the `predicate` property of the field entry is present, a boolean
+        [JSON Schema](https://json-schema.org/specification.html) descriptor
+        value.
+     3. If the `predicate` property of the field entry is present, a boolean
         value should be returned rather than the value of the _Field Query
         Result_. Calculate this boolean value by evaluating the _Field Query
         Result_ against the
         [JSON Schema](https://json-schema.org/specification.html) descriptor
         value of the `filter` property.         
-      4. If the result is valid, proceed iterating the rest of the `fields` entries.
+     4. If the result is valid, proceed iterating the rest of the `fields`
+        entries.
   3. If all of the previous validation steps are successful, mark the candidate
-    input as a match for use in a [[ref:Presentation Submission]], and if present at
-    the top level of the [[ref:Input Descriptor]], keep a relative reference to the
-    `group` values the input is designated for.
-  4. If the `constraints` property of the [[ref:Input Descriptor]] is present and it
-    contains a `limit_disclosure` property set to the boolean value `true`,
-    ensure that any subsequent submission of data in relation to the candidate
-    input is limited to the entries specified in the `fields` property. If the
-    `fields` property ****is not**** present, or contains zero
-    [_Input Descriptor Field Entries_](#input-descriptor-field-entry),
-    submission ****SHOULD NOT**** include any [[ref:Claim]] data from the [[ref:Claim]].
-    (for example: a [[ref:Verifier]] may simply want to know a [[ref:Holder]] has a valid,
-    signed [[ref:Claims]] of a particular type, without disclosing any of the
-    data it contains).
-  5. If the `constraints` property of the [[ref:Input Descriptor]] is present, and it
-    contains a `subject_is_issuer` property set to the value `required`, ensure
-    that any submission of data in relation to the candidate input is fulfilled
-    using a _self_attested_ [[ref:Claim]].
+     input as a match for use in a [[ref:Presentation Submission]].
+     
+     If present at the top level of the [[ref:Input Descriptor]], keep a
+     relative reference to the `group` values the input is designated for.
+  4. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+     and it contains a `limit_disclosure` property set to the boolean value
+     `true`, ensure that any subsequent submission of data in relation to the
+     candidate input is limited to the entries specified in the `fields`
+     property. If the `fields` property ****is not**** present, or contains zero
+     [_Input Descriptor Field Entries_](#input-descriptor-field-entry),
+     submission ****SHOULD NOT**** include any [[ref:Claim]] data from the
+     [[ref:Claim]]. For example, a [[ref:Verifier]] may simply want to know a
+     [[ref:Holder]] has a valid, signed [[ref:Claims]] of a particular type,
+     without disclosing any of the data it contains.
+  5. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+     and it contains a `subject_is_issuer` property set to the value `required`,
+     ensure that any submission of data in relation to the candidate input is
+     fulfilled using a _self_attested_ [[ref:Claim]].
   6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-    and it contains an `is_holder` property, ensure that for each object in the
-    array, any submission of data in relation to the candidate input is
-    fulfilled by the [[Ref:Subject]] of the attributes so identified by the strings in
-    the `field_id` array.
+     and it contains an `is_holder` property, ensure that for each object in the
+     array, any submission of data in relation to the candidate input is
+     fulfilled by the [[Ref:Subject]] of the attributes so identified by the
+     strings in the `field_id` array.
   7. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-    and it contains a `same_subject` property, ensure that for each object in
-    the array, all of the attributes so identified by the strings in the
-    `field_id` array are about the same [[Ref:Subject]].
+     and it contains a `same_subject` property, ensure that for each object in
+     the array, all of the attributes so identified by the strings in the
+     `field_id` array are about the same [[Ref:Subject]].
 
 ::: note
-The above evaluation process assumes the User Agent will test each candidate
+The above evaluation process assumes the proceng entity will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
 criteria for inclusion in submission. Any additional testing of a candidate
-input for a schema match beyond comparison of the schema `uri` (e.g. specific
+input for a schema match beyond comparison of the schema `uri` (e.g., specific
 requirements or details expressed in schema `metadata`) is at the discretion
 of the implementer.
 :::
@@ -1460,22 +1468,24 @@ of the implementer.
 #### Expired and Revoked Data
 
 Certain types of [[ref:Claims]] have concepts of _expiration_ and _revocation_.
-_Expiration_ is mechanism normally used to communicate a time bound up until
-which a [[ref:Claim]] is valid. _Revocation_ is a mechanism normally used to give
-an issuer control over the status of a [[ref:Claim]] after issuance. Different
-[[ref:Claim]] specifications handle these concepts in different ways. 
+_Expiration_ is mechanism used to communicate a time after which a [[ref:Claim]]
+will no longer be valid. _Revocation_ is a mechanism used by an issuer to
+express the status of a [[ref:Claim]] after issuance. Different [[ref:Claim]]
+specifications handle these concepts in different ways. 
 
-[[ref:Presentation Definitions]] have a need to specify whether expired, revoked,
-or [[ref:Claims]] of other statuses can be accepted. For [[ref:Claims]] that have
-simple status properties [Input Descriptor Filters](#input-descriptor-objects)
-JSON Schema can be used to write specify acceptable criteria.
+[[ref:Presentation Definitions]] have a need to specify whether expired,
+revoked, or [[ref:Claims]] of other statuses can be accepted. For [[ref:Claims]]
+that have simple status properties,
+[Input Descriptor Filters](#input-descriptor-objects) JSON Schema can be used to
+specify acceptable criteria.
 
-The first example demonstrates _expiry_ using the [VC Data Model's
+The first example below demonstrates _expiry_ using the [VC Data Model's
  `expirationDate` property](https://w3c.github.io/vc-data-model/#expiration-0).
-The second demonstrates _revocation_, or more generally, _credential status_
-using the [VC Data Model's `credentialStatus` property](https://w3c.github.io/vc-data-model/#status-0).
-Using the syntax provided in the example a [[ref:Verifier]] will have all requisite
-information to resolve the status of a [[ref:Claim]].
+The second example below demonstrates _revocation_, or more generally,
+_credential status_ using the
+[VC Data Model's `credentialStatus` property](https://w3c.github.io/vc-data-model/#status-0).
+Using the syntax provided in the example, a [[ref:Verifier]] will have all
+requisite information to resolve the status of a [[ref:Claim]].
 
 <tab-panels selected-index="0">
 
@@ -1551,45 +1561,63 @@ information to resolve the status of a [[ref:Claim]].
 
 </tab-panel>
 
-#### Holder Binding
-Credentials often rely on proofs of [[ref:Holder]] binding for their validity. A
-[[ref:Verifier]] may wish to determine that a particular [[ref:Claim]], or set of [[ref:Claims]] is
-bound to the [[ref:Claim]] [[ref:Holder]]. This can help the [[ref:Verifier]] to determine the
-legitimacy of the presented proofs. Some examples of [[ref:Holder]] binding include
-proof of identifier control, proof the [[ref:Holder]] knows a secret, or biometrics.
+#### Holder and Subject Binding
+[[ref:Claims]] often rely on proofs of [[ref:Holder]] or [[ref:Subject]] binding
+for their validity. A [[ref:Verifier]] may wish to determine that a particular
+[[ref:Claim]], or set of [[ref:Claims]] is bound to a particular [[ref:Holder]]
+or [[ref:Subject]]. This can help the [[ref:Verifier]] to determine the
+legitimacy of the presented proofs. 
 
-The [[ref:Claim]] issuer makes proofs of [[ref:Holder]] binding possible by including [[ref:Holder]]
-information either in the [[ref:Claim]] or the [[ref:Claim]] signature. 
+Some mechanisms which enable proof of [[ref:Holder]] binding are described
+below. These include proof of identifier control, proof the [[ref:Holder]] knows
+a secret value, and biometrics. An [[ref:Issuer]] can make proofs of
+[[ref:Holder]] binding possible by including [[ref:Holder]] information either
+in the [[ref:Claim]] or the [[ref:Claim]] signature.
+
+Some examples of [[ref:Subject]] binding include matching the [[ref:Subject]] of
+one [[ref:Claim]] with that of another, or matching the [[ref:Subject]] of a
+[[ref:Claim]] with the [[ref:Holder]].
 
 ##### Proof of Identifier Control
-A number of [[ref:Claim]] types include an identifier for the [[ref:Claim]] [[Ref:Subject]]. A [[ref:Verifier]]
-may wish to ascertain that one of the [[Ref:Subject]] identified in the [[ref:Claim]] is the one
-submitting the proof, or has consented to the proof submission. A [[ref:Claim]] may also
-include an identifier for the [[ref:Holder]], independent of the [[Ref:Subject]] identifiers. 
+A number of [[ref:Claim]] types include an identifier for the [[ref:Claim]]
+[[Ref:Subject]]. A [[ref:Verifier]] may wish to ascertain that one of the
+[[Ref:Subject]] identified in the [[ref:Claim]] is the one submitting the proof,
+or has consented to the proof submission. A [[ref:Claim]] may also include an
+identifier for the [[ref:Holder]], independent of the [[Ref:Subject]]
+identifiers. 
 
-One mechanism for providing such proofs is the use of a [[ref:DID]] as the identifier
-for the [[ref:Claim]] [[Ref:Subject]] or [[ref:Holder]]. DIDs enable an entity to provide a
-cryptographic proof of control of the identifier, usually through a
-demonstration that the [[ref:Holder]] knows some secret value, such as a private key.
-The [[ref:Holder]] can demonstrate the same proof of control when presenting the [[ref:Claim]].
-In addition to verifying the authenticity and origin of the [[ref:Claim]] itself, a
-[[ref:Verifier]] can verify that the [[ref:Holder]] of the [[ref:Claim]] still controls the identifier.
+One mechanism for providing such proofs is the use of a [[ref:DID]] as the
+identifier for the [[ref:Claim]] [[Ref:Subject]] or [[ref:Holder]]. DIDs enable
+an entity to provide a cryptographic proof of control of the identifier, usually
+through a demonstration that the [[ref:DID]] Controller knows some secret value,
+such as a private key.
+
+The [[ref:Holder]] or [[ref:Subject]] can demonstrate this proof of control when
+the [[ref:Claim]] is presented. In addition to verifying the authenticity and
+origin of the [[ref:Claim]] itself, a [[ref:Verifier]] can verify that the
+[[ref:Holder]] or [[ref:Subject]] of the [[ref:Claim]] still controls the
+identifier.
 
 ##### Link Secrets
-Some [[ref:Claim]] signatures support the inclusion of [[ref:Holder]]-provided secrets that
-become incorporated into the signature, but remain hidden from the [[ref:Claim]] issuer.
-One common use of this capability is to bind the [[ref:Claim]] to the [[ref:Holder]]. This is
-sometimes called a link secret. Just as with proof of control of an identifier,
-link secret proofs demonstrate that the [[ref:Holder]] knows some secret value. Upon
-presentation to a [[ref:Verifier]], the [[ref:Holder]] demonstrates knowledge of the secret
-without revealing it. The [[ref:Verifier]] can verify that the [[ref:Holder]] knows the link
-secret, and that the link secret is contained in the [[ref:Claim]] signature.
+Some [[ref:Claim]] signatures support the inclusion of [[ref:Holder]]-provided
+secrets that become incorporated into the signature, but remain hidden from the
+[[ref:Claim]] issuer. One common use of this capability is to bind the
+[[ref:Claim]] to the [[ref:Holder]]. This is sometimes called a _link secret_.
+
+Just as with proof of control of an identifier, link secret proofs demonstrate
+that the [[ref:Holder]] knows some secret value. Upon presentation to a
+[[ref:Verifier]], the [[ref:Holder]] demonstrates knowledge of the secret
+without revealing it. The [[ref:Verifier]] can verify that the [[ref:Holder]]
+knows the link secret, and that the link secret is contained in the
+[[ref:Claim]] signature. The [[ref:Holder]] can provide this proof for each
+presented [[ref:Claim]], thereby linking them together.
 
 ##### Biometrics
-This type of [[ref:Holder]] binding, instead of relying on demonstrating knowledge of
-some secret value, relies on the evaluation of biometric data. There are a
-number of mechanisms for safely embedding biometric information in a [[ref:Claim]] such
-that only a person who can confirm the biometric may present the [[ref:Claim]]. 
+This type of [[ref:Holder]] binding, instead of relying on demonstrating
+knowledge of some secret value, relies on the evaluation of biometric data.
+There are a number of mechanisms for safely embedding biometric information in a
+[[ref:Claim]] such that only a person who can confirm the biometric may present
+the [[ref:Claim]]. 
 
 ### JSON Schema
 
@@ -1875,21 +1903,24 @@ format-related rules above:
 ```
 
 ### Presentation Requests
-[[ref:Presentation Definition]]s may be sent from a [[ref:Verifier]] to a [[ref:Holder]] using 
-a wide variety of transport mechanisms or [[ref:Claim]] exchange protocols. This
-specification does not define a transport mechanism for
-[[ref:Presentation Definitions]] (or [[ref:Presentation Request]]), but does note that different 
-use cases, supported signature schemes, protocols, and threat models may
-require a [[ref:Presentation Request]]to have certain properties:
-- Signature verification - A [[ref:Holder]] may wish to have assurances as to the
-  provenance, identity, or status of a [[ref:Presentation Definition]]. In this case,
-  a [[ref:Presentation Request]] that uses digital signatures may be required. 
-- `domain`, `challenge`, or `nonce` - Some presentation protocols may require
-  that presentations be unique, i.e., it should be possible for a [[ref:Verifier]] to
-  detect if a presentation has been used before. Other protocols may require
-  that a presentation to be bound to a particular communication exchange, or
-  session. In these cases, a [[ref:Presentation Request]] that provides a `domain`,
-  `challenge`,or `nonce` property may be required.
+A [[ref:Presentation Request]] is any transport mechanism used to send a
+[[ref:Presentation Definition]] from a [[ref:Verifier]] to a [[ref:Holder]]. A
+wide variety of transport mechanisms or [[ref:Claim]] exchange protocols may be
+used to send [[ref:Presentation Definitions]]. This specification does not
+define [[ref:Presentation Requests]] and is designed to be agnostic to them.
+Please note, however, that different use cases, supported signature schemes,
+protocols, and threat models may require a [[ref:Presentation Request]]to have
+certain properties. Some of these are expressed below:
+- Signature verification - A [[ref:Holder]] may wish to have assurances as to
+  the provenance, identity, or status of a [[ref:Presentation Definition]]. In
+  this case, a [[ref:Presentation Request]] that uses digital signatures may be
+  required. 
+- Replay protection - Some presentation protocols may require that presentations
+  be unique, i.e., it should be possible for a [[ref:Verifier]] to detect if a
+  presentation has been used before. Other protocols may require that a
+  presentation be bound to a particular communication exchange or session. In
+  these cases, a [[ref:Presentation Request]] that provides a `domain`,
+  `challenge`,or `nonce` value may be required.
 
 
 ## Presentation Submission
