@@ -1925,36 +1925,41 @@ certain properties. Some of these are expressed below:
 
 ## Presentation Submission
 
-_Presentation Submissions_ are objects embedded within target [[ref:Claim]]
-negotiation formats that unify the presentation of proofs to a [[ref:Verifier]]
-in accordance with the requirements a [[ref:Verifier]] specified in a 
-[[ref:Presentation Definition]]. Embedded [[ref:Presentation Submission]] 
-objects ****MUST**** be located within target data format as a 
-`presentation_submission` property, which are composed and embedded as follows:
+[[ref:Presentation Submissions]] are objects embedded within target
+[[ref:Claim]] negotiation formats that express how the inputs presented as
+proofs to a [[ref:Verifier]] are provided in accordance with the requirements
+specified in a [[ref:Presentation Definition]]. Embedded
+[[ref:Presentation Submission]] objects ****MUST**** be located within target
+data format as the value of a `presentation_submission` property, which is
+composed and embedded as follows:
 
-1. The `presentation_submission` object ****MUST**** be included at the top-level of an Embed Target, or in the specific location described in the 
-[Embed Locations table](#embed-locations) in the [Embed Target](#embed-target)
-section below.
-2. The object ****MUST**** include `id` and `definition_id` properties.
-    - The `id` property exists to uniquely identify the resource. The property 
-  ****MUST**** be a unique identifier, such as a [UUID](https://tools.ietf.org/html/rfc4122). 
-    - The `definition_id` property exists to link the submission to 
-    its definition and ****MUST**** be the `id` value of a valid
-    [[ref:Presentation Definition]].
-3. The object ****MUST**** include a `descriptor_map` property, and its value
-  ****MUST**** be an array of _Input Descriptor Mapping Objects_, each being
-  composed as follows:
-    - The object ****MUST**** include an `id` property, and its value
-      ****MUST**** be a string matching the `id` property of the _Input
-      Descriptor_ in the [[ref:Presentation Definition]] the submission is related to.
-    - The object ****MUST**** include a `format` property, and its value 
-      ****MUST**** be a string value matching one of the 
-      [Claim Format Designation](#claim-format-designations) (`jwt`, 
-      `jwt_vc`, `jwt_vp`, `ldp_vc`, `ldp_vp`, `ldp`), to denote what data format the [[ref:Claim]] is being 
-      submitted in.
-    - The object ****MUST**** include a `path` property, and its value
-      ****MUST**** be a [JSONPath](https://goessner.net/articles/JsonPath/)
-      string expression that selects the [[ref:Claim]] to be submit in relation
+- The `presentation_submission` object ****MUST**** be included at the
+  top-level of an Embed Target, or in the specific location described in the
+  [Embed Locations table](#embed-locations) in the [Embed Target](#embed-target)
+  section below. 
+- The `presentation_submission` object ****MUST**** contain an `id` property.
+  The value of this property ****MUST**** be a unique identifier, such as a
+  [UUID](https://tools.ietf.org/html/rfc4122).
+- The `presentation_submission` object ****MUST**** contain a `definition_id`
+  property. e value of this property ****MUST**** be the `id` value of a valid
+  [[ref:Presentation Definition]].
+- The `presentation_submission` object ****MUST**** include a `descriptor_map`
+  property. The value of this property ****MUST**** be an array of
+  _Input Descriptor Mapping Objects_, composed as follows:
+    - The `descriptor_map` object ****MUST**** include an `id` property. The
+      value of this property ****MUST**** be a string that matches the `id`
+      property of the [[ref:Input Descriptor]] in the
+      [[ref:Presentation Definition]] that this [[ref:Presentation Submission]]
+      is related to.
+    - The `descriptor_map` object ****MUST**** include a `format` property. The
+      value of this property ****MUST**** be a string that matches one of the 
+      [Claim Format Designation](#claim-format-designations). This denotes the
+      data format of the [[ref:Claim]].
+    - The `descriptor_map` object ****MUST**** include a `path` property. The
+      value of this property ****MUST**** be a
+      [JSONPath](https://goessner.net/articles/JsonPath/) string expression. The
+      `path` property 
+      selects the [[ref:Claim]] to be submit in relation
       to the identified [[ref:Input Descriptor]] identified, when executed against
       the top-level of the object the _Presentation Submission_ is embedded
       within.
