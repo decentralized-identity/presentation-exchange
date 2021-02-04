@@ -1958,15 +1958,18 @@ composed and embedded as follows:
     - The `descriptor_map` object ****MUST**** include a `path` property. The
       value of this property ****MUST**** be a
       [JSONPath](https://goessner.net/articles/JsonPath/) string expression. The
-      `path` property 
-      selects the [[ref:Claim]] to be submit in relation
-      to the identified [[ref:Input Descriptor]] identified, when executed against
-      the top-level of the object the _Presentation Submission_ is embedded
-      within.
-    - The object ****MAY**** include a `path_nested` object to specify the
-      presence of a multi-[[ref:Claim]] envelope format, meaning the [[ref:Claim]] indending to be selected must be decoded separately from its parent enclosure.
-      + The format of a `path_nested` object mirrors that of a `descriptor_map` property. The nesting may be any number of levels deep. The `id` property ****MUST**** be the same for each level of nesting.
-      + The `path` property inside each `path_nested` property provides a _relative path_ within a given nested value.
+      `path` property indicates the [[ref:Claim]] submitted in relation to the
+      identified [[ref:Input Descriptor]], when executed against the top-level
+      of the object the [[ref:Presentation Submission]] is embedded within.
+    - The object ****MAY**** include a `path_nested` object to indicate the
+      presence of a multi-[[ref:Claim]] envelope format. This means the
+      [[ref:Claim]] indicated is to be decoded separately from its parent
+      enclosure.
+      + The format of a `path_nested` object mirrors that of a `descriptor_map`
+        property. The nesting may be any number of levels deep. The `id`
+        property ****MUST**** be the same for each level of nesting.
+      + The `path` property inside each `path_nested` property provides a
+        _relative path_ within a given nested value.
 
 ### Processing of `path_nested` Entries
 
@@ -1997,56 +2000,60 @@ composed and embedded as follows:
 }
 ```
 
-When the `path_nested` property is present in a _Presentation Submission_ object, 
-process as follows:
+When the `path_nested` property is present in a [[ref:Presentation Submission]]
+object, process as follows:
 
-1. For each Nested Submission Traversal Object in the `path_nested` array,
-   process as follows:
-    a. Execute the [JSONPath](https://goessner.net/articles/JsonPath/) expression string 
-      on the [_Current Traversal Object_](#current-traversal-object){id="current-traversal-object"}, or if none is designated, 
-      the top level of the Embed Target.
-    b. Decode and parse the value returned from [JSONPath](https://goessner.net/articles/JsonPath/) 
-      execution in accordance with the [Claim Format Designation](#claim-format-designations) 
-      specified in the object's `format` property. If value parses and validates in accordance 
-      with the [Claim Format Designation](#claim-format-designations) specified, let 
-      the resulting object be the [_Current Traversal Object_](#current-traversal-object)
-    c. If present, process the next Nested Submission Traversal Object in the 
-       current `path_nested` property.
-2. If parsing of the Nested Submission Traversal Objects in the `path_nested`
+1. For each _Nested Submission Traversal Object_ in the `path_nested` array:
+   1. Execute the [JSONPath](https://goessner.net/articles/JsonPath/)
+      expression string on the
+      [_Current Traversal Object_](#current-traversal-object){id="current-traversal-object"},
+      or if none is designated, the top level of the Embed Target.
+   1. Decode and parse the value returned from
+      [JSONPath](https://goessner.net/articles/JsonPath/) execution in
+      accordance with the [Claim Format Designation](#claim-format-designations) 
+      specified in the object's `format` property. If the value parses and
+      validates in accordance with the
+      [Claim Format Designation](#claim-format-designations) specified, let the
+      resulting object be the
+      [_Current Traversal Object_](#current-traversal-object)
+   1. If present, process the next _Nested Submission Traversal Object_ in the
+      current `path_nested` property.
+2. If parsing of the _Nested Submission Traversal Objects_ in the `path_nested`
    property produced a valid value, process it as the submission against the
-   [[ref:Input Descriptor]] indicated by the  `id` property of the containing
-  _Input Descriptor Mapping Object_.
+   [[ref:Input Descriptor]] indicated by the `id` property of the containing
+   _Input Descriptor Mapping Object_.
 
 ### Limited Disclosure Submissions
 
-If for all [[ref:Claims]] submitted in relation to
-[_Input Descriptor Objects_](#input-descriptor-objects) that include a
-`constraints` object with a `limit_disclosure` property set to the boolean value
-`true`, ensure that the data submitted is limited to the entries specified in
-the `fields` property of the `constraints` object. If the `fields` property
-****is not**** present, or contains zero
+For all [[ref:Claims]] submitted in relation to [[ref:Input Descriptor Objects]]
+that include a `constraints` object with a `limit_disclosure` property set to
+the boolean value `true`, ensure that the data submitted is limited to the
+entries specified in the `fields` property of the `constraints` object. If the
+`fields` property ****is not**** present, or contains zero
 [_Input Descriptor Field Entries_](#input-descriptor-field-entry), the
-submission ****SHOULD NOT**** include any [[ref:Claim]] data from the [[ref:Claim]]. (for
-example: a [[ref:Verifier]] may simply want to know a [[ref:Holder]] has a valid, signed
-[[ref:Claim]] of a particular type, without disclosing any of the data it contains).
+submission ****SHOULD NOT**** include any data from the [[ref:Claim]]. For
+example, a [[ref:Verifier]] may simply want to know whether a [[ref:Holder]] has
+a valid, signed [[ref:Claim]] of a particular type, without disclosing any of
+the data it contains.
 
 ### Validation of Claims
 
-Once a [[ref:Claim]] has been ingested via a [[ref:Presentation Submission]], any validation 
-beyond the process of evaluation defined by the [Input Evaluation](#input-evaluation) 
-section is outside the scope of Presentation Exchange. Validation of signatures 
-and other cryptographic proofs are a function of a given [[ref:Claim]] format, and 
-should be evaluated in accordance with a given [[ref:Claim]] format's standardized 
-processing steps. Additional verification of [[ref:Claim]] data or subsequent 
-validation required by a given [[ref:Verifier]] are left to the [[ref:Verifier]]'s systems, code 
-and business processes to define and execute.
+Once a [[ref:Claim]] has been ingested via a [[ref:Presentation Submission]],
+any validation beyond the process of evaluation defined by the
+[Input Evaluation](#input-evaluation) section is outside the scope of
+Presentation Exchange. Validation of signatures and other cryptographic proofs
+are a function of the given [[ref:Claim]] format, and should be evaluated in
+accordance with the given [[ref:Claim]] format's standardized processing steps.
+Additional verification of [[ref:Claim]] data or subsequent validation required
+by a given [[ref:Verifier]] are left to the [[ref:Verifier]]'s systems, code and
+business processes to define and execute.
 
-During validation, each [[ref:Input Descriptor]] Object ****MUST**** refer to only a
-single discrete container within a _Presentation Submission_, such that all
-checks refer to properties within the same container and are protected by the
-same digital signature, if the container format supports digital signatures.
-Examples of discrete container formats include a single Verifiable Credential
-within a Verifiable Presentation as defined in 
+During validation, each [[ref:Input Descriptor]] Object ****MUST**** only refer
+to a single discrete container within a [[ref:Presentation Submission]], such
+that all checks refer to properties within the same container and are protected
+by the same digital signature, if the container format supports digital
+signatures. Examples of discrete container formats include a single Verifiable
+Credential within a Verifiable Presentation as defined in 
 [W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/), OpenID
 Connect Tokens, and JSON Web Tokens. This is to ensure that related
 requirements, for example, "given name" and "family name" within the same
@@ -2123,31 +2130,35 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
 ## Claim Format Designations
 
 Within the _Presentation Exchange_ specification, there are numerous sections 
-where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] variants they support and 
-are submitting. The following are the normalized references used within the 
-specification:
+where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] variants
+they support and are submitting. The following are the normalized references
+used within the specification:
 
 - `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7797]] 
   that will be submitted in the form of a JWT encoded string. Expression of 
-  supported algorithms in relation to this format ****MUST**** be conveyed using an `alg` property 
-  paired with values that are identifiers from the 
-  JSON Web Algorithms registry [[spec:RFC7518]].
+  supported algorithms in relation to this format ****MUST**** be conveyed using
+  an `alg` property paired with values that are identifiers from the JSON Web
+  Algorithms registry [[spec:RFC7518]].
 - `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7797]] 
-  that will be submitted in the form of a JWT encoded string, and the body of the decoded 
-  JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7797]] section 
-  of the [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token). 
-  Expression of supported algorithms in relation to these formats ****MUST**** be conveyed using 
-  an `alg` property paired with values that are identifiers from the JSON Web Algorithms registry 
-  [[spec:RFC7518]].
-- `ldp_vc`, `ldp_vp` - these formats are W3C Verifiable Credentials [[spec:VC-DATA MODEL]]
-  that will be submitted in the form of a JSON object. Expression of supported 
-  algorithms in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
-  paired with values that are identifiers from the 
+  that will be submitted in the form of a JWT encoded string, and the body of
+  the decoded JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7797]]
+  section of the
+  [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token). 
+  Expression of supported algorithms in relation to these formats ****MUST****
+  be conveyed using an `alg` property paired with values that are identifiers
+  from the JSON Web Algorithms registry [[spec:RFC7518]].
+- `ldp_vc`, `ldp_vp` - these formats are W3C Verifiable Credentials
+  [[spec:VC-DATA MODEL]] that will be submitted in the form of a JSON object.
+  Expression of supported algorithms in relation to these formats ****MUST****
+  be conveyed using a `proof_type` property paired with values that are
+  identifiers from the 
   [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
-- `ldp` - this format is defined in the [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/) 
-  specification [[spec: Linked Data Proofs]], and will be submitted as objects. Expression of supported algorithms 
-  in relation to these formats ****MUST**** be conveyed using a `proof_type` property 
-  with values that are identifiers from the 
+- `ldp` - this format is defined in the
+  [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/)
+  specification [[spec: Linked Data Proofs]], and will be submitted as objects.
+  Expression of supported algorithms in relation to these formats ****MUST****
+  be conveyed using a `proof_type` property with values that are identifiers
+  from the 
   [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 
 ## JSON Schema Vocabulary Definition
@@ -2579,7 +2590,9 @@ JSONPath                      | Description
 
 #### JSON Web Token Claims Registration
 
-This specification registers the [[ref:Claims]] in section [Registry Contents]() in the IANA JSON Web Token [[ref:Claims]] registry defined in [RFC 751 JSON Web Token (JWT)](https://tools.ietf.org/html/rfc7519).
+This specification registers the [[ref:Claims]] in section [Registry Contents]()
+in the IANA JSON Web Token [[ref:Claims]] registry defined in
+[RFC 751 JSON Web Token (JWT)](https://tools.ietf.org/html/rfc7519).
 
 ##### Registry Contents
 
