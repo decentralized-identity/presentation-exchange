@@ -8,7 +8,6 @@
       "properties": {
         "id": { "type": "string" },
         "definition_id": { "type": "string" },
-        "locale": { "type": "string" },
         "descriptor_map": {
           "type": "array",
           "items": { "$ref": "#/definitions/descriptor" }
