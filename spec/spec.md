@@ -192,12 +192,12 @@ conjunction with the
     "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "locale": "en-US",
     "input_descriptors": [{
-      "id": "name_input",
+      "id": "legalname_input",
       "name": "Full Legal Name",
-      "purpose": "We need your full legal name.",
+      "purpose": "We require a verified legal name for this transaction, as per Recommendation 16.",
       "schema": [
         {
-          "uri": "https://name-standards.com/name.json",
+          "uri": "https://name-standards.com/legalname.json",
           "required": true
         }
       ]
@@ -218,7 +218,7 @@ conjunction with the
     "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "locale": "de-DE",
     "descriptor_map": [{
-      "id": "name_input",
+      "id": "legalname_input",
       "path": "$.verifiableCredential[0]"
     }]
   }
@@ -257,12 +257,12 @@ requirement.
     "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "input_descriptors": [
       {
-        "id": "banking_input",
-        "name": "Bank Account Information",
-        "purpose": "We need your bank and account information.",
+        "id": "bankaccount_input",
+        "name": "Full Bank Account Routing Information",
+        "purpose": "We can only remit payment to a currently-valid bank account, submitted as an ABA RTN + Acct # or IBAN.",
         "schema": [
           {
-            "uri": "https://bank-standards.com/customer.json"
+            "uri": "https://bank-standards.com/fullaccountroute.json"
           }
         ],
         "constraints": {
@@ -270,7 +270,7 @@ requirement.
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The claim must be from one of the specified issuers",
+              "purpose": "We can only verify bank accounts if they are attested by a trusted bank, auditor, or regulatory authority.",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
@@ -280,7 +280,7 @@ requirement.
         }
       },
       {
-        "id": "citizenship_input",
+        "id": "us_passport_input",
         "name": "US Passport",
         "schema": [
           {
@@ -336,7 +336,7 @@ requirement.
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The claim must be from one of the specified issuers",
+              "purpose": "We can only accept digital driver's licenses issued by national authorities of member states or trusted notarial auditors.",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:gov1|did:example:gov2"
@@ -347,7 +347,7 @@ requirement.
               "filter": {
                 "type": "string",
                 "format": "date",
-                "maximum": "1999-6-15"
+                "maximum": "1999-06-15"
               }
             }
           ]
@@ -369,7 +369,7 @@ requirement.
               "filter": {
                 "type": "string",
                 "format": "date",
-                "maximum": "1999-5-16"
+                "maximum": "1999-05-16"
               }
             }
           ]
@@ -394,19 +394,20 @@ requirement.
     "submission_requirements": [
       {
         "name": "Banking Information",
-        "purpose": "We need to know if you have an established banking history.",
+        "purpose": "We can only remit payment to a currently-valid bank account in the US, Germany or France.",
         "rule": "pick",
         "count": 1,
         "from": "A"
       },
       {
         "name": "Employment Information",
-        "purpose": "We need to know that you are currently employed.",
+        "purpose": "We are only verifying one current employment relationship, not any other information about employment.",
         "rule": "all",
         "from": "B"
       },
       {
-        "name": "Citizenship Information",
+        "name": "Eligibility to Drive on US Roads",
+        "purpose": "We need to verify eligibility to drive on US roads via US or EU driver's license, but no biometric or identifying information contained there.",
         "rule": "pick",
         "count": 1,
         "from": "C"
@@ -416,7 +417,7 @@ requirement.
       {
         "id": "banking_input_1",
         "name": "Bank Account Information",
-        "purpose": "We need your bank and account information.",
+        "purpose": "Bank Account required to remit payment.",
         "group": ["A"],
         "schema": [
           {
@@ -424,11 +425,11 @@ requirement.
           }
         ],
         "constraints": {
-          "limit_disclosure": true,
+          "limit_disclosure": "required",
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The claim must be from one of the specified issuers",
+              "purpose": "We can only verify bank accounts if they are attested by a trusted bank, auditor or regulatory authority.",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
@@ -436,19 +437,18 @@ requirement.
             },
             {
               "path": ["$.credentialSubject.account[*].account_number", "$.vc.credentialSubject.account[*].account_number", "$.account[*].account_number"],
-              "purpose": "We need your bank account number for processing purposes",
+              "purpose": "We can only remit payment to a currently-valid bank account in the US, France, or Germany, submitted as an ABA Acct # or IBAN.",
               "filter": {
                 "type": "string",
-                "minLength": 10,
-                "maxLength": 12
+                "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
               }
             },
             {
               "path": ["$.credentialSubject.account[*].routing_number", "$.vc.credentialSubject.account[*].routing_number", "$.account[*].routing_number"],
-              "purpose": "You must have an account with a German, US, or Japanese bank account",
+              "purpose": "We can only remit payment to a currently-valid account at a US, French, or German federally-accredited bank, submitted as an ABA RTN or SWIFT code.",
               "filter": {
                 "type": "string",
-                "pattern": "^DE|^US|^JP"
+                "pattern": "^[0-9]{9}|^([a-zA-Z]){4}([a-zA-Z]){2}([0-9a-zA-Z]){2}([0-9a-zA-Z]{3})?$"
               }
             }
           ]
@@ -457,7 +457,7 @@ requirement.
       {
         "id": "banking_input_2",
         "name": "Bank Account Information",
-        "purpose": "We need your bank and account information.",
+        "purpose": "We can only remit payment to a currently-valid bank account.",
         "group": ["A"],
         "schema": [
           {
@@ -471,7 +471,7 @@ requirement.
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The claim must be from one of the specified issuers",
+              "purpose": "We can only verify bank accounts if they are attested by a trusted bank, auditor or regulatory authority.",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
@@ -479,19 +479,18 @@ requirement.
             },
             { 
               "path": ["$.credentialSubject.account[*].id", "$.vc.credentialSubject.account[*].id", "$.account[*].id"],
-              "purpose": "We need your bank account number for processing purposes",
+              "purpose": "We can only remit payment to a currently-valid bank account in the US, France, or Germany, submitted as an ABA Acct # or IBAN.",
               "filter": {
                 "type": "string",
-                "minLength": 10,
-                "maxLength": 12
+                "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
               }
             },
             {
               "path": ["$.credentialSubject.account[*].route", "$.vc.credentialSubject.account[*].route", "$.account[*].route"],
-              "purpose": "You must have an account with a German, US, or Japanese bank account",
+              "purpose": "We can only remit payment to a currently-valid account at a US, Japanese, or German federally-accredited bank, submitted as an ABA RTN or SWIFT code.",
               "filter": {
                 "type": "string",
-                "pattern": "^DE|^US|^JP"
+                "pattern": "^[0-9]{9}|^([a-zA-Z]){4}([a-zA-Z]){2}([0-9a-zA-Z]){2}([0-9a-zA-Z]{3})?$"
               }
             }
           ]
@@ -500,7 +499,7 @@ requirement.
       {
         "id": "employment_input",
         "name": "Employment History",
-        "purpose": "We need to know your work history.",
+        "purpose": "We are only verifying one current employment relationship, not any other information about employment.",
         "group": ["B"],
         "schema": [
           {
@@ -508,6 +507,7 @@ requirement.
           }
         ],
         "constraints": {
+          "limit_disclosure": "required",
           "fields": [
             {
               "path": ["$.jobs[*].active"],
@@ -520,19 +520,19 @@ requirement.
         }
       },
       {
-        "id": "citizenship_input_1",
+        "id": "drivers_license_input_1",
         "name": "EU Driver's License",
         "group": ["C"],
         "schema": [
           {
-            "uri": "https://eu.com/claims/DriversLicense.json"
+            "uri": "https://schema.eu/claims/DriversLicense.json"
           }
         ],
         "constraints": {
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The claim must be from one of the specified issuers",
+              "purpose": "We can only accept digital driver's licenses issued by national authorities of EU member states or trusted notarial auditors.",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:gov1|did:example:gov2"
@@ -540,32 +540,42 @@ requirement.
             },
             {
               "path": ["$.credentialSubject.dob", "$.vc.credentialSubject.dob", "$.dob"],
+              "purpose": "We must confirm that the driver was at least 21 years old on April 16, 2020.",
               "filter": {
                 "type": "string",
                 "format": "date",
-                "minimum": "1999-5-16"
+                "maximum": "1999-05-16"
               }
             }
           ]
         }
       },
       {
-        "id": "citizenship_input_2",
-        "name": "US Passport",
+        "id": "drivers_license_input_2",
+        "name": "Driver's License from one of 50 US States",
         "group": ["C"],
         "schema": [
           {
-            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
+            "uri": "hub://did:foo:123/Collections/schema.us.gov/american_drivers_license.json"
           }
         ],
         "constraints": {
           "fields": [
             {
+              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
+              "purpose": "We can only accept digital driver's licenses issued by the 50 US states' automative affairs agencies.",
+              "filter": {
+                "type": "string",
+                "pattern": "did:example:gov1|did:web:dmv.ca.gov|did:example:oregonDMV"
+              }
+            },
+            {
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
+              "purpose": "We must confirm that the driver was at least 21 years old on April 16, 2020.",
               "filter": {
                 "type": "string",
                 "format": "date",
-                "minimum": "1999-5-16"
+                "maximum": "1999-05-16"
               }
             }
           ]
@@ -685,7 +695,7 @@ values, and an explanation why a certain item or set of data is being requested:
   {
     "id": "banking_input_1",
     "name": "Bank Account Information",
-    "purpose": "We need your bank and account information.",
+    "purpose": "We can only remit payment to a currently-valid bank account.",
     "group": ["A"],
     "schema": [
       {
@@ -699,7 +709,7 @@ values, and an explanation why a certain item or set of data is being requested:
       "fields": [
         {
           "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-          "purpose": "The claim must be from one of the specified issuers",
+          "purpose": "We can only verify bank accounts if they are attested by a trusted bank, auditor, or regulatory authority.",
           "filter": {
             "type": "string",
             "pattern": "did:example:123|did:example:456"
@@ -707,19 +717,18 @@ values, and an explanation why a certain item or set of data is being requested:
         },
         { 
           "path": ["$.credentialSubject.account[*].id", "$.vc.credentialSubject.account[*].id", "$.account[*].id"],
-          "purpose": "We need your bank account number for processing purposes",
+          "purpose": "We can only remit payment to a currently-valid bank account, submitted as an ABA RTN + Acct # or IBAN.",
           "filter": {
             "type": "string",
-            "minLength": 10,
-            "maxLength": 12
+            "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
           }
         },
         {
           "path": ["$.credentialSubject.account[*].route", "$.vc.credentialSubject.account[*].route", "$.account[*].route"],
-          "purpose": "You must have an account with a German, US, or Japanese bank account",
+          "purpose": "We can only remit payment to a currently-valid bank account in the US, Germany or France.",
           "filter": {
             "type": "string",
-            "pattern": "^DE|^US|^JP"
+            "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
           }
         }
       ]
@@ -855,7 +864,7 @@ values, and an explanation why a certain item or set of data is being requested:
           processing entity submit a response that has been _self-attested_,
           i.e., the [[ref:Claim]] used in the presentation was 'issued' by the
           [[Ref:Subject]] of the [[ref:Claim]].
-
+      :::note
       The `subject_is_issuer` property could be used by a [[ref:Verifier]] to
       require that certain inputs be _self_attested_. For example, a college
       application [[ref:Presentation Definition]] might contain an
@@ -863,8 +872,10 @@ values, and an explanation why a certain item or set of data is being requested:
       [[ref:Verifier]] would be able to require that the essay be provided by
       the same [[Ref:Subject]] as any other [[ref:Claims]] in the presented
       application.
-    - The object ****MAY**** contain an `is_holder` property. If present, its
-      value ****MUST**** be an array of objects composed as follows:
+      :::
+    - The _constraints object_ ****MAY**** contain an `is_holder` property. If
+      present, its value ****MUST**** be an array of objects composed as
+      follows:
         - The _is-holder object_ ****MUST**** contain a `field_id` property. The
           value of this property ****MUST**** be an array of strings, with each
           string matching the string value from an
@@ -1106,14 +1117,14 @@ all input_descriptors ****MUST**** be grouped. Any unused
   "submission_requirements": [
     {
       "name": "Banking Information",
-      "purpose": "We need to know if you have an established banking history.",
+      "purpose": "We need you to prove you currently hold a bank account older than 12months.",
       "rule": "pick",
       "count": 1,
       "from": "A"
     },
     {
       "name": "Employment Information",
-      "purpose": "We need to know that you are currently employed.",
+      "purpose": "We are only verifying one current employment relationship, not any other information about employment.",
       "rule": "all",
       "from": "B"
     },
@@ -1124,13 +1135,13 @@ all input_descriptors ****MUST**** be grouped. Any unused
       "from_nested": [
         {
           "name": "United States Citizenship Proofs",
-          "purpose": "We need you to prove you are a US citizen.",
+          "purpose": "We need you to prove your US citizenship.",
           "rule": "all",
           "from": "C"
         },
         {
           "name": "European Union Citizenship Proofs",
-          "purpose": "We need you to prove you are a citizen of a EU country.",
+          "purpose": "We need you to prove you are a citizen of an EU member state.",
           "rule": "all",
           "from": "D"
         }
@@ -1194,7 +1205,7 @@ For an `all` rule [[ref:Submission Requirement Object]]:
   "submission_requirements": [
     {
       "name": "Submission of educational transcripts",
-      "purpose": "We need all your educational transcripts to process your application",
+      "purpose": "We need your complete educational transcripts to process your application",
       "rule": "all",
       "from": "A"
     }
@@ -1254,11 +1265,10 @@ with a matching `group` string. In the first example that follows, the
 ```json
   "submission_requirements": [
     {
-      "name": "Citizenship Proof",
-      "purpose": "We need to confirm you are a citizen of one of the following countries",
+      "name": "Eligibility to Work Proof",
+      "purpose": "We need to prove you are eligible for full-time employment in 2 or more of the following countries",
       "rule": "pick",
       "min": 2,
-      "max": 4,
       "from": "B"
     }
   ]
@@ -1277,7 +1287,7 @@ from group `"A"` or two members from group `"B"`:
   "submission_requirements": [
     {
       "name": "Confirm banking relationship or employment and residence proofs",
-      "purpose": "Submit your bank statement or proofs of employment and residence to process your loan",
+      "purpose": "Recent bank statements or proofs of both employment and residence will be validated to initiate your loan application but not stored",
       "rule": "pick",
       "count": 1,
       "from_nested": [
@@ -1456,13 +1466,13 @@ For each candidate input:
      the array, all of the attributes so identified by the strings in the
      `field_id` array are about the same [[Ref:Subject]].
 
-::: note
-The above evaluation process assumes the proceng entity will test each candidate
-input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
-criteria for inclusion in submission. Any additional testing of a candidate
-input for a schema match beyond comparison of the schema `uri` (e.g., specific
-requirements or details expressed in schema `metadata`) is at the discretion
-of the implementer.
+::: note 
+The above evaluation process assumes the processing entity will test
+each candidate input (JWT, Verifiable Credential, etc.) it holds to determine if
+it meets the criteria for inclusion in submission. Any additional testing of a
+candidate input for a schema match beyond comparison of the schema `uri` (e.g.,
+specific requirements or details expressed in schema `metadata`) is at the
+discretion of the implementer.
 :::
 
 #### Expired and Revoked Data
@@ -1496,12 +1506,12 @@ requisite information to resolve the status of a [[ref:Claim]].
 
 <section>
 
-::: example Drivers License Expiry
+::: example Drivers License Expiration
 ```json
 {
   "id": "drivers_license_information",
   "name": "Verify Valid License",
-  "purpose": "We need to know you have a license valid through December.",
+  "purpose": "We need you to show that your driver's license will be valid through December of this year.",
   "metadata": {
     "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
     "redirect_uri": "https://yourwatchful.gov/verify"
@@ -1519,7 +1529,7 @@ requisite information to resolve the status of a [[ref:Claim]].
         "filter": {
           "type": "string",
           "format": "date-time",
-          "min": "2020-12-31T23:59:59.000Z"
+          "min": "2021-12-31T23:59:59.000Z"
         }
       }
     ]
@@ -2155,7 +2165,7 @@ used within the specification:
   [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 - `ldp` - this format is defined in the
   [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/)
-  specification [[spec: Linked Data Proofs]], and will be submitted as objects.
+  specification [[spec:Linked Data Proofs]], and will be submitted as objects.
   Expression of supported algorithms in relation to these formats ****MUST****
   be conveyed using a `proof_type` property with values that are identifiers
   from the 
@@ -2466,7 +2476,12 @@ JSONPath                      | Description
         "issuanceDate": "2010-01-01T19:73:24Z",
         "credentialSubject": {
           "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-          "active": true
+        },
+        "credentialStatus": {
+            "id": "https://hr-services.com/credentials/status/123#94567",
+            "type": "RevocationList2020Status",
+            "revocationListIndex": "94567",
+            "revocationListCredential": "https://hr-services.com/credentials/status/123"
         },
         "proof": {
           "type": "EcdsaSecp256k1VerificationKey2019",
@@ -2488,7 +2503,7 @@ JSONPath                      | Description
           "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
           "license": {
             "number": "34DGE352",
-            "dob": "07/13/80"
+            "dob": "1980-07-13"
           }
         },
         "proof": {
