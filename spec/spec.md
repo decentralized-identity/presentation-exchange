@@ -2051,7 +2051,7 @@ the data it contains.
 Once a [[ref:Claim]] has been ingested via a [[ref:Presentation Submission]],
 any validation beyond the process of evaluation defined by the
 [Input Evaluation](#input-evaluation) section is outside the scope of
-Presentation Exchange. Validation of signatures and other cryptographic proofs
+Presentation Exchange. Verification of signatures and other cryptographic proofs
 are a function of the given [[ref:Claim]] format, and should be evaluated in
 accordance with the given [[ref:Claim]] format's standardized processing steps.
 Additional verification of [[ref:Claim]] data or subsequent validation required
