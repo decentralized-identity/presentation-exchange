@@ -163,72 +163,6 @@ nested.
 [[ref:Holder]] (via a [[ref:Presentation Definition]]) in order to proceed with
 an interaction.
 
-## Localization
-
-To support localization, [IETF BCP 47](https://tools.ietf.org/html/bcp47) one
-****MAY**** use language tags under the `locale` property in both a
-[[ref:Presentation Definition]] and [[ref:Presentation Submission]]. If a
-Definition has a language tag, so should the corresponding Submission. A
-Submission may have a language tag regardless of the presence of one in the
-corresponding Definition.
-
-Wrapping transports such as HTTP may choose to utlilize the `locale` property in
-conjunction with the
-[Accept-Language](https://tools.ietf.org/html/rfc7231#section-5.3.5) header.
-
-<tab-panels selected-index="0">
-
-<nav>
-  <button type="button">Presentation Definition with Locale</button>
-  <button type="button">Presentation Submission with Locale</button>
-</nav>
-
-<section>
-
-::: example Presentation Definition with Locale
-```json
-{
-  "presentation_definition": {
-    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-    "locale": "en-US",
-    "input_descriptors": [{
-      "id": "name_input",
-      "name": "Full Legal Name",
-      "purpose": "We need your full legal name.",
-      "schema": [
-        {
-          "uri": "https://name-standards.com/name.json",
-          "required": true
-        }
-      ]
-    }]
-  }
-}
-```
-
-</section>
-
-<section>
-
-::: example Presentation Submission with Locale
-```json
-{
-  "presentation_submission": {
-    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
-    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-    "locale": "de-DE",
-    "descriptor_map": [{
-      "id": "name_input",
-      "path": "$.verifiableCredential[0]"
-    }]
-  }
-}
-```
-
-</section>
-
-</tab-panels>
-
 ## Presentation Definition
 
 [[ref:Presentation Definitions]] are objects that articulate what proofs a
@@ -1882,7 +1816,6 @@ format-related rules above:
         "id": { "type": "string" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
-        "locale": { "type": "string" },
         "format": { "$ref": "#/definitions/format"},
         "submission_requirements": {
           "type": "array",
@@ -2093,7 +2026,6 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
       "properties": {
         "id": { "type": "string" },
         "definition_id": { "type": "string" },
-        "locale": { "type": "string" },
         "descriptor_map": {
           "type": "array",
           "items": { "$ref": "#/definitions/descriptor" }

@@ -221,7 +221,6 @@
         "id": { "type": "string" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
-        "locale": { "type": "string" },
         "format": { "$ref": "#/definitions/format"},
         "submission_requirements": {
           "type": "array",
