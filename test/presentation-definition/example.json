@@ -10,7 +10,7 @@
           "uri": "https://bank-standards.com/customer.json"
         }],
         "constraints": {
-          "limit_disclosure": true,
+          "limit_disclosure": "required",
           "fields": [
             {
               "path": [

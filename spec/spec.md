@@ -740,12 +740,18 @@ values, and an explanation why a certain item or set of data is being requested:
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
-      property. If present, its value ****MUST**** be a boolean value. A value
-      of `true` indicates that the processing entity ****SHOULD NOT**** submit
-      any fields beyond those listed in the `fields` array (if present). A value
-      of `false`, or omission of the property, indicates the processing entity
-      ****MAY**** submit a response that contains more than the data described
-      in the `fields` array.
+      property. If present, its value ****MUST**** be onf the following strings:
+
+        - `required` - This indicates that the processing entity ****MUST****
+          limit submitted fields to those listed in the `fields` array (if
+          present).
+        - `preferred` - This indicates that the processing entity ****SHOULD****
+          limit submitted fields to those listed in the `fields` array (if
+          present).
+          
+      Omission of the `limit_disclosure` property indicates the processing
+      entity ****MAY**** submit a response that contains more than the data
+      described in the `fields` array.
     - The _constraints object_ ****MAY**** contain a `statuses` property. If
       present, its value ****MUST**** be an object that includes one or more of
       the following status properties:
@@ -1367,8 +1373,8 @@ For each candidate input:
      If present at the top level of the [[ref:Input Descriptor]], keep a
      relative reference to the `group` values the input is designated for.
   4. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-     and it contains a `limit_disclosure` property set to the boolean value
-     `true`, ensure that any subsequent submission of data in relation to the
+     and it contains a `limit_disclosure` property set to the string value
+     `required`, ensure that any subsequent submission of data in relation to the
      candidate input is limited to the entries specified in the `fields`
      property. If the `fields` property ****is not**** present, or contains zero
      [_Input Descriptor Field Entries_](#input-descriptor-field-entry),
@@ -1688,7 +1694,10 @@ format-related rules above:
         "constraints": {
           "type": "object",
           "properties": {
-            "limit_disclosure": { "type": "boolean" },
+            "limit_disclosure": {
+              "type": "string",
+              "enum": ["required", "preferred"]
+            },
             "statuses": {
               "type": "object",
               "properties": {
@@ -1960,7 +1969,7 @@ object, process as follows:
 
 For all [[ref:Claims]] submitted in relation to [[ref:Input Descriptor Objects]]
 that include a `constraints` object with a `limit_disclosure` property set to
-the boolean value `true`, ensure that the data submitted is limited to the
+the string value `required`, ensure that the data submitted is limited to the
 entries specified in the `fields` property of the `constraints` object. If the
 `fields` property ****is not**** present, or contains zero
 [_Input Descriptor Field Entries_](#input-descriptor-field-entry), the
