@@ -897,7 +897,7 @@ values, and an explanation why a certain item or set of data is being requested:
           used to filter against the values returned from evaluation of the
           [JSONPath](https://goessner.net/articles/JsonPath/) string
           expressions in the `path` array.
-        - The object ****MAY**** contain a `predicate` property. If the
+        - The _fields object_ ****MAY**** contain a `predicate` property. If the
           `predicate` property is present, the `filter` property ****MUST****
           also be present. 
           
@@ -930,7 +930,10 @@ values, and an explanation why a certain item or set of data is being requested:
             - `preferred` - This indicates that the returned value
               ****SHOULD**** be the boolean result of applying the value of the
               `filter` property to the result of evaluating the `path` property.
-
+            
+          If the `predicate` property is not present, a processing entity
+          ****MUST NOT**** return derived predicate values.
+    
           If the `predicate` property is present, the set of JSON Schema
           descriptors which comprise the value of the `filter` property
           ****MUST**** be restricted according to the desired predicate
