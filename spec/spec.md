@@ -1853,10 +1853,11 @@ define [[ref:Presentation Requests]] and is designed to be agnostic to them.
 Please note, however, that different use cases, supported signature schemes,
 protocols, and threat models may require a [[ref:Presentation Request]]to have
 certain properties. Some of these are expressed below:
-- Signature verification - A [[ref:Holder]] may wish to have assurances as to
-  the provenance, identity, or status of a [[ref:Presentation Definition]]. In
-  this case, a [[ref:Presentation Request]] that uses digital signatures may be
-  required. 
+- Signature verification -  Strongly identifying the entity making a request via
+  a [[ref:presentation definition]] is outside the scope of this specification,
+  however a [[ref:Holder]] may wish to have assurances as to the provenance,
+  identity, or status of a [[ref:Presentation Definition]]. In this case, a
+  [[ref:Presentation Request]] that uses digital signatures may be required.
 - Replay protection - Some presentation protocols may require that presentations
   be unique, i.e., it should be possible for a [[ref:Verifier]] to detect if a
   presentation has been used before. Other protocols may require that a
