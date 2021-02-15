@@ -901,7 +901,7 @@ values, and an explanation why a certain item or set of data is being requested:
           `predicate` property is present, the `filter` property ****MUST****
           also be present. 
           
-          Note: The inclusion of the `predicate` property indicates that the
+          :::note The inclusion of the `predicate` property indicates that the
           processing entity returns a boolean, rather than a value returned
           from evaluation of the
           [JSONPath](https://goessner.net/articles/JsonPath/) string
@@ -913,11 +913,20 @@ values, and an explanation why a certain item or set of data is being requested:
           returned from evaluation of the
           [JSONPath](https://goessner.net/articles/JsonPath/) string
           expressions in the `path` array.
+          :::
           
           The value of `predicate` ****MUST**** be one of the following strings:
             - `required` - This indicates that the returned value ****MUST****
               be the boolean result of applying the value of the `filter`
               property to the result of evaluating the `path` property.
+              :::note Using a value of `required` for the `predicate` property
+              may severely limit the responses a [[ref:Holder]] may be able to
+              make. Many signature schemes do not support deriving predicates,
+              even those signature schemes which are otherwise ZKP-capable. A
+              [[ref:Verifier]] should be sure they support such schemes, and
+              have high confidence they are also supported by the
+              [[ref:Holder]], before indicating predicate responses are
+              required.:::
             - `preferred` - This indicates that the returned value
               ****SHOULD**** be the boolean result of applying the value of the
               `filter` property to the result of evaluating the `path` property.
