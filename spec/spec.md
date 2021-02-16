@@ -163,72 +163,6 @@ nested.
 [[ref:Holder]] (via a [[ref:Presentation Definition]]) in order to proceed with
 an interaction.
 
-## Localization
-
-To support localization, [IETF BCP 47](https://tools.ietf.org/html/bcp47) one
-****MAY**** use language tags under the `locale` property in both a
-[[ref:Presentation Definition]] and [[ref:Presentation Submission]]. If a
-Definition has a language tag, so should the corresponding Submission. A
-Submission may have a language tag regardless of the presence of one in the
-corresponding Definition.
-
-Wrapping transports such as HTTP may choose to utlilize the `locale` property in
-conjunction with the
-[Accept-Language](https://tools.ietf.org/html/rfc7231#section-5.3.5) header.
-
-<tab-panels selected-index="0">
-
-<nav>
-  <button type="button">Presentation Definition with Locale</button>
-  <button type="button">Presentation Submission with Locale</button>
-</nav>
-
-<section>
-
-::: example Presentation Definition with Locale
-```json
-{
-  "presentation_definition": {
-    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-    "locale": "en-US",
-    "input_descriptors": [{
-      "id": "legalname_input",
-      "name": "Full Legal Name",
-      "purpose": "We require a verified legal name for this transaction, as per Recommendation 16.",
-      "schema": [
-        {
-          "uri": "https://name-standards.com/legalname.json",
-          "required": true
-        }
-      ]
-    }]
-  }
-}
-```
-
-</section>
-
-<section>
-
-::: example Presentation Submission with Locale
-```json
-{
-  "presentation_submission": {
-    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
-    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-    "locale": "de-DE",
-    "descriptor_map": [{
-      "id": "legalname_input",
-      "path": "$.verifiableCredential[0]"
-    }]
-  }
-}
-```
-
-</section>
-
-</tab-panels>
-
 ## Presentation Definition
 
 [[ref:Presentation Definitions]] are objects that articulate what proofs a
@@ -815,12 +749,18 @@ values, and an explanation why a certain item or set of data is being requested:
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
-      property. If present, its value ****MUST**** be a boolean value. A value
-      of `true` indicates that the processing entity ****SHOULD NOT**** submit
-      any fields beyond those listed in the `fields` array (if present). A value
-      of `false`, or omission of the property, indicates the processing entity
-      ****MAY**** submit a response that contains more than the data described
-      in the `fields` array.
+      property. If present, its value ****MUST**** be onf the following strings:
+
+        - `required` - This indicates that the processing entity ****MUST****
+          limit submitted fields to those listed in the `fields` array (if
+          present).
+        - `preferred` - This indicates that the processing entity ****SHOULD****
+          limit submitted fields to those listed in the `fields` array (if
+          present).
+          
+      Omission of the `limit_disclosure` property indicates the processing
+      entity ****MAY**** submit a response that contains more than the data
+      described in the `fields` array.
     - The _constraints object_ ****MAY**** contain a `statuses` property. If
       present, its value ****MUST**** be an object that includes one or more of
       the following status properties:
@@ -1443,8 +1383,8 @@ For each candidate input:
      If present at the top level of the [[ref:Input Descriptor]], keep a
      relative reference to the `group` values the input is designated for.
   4. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-     and it contains a `limit_disclosure` property set to the boolean value
-     `true`, ensure that any subsequent submission of data in relation to the
+     and it contains a `limit_disclosure` property set to the string value
+     `required`, ensure that any subsequent submission of data in relation to the
      candidate input is limited to the entries specified in the `fields`
      property. If the `fields` property ****is not**** present, or contains zero
      [_Input Descriptor Field Entries_](#input-descriptor-field-entry),
@@ -1764,7 +1704,10 @@ format-related rules above:
         "constraints": {
           "type": "object",
           "properties": {
-            "limit_disclosure": { "type": "boolean" },
+            "limit_disclosure": {
+              "type": "string",
+              "enum": ["required", "preferred"]
+            },
             "statuses": {
               "type": "object",
               "properties": {
@@ -1892,7 +1835,6 @@ format-related rules above:
         "id": { "type": "string" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
-        "locale": { "type": "string" },
         "format": { "$ref": "#/definitions/format"},
         "submission_requirements": {
           "type": "array",
@@ -1921,10 +1863,11 @@ define [[ref:Presentation Requests]] and is designed to be agnostic to them.
 Please note, however, that different use cases, supported signature schemes,
 protocols, and threat models may require a [[ref:Presentation Request]]to have
 certain properties. Some of these are expressed below:
-- Signature verification - A [[ref:Holder]] may wish to have assurances as to
-  the provenance, identity, or status of a [[ref:Presentation Definition]]. In
-  this case, a [[ref:Presentation Request]] that uses digital signatures may be
-  required. 
+- Signature verification -  Strongly identifying the entity making a request via
+  a [[ref:presentation definition]] is outside the scope of this specification,
+  however a [[ref:Holder]] may wish to have assurances as to the provenance,
+  identity, or status of a [[ref:Presentation Definition]]. In this case, a
+  [[ref:Presentation Request]] that uses digital signatures may be required.
 - Replay protection - Some presentation protocols may require that presentations
   be unique, i.e., it should be possible for a [[ref:Verifier]] to detect if a
   presentation has been used before. Other protocols may require that a
@@ -2037,7 +1980,7 @@ object, process as follows:
 
 For all [[ref:Claims]] submitted in relation to [[ref:Input Descriptor Objects]]
 that include a `constraints` object with a `limit_disclosure` property set to
-the boolean value `true`, ensure that the data submitted is limited to the
+the string value `required`, ensure that the data submitted is limited to the
 entries specified in the `fields` property of the `constraints` object. If the
 `fields` property ****is not**** present, or contains zero
 [_Input Descriptor Field Entries_](#input-descriptor-field-entry), the
@@ -2103,7 +2046,6 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
       "properties": {
         "id": { "type": "string" },
         "definition_id": { "type": "string" },
-        "locale": { "type": "string" },
         "descriptor_map": {
           "type": "array",
           "items": { "$ref": "#/definitions/descriptor" }

@@ -127,7 +127,10 @@
         "constraints": {
           "type": "object",
           "properties": {
-            "limit_disclosure": { "type": "boolean" },
+            "limit_disclosure": {
+              "type": "string",
+              "enum": ["required", "preferred"]
+            },
             "fields": {
               "type": "array",
               "items": { "$ref": "#/definitions/field" }
@@ -221,7 +224,6 @@
         "id": { "type": "string" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
-        "locale": { "type": "string" },
         "format": { "$ref": "#/definitions/format"},
         "submission_requirements": {
           "type": "array",
