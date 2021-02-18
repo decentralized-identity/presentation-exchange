@@ -354,11 +354,11 @@ requirement.
         "group": ["A"],
         "schema": [
           {
-            "uri": "https://bank-standards.com#accounts",
+            "uri": "https://bank-standards.example.com#accounts",
             "required": true
           },
           {
-            "uri": "https://bank-standards.com#investments",
+            "uri": "https://bank-standards.example.com#investments",
             "required": true
           }
         ],
