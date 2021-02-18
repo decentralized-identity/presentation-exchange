@@ -359,7 +359,12 @@ requirement.
         "group": ["A"],
         "schema": [
           {
-            "uri": "https://bank-standards.com/customer.json"
+            "uri": "https://bank-standards.example.com#accounts",
+            "required": true
+          },
+          {
+            "uri": "https://bank-standards.example.com#investments",
+            "required": true
           }
         ],
         "constraints": {
@@ -383,11 +388,11 @@ requirement.
               }
             },
             {
-              "path": ["$.credentialSubject.account[*].routing_number", "$.vc.credentialSubject.account[*].routing_number", "$.account[*].routing_number"],
-              "purpose": "You must have an account with a German, US, or Japanese bank account",
+              "path": ["$.credentialSubject.portfolio_value", "$.vc.credentialSubject.portfolio_value", "$.portfolio_value"],
+              "purpose": "You must have a portfolio value of at least one million dollars",
               "filter": {
-                "type": "string",
-                "pattern": "^DE|^US|^JP"
+                "type": "number",
+                "minimum": 1000000
               }
             }
           ]
