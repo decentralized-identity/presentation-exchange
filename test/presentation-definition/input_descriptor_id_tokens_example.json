@@ -1,0 +1,34 @@
+{
+  "presentation_definition": {
+    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
+    "input_descriptors": [
+      {
+        "id": "employment_input_xyz_gov",
+        "group": ["B"],
+        "schema": [
+          {
+            "uri": "https://login.idp.com/xyz.gov/.well-known/openid-configuration",
+            "required": true
+          }
+        ],
+        "name": "Verify XYZ Government Employment",
+        "purpose": "We need to know if you currently work at an agency in the XYZ government",
+        "metadata": {
+          "client_id": "40be4fb5-7f3a-470b-aa37-66ed43821bd7",
+          "redirect_uri": "https://tokens.xyz.gov/verify"
+        },
+        "constraints": {
+          "fields": [
+            {
+              "path": ["$.status"],
+              "filter": {
+                "type": "string",
+                "pattern": "active"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

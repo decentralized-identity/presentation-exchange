@@ -54,7 +54,7 @@ customElements.define("slide-panels",class extends HTMLElement{static get observ
 <dt><strong>Editors:</strong></dt>
 <dd><a path-0="www.linkedin.com"path-1="in"path-2="dbuchner"path-3=""href="https://www.linkedin.com/in/dbuchner/" >Daniel Buchner</a> (Microsoft)</dd>
 <dd><a path-0="www.linkedin.com"path-1="in"path-2="bzundel"path-3=""href="https://www.linkedin.com/in/bzundel/" >Brent Zundel</a> (Evernym)</dd>
-<dd><a path-0="www.linkedin.com"path-1="in"path-2="rado0x54"path-3=""href="https://www.linkedin.com/in/rado0x54/" >Martin Riedel</a> (Civic Technologies)</dd>
+<dd><a path-0="www.linkedin.com"path-1="in"path-2="rado0x54"path-3=""href="https://www.linkedin.com/in/rado0x54/" >Martin Riedel</a> (Consensys Mesh)</dd>
 <dt><strong>Contributors:</strong></dt>
 <dd><a path-0="www.linkedin.com"path-1="in"path-2="cohengabe"path-3=""href="https://www.linkedin.com/in/cohengabe/" >Gabe Cohen</a> (Workday)</dd>
 <dd><a path-0="www.linkedin.com"path-1="in"path-2="or13b"path-3=""href="https://www.linkedin.com/in/or13b/" >Orie Steele</a> (Transmute)</dd>
@@ -67,56 +67,80 @@ customElements.define("slide-panels",class extends HTMLElement{static get observ
 <hr>
 <h2 id="abstract"><a class="toc-anchor" href="#abstract" >§</a> Abstract</h2>
 <p>A common activity between peers in identity systems that feature the ability to
-generate self-asserted and third-party issued claims is the demand and
-submission of proofs from a Holder to a Verifier. This flow implicitly requires
-the Holder and Verifier have a known mechanism to facilitate the two primary
-steps in a proving exchange: the way Verifiers define the proof requirements,
-and how Holders must encode submissions of proof to align with those
-requirements.</p>
-<p>To address these needs, this Presentation Exchange specification codifies the
-<code>Presentation Definition</code> data format Verifiers can use to articulate proof
-requirements, as well as the <code>Presentation Submission</code> data format Holders can
-use to submit proofs in accordance with them. The specification is designed to
-be both claim format and transport envelope agnostic, meaning an implementer
-can use <a path-0="tools.ietf.org"path-1="html"path-2="rfc7519"href="https://tools.ietf.org/html/rfc7519" >JSON Web Tokens (JWTs)</a>,
+generate self-asserted and third-party issued <a class="term-reference" href="#term:claims">Claims</a> is the demand and
+submission of proofs from a <a class="term-reference" href="#term:holder">Holder</a> to a <a class="term-reference" href="#term:verifier">Verifier</a>. This flow
+implicitly requires the <a class="term-reference" href="#term:holder">Holder</a> and <a class="term-reference" href="#term:verifier">Verifier</a> have a mechanism to
+facilitate the two primary steps in a proving exchange: a way for
+<a class="term-reference" href="#term:verifiers">Verifiers</a> to describe proof requirements, and for <a class="term-reference" href="#term:holders">Holders</a> to
+describe submissions of proof which align with those requirements.</p>
+<p>To address these needs, this Presentation Exchange specification codifies a
+<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> data format <a class="term-reference" href="#term:verifiers">Verifiers</a> can use to
+articulate proof requirements, and a <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a> data format
+<a class="term-reference" href="#term:holders">Holders</a> can use to describe proofs submitted in accordance with them.</p>
+<p>This specification is designed to be both <a class="term-reference" href="#term:claim">Claim</a> format and transport
+envelope agnostic, meaning an implementer can use
+<a path-0="tools.ietf.org"path-1="html"path-2="rfc7519"href="https://tools.ietf.org/html/rfc7519" >JSON Web Tokens (JWTs)</a>,
 <a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3=""href="https://www.w3.org/TR/vc-data-model/" >Verifiable Credentials (VCs)</a>,
 <a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3="#json-web-token-extensions"href="https://www.w3.org/TR/vc-data-model/#json-web-token-extensions" >JWT-VCs</a>,
-or any other claim format, and convey them
-via <a path-0="openid.net"path-1="connect"path-2=""href="https://openid.net/connect/" >Open ID Connect</a>, <a path-0="identity.foundation"path-1="didcomm-messaging"path-2="spec"path-3=""href="https://identity.foundation/didcomm-messaging/spec/" >DIDComm</a>,
+or any other <a class="term-reference" href="#term:claim">Claim</a> format, and convey them via
+<a path-0="openid.net"path-1="connect"path-2=""href="https://openid.net/connect/" >Open ID Connect</a>,
+<a path-0="identity.foundation"path-1="didcomm-messaging"path-2="spec"path-3=""href="https://identity.foundation/didcomm-messaging/spec/" >DIDComm</a>,
 <a path-0="w3c-ccg.github.io"path-1="credential-handler-api"path-2=""href="https://w3c-ccg.github.io/credential-handler-api/" >Credential Handler API</a>,
-or any other transport envelope. The goal of
-this flexible format and transport agnostic mechanism is to nullify the
-redundant handling, code, and hassle involved in presenting and satisfying
-logical requirements across formats and transport envelopes.</p>
-<p>This specification does not endeavor to define transport protocols, specific
-endpoints, or other means for conveying the formatted objects it codifies, but
-encourages other specifications and projects that do define such mechanisms to
-utilize these data formats within their flows.</p>
+or any other transport envelope. The goal of this flexible format- and
+transport-agnostic mechanism is to nullify the redundant handling, code, and
+hassle involved in presenting and satisfying logical requirements across formats
+and transport envelopes.</p>
+<p>This specification does not define transport protocols, specific endpoints, or
+other means for conveying the formatted objects it codifies, but encourages
+other specifications and projects that do define such mechanisms to utilize
+these data formats within their flows.</p>
 <h2 id="status-of-this-document"><a class="toc-anchor" href="#status-of-this-document" >§</a> Status of This Document</h2>
-<p>Presentation Exchange is a draft specification under development within the
-Decentralized Identity Foundation (DIF), and designed to incorporate the
-requirements and learnings from related work of the most active industry players
-into a shared specification that meets the collective needs of the community.
-This spec is regularly updated to reflect relevant changes, and we encourage
-active engagement on GitHub (see above) and other mediums (e.g. DIF) where this
-work is being done.</p>
+<p>Presentation Exchange v1.0 is a <em>DRAFT</em> specification under development within
+the Decentralized Identity Foundation (DIF). It incorporates requirements and
+learnings from related work of many active industry players into a shared
+specification that meets the collective needs of the community.</p>
+<p>This specification is ready for feedback from other decentralized
+identity-related and -adjacent communities. It will be updated to incorporate
+that feedback, then implementations will be sought so that the specification can
+move to <em>Working Group Approved</em> status. We encourage reviewers to submit issues
+on <a path-0="github.com"path-1="decentralized-identity"path-2="presentation-exchange"path-3="issues"href="https://github.com/decentralized-identity/presentation-exchange/issues" >GitHub</a>.</p>
 <h2 id="terminology"><a class="toc-anchor" href="#terminology" >§</a> Terminology</h2>
 <dl>
+<dt><span id="term:claims"><span id="term:claim">Claim</span></span></dt>
+<dd>An assertion made about a <a class="term-reference" href="#term:subject">Subject</a>. Used as an umbrella term for
+Credential, Assertion, Attestation, etc.</dd>
 <dt><span id="term:did"><span id="term:decentralized-identifier"><span id="term:decentralized-identifiers">Decentralized Identifiers</span></span></span></dt>
 <dd>Unique ID URI string and PKI metadata document format for describing the
 cryptographic keys and other fundamental PKI values linked to a unique,
 user-controlled, self-sovereign identifier in a target system (i.e. blockchain,
 distributed ledger).</dd>
+<dt><span id="term:embed-locations">Embed Locations</span></dt>
+<dd>Embed Locations are the specific paths and indexes per <a class="term-reference" href="#term:embed-target">Embed Target</a>
+where the <a class="term-reference" href="#term:verifier">Verifier</a> can expect to find the <a class="term-reference" href="#term:presentation">Presentation</a>.</dd>
+<dt><span id="term:embed-targets"><span id="term:embed-target">Embed Target</span></span></dt>
+<dd>Embed Targets are data formats used in messaging protocols that may be used
+to transport a <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>.</dd>
+<dt><span id="term:field-query-result">Field Query Result</span></dt>
+<dd>Field Query Results are values returned from paths specified in an
+<a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a>.</dd>
 <dt><span id="term:holders"><span id="term:holder">Holder</span></span></dt>
 <dd>Holders are entities that submit proofs to <a class="term-reference" href="#term:verifiers">Verifiers</a> to satisfy the
 requirements described in a <span id="term:presentation-definition">Presentation Definition</span>.</dd>
-<dt><span id="term:verifiers"><span id="term:verifier">Verifier</span></span></dt>
-<dd>Verifiers are entities that define what proofs they require from a
-<a class="term-reference" href="#term:holder">Holder</a> (via a <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>) in order to proceed with
-an interaction.</dd>
-<dt><span id="term:claims"><span id="term:claim">Claim</span></span></dt>
-<dd>An assertion made about a given entity. Used as an umbrella term for
-Credential, Assertion, Attestation, etc.</dd>
+<dt><span id="term:holder-binding">Holder Binding</span></dt>
+<dd>Holder Bindings are requirements of a certain type of relationship between
+the <a class="term-reference" href="#term:holder">Holder</a> and the <a class="term-reference" href="#term:claims">Claims</a> within the <a class="term-reference" href="#term:presentation">Presentation</a>.</dd>
+<dt><span id="term:input-descriptors"><span id="term:input-descriptor">Input Descriptor</span></span></dt>
+<dd>Input Descriptors are used by a Verifier to describe the information required
+of a <a class="term-reference" href="#term:holder">Holder</a> before an interaction can proceed.</dd>
+<dt><span id="term:input-descriptor-objects"><span id="term:input-descriptor-object">Input Descriptor Object</span></span></dt>
+<dd>Input Descriptors Objects are populated with properties describing what type
+of input data/<a class="term-reference" href="#term:claim">Claim</a>, or sub-fields thereof, are required for submission
+to the <a class="term-reference" href="#term:verifier">Verifier</a>.</dd>
+<dt><span id="term:link-secrets">Link Secrets</span></dt>
+<dd>Link Secrets are values held by the <a class="term-reference" href="#term:holder">Holder</a> but hidden from other
+parties. They are typically incorporated into cryptographic signatures used in
+claims to demonstrate correlation while preventing replay attacks. An Issuer
+may ascertain that a Holder possesses a link secret without its disclosure.</dd>
 <dt><span id="term:presentation-definition">Presentation Definition</span></dt>
 <dd>Presentation Definitions are objects that articulate what proofs a Verifier
 requires. These help the Verifier to decide how or whether to interact with a
@@ -124,6 +148,18 @@ requires. These help the Verifier to decide how or whether to interact with a
 the forms and details of the proofs they require, and optional sets of
 selection rules, to allow Holders flexibility in cases where many different
 types of proofs may satisfy an input requirement.</dd>
+<dt><span id="term:presentation-request">Presentation Request</span></dt>
+<dd>Presentation Requests are transport mechanisms for <a class="term-reference" href="#term:presentation">Presentation</a>.  Presentation Requests can take multiple shapes, using a variety
+of protocols and signature schemes not refined in this specification. They are
+sent by a <a class="term-reference" href="#term:verifier">Verifier</a> to a <a class="term-reference" href="#term:holder">Holder</a>.</dd>
+<dt><span id="term:presentation-submission">Presentation Submission</span></dt>
+<dd>Presentation Submissions are objects embedded within target claim negotiation
+formats that unify the presentation of proofs to a <a class="term-reference" href="#term:verifier">Verifier</a> in
+accordance with the requirements a <a class="term-reference" href="#term:verifier">Verifier</a> specified in a
+<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>.</dd>
+<dt><span id="term:subjects"><span id="term:subject">Subject</span></span></dt>
+<dd>Subjects are the entities about which [[r:Claims]] are made. The Subject may
+not be the same entity as the <a class="term-reference" href="#term:holder">Holder</a></dd>
 <dt><span id="term:submission-requirements"><span id="term:submission-requirement">Submission Requirement</span></span></dt>
 <dd>Submission Requirements are objects that define what combinations of inputs
 must be submitted to comply with the requirements a <a class="term-reference" href="#term:verifier">Verifier</a> has for
@@ -136,95 +172,19 @@ application).</dd>
 <dd>Submission Requirement Rules describe combinatorical rules within a
 <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a> when processing inputs. They may be
 nested.</dd>
-<dt><span id="term:input-descriptors"><span id="term:input-descriptor">Input Descriptor</span></span></dt>
-<dd>Input Descriptors are used by a Verifier to describe the information required
-of a <a class="term-reference" href="#term:holder">Holder</a> before an interaction can proceed.</dd>
-<dt><span id="term:input-descriptor-objects"><span id="term:input-descriptor-object">Input Descriptor Object</span></span></dt>
-<dd>Input Descriptors Objects are populated with properties describing what type
-of input data/<a class="term-reference" href="#term:claim">Claim</a>, or sub-fields thereof, are required for submission
-to the <a class="term-reference" href="#term:verifier">Verifier</a>.</dd>
-<dt><span id="term:field-query-result">Field Query Result</span></dt>
-<dd>Field Query Results are values returned from paths specified in an
-<a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a>.</dd>
-<dt><span id="term:holder-binding">Holder Binding</span></dt>
-<dd>Holder Bindings are requirements of a certain type of relationship between
-the <a class="term-reference" href="#term:holder">Holder</a> and the <a class="term-reference" href="#term:claims">Claims</a> within the <a class="term-reference" href="#term:presentation">Presentation</a>.</dd>
-<dt><span id="term:link-secrets">Link Secrets</span></dt>
-<dd>Link Secrets are values held by the <a class="term-reference" href="#term:holder">Holder</a> but hidden from other
-parties. They are typically incorporated into cryptographic signatures used in
-claims to demonstrate correlation while preventing replay attacks. An Issuer
-may ascertain that a Holder possesses a link secret without its disclosure.</dd>
-<dt><span id="term:presentation-request">Presentation Request</span></dt>
-<dd>Presentation Requests are transport mechanisms for <a class="term-reference" href="#term:presentation">Presentation</a>.  Presentation Requests can take multiple shapes, using a variety
-of protocols and signature schemes not refined in this specification. They are
-sent by a <a class="term-reference" href="#term:verifier">Verifier</a> to a <a class="term-reference" href="#term:holder">Holder</a>.</dd>
-<dt><span id="term:presentation-submission">Presentation Submission</span></dt>
-<dd>Presentation Submissions are objects embedded within target claim negotiation
-formats that unify the presentation of proofs to a <a class="term-reference" href="#term:verifier">Verifier</a> in
-accordance with the requirements a <a class="term-reference" href="#term:verifier">Verifier</a> specified in a
-<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>.</dd>
-<dt><span id="term:embed-targets"><span id="term:embed-target">Embed Target</span></span></dt>
-<dd>Embed Targets are data formats used in messaging protocols that may be used
-to transport a <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>.</dd>
-<dt><span id="term:embed-locations">Embed Locations</span></dt>
-<dd>Embed Locations are the specific paths and indexes per <a class="term-reference" href="#term:embed-target">Embed Target</a>
-where the <a class="term-reference" href="#term:verifier">Verifier</a> can expect to find the <a class="term-reference" href="#term:presentation">Presentation</a>.</dd>
+<dt><span id="term:verifiers"><span id="term:verifier">Verifier</span></span></dt>
+<dd>Verifiers are entities that define what proofs they require from a
+<a class="term-reference" href="#term:holder">Holder</a> (via a <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>) in order to proceed with
+an interaction.</dd>
 </dl>
-<h2 id="localization"><a class="toc-anchor" href="#localization" >§</a> Localization</h2>
-<p>To support localization, <a path-0="tools.ietf.org"path-1="html"path-2="bcp47"href="https://tools.ietf.org/html/bcp47" >IETF BCP 47</a> one
-<strong><strong>MAY</strong></strong> use language tags under the <code>locale</code> property in both a <code>Presentation Definition</code> and <code>Presentation Submission</code>. If a Definition has a language tag,
-so should the corresponding Submission. A Submission may have a language tag
-regardless of the presence of one in the corresponding Definition.</p>
-<p>Wrapping transports such as HTTP may choose to utlilize the <code>locale</code> property in
-conjunction with the
-<a path-0="tools.ietf.org"path-1="html"path-2="rfc7231#section-5.3.5"href="https://tools.ietf.org/html/rfc7231#section-5.3.5" >Accept-Language</a> header.</p>
-<tab-panels selected-index="0">
-<nav>
-  <button type="button">Presentation Definition with Locale</button>
-  <button type="button">Presentation Submission with Locale</button>
-</nav>
-<section>
-<div id="presentation-definition-with-locale" class="notice example"><a class="notice-link" href="#presentation-definition-with-locale">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
-    <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token string">"en-US"</span><span class="token punctuation">,</span>
-    <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
-      <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"name_input"</span><span class="token punctuation">,</span>
-      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Full Legal Name"</span><span class="token punctuation">,</span>
-      <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your full legal name."</span><span class="token punctuation">,</span>
-      <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token punctuation">{</span>
-          <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://name-standards.com/name.json"</span><span class="token punctuation">,</span>
-          <span class="token property">"required"</span><span class="token operator">:</span> <span class="token boolean">true</span>
-        <span class="token punctuation">}</span>
-      <span class="token punctuation">]</span>
-    <span class="token punctuation">}</span><span class="token punctuation">]</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
-</section>
-<section>
-<div id="presentation-submission-with-locale" class="notice example"><a class="notice-link" href="#presentation-submission-with-locale">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"a30e3b91-fb77-4d22-95fa-871689c322e2"</span><span class="token punctuation">,</span>
-    <span class="token property">"definition_id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
-    <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token string">"de-DE"</span><span class="token punctuation">,</span>
-    <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
-      <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"name_input"</span><span class="token punctuation">,</span>
-      <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.verifiableCredential[0]"</span>
-    <span class="token punctuation">}</span><span class="token punctuation">]</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
-</section>
-</tab-panels>
 <h2 id="presentation-definition"><a class="toc-anchor" href="#presentation-definition" >§</a> Presentation Definition</h2>
-<p>Presentation Definitions are objects that articulate what proofs a <a class="term-reference" href="#term:verifier">Verifier</a>
-requires. These help the <a class="term-reference" href="#term:verifier">Verifier</a> to decide how or whether to interact with a
-Holder. Presentation Definitions are composed of inputs, which describe the
-forms and details of the proofs they require, and optional sets of selection
-rules, to allow Holders flexibility in cases where many different types of
-proofs may satisfy an input requirement.</p>
+<p><a class="term-reference" href="#term:presentation-definitions">Presentation Definitions</a> are objects that articulate what proofs a
+<a class="term-reference" href="#term:verifier">Verifier</a> requires. These help the <a class="term-reference" href="#term:verifier">Verifier</a> to decide how or
+whether to interact with a <a class="term-reference" href="#term:holder">Holder</a>. <a class="term-reference" href="#term:presentation-definitions">Presentation Definitions</a> are
+composed of inputs, which describe the forms and details of the proofs they
+require, and optional sets of selection rules, to allow <a class="term-reference" href="#term:holders">Holders</a>
+flexibility in cases where different types of proofs may satisfy an input
+requirement.</p>
 <tab-panels selected-index="0">
 <nav>
   <button type="button">Basic Example</button>
@@ -247,7 +207,7 @@ proofs may satisfy an input requirement.</p>
           <span class="token punctuation">}</span>
         <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"limit_disclosure"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+          <span class="token property">"limit_disclosure"</span><span class="token operator">:</span> <span class="token string">"required"</span><span class="token punctuation">,</span>
           <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
             <span class="token punctuation">{</span>
               <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.issuer"</span><span class="token punctuation">,</span> <span class="token string">"$.vc.issuer"</span><span class="token punctuation">,</span> <span class="token string">"$.iss"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -394,7 +354,7 @@ proofs may satisfy an input requirement.</p>
           <span class="token punctuation">}</span>
         <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"limit_disclosure"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+          <span class="token property">"limit_disclosure"</span><span class="token operator">:</span> <span class="token string">"required"</span><span class="token punctuation">,</span>
           <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
             <span class="token punctuation">{</span>
               <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.issuer"</span><span class="token punctuation">,</span> <span class="token string">"$.vc.issuer"</span><span class="token punctuation">,</span> <span class="token string">"$.iss"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -548,34 +508,55 @@ proofs may satisfy an input requirement.</p>
 </div>
 </div>
 </div>
-</div>
-</div>
 </section>
 </tab-panels>
-<p>The following properties are for use at the top-level of the resource — all
-other properties that are not defined below MUST be ignored:</p>
-<ul>
-<li><code>id</code> - The resource <strong><strong>MUST</strong></strong> contain this property uniquely identifying
-the resource. The property <strong><strong>MUST</strong></strong> be a unique identifier, such as a <a path-0="tools.ietf.org"path-1="html"path-2="rfc4122"href="https://tools.ietf.org/html/rfc4122" >UUID</a>.</li>
-<li><code>name</code> - The resource <strong><strong>MAY</strong></strong> contain this property, and if present its
-value <strong><strong>SHOULD</strong></strong> be a human-friendly name that describes what the
-Presentation Definition pertains to.</li>
-<li><code>purpose</code> - The resource <strong><strong>MAY</strong></strong> contain this property, and if present its
-value <strong><strong>MUST</strong></strong> be a string that describes the purpose for which the
-Presentation Definition’s inputs are being requested.</li>
-<li>The resource <strong><strong>MAY</strong></strong> include a <code>format</code> property, and its value
-<strong><strong>MUST</strong></strong> be an object with one or more properties matching the registered
-<a href="#claim-format-designations" >Claim Format Designations</a> (<code>jwt</code>,
-<code>jwt_vc</code>, <code>jwt_vp</code>, etc.) to inform the Holder of the claim format
-configurations the <a class="term-reference" href="#term:verifier">Verifier</a> can process. The value for each property included
-<strong><strong>MUST</strong></strong> be an object composed as follows:
+<p>The following properties are for use at the top-level of a
+<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>. Any properties that are not defined below MUST
+be ignored:</p>
 <ul>
 <li>
-<p>The object <strong><strong>MUST</strong></strong> include a format-specific property (i.e. <code>alg</code>,
-<code>proof_type</code>) that expresses which algorithms the <a class="term-reference" href="#term:verifier">Verifier</a> supports for the
-format, and if present, its value <strong><strong>MUST</strong></strong> be an array of one or more
-of the format-specific algorithmic identifier references, as noted in the
+<p><code>id</code> - The <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> <strong><strong>MUST</strong></strong> contain an <code>id</code>
+property. The value of this property <strong><strong>MUST</strong></strong> be a unique identifier, such
+as a <a path-0="tools.ietf.org"path-1="html"path-2="rfc4122"href="https://tools.ietf.org/html/rfc4122" >UUID</a>.</p>
+</li>
+<li>
+<p><code>input_descriptors</code> - The <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>  <strong><strong>MUST</strong></strong>
+contain an <code>input_descriptors</code> property. Its value <strong><strong>MUST</strong></strong> be an array of
+<a class="term-reference" href="#term:input-descriptor-objects">Input Descriptor Objects</a>, the composition of which are described in
+the <a href="#input-descriptors" ><code>Input Descriptors</code></a> section below.</p>
+<p>The <a class="term-reference" href="#term:input-descriptors">Input Descriptors</a> required for submission are described by the
+<code>submission_requirements</code>. If no <code>submission_requirements</code> value is present,
+all inputs listed in the <code>input_descriptors</code> array are required for submission.</p>
+</li>
+<li>
+<p><code>name</code> - The <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> <strong><strong>MAY</strong></strong> contain a <code>name</code>
+property. If present, its value <strong><strong>SHOULD</strong></strong> be a human-friendly string
+intended to constitute a distinctive designation of the
+<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>.</p>
+</li>
+<li>
+<p><code>purpose</code> - The <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> <strong><strong>MAY</strong></strong> contain a
+<code>purpose</code> property. If present, its value <strong><strong>MUST</strong></strong> be a string that
+describes the purpose for which the <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>'s inputs
+are being requested.</p>
+</li>
+<li>
+<p>The <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> <strong><strong>MAY</strong></strong> include a <code>format</code> property.
+If present, its value <strong><strong>MUST</strong></strong> be an object with one or more properties
+matching the registered
+<a href="#claim-format-designations" >Claim Format Designations</a> (e.g., <code>jwt</code>,
+<code>jwt_vc</code>, <code>jwt_vp</code>, etc.). Te properties inform the <a class="term-reference" href="#term:holder">Holder</a> of the
+<a class="term-reference" href="#term:claim">Claim</a> format configurations the <a class="term-reference" href="#term:verifier">Verifier</a> can process. The
+value for each claim format property <strong><strong>MUST</strong></strong> be an object composed as
+follows:</p>
+<ul>
+<li>
+<p>The object <strong><strong>MUST</strong></strong> include a format-specific property (i.e., <code>alg</code>,
+<code>proof_type</code>) that expresses which algorithms the <a class="term-reference" href="#term:verifier">Verifier</a>
+supports for the format. Its value <strong><strong>MUST</strong></strong> be an array of one or more
+format-specific algorithmic identifier references, as noted in the
 <a href="#claim-format-designations" >Claim Format Designations</a> section.</p>
+<p>For example:</p>
 <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"format"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -609,32 +590,496 @@ of the format-specific algorithmic identifier references, as noted in the
 </li>
 </ul>
 </li>
-<li><code>submission_requirements</code> - The resource <strong><strong>MAY</strong></strong> contain this property,
-and if present, its value <strong><strong>MUST</strong></strong> conform to the Submission Requirement
-Format. If not present, all inputs listed in the <code>input_descriptors</code> array are
-required for submission. The description for the format of this property is in
-the <a href="#submission-requirement" ><code>Submission Requirement</code></a> section below.</li>
-<li><code>input_descriptors</code> - The resource <strong><strong>MUST</strong></strong> contain this property, and
-its value <strong><strong>MUST</strong></strong> be an array of <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> objects. If no
-<code>submission_requirements</code> is present, all inputs listed in the
-<code>input_descriptors</code> array are required for submission. The composition of
-values under this property are described in the <a href="#input-descriptors" ><code>Input Descriptors</code></a> section below.</li>
+<li>
+<p><code>submission_requirements</code> - The <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> <strong><strong>MAY</strong></strong>
+contain a <code>submission_requirements</code> property. If present, its value
+<strong><strong>MUST</strong></strong> be an object conforming to the <a class="term-reference" href="#term:submission-requirement">Submission Requirement</a>
+format described in the <a href="#submission-requirement" ><code>Submission Requirement</code></a>
+section below.</p>
+<p>If not present, all inputs listed in the <code>input_descriptors</code> array are
+required for submission.</p>
+</li>
+</ul>
+<h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors" >§</a> Input Descriptors</h3>
+<p><a class="term-reference" href="#term:input-descriptors">Input Descriptors</a> are objects used to describe the information a
+<a class="term-reference" href="#term:verifier">Verifier</a> requires of a <a class="term-reference" href="#term:holder">Holder</a>. If no
+<a class="term-reference" href="#term:submission-requirements">Submission Requirements</a> are present, all <a class="term-reference" href="#term:input-descriptors">Input Descriptors</a>
+<strong><strong>MUST</strong></strong> be satisfied.</p>
+<p><a class="term-reference" href="#term:input-descriptor-objects">Input Descriptor Objects</a> contain an identifier, a schema URI that links
+to the schema of the requested input data, and may contain constraints on data
+values, and an explanation why a certain item or set of data is being requested:</p>
+<tab-panels selected-index="0">
+<nav>
+  <button type="button">Sample Descriptor</button>
+  <button type="button">Descriptor for ID Tokens</button>
+</nav>
+<section>
+<div id="example-1" class="notice example"><a class="notice-link" href="#example-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
+    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span><span class="token punctuation">,</span>
+    <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-schemas.org/1.0.0/accounts.json"</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-schemas.org/2.0.0/accounts.json"</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.issuer"</span><span class="token punctuation">,</span> <span class="token string">"$.vc.issuer"</span><span class="token punctuation">,</span> <span class="token string">"$.iss"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"The claim must be from one of the specified issuers"</span><span class="token punctuation">,</span>
+          <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+            <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"did:example:123|did:example:456"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span> 
+          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.credentialSubject.account[*].id"</span><span class="token punctuation">,</span> <span class="token string">"$.vc.credentialSubject.account[*].id"</span><span class="token punctuation">,</span> <span class="token string">"$.account[*].id"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank account number for processing purposes"</span><span class="token punctuation">,</span>
+          <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+            <span class="token property">"minLength"</span><span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+            <span class="token property">"maxLength"</span><span class="token operator">:</span> <span class="token number">12</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.credentialSubject.account[*].route"</span><span class="token punctuation">,</span> <span class="token string">"$.vc.credentialSubject.account[*].route"</span><span class="token punctuation">,</span> <span class="token string">"$.account[*].route"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"You must have an account with a German, US, or Japanese bank account"</span><span class="token punctuation">,</span>
+          <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+            <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"^DE|^US|^JP"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</code></pre>
+</div>
+</section>
+<section>
+<div id="example-2" class="notice example"><a class="notice-link" href="#example-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
+  <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://login.idp.com/xyz.gov/.well-known/openid-configuration"</span><span class="token punctuation">,</span>
+      <span class="token property">"required"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify XYZ Government Employment"</span><span class="token punctuation">,</span>
+  <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you currently work at an agency in the XYZ government"</span><span class="token punctuation">,</span>
+  <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"40be4fb5-7f3a-470b-aa37-66ed43821bd7"</span><span class="token punctuation">,</span>
+    <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://tokens.xyz.gov/verify"</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.status"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+          <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"active"</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</section>
+</tab-panels>
+<h4 id="input-descriptor-objects"><a class="toc-anchor" href="#input-descriptor-objects" >§</a> Input Descriptor Objects</h4>
+<p><a class="term-reference" href="#term:input-descriptor-objects">Input Descriptor Objects</a> are composed as follows:</p>
+<ul>
+<li>
+<p>The <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a> <strong><strong>MUST</strong></strong> contain an <code>id</code> property.
+The value of the <code>id</code> property <strong><strong>MUST</strong></strong> be a string that does not conflict
+with the <code>id</code> of another <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a> in the same
+<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>.</p>
+</li>
+<li>
+<p>The <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a> <strong><strong>MUST</strong></strong> contain a <code>schema</code> property.
+The value of the <code>schema</code> property <strong><strong>MUST</strong></strong> be an array composed of
+objects as follows:</p>
+<ul>
+<li>The <em>schema object</em> <strong><strong>MUST</strong></strong> contain a <code>uri</code> property, and its value
+<strong><strong>MUST</strong></strong> be a string consisting of a valid URI for an acceptable
+<a class="term-reference" href="#term:claim">Claim</a> schema.</li>
+<li>The <em>schema object</em> <strong><strong>MAY</strong></strong> contain a <code>required</code> property. If present,
+the value of this property <strong><strong>MUST</strong></strong> be a boolean. A value of <code>true</code>
+indicates that the given schema object is required to be the schema of the
+inputs used to fulfill the given <a class="term-reference" href="#term:submission-requirement">Submission Requirement</a>.</li>
+</ul>
+</li>
+<li>
+<p>The <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a> <strong><strong>MAY</strong></strong> contain a <code>group</code> property. If
+present, its value <strong><strong>MUST</strong></strong> match one of the grouping strings listed in
+the <code>from</code> values of a <a class="term-reference" href="#term:submission-requirement-rule">Submission Requirement Rule</a> object.</p>
+</li>
+<li>
+<p>The <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a> <strong><strong>MAY</strong></strong> contain a <code>name</code> property. If
+present, its value <strong><strong>SHOULD</strong></strong> be a human-friendly name that describes what
+the target schema represents.</p>
+</li>
+<li>
+<p>The <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a> <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property.
+If present, its value <strong><strong>MUST</strong></strong> be a string that describes the purpose for
+which the <a class="term-reference" href="#term:claim">Claim</a>'s data is being requested.</p>
+</li>
+<li>
+<p>The <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a> <strong><strong>MAY</strong></strong> contain a <code>metadata</code> property.
+If present, its value <strong><strong>MUST</strong></strong> be an object with metadata properties that
+describe any information specific to the acquisition, formulation, or details
+of the <a class="term-reference" href="#term:claim">Claim</a> in question.</p>
+<p>Note: this specification does not specify the <code>metadata</code> property beyond
+stating that it is an object. This property is provided to implementers as a
+means of providing additional information that may be required by their
+implementation, but which does not fit within another property.</p>
+</li>
+<li>
+<p>The <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a> <strong><strong>MAY</strong></strong> contain a <code>constraints</code>
+property. If present, its value <strong><strong>MUST</strong></strong> be an object composed as follows:</p>
+<ul>
+<li>
+<p>The <em>constraints object</em> <strong><strong>MAY</strong></strong> contain a <code>limit_disclosure</code>
+property. If present, its value <strong><strong>MUST</strong></strong> be onf the following strings:</p>
+<ul>
+<li><code>required</code> - This indicates that the processing entity <strong><strong>MUST</strong></strong>
+limit submitted fields to those listed in the <code>fields</code> array (if
+present).</li>
+<li><code>preferred</code> - This indicates that the processing entity <strong><strong>SHOULD</strong></strong>
+limit submitted fields to those listed in the <code>fields</code> array (if
+present).</li>
+</ul>
+<p>Omission of the <code>limit_disclosure</code> property indicates the processing
+entity <strong><strong>MAY</strong></strong> submit a response that contains more than the data
+described in the <code>fields</code> array.</p>
+</li>
+<li>
+<p>The <em>constraints object</em> <strong><strong>MAY</strong></strong> contain a <code>statuses</code> property. If
+present, its value <strong><strong>MUST</strong></strong> be an object that includes one or more of
+the following status properties:</p>
+<ul>
+<li><code>active</code> - A credential is active if it is not revoked, expired,
+suspended, or in any type of deactivated state.</li>
+<li><code>suspended</code> - A credential is suspended if the Issuer has published an
+explicit signal that the credential is in an inactive state and
+<strong><strong>should not</strong></strong> currently be relied upon, but may become active
+again in the future.</li>
+<li><code>revoked</code> - A credential is revoked if the Issuer has published an
+explicit signal that the credential in question <strong><strong>should not</strong></strong> be
+relied upon going forward as an accurate reflection of the Issuer’s
+statements about the <a class="term-reference" href="#term:subject">Subject</a> within the scope of the
+credential.</li>
+</ul>
+<p>The values of all status properties are objects, composed as follows:</p>
+<ul>
+<li><em>status objects</em> <strong><strong>MUST</strong></strong> include a <code>directive</code> property, and its
+value <strong><strong>MUST</strong></strong> be one of the following strings:
+<ul>
+<li><code>required</code> - the credential <strong><strong>MUST</strong></strong> be of the specified
+status.</li>
+<li><code>allowed</code> - the credential <strong><strong>MAY</strong></strong> be of the specified status.</li>
+<li><code>disallowed</code> - the credential <strong><strong>MUST NOT</strong></strong> be of the specified
+status.</li>
+</ul>
+<pre class="language-json"><code class="language-json">  <span class="token property">"statuses"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"active"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"directive"</span><span class="token operator">:</span> <span class="token string">"required"</span>  <span class="token comment">// other values: "allowed", "disallowed"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"suspended"</span><span class="token operator">:</span> <span class="token punctuation">{</span>...<span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"revoked"</span><span class="token operator">:</span> <span class="token punctuation">{</span>...<span class="token punctuation">}</span>
+  <span class="token punctuation">}</span> 
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>The <em>constraints object</em> <strong><strong>MAY</strong></strong> contain a <code>subject_is_issuer</code>
+property. If present, its value <strong><strong>MUST</strong></strong> be one of the following
+strings:</p>
+<ul>
+<li><code>required</code> - This indicates that the processing entity <strong><strong>MUST</strong></strong>
+submit a response that has been <em>self-attested</em>, i.e., the
+<a class="term-reference" href="#term:claim">Claim</a> used in the presentation was ‘issued’ by the
+<a class="term-reference" href="#term:subject">Subject</a> of the <a class="term-reference" href="#term:claim">Claim</a>.</li>
+<li><code>preferred</code> - This indicates that it is <strong><strong>RECOMMENDED</strong></strong> that the
+processing entity submit a response that has been <em>self-attested</em>,
+i.e., the <a class="term-reference" href="#term:claim">Claim</a> used in the presentation was ‘issued’ by the
+<a class="term-reference" href="#term:subject">Subject</a> of the <a class="term-reference" href="#term:claim">Claim</a>.</li>
+</ul>
+<p>The <code>subject_is_issuer</code> property could be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to
+require that certain inputs be <em>self_attested</em>. For example, a college
+application <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> might contain an
+<a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> for an essay submission. In this case, the
+<a class="term-reference" href="#term:verifier">Verifier</a> would be able to require that the essay be provided by
+the same <a class="term-reference" href="#term:subject">Subject</a> as any other <a class="term-reference" href="#term:claims">Claims</a> in the presented
+application.</p>
+</li>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain an <code>is_holder</code> property. If present, its
+value <strong><strong>MUST</strong></strong> be an array of objects composed as follows:</p>
+<ul>
+<li>The <em>is-holder object</em> <strong><strong>MUST</strong></strong> contain a <code>field_id</code> property. The
+value of this property <strong><strong>MUST</strong></strong> be an array of strings, with each
+string matching the string value from an
+<a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entry</em></a>
+object’s <code>id</code> property. This identifies the attribute whose
+<a class="term-reference" href="#term:subject">Subject</a> is of concern to the <a class="term-reference" href="#term:verifier">Verifier</a>.</li>
+<li>The <em>is-holder object</em> <strong><strong>MUST</strong></strong> contain a <code>directive</code> property.
+The value of this property <strong><strong>MUST</strong></strong>  be one of the following
+strings:
+<ul>
+<li><code>required</code> - This indicates that the processing entity
+<strong><strong>MUST</strong></strong> include proof that the <a class="term-reference" href="#term:subject">Subject</a> of each
+attribute identified by a value in the <code>field_id</code> array is the
+same as the entity submitting the response.</li>
+<li><code>preferred</code> - This indicates that it is <strong><strong>RECOMMENDED</strong></strong> that
+the processing entity include proof that the <a class="term-reference" href="#term:subject">Subject</a> of
+each attribute identified by a value in the <code>field_id</code> array is
+the same as the entity submitting the response.</li>
+</ul>
+</li>
+</ul>
+<p>The <code>is_holder</code> property would be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to require
+that certain inputs be provided by a certain <a class="term-reference" href="#term:subject">Subject</a>. For example,
+an identity verification <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> might contain an
+<a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> for a birthdate from a birth certificate. Using
+<code>is_holder</code>, the <a class="term-reference" href="#term:verifier">Verifier</a> would be able to require that the
+<a class="term-reference" href="#term:holder">Holder</a> of the birth certificate <a class="term-reference" href="#term:claim">Claim</a> is the same as the
+<a class="term-reference" href="#term:subject">Subject</a> of the birthdate attribute. This is especially useful in
+cases where a <a class="term-reference" href="#term:claim">Claim</a> may have multiple <a class="term-reference" href="#term:subjects">Subjects</a>.</p>
+<p>For more information about techniques used to prove binding to a
+<a class="term-reference" href="#term:holder">Holder</a>, please see <a href="#holder-binding" ><em>Holder Binding</em></a>.</p>
+</li>
+<li>
+<p>The <em>constraints object</em> <strong><strong>MAY</strong></strong> contain a <code>same_subject</code> property. If
+present, its value <strong><strong>MUST</strong></strong> be an array of objects composed as
+follows:</p>
+<ul>
+<li>The <em>same-subject object</em> <strong><strong>MUST</strong></strong> contain a <code>field_id</code> property.
+The value of this property <strong><strong>MUST</strong></strong> be an array of strings, with
+each string matching the string value from a
+<a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entry</em></a>
+object’s <code>id</code> property. This identifies the attributes whose
+<a class="term-reference" href="#term:subject">Subject</a> is of concern to the <a class="term-reference" href="#term:verifier">Verifier</a>. It is important
+to note that the attributes whose <a class="term-reference" href="#term:subject">Subject</a> is of concern to the
+<a class="term-reference" href="#term:verifier">Verifier</a> <strong><strong>MAY</strong></strong> be identified in the
+<a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entry</em></a> of a
+different <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a>.</li>
+<li>The <em>same-subject object</em> <strong><strong>MUST</strong></strong> contain a <code>directive</code> property.
+The value of this property <strong><strong>MUST</strong></strong>  be one of the following
+strings:
+<ul>
+<li><code>required</code> - This indicates that the processing entity
+<strong><strong>MUST</strong></strong> include proof that the <a class="term-reference" href="#term:subject">Subject</a> of each
+attribute identified by a value in the <code>field_id</code> array is the
+same as the <a class="term-reference" href="#term:subject">Subject</a> of the attributes identified by the
+other values in the <code>field_id</code> array.</li>
+<li><code>preferred</code> - This indicates that it is <strong><strong>RECOMMENDED</strong></strong> that
+the processing entity include proof that the <a class="term-reference" href="#term:subject">Subject</a> of
+each attribute identified by a value in the <code>field_id</code> array is
+the same as the <a class="term-reference" href="#term:subject">Subject</a> of the attributes identified by
+the other values in the <code>field_id</code> array.</li>
+</ul>
+</li>
+</ul>
+<p>The <code>same_subject</code> property would be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to require
+that certain provided inputs be about the same <a class="term-reference" href="#term:subject">Subject</a>. For
+example, a <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> might contain an
+<a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> which calls for a street address from a driver
+license <a class="term-reference" href="#term:claim">Claim</a> and another <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> which calls
+for a name from a birth certificate <a class="term-reference" href="#term:claim">Claim</a>. Using the
+<code>same_subject</code> property, <a class="term-reference" href="#term:verifier">Verifier</a> would be able to require that
+the <a class="term-reference" href="#term:subject">Subject</a> of the street address attribute <a class="term-reference" href="#term:claim">Claim</a> is the
+same as the <a class="term-reference" href="#term:subject">Subject</a> of the name attribute.</p>
+</li>
+<li>
+<p>The <em>constraints object</em> <strong><strong>MAY</strong></strong> contain a <code>fields</code> property. If
+present, its value <strong><strong>MUST</strong></strong> be an array of
+<a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entry</em></a> objects,
+each being composed as follows:</p>
+<ul>
+<li>
+<p>The <em>fields object</em> <strong><strong>MUST</strong></strong> contain a <code>path</code> property. The value
+of this property <strong><strong>MUST</strong></strong> be an array of one or more
+<a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> string
+expressions (as defined in the
+<a href="#jsonpath-syntax-definition" >JSONPath Syntax Definition</a> section)
+that select a target value from the input. The array <strong><strong>MUST</strong></strong>
+be evaluated from 0-index forward, and the first expressions to
+return a value will be used for the rest of the entry’s evaluation.
+The ability to declare multiple expressions in this way allows the
+<a class="term-reference" href="#term:verifier">Verifier</a> to account for format differences - for
+example: normalizing the differences in structure between
+JSON-LD/JWT-based
+<a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3=""href="https://www.w3.org/TR/vc-data-model/" >Verifiable Credentials</a> and
+vanilla JSON Web Tokens (JWTs) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>].</p>
+</li>
+<li>
+<p>The <em>fields object</em> <strong><strong>MAY</strong></strong> contain an <code>id</code> property. If present,
+its value <strong><strong>MUST</strong></strong> be a string that is unique from every other
+field object’s <code>id</code> property, including those contained in other
+<a class="term-reference" href="#term:input-descriptor-objects">Input Descriptor Objects</a>.</p>
+</li>
+<li>
+<p>The <em>fields object</em> <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property. If
+present, its value <strong><strong>MUST</strong></strong> be a string that describes the purpose
+for which the field is being requested.</p>
+</li>
+<li>
+<p>The <em>fields object</em> <strong><strong>MAY</strong></strong> contain a <code>filter</code> property, and if
+present its value <strong><strong>MUST</strong></strong> be a
+<a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a> descriptor
+used to filter against the values returned from evaluation of the
+<a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> string
+expressions in the <code>path</code> array.</p>
+</li>
+<li>
+<p>The object <strong><strong>MAY</strong></strong> contain a <code>predicate</code> property. If the
+<code>predicate</code> property is present, the <code>filter</code> property <strong><strong>MUST</strong></strong>
+also be present.</p>
+<p>Note: The inclusion of the <code>predicate</code> property indicates that the
+processing entity returns a boolean, rather than a value returned
+from evaluation of the
+<a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> string
+expressions in the <code>path</code> array. The boolean returned is the result
+of using the <code>filter</code> property’s
+<a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a>
+descriptors against the evaluated value. Exclusion of the <code>predicate</code>
+property indicates that the processing entity returns the value
+returned from evaluation of the
+<a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> string
+expressions in the <code>path</code> array.</p>
+<p>The value of <code>predicate</code> <strong><strong>MUST</strong></strong> be one of the following strings:</p>
+<ul>
+<li><code>required</code> - This indicates that the returned value <strong><strong>MUST</strong></strong>
+be the boolean result of applying the value of the <code>filter</code>
+property to the result of evaluating the <code>path</code> property.</li>
+<li><code>preferred</code> - This indicates that the returned value
+<strong><strong>SHOULD</strong></strong> be the boolean result of applying the value of the
+<code>filter</code> property to the result of evaluating the <code>path</code> property.</li>
+</ul>
+<p>If the <code>predicate</code> property is present, the set of JSON Schema
+descriptors which comprise the value of the <code>filter</code> property
+<strong><strong>MUST</strong></strong> be restricted according to the desired predicate
+operation, as follows:</p>
+<ul>
+<li>To express the following range proofs, use the JSON Schema
+<a path-0="json-schema.org"path-1="understanding-json-schema"path-2="reference"path-3="numeric.html#range"href="https://json-schema.org/understanding-json-schema/reference/numeric.html#range" >numeric range</a>
+properties:
+<ul>
+<li><code>greater-than</code> - Use the <code>exclusiveMinimum</code> descriptor. For
+example, to request a proof that an attribute is greater than
+10000, use the following as the value of the <code>filter</code> object:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
+  <span class="token property">"exclusiveMinimum"</span><span class="token operator">:</span> <span class="token number">10000</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li><code>less-than</code> - Use the <code>exclusiveMaximum</code> descriptor. For
+example, to request a proof that an attribute is less than 85,
+use the following as the value of the <code>filter</code> object:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
+  <span class="token property">"exclusiveMaximum"</span><span class="token operator">:</span> <span class="token number">85</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li><code>greater-than or equal-to</code> - Use the <code>minimum</code> descriptor. For
+example, to request a proof that an attribute is greater than or
+equal to 18, use the following as the value of the <code>filter</code>
+object:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
+  <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">18</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li><code>less-than or equal-to</code> - Use the <code>maximum</code> descriptor. For
+example, to request a proof that an attribute is less than or
+equal to 65536, use the following as the value of the <code>filter</code>
+object:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
+  <span class="token property">"maximum"</span><span class="token operator">:</span> <span class="token number">65536</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+</li>
+<li>to express the following equality proofs, use the JSON Schema
+<code>const</code> descriptor:
+<ul>
+<li><code>equal-to</code> - Use the <code>const</code> descriptor. For example to
+request proof that an attribute has the value “Chad”, use the
+following as the value of the <code>filter</code> object:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"const"</span><span class="token operator">:</span> <span class="token string">"Chad"</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li><code>not equal-to</code> - Use the <code>const</code> descriptor with the <code>not</code>
+operator. For example, to request proof that an attribute does
+not have the value “Karen”, use the following as the value of
+the <code>filter</code> object:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"not"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"const"</span><span class="token operator">:</span> <span class="token string">"Karen"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+</li>
+<li>to express set-membership proofs, use the JSON Schema <code>enum</code>
+descriptor:
+<ul>
+<li><code>in-set</code> - Use the <code>enum</code> descriptor. For example, to
+request proof that an attribute is contained in the set of
+rainbow colors, use the following as the value of the <code>filter</code>
+object:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+  <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"red"</span><span class="token punctuation">,</span> <span class="token string">"yellow"</span><span class="token punctuation">,</span> <span class="token string">"blue"</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li><code>not-in-set</code> - Use the <code>enum</code> descriptor with the <code>not</code>
+operator. For example, to request proof that an attribute is
+not contained in the set of primary colors, use the following
+as the value of the <code>filter</code> object:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"not"</span><span class="token operator">:</span> <span class="token punctuation">{</span> 
+    <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"red"</span><span class="token punctuation">,</span> <span class="token string">"yellow"</span><span class="token punctuation">,</span> <span class="token string">"blue"</span><span class="token punctuation">]</span> 
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>At this time, additional predicate operations are not supported.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h3 id="submission-requirements"><a class="toc-anchor" href="#submission-requirements" >§</a> Submission Requirements</h3>
-<p><em>Presentation Definitions</em> <strong><strong>MAY</strong></strong> include <em>Submission Requirements</em>,
-which are objects that define what combinations of inputs must be submitted
-to comply with the requirements a <a class="term-reference" href="#term:verifier">Verifier</a> has for proceeding in a flow (e.g.
-claim issuance, allowing entry, accepting an application).
-<em>Submission Requirements</em> introduce a set of rule types and mapping instructions
-a User Agent can ingest to present requirement optionality to the user, and
-subsequently submit inputs in a way that maps back to the rules the verifying
-party has asserted (via a <code>Proof Submission</code> object). The following section
-defines the format for <em>Submission Requirement</em> objects, and the selection syntax
-verifying parties can use to specify which combinations of inputs are acceptable.</p>
-<p>If present, all members of the <code>submission_requirements</code> array <strong><strong>MUST</strong></strong>
-be satisfied, and all input_descriptors <strong><strong>MUST</strong></strong> be grouped. Any unused
-input_descriptors that remain after satisfying all submission_requirements
-<strong><strong>MUST</strong></strong> be ignored.</p>
+<p><a class="term-reference" href="#term:presentation-definitions">Presentation Definitions</a> <strong><strong>MAY</strong></strong> include
+<a class="term-reference" href="#term:submission-requirements">Submission Requirements</a> which define what combinations of inputs a
+processing entity must submit to comply with the requirements of a
+<a class="term-reference" href="#term:verifier">Verifier</a>.</p>
+<p><a class="term-reference" href="#term:submission-requirements">Submission Requirements</a> introduce a set of rule types and mapping
+instructions a processing entity can ingest to present requirement optionality
+to the user, and subsequently submit inputs in a way that maps back to the rules
+the <a class="term-reference" href="#term:verifier">Verifier</a> has asserted.</p>
+<p>The following section defines the format for <a class="term-reference" href="#term:submission-requirements">Submission Requirements</a>
+and the selection syntax <a class="term-reference" href="#term:verifiers">Verifiers</a> can use to specify which combinations
+of inputs are acceptable.</p>
+<p>If present, all <a class="term-reference" href="#term:submission-requirements">Submission Requirements</a> <strong><strong>MUST</strong></strong> be satisfied, and
+all input_descriptors <strong><strong>MUST</strong></strong> be grouped. Any unused
+[ref:Input Descriptors]] that remain after satisfying all
+<a class="term-reference" href="#term:submission-requirements">Submission Requirements</a> <strong><strong>MUST</strong></strong> be ignored.</p>
 <div id="submission-requirement" class="notice example"><a class="notice-link" href="#submission-requirement">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Banking Information"</span><span class="token punctuation">,</span>
@@ -671,56 +1116,55 @@ input_descriptors that remain after satisfying all submission_requirements
   <span class="token punctuation">]</span>
 </code></pre>
 </div>
+</div>
 <h4 id="submission-requirement-objects"><a class="toc-anchor" href="#submission-requirement-objects" >§</a> Submission Requirement Objects</h4>
-<p><em>Submission Requirement Objects</em> describe combinations of inputs that
-<strong><strong>must</strong></strong> be submitted via a <a href="#presentation-submission" >Presentation Submission</a>
-to satisfy <a class="term-reference" href="#term:verifier">Verifier</a> demands. <em>Submission Requirement Objects</em> are JSON objects
-constructed as follows:</p>
-<ol>
-<li>The object  <strong><strong>MUST</strong></strong> contain a <code>rule</code> property, and its value
-<strong><strong>MUST</strong></strong> be a string matching one of the <a href="#submission-requirement-rules" >Submission Requirement
-Rules</a> values listed in the section below.</li>
-<li>The object <strong><strong>MUST</strong></strong> contain either a <code>from</code> or <code>from_nested</code> property.
-If both properties are present, the implementation <em><strong>MUST</strong></em> produce an
-error. The values of the <code>from</code> and <code>from_nested</code> properties are defined as
-follows:
+<p><a class="term-reference" href="#term:submission-requirement-objects">Submission Requirement Objects</a> are JSON objects constructed as follows:</p>
 <ul>
-<li><code>from</code> - the value of the <code>from</code> property <strong><strong>must</strong></strong> be a <code>group</code> string
-matching one of the <code>group</code> strings specified for one or more <em>Input
-Descriptor</em> objects.</li>
-<li><code>from_nested</code> - an array of nested <em>Submission Requirement Objects</em>.</li>
+<li>A <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a> <strong><strong>MUST</strong></strong> contain a <code>rule</code>
+property. The value of this property <strong><strong>MUST</strong></strong> be a string that matches one
+of the <a class="term-reference" href="#term:submission-requirement-rules">Submission Requirement Rules</a> values listed in the section
+below.</li>
+<li>A <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a> <strong><strong>MUST</strong></strong> contain either a
+<code>from</code> or <code>from_nested</code> property. If both properties are present, the
+implementation <em><strong>MUST</strong></em> produce an error. The values of the <code>from</code> and
+<code>from_nested</code> properties are defined as follows:
+<ul>
+<li><code>from</code> - The value of the <code>from</code> property <strong><strong>MUST</strong></strong> be a <code>group</code> string
+matching one of the <code>group</code> strings specified for one or more
+[[ref:Input Descriptor Objects].</li>
+<li><code>from_nested</code> - The value of the <code>from_nested</code> property <strong><strong>MUST</strong></strong> be an
+array <a class="term-reference" href="#term:submission-requirement-objects">Submission Requirement Objects</a>.</li>
 </ul>
 </li>
-<li>The object  <strong><strong>MAY</strong></strong> contain a <code>name</code> property, and if present, its value
-<strong><strong>MUST</strong></strong> be a string which <strong><strong>MAY</strong></strong> be used by a consuming User Agent
-to display the general name of the requirement set to a user.</li>
-<li>The object <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property and, if present, its
-value <strong><strong>MUST</strong></strong> be a string that describes the purpose for which the
-specified requirement is being asserted.</li>
-<li>The object <strong><strong>MAY</strong></strong> contain additional properties as required by
-<a href="#submission-requirement-rules" >Submission Requirement Rules</a>, such as
-<code>count</code>, <code>min</code>, and <code>max</code> for the <code>&quot;pick&quot;</code> rule.</li>
-</ol>
+<li>The <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a>  <strong><strong>MAY</strong></strong> contain a <code>name</code>
+property. If present, its value <strong><strong>MUST</strong></strong> be a string. The string
+<strong><strong>MAY</strong></strong> be used by a consuming User Agent to display the general name of
+the requirement set to a user.</li>
+<li>The <a class="term-reference" href="#term:submission-requirement-objects">Submission Requirement Objects</a> <strong><strong>MAY</strong></strong> contain a <code>purpose</code>
+property. If present, its value <strong><strong>MUST</strong></strong> be a string that describes the
+purpose for which the submission is being requested.</li>
+<li>The <a class="term-reference" href="#term:submission-requirement-objects">Submission Requirement Objects</a> <strong><strong>MAY</strong></strong> contain additional
+properties as required by certain <a class="term-reference" href="#term:submission-requirement-rules">Submission Requirement Rules</a>. For
+example, <code>count</code>, <code>min</code>, and <code>max</code> may be present with a <code>pick</code> rule.</li>
+</ul>
 <h4 id="submission-requirement-rules"><a class="toc-anchor" href="#submission-requirement-rules" >§</a> Submission Requirement Rules</h4>
-<p><a href="#submission-requirement-rules" id="requirement-rules" ><em>Submission Requirement Rules</em></a>
-are used within <em>Submission Requirement Objects</em> to describe the specific
-combinatorial rule that must be applied to submit a particular subset of
-required inputs. Rules are selected by populating the <code>rule</code> property with the
-corresponding string. An implementation <strong><strong>MUST</strong></strong> support the following
-standard types:</p>
+<p><a class="term-reference" href="#term:submission-requirement-rules">Submission Requirement Rules</a> are used within
+<a class="term-reference" href="#term:submission-requirement-objects">Submission Requirement Objects</a> to describe the specific combinatorial
+rules that must be applied to submit a particular subset of reqested inputs. The
+specified <a class="term-reference" href="#term:submission-requirements-rule">Submission Requirements Rule</a> determines the behavior of the
+corresponding <code>from</code> or <code>from_nested</code> property, as described below. A conformant
+implementation <strong><strong>MUST</strong></strong> support the following rules:</p>
 <h5 id="all-rule"><a class="toc-anchor" href="#all-rule" >§</a> <code>all</code> rule</h5>
+<p>For an <code>all</code> rule <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a>:</p>
 <ul>
-<li>The object <strong><strong>must</strong></strong> contain a <code>rule</code> property, and its value <strong><strong>MUST</strong></strong>
-be the string <code>&quot;all&quot;</code>.</li>
-<li>The object <strong><strong>MUST</strong></strong> contain either a <code>from</code> or <code>from_nested</code> property,
-which behave as follows when used in an <code>all</code> rule:
+<li>The value of the <code>rule</code> property <strong><strong>MUST</strong></strong> be the string “all”.</li>
+<li>The following behavior is required for the <code>from</code> or <code>from_nested</code> property:
 <ul>
-<li><code>from</code> - when used within an <code>all</code> rule, every <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> matching
-the group string of the <code>from</code> value must be submitted to the <a class="term-reference" href="#term:verifier">Verifier</a>.</li>
-<li><code>from_nested</code> - when used within an <code>all</code> rule, all the <em>Submission
-Requirement Objects</em> specified in the <code>from_nested</code> array must be satisfied
-by the inputs submitted in a subsequent
-<a href="#presentation-submission" >Presentation Submission</a>.</li>
+<li><code>from</code> - All <a class="term-reference" href="#term:input-descriptors">Input Descriptors</a> matching the <code>group</code> string of the
+<code>from</code> value <strong><strong>MUST</strong></strong> be submitted to the <a class="term-reference" href="#term:verifier">Verifier</a>.</li>
+<li><code>from_nested</code> - All <a class="term-reference" href="#term:submission-requirement-objects">Submission Requirement Objects</a> specified in the
+<code>from_nested</code> array must be satisfied by the inputs submitted to the
+<a class="term-reference" href="#term:verifier">Verifier</a>.</li>
 </ul>
 </li>
 </ul>
@@ -735,25 +1179,40 @@ by the inputs submitted in a subsequent
 </code></pre>
 </div>
 <h5 id="pick-rule"><a class="toc-anchor" href="#pick-rule" >§</a> <code>pick</code> rule</h5>
+<p>For a <code>pick</code> rule <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a>:</p>
 <ul>
-<li>The <em>Submission Requirement</em> object’s <code>rule</code> property <strong><strong>MUST</strong></strong> contain
-the string value <code>&quot;pick&quot;</code>.</li>
-<li>The <em>Submission Requirement</em> object <strong><strong>MAY</strong></strong> contain a <code>count</code> property,
-and if present, its value <strong><strong>MUST</strong></strong> be an integer greater than zero.</li>
-<li>The <em>Submission Requirement</em> object <strong><strong>MAY</strong></strong> contain a <code>min</code> property,
-and if present, its value <strong><strong>MUST</strong></strong> be an integer greater than or equal to zero.</li>
-<li>The <em>Submission Requirement</em> object <strong><strong>MAY</strong></strong> contain a <code>max</code> property,
-and if present, its value <strong><strong>MUST</strong></strong> be an integer greater than zero, and,
-if also present, greater than the value of the <code>min</code> property.</li>
-<li>The <em>Submission Requirement</em> object <strong><strong>MUST</strong></strong> contain either a <code>from</code>
-property or a <code>from_nested</code> property, and of whichever are present, all inputs
-from the <code>from</code> group string specified or <em>Submission Requirements</em> in the
-<code>from_nested</code> array <strong><strong>MUST</strong></strong> be submitted or satisfied.</li>
+<li>The value of the <code>rule</code> property <strong><strong>MUST</strong></strong> be the string “pick”.</li>
+<li>The <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a> <strong><strong>MAY</strong></strong> contain a <code>count</code>
+property. If present, its value <strong><strong>MUST</strong></strong> be an integer greater than zero.
+This indicates the number of <a class="term-reference" href="#term:input-descriptors">input Descriptors</a> or
+<a class="term-reference" href="#term:submission-requirements-objects">Submission Requirements Objects</a> to be submitted.</li>
+<li>The <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a> <strong><strong>MAY</strong></strong> contain a <code>min</code>
+property. If present, its value <strong><strong>MUST</strong></strong> be an integer greater than or
+equal to zero. This indicates the minimum number of <a class="term-reference" href="#term:input-descriptors">input Descriptors</a>
+or <a class="term-reference" href="#term:submission-requirements-objects">Submission Requirements Objects</a> to be submitted.</li>
+<li>The <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a> <strong><strong>MAY</strong></strong> contain a <code>max</code>
+property. If present, its value <strong><strong>MUST</strong></strong> be an integer greater than zero
+and, if also present, greater than the value of the <code>min</code> property. This
+indicates the maximum number of <a class="term-reference" href="#term:input-descriptors">input Descriptors</a> or
+<a class="term-reference" href="#term:submission-requirements-objects">Submission Requirements Objects</a> to be submitted.</li>
+<li>The following behavior is required for the <code>from</code> or <code>from_nested</code> property:
+<ul>
+<li><code>from</code> - The specified number of <a class="term-reference" href="#term:input-descriptors">Input Descriptors</a> matching the
+<code>group</code> string of the <code>from</code> value <strong><strong>MUST</strong></strong> be submitted to the
+<a class="term-reference" href="#term:verifier">Verifier</a>.</li>
+<li><code>from_nested</code> - The specified number of
+<a class="term-reference" href="#term:submission-requirement-objects">Submission Requirement Objects</a> in the <code>from_nested</code> array must be
+satisfied by the inputs submitted to the <a class="term-reference" href="#term:verifier">Verifier</a>.</li>
 </ul>
-<p>If the <code>from</code> property contains a <code>group</code> string, it directs the consumer of
-the <em>Presentation Definition</em> to submit all members of the matching <code>group</code>
-string. In the following example, the <code>from</code> property contains a <code>group</code>
-string to require a single member of group <code>&quot;B&quot;</code>:</p>
+</li>
+</ul>
+<p>If <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a> has a <code>from</code> property, this directs the
+processing entity to submit inputs from the set of <a class="term-reference" href="#term:input-descriptors">Input Descriptors</a>
+with a matching <code>group</code> string. In the first example that follows, the
+<a class="term-reference" href="#term:submission-requirement">Submission Requirement</a> requests a single input from
+<a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> group <code>&quot;B&quot;</code>. In the second example, the
+<a class="term-reference" href="#term:submission-requirement">Submission Requirement</a> requests from 2 to 4 inputs from
+<a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> group <code>&quot;B&quot;</code>.</p>
 <div id="submission-requirement,-pick,-group" class="notice example"><a class="notice-link" href="#submission-requirement,-pick,-group">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Citizenship Proof"</span><span class="token punctuation">,</span>
@@ -777,11 +1236,11 @@ string to require a single member of group <code>&quot;B&quot;</code>:</p>
   <span class="token punctuation">]</span>
 </code></pre>
 </div>
-<p>If the <code>from</code> property contains an array of nested <em>Submission Requirement</em>
-objects, it directs the consumer of the <em>Presentation Definition</em> to submit
-members such that the number of satisfied <em>Submission Requirement</em> objects is
-exactly <code>count</code>. In the following example, the <code>from</code> property contains an
-array of nested <em>Submission Requirement</em> objects to require either all members
+<p>If the <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a> has a <code>from_nested</code> property, this
+directs the processing entity to submit inputs such that the number of satisfied
+<a class="term-reference" href="#term:submission-requirement-objects">Submission Requirement Objects</a> matches the number requested. In the
+following example, the <code>from_nested</code> property contains an array of
+<a class="term-reference" href="#term:submission-requirement-objects">Submission Requirement Objects</a> which requests either all members
 from group <code>&quot;A&quot;</code> or two members from group <code>&quot;B&quot;</code>:</p>
 <div id="submission-requirement,-pick,-nested" class="notice example"><a class="notice-link" href="#submission-requirement,-pick,-nested">EXAMPLE</a><pre class="language-json"><code class="language-json">  <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
@@ -859,480 +1318,66 @@ format-related rules above:</p>
 <h4 id="property-values-and-evaluation"><a class="toc-anchor" href="#property-values-and-evaluation" >§</a> Property Values and Evaluation</h4>
 <p>The following property value and evaluation guidelines summarize many of the
 processing-related rules above:</p>
-<ol>
-<li>The <code>rule</code> property value may be either <code>&quot;all&quot;</code> or <code>&quot;pick&quot;</code>, and the
+<ul>
+<li>The <code>rule</code> property value may be either <code>&quot;all&quot;</code> or <code>&quot;pick&quot;</code>, and a conformant
 implementation <strong><strong>MUST</strong></strong> produce an error if an unknown <code>rule</code> value is
 present.</li>
-<li>The <em>Submission Requirement</em>  <strong><strong>MUST</strong></strong> contain a <code>from</code> property or a
-<code>from_nested</code> property, not both, and if present their values must be a string or an array, respectively. If any of these conditions are not met,
-the implementation <strong><strong>MUST</strong></strong> produce an error.</li>
-<li>To determine whether a <em>Submission Requirement</em> is satisfied, used the
-following algorithm:
+<li>The <a class="term-reference" href="#term:submission-requirement-object">Submission Requirement Object</a> <strong><strong>MUST</strong></strong> contain a <code>from</code>
+property or a <code>from_nested</code> property, not both. If present their values must
+be a string or an array, respectively. If any of these conditions are not
+met, a conformant implementation <strong><strong>MUST</strong></strong> produce an error.</li>
+<li>A conformant implementation could use the following algorithm To determine
+whether a <a class="term-reference" href="#term:submission-requirement">Submission Requirement</a> is satisfied:
 <ul>
-<li>If the <code>rule</code> is <code>&quot;all&quot;</code>, then the <em>Submission Requirement</em> MUST
-contain a <code>from</code> property or a <code>from_nested</code> property, and of whichever are present, all inputs from the <code>from</code> group string specified or <em>Submission Requirements</em> in the <code>from_nested</code> array <strong><strong>MUST</strong></strong> be submitted or satisfied, respectively.</li>
-<li>If the <code>rule</code> is <code>&quot;pick&quot;</code>, then the <em>Submission Requirement</em> MUST contain
-a <code>from</code> property or a <code>from_nested</code> property, and of whichever are
-present, they must be evaluated as follows:
+<li>If the <code>rule</code> is <code>&quot;all&quot;</code>, then the <a class="term-reference" href="#term:submission-requirement">Submission Requirement</a>
+<strong><strong>MUST</strong></strong> contain a <code>from</code> property or a <code>from_nested</code> property, and of
+whichever are present, all inputs from the <code>from</code> group string or the
+<code>from_nested</code> <a class="term-reference" href="#term:submission-requirements">Submission Requirements</a> array <strong><strong>MUST</strong></strong> be
+submitted or satisfied, respectively.</li>
+<li>If the <code>rule</code> is <code>&quot;pick&quot;</code>, then the <a class="term-reference" href="#term:submission-requirement">Submission Requirement</a>
+<strong><strong>MUST</strong></strong> contain a <code>from</code> property or a <code>from_nested</code> property, and of
+whichever are present, they must be evaluated as follows:
 <ul>
 <li>if a <code>count</code> property is present, the number of inputs submitted, or
-nested <em>Submission Requirements</em> satisfied, <strong><strong>MUST</strong></strong> be exactly
+nested <a class="term-reference" href="#term:submission-requirements">Submission Requirements</a> satisfied, <strong><strong>MUST</strong></strong> be exactly
 equal to the value of <code>count</code> property.</li>
 <li>if a <code>min</code> property is present, the number of inputs submitted, or
-nested <em>Submission Requirements</em> satisfied, <strong><strong>MUST</strong></strong> be equal to
+nested <a class="term-reference" href="#term:submission-requirements">Submission Requirements</a> satisfied, <strong><strong>MUST</strong></strong> be equal to
 or greater than the value of the <code>min</code> property.</li>
 <li>if a <code>max</code> property is present, the number of inputs submitted, or
-nested <em>Submission Requirements</em> satisfied, <strong><strong>MUST</strong></strong> be equal to
+nested <a class="term-reference" href="#term:submission-requirements">Submission Requirements</a> satisfied, <strong><strong>MUST</strong></strong> be equal to
 or less than the value of the <code>max</code> property.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h3 id="input-descriptors"><a class="toc-anchor" href="#input-descriptors" >§</a> Input Descriptors</h3>
-<p><a class="term-reference" href="#term:input-descriptors">Input Descriptors</a> are objects used to describe the information a <a class="term-reference" href="#term:verifier">Verifier</a>
-requires of a Holder before they will proceed with an interaction. If no
-<code>submission_requirements</code> objects are present, all <code>input_descriptor</code> objects
-<strong><strong>MUST</strong></strong> be satisfied.</p>
-<p><em>Input Descriptor Objects</em> contain a schema URI that links to the schema
-of the required input data, constraints on data values, and an explanation
-why a certain item or set of data is being requested:</p>
-<tab-panels selected-index="0">
-<nav>
-  <button type="button">Sample Descriptor</button>
-  <button type="button">Descriptor for ID Tokens</button>
-</nav>
-<section>
-<div id="example-1" class="notice example"><a class="notice-link" href="#example-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-  <span class="token punctuation">{</span>
-    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_1"</span><span class="token punctuation">,</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Bank Account Information"</span><span class="token punctuation">,</span>
-    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank and account information."</span><span class="token punctuation">,</span>
-    <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-      <span class="token punctuation">{</span>
-        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-schemas.org/1.0.0/accounts.json"</span>
-      <span class="token punctuation">}</span><span class="token punctuation">,</span>
-      <span class="token punctuation">{</span>
-        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://bank-schemas.org/2.0.0/accounts.json"</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token punctuation">{</span>
-          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.issuer"</span><span class="token punctuation">,</span> <span class="token string">"$.vc.issuer"</span><span class="token punctuation">,</span> <span class="token string">"$.iss"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"The claim must be from one of the specified issuers"</span><span class="token punctuation">,</span>
-          <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
-            <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"did:example:123|did:example:456"</span>
-          <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
-        <span class="token punctuation">{</span> 
-          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.credentialSubject.account[*].id"</span><span class="token punctuation">,</span> <span class="token string">"$.vc.credentialSubject.account[*].id"</span><span class="token punctuation">,</span> <span class="token string">"$.account[*].id"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need your bank account number for processing purposes"</span><span class="token punctuation">,</span>
-          <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
-            <span class="token property">"minLength"</span><span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
-            <span class="token property">"maxLength"</span><span class="token operator">:</span> <span class="token number">12</span>
-          <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
-        <span class="token punctuation">{</span>
-          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.credentialSubject.account[*].route"</span><span class="token punctuation">,</span> <span class="token string">"$.vc.credentialSubject.account[*].route"</span><span class="token punctuation">,</span> <span class="token string">"$.account[*].route"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-          <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"You must have an account with a German, US, or Japanese bank account"</span><span class="token punctuation">,</span>
-          <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
-            <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"^DE|^US|^JP"</span>
-          <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-      <span class="token punctuation">]</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">]</span>
-</code></pre>
-</div>
-</section>
-<section>
-<div id="example-2" class="notice example"><a class="notice-link" href="#example-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
-  <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">{</span>
-      <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://login.idp.com/xyz.gov/.well-known/openid-configuration"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify XYZ Government Employment"</span><span class="token punctuation">,</span>
-      <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you currently work at an agency in the XYZ government"</span><span class="token punctuation">,</span>
-      <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"40be4fb5-7f3a-470b-aa37-66ed43821bd7"</span><span class="token punctuation">,</span>
-        <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://tokens.xyz.gov/verify"</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-      <span class="token punctuation">{</span>
-        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.status"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
-          <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"active"</span>
-        <span class="token punctuation">}</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">]</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
-</section>
-</tab-panels>
-<h4 id="input-descriptor-objects"><a class="toc-anchor" href="#input-descriptor-objects" >§</a> Input Descriptor Objects</h4>
-<p><a class="term-reference" href="#term:input-descriptors">Input Descriptors</a> are objects that describe what type of input
-data/claim,  or sub-fields thereof, is required for submission to the <a class="term-reference" href="#term:verifier">Verifier</a>.
-<em>Input Descriptor Objects</em> are composed as follows:</p>
-<ul>
-<li>The object <strong><strong>MUST</strong></strong> contain an <code>id</code> property. The value of the <code>id</code>
-property <strong><strong>MUST</strong></strong> be a unique identifying string that does not conflict
-with the <code>id</code> of another <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> in the same <em>Presentation
-Definition</em> object.</li>
-<li>The object <strong><strong>MAY</strong></strong> contain a <code>group</code> property, and if present, its value
-<strong><strong>MUST</strong></strong> match one of the grouping strings listed in the <code>from</code> values of a
-<a href="#submission-requirement-rules" ><em>Submission Requirement Rule Object</em></a>.</li>
-<li>The object <strong><strong>MAY</strong></strong> contain a <code>name</code> property, and if present its
-value <strong><strong>SHOULD</strong></strong> be a human-friendly name that describes what the
-target schema represents.</li>
-<li>The object <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property, and if present its
-value <strong><strong>MUST</strong></strong> be a string that describes the purpose for which the
-claim’s data is being requested.</li>
-<li>The object <strong><strong>MAY</strong></strong> contain a <code>metadata</code> property, and if present its
-value <strong><strong>MUST</strong></strong> be an object with metadata properties that describe
-any information specific to the acquisition, formulation, or details of
-the claim in question.</li>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>schema</code> property, and its value
-<strong><strong>MUST</strong></strong> be an array composed of objects as follows:
-<ul>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>uri</code> property, and its value
-<strong><strong>MUST</strong></strong> be an string consisting of a valid URI string for
-the acceptable claim schemas. Multiple array objects may be present
-for multiple schemas. A common use of multiple entries in
-the <code>schema</code> array is when multiple versions of a claim schema exist
-and there is a desire to express support for more than one version.
-This field allowing multiple URIs is not intended to be used as
-a mechanism for including references to fundamentally different schemas, and <strong><strong>SHOULD NOT</strong></strong> be used by the implementer this way.</li>
-<li>The object <strong><strong>MAY</strong></strong> contain a boolean <code>required</code> property, and
-if present and <code>true</code> it signifies that the given schema object
-is required to fulfill the given <a class="term-reference" href="#term:submission-requirement">Submission Requirement</a>.</li>
-</ul>
-</li>
-<li>The object <strong><strong>MAY</strong></strong> contain a <code>constraints</code> property, and its value
-<strong><strong>MUST</strong></strong> be an object composed as follows:
-<ul>
-<li>
-<p>The object <strong><strong>MAY</strong></strong> contain a <code>limit_disclosure</code> property, and if
-present its value <strong><strong>MUST</strong></strong> be a boolean value. Setting the property
-to <code>true</code> indicates that the processing entity <strong><strong>SHOULD NOT</strong></strong> submit
-any fields beyond those listed in the <code>fields</code> array (if present).
-Setting the property to <code>false</code>, or omitting the property, indicates
-the processing entity <strong><strong>MAY</strong></strong> submit a response that contains more
-than the data described in the <code>fields</code> array.</p>
-</li>
-<li>
-<p>The object <strong><strong>MAY</strong></strong> contain a <code>statuses</code> property, and if present, its value
-<strong><strong>MUST</strong></strong> be an object that includes one or more of the following status
-properties: <code>active</code>, <code>suspended</code>, <code>revoked</code>. These statuses are defined
-as follows:</p>
-<ul>
-<li><code>active</code> - a credential that is not revoked, expired, suspended, or in any
-type of deactivated state.</li>
-<li><code>suspended</code> - a credential is suspended if the Issuer has published an explicit
-signal that the credential is in an inactive state and <strong><strong>should not</strong></strong>
-currently be relied upon, but may become active again in the future.</li>
-<li><code>revoked</code> - a credential is revoked if the Issuer has published an explicit signal
-that the credential in question <strong><strong>should not</strong></strong> be relied upon going forward
-as an accurate reflection of the Issuer’s statements about the Subject within
-the scope of the credential.</li>
-</ul>
-<pre class="language-json"><code class="language-json">  <span class="token property">"statuses"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"active"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"directive"</span><span class="token operator">:</span> <span class="token string">"required"</span>  <span class="token comment">// other values: "allowed", "disallowed"</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token property">"suspended"</span><span class="token operator">:</span> <span class="token punctuation">{</span>...<span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token property">"revoked"</span><span class="token operator">:</span> <span class="token punctuation">{</span>...<span class="token punctuation">}</span>
-  <span class="token punctuation">}</span> 
-</code></pre>
-<p>The values of all status properties are objects, composed as follows:</p>
-<ul>
-<li>Status objects <strong><strong>MUST</strong></strong> include a <code>directive</code> property, and its
-value <strong><strong>MUST</strong></strong> be one of the following strings:
-<ul>
-<li><code>required</code>: the credential <strong><strong>MUST</strong></strong> be of the specified status.</li>
-<li><code>allowed</code>: the credential <strong><strong>MAY</strong></strong> be of the specified status.</li>
-<li><code>disallowed</code>: the credential <strong><strong>MUST NOT</strong></strong> be of the specified status.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>The object <strong><strong>MAY</strong></strong> contain a <code>subject_is_issuer</code> property, and if
-present its value <strong><strong>MUST</strong></strong> be one of the following strings:</p>
-<ul>
-<li><code>required</code> - This indicates that the processing entity <strong><strong>MUST</strong></strong>
-submit a response that has been <em>self-attested</em>, i.e., the claim
-used in the presentation has been ‘issued’ by the subject of the
-claim.</li>
-<li><code>preferred</code> - This indicates that it is <strong><strong>RECOMMENDED</strong></strong> that the
-processing entity submit a response that has been <em>self-attested</em>,
-i.e., the claim used in the presentation has been ‘issued’ by the
-subject of the claim.</li>
-</ul>
-<p>The <code>subject_is_issuer</code> property could be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to require
-that certain inputs be <em>self_attested</em>. For example, a college
-application <code>presentation definition</code> might contain an <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a>
-object for an essay submission. In this case, the <a class="term-reference" href="#term:verifier">Verifier</a> would be able
-to require that the essay be provided by the one submits the application.</p>
-</li>
-<li>
-<p>The object <strong><strong>MAY</strong></strong> contain an <code>is_holder</code> property, and if
-present its value <strong><strong>MUST</strong></strong> be an array of objects composed as
-follows:</p>
-<ul>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>field_id</code> property. The value of
-this property <strong><strong>MUST</strong></strong> be an array of strings, with each string
-matching the string value from a
-<a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entry</em></a>
-object’s <code>id</code> property. This identifies the attribute whose subject is
-of concern to the verifier.</li>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>directive</code> property. The value of
-this property <strong><strong>MUST</strong></strong>  be one of the following strings:
-<ul>
-<li><code>required</code> - This indicates that the processing entity <strong><strong>MUST</strong></strong>
-include proof that the subject of each attribute identified by a
-value in the <code>field_id</code> array is the same as the entity submitting
-the response.</li>
-<li><code>preferred</code> - This indicates that it is <strong><strong>RECOMMENDED</strong></strong> that the
-processing entity include proof that the subject of each attribute
-identified by a value in the <code>field_id</code> array is the same as the
-entity submitting the response.</li>
-</ul>
-</li>
-</ul>
-<p>The <code>is_holder</code> property would be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to
-require that certain inputs be provided by a certain subject. For
-example, an identity verification <code>presentation definition</code> might
-contain an <em>Input Descriptor</em> object for a birthdate from a birth
-certificate. In this case, the <a class="term-reference" href="#term:verifier">Verifier</a> would be able to require
-that the holder of the birth certificate claim is the same as the
-subject of the birthdate attribute. This is especially useful in cases
-where a claim may have multiple subjects.</p>
-<p>For more information about techniques used to prove binding to a holder,
-please see <a href="#holder-binding" ><em>Holder Binding</em></a>.</p>
-</li>
-<li>
-<p>The object <strong><strong>MAY</strong></strong> contain a <code>same_subject</code> property, and if present
-its value <strong><strong>MUST</strong></strong> be an array of objects composed as follows:</p>
-<ul>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>field_id</code> property. The value of
-this property <strong><strong>MUST</strong></strong> be an array of strings, with each string
-matching the string value from a
-<a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entry</em></a>
-object’s <code>id</code> property. This identifies the attributes whose subject
-is of concern to the verifier. It is important to note that the
-attributes <strong><strong>MAY</strong></strong> be identified in an
-<a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entry</em></a> of a
-different <a href="#input-descriptors" ><em>Input Descriptor</em></a> object.</li>
-<li>The object <strong><strong>MUST</strong></strong> contain a <code>directive</code> property. The value of
-this property <strong><strong>MUST</strong></strong>  be one of the following strings:
-<ul>
-<li><code>required</code> - This indicates that the processing entity <strong><strong>MUST</strong></strong>
-include proof that the subject of each attribute identified by a
-value in the <code>field_id</code> array is the same as the subject of the
-attributes identified by the other values in the <code>field_id</code> array.</li>
-<li><code>preferred</code> - This indicates that it is <strong><strong>RECOMMENDED</strong></strong> that the
-processing entity include proof that the subject of each attribute
-identified by a value in the <code>field_id</code> array is the same as the
-subject of the attributes identified by the other values in the
-<code>field_id</code> array.</li>
-</ul>
-</li>
-</ul>
-<p>The <code>same_subject</code> property would be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to
-require that certain provided inputs be about the same subject. For
-example, a <code>presentation definition</code> might contain an
-<a href="#input-descriptors" ><em>Input Descriptor</em></a> object which calls for a street
-address from a driver license claim and another
-<a href="#input-descriptors" ><em>Input Descriptor</em></a> object which calls for a name
-from a birth certificate claim. The <a class="term-reference" href="#term:verifier">Verifier</a> would be able to
-require that the subject of the street address attribute claim is the
-same as the subject of the name attribute.</p>
-</li>
-<li>
-<p>The object <strong><strong>MAY</strong></strong> contain a <code>fields</code> property, and its value
-<strong><strong>MUST</strong></strong> be an array of
-<a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entry</em></a> objects,
-each being composed as follows:</p>
-<ul>
-<li>
-<p>The object <strong><strong>MUST</strong></strong> contain a <code>path</code> property, and its value
-<strong><strong>MUST</strong></strong> be an array of one or more
-<a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> string
-expressions, as defined in the
-<a href="#jsonpath-syntax-definition" >JSONPath Syntax Definition</a> section,
-that select a target value from the input. The array <strong><strong>MUST</strong></strong>
-be evaluated from 0-index forward, and the first expressions to
-return a value will be used for the rest of the entry’s evaluation.
-The ability to declare multiple expressions this way allows the
-<a class="term-reference" href="#term:verifier">Verifier</a> to account for format differences - for
-example: normalizing the differences in structure between
-JSON-LD/JWT-based
-<a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3=""href="https://www.w3.org/TR/vc-data-model/" >Verifiable Credentials</a> and
-vanilla JSON Web Tokens (JWTs) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>].</p>
-</li>
-<li>
-<p>The object <strong><strong>MAY</strong></strong> contain an <code>id</code> property, and if present
-its value <strong><strong>MUST</strong></strong> be a string that is unique from any other
-field object’s <code>id</code> property.</p>
-</li>
-<li>
-<p>The object <strong><strong>MAY</strong></strong> contain a <code>purpose</code> property, and if present
-its value <strong><strong>MUST</strong></strong> be a string that describes the purpose for
-which the field is being requested.</p>
-</li>
-<li>
-<p>The object <strong><strong>MAY</strong></strong> contain a <code>filter</code> property, and if present
-its value <strong><strong>MUST</strong></strong> be
-<a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a> descriptor
-used to filter against the values returned from evaluation of the
-<a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> string
-expressions in the <code>path</code> array.</p>
-</li>
-<li>
-<p>The object <strong><strong>MAY</strong></strong> contain a <code>predicate</code> property. If the
-<code>predicate</code> property is present, the <code>filter</code> property <strong><strong>MUST</strong></strong>
-also be present. The inclusion of the <code>predicate</code> property
-indicates that the processing entity returns a boolean, rather than
-a value returned from evaluation of the
-<a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> string
-expressions in the <code>path</code> array. The boolean returned is the result
-of using the <code>filter</code> property’s
-<a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a>
-descriptors against the evaluated value. The value of <code>predicate</code>
-<strong><strong>MUST</strong></strong> be one of the following strings:</p>
-<ul>
-<li><code>required</code> - This indicates that the returned value <strong><strong>MUST</strong></strong>
-be the boolean result of applying the value of the <code>filter</code>
-property to the result of evaluating the <code>path</code> property.</li>
-<li><code>preferred</code> - This indicates that the returned value
-<strong><strong>SHOULD</strong></strong> be the boolean result of applying the value of the
-<code>filter</code> property to the result of evaluating the <code>path</code> property.</li>
-</ul>
-<p>If the <code>predicate</code> property is present, the set of JSON Schema
-descriptors which comprise the value of the <code>filter</code> property
-<strong><strong>MUST</strong></strong> be restricted according to the desired predicate
-operation, as follows:</p>
-<ul>
-<li>To express the following range proofs, use the JSON Schema
-<a path-0="json-schema.org"path-1="understanding-json-schema"path-2="reference"path-3="numeric.html#range"href="https://json-schema.org/understanding-json-schema/reference/numeric.html#range" >numeric range</a>
-properties:
-<ul>
-<li><code>greater-than</code> - Use the <code>exclusiveMinimum</code> descriptor. For
-example, to request a proof that an attribute is greater than
-10000:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
-  <span class="token property">"exclusiveMinimum"</span><span class="token operator">:</span> <span class="token number">10000</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span>
-</code></pre>
-</li>
-<li><code>less-than</code> - Use the <code>exclusiveMaximum</code> descriptor. For
-example, to request a proof that an attribute is less than 85:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
-  <span class="token property">"exclusiveMaximum"</span><span class="token operator">:</span> <span class="token number">85</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span>
-</code></pre>
-</li>
-<li><code>greater-than or equal-to</code> - Use the <code>minimum</code> descriptor. For
-example, to request a proof that an attribute is greater than or
-equal to 18:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
-  <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">18</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span>
-</code></pre>
-</li>
-<li><code>less-than or equal-to</code> - Use the <code>maximum</code> descriptor. For
-example, to request a proof that an attribute is less than or
-equal to 65536:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
-  <span class="token property">"maximum"</span><span class="token operator">:</span> <span class="token number">65536</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span>
-</code></pre>
-</li>
-</ul>
-</li>
-<li>to express the following equality proofs, use the JSON Schema
-<code>const</code> descriptor:
-<ul>
-<li><code>equal-to</code> - Use the <code>const</code> descriptor. For example to request
-proof that an attribute has the value “Chad”:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"const"</span><span class="token operator">:</span> <span class="token string">"Chad"</span>
-<span class="token punctuation">}</span>
-</code></pre>
-</li>
-<li><code>not equal-to</code> - Use the <code>const</code> descriptor with the <code>not</code>
-operator. For example, to request proof that an attribute does
-not have the value “Karen”:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"not"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"const"</span><span class="token operator">:</span> <span class="token string">"Karen"</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
-</li>
-</ul>
-</li>
-<li>to express set-membership proofs, use the JSON Schema <code>enum</code>
-descriptor:
-<ul>
-<li><code>in-set</code> - Use the <code>enum</code> descriptor. For example, to
-request proof that an attribute is contained in the set of
-rainbow colors:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
-  <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"red"</span><span class="token punctuation">,</span> <span class="token string">"yellow"</span><span class="token punctuation">,</span> <span class="token string">"blue"</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span>
-</code></pre>
-</li>
-<li><code>not-in-set</code> - Use the <code>enum</code> descriptor with the <code>not</code>
-operator. For example, to request proof that an attribute is not
-contained in the set of primary colors:<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"not"</span><span class="token operator">:</span> <span class="token punctuation">{</span> 
-    <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"red"</span><span class="token punctuation">,</span> <span class="token string">"yellow"</span><span class="token punctuation">,</span> <span class="token string">"blue"</span><span class="token punctuation">]</span> 
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-<p>At this time, additional predicate operations are not supported.</p>
-</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 <h3 id="input-evaluation"><a class="toc-anchor" href="#input-evaluation" >§</a> Input Evaluation</h3>
-<p>A consumer of a <em>Presentation Definition</em> must filter inputs they hold (signed
-claims, raw data, etc.) to determine whether they possess the inputs
-required to fulfill the demands of the Verifying party. A consumer of a
-<em>Presentation Definition</em> <strong><strong>SHOULD</strong></strong> use the following process to validate
-whether or not its candidate inputs meet the requirements it describes:</p>
-<p>For each <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> in the <code>input_descriptors</code> array of a <em>Presentation
-Definition</em>, a User Agent <strong><strong>should</strong></strong> compare each candidate input (JWT,
-Verifiable Credential, etc.) it holds to determine whether there is a match.
-Evaluate each candidate input as follows:</p>
+<p>A processing entity of a <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> must filter inputs they
+hold (signed <a class="term-reference" href="#term:claims">Claims</a>, raw data, etc.) to determine whether they possess
+the inputs requested by the <a class="term-reference" href="#term:verifier">Verifier</a>. A processing entity of a
+<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> <strong><strong>SHOULD</strong></strong> use the following process to
+validate whether or not its candidate inputs meet the requirements it describes:</p>
+<p>For each <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> in the <code>input_descriptors</code> array of a
+<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>, a processing entity <strong><strong>SHOULD</strong></strong> compare each
+candidate input (JWT, Verifiable Credential, etc.) it holds to determine whether
+there is a match.</p>
+<p>For each candidate input:</p>
 <ol>
-<li>The schema of the candidate input <strong><strong>must</strong></strong> match one of the <em>Input
-Descriptor</em> <code>schema</code> object <code>uri</code> values exactly. If the scheme is a
-hashlink or a similar value that points to immutable content, this means the
-content of the schema, not just the URI from which it is downloaded, must
-also match. If one of the values is an exact match, proceed, if there are no
-exact matches, skip to the next candidate input.</li>
-<li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present, and it
-contains a <code>fields</code> property with one or more
+<li>
+<p>The URI for the schema of the candidate input <strong><strong>MUST</strong></strong> match one of the
+<a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> <code>schema</code> object <code>uri</code> values exactly.</p>
+<p>If the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> <code>schema</code> object <code>uri</code> is a hashlink or
+similar value that points to immutable content, then the content of the
+retrieved schema must also match.</p>
+<p>If one of the values is an exact match, proceed, if there are no
+exact matches, skip to the next candidate input.</p>
+</li>
+<li>
+<p>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present,
+and it contains a <code>fields</code> property with one or more
 <a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entries</em></a>, evaluate
-each against the candidate input as follows:
+each against the candidate input as follows:</p>
 <ol>
 <li>Iterate the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> <code>path</code> array of
 <a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> string expressions
@@ -1343,68 +1388,81 @@ If no result is returned for any of the expressions, skip to the next
 candidate input.</li>
 <li>If the <code>filter</code> property of the field entry is present, validate the
 <em>Field Query Result</em> from the step above against the
-<a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a> descriptor value.</li>
+<a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a> descriptor
+value.</li>
 <li>If the <code>predicate</code> property of the field entry is present, a boolean
 value should be returned rather than the value of the <em>Field Query
 Result</em>. Calculate this boolean value by evaluating the <em>Field Query
 Result</em> against the
 <a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a> descriptor
 value of the <code>filter</code> property.</li>
-<li>If the result is valid, proceed iterating the rest of the <code>fields</code> entries.</li>
+<li>If the result is valid, proceed iterating the rest of the <code>fields</code>
+entries.</li>
 </ol>
 </li>
-<li>If all of the previous validation steps are successful, mark the candidate
-input as a match for use in a <em>Presentation Submission</em>, and if present at
-the top level of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a>, keep a relative reference to the
-<code>group</code> values the input is designated for.</li>
-<li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present and it
-contains a <code>limit_disclosure</code> property set to the boolean value <code>true</code>,
-ensure that any subsequent submission of data in relation to the candidate
-input is limited to the entries specified in the <code>fields</code> property. If the
-<code>fields</code> property <strong><strong>is not</strong></strong> present, or contains zero
+<li>
+<p>If all of the previous validation steps are successful, mark the candidate
+input as a match for use in a <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>.</p>
+<p>If present at the top level of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a>, keep a
+relative reference to the <code>group</code> values the input is designated for.</p>
+</li>
+<li>
+<p>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present,
+and it contains a <code>limit_disclosure</code> property set to the string value
+<code>required</code>, ensure that any subsequent submission of data in relation to the
+candidate input is limited to the entries specified in the <code>fields</code>
+property. If the <code>fields</code> property <strong><strong>is not</strong></strong> present, or contains zero
 <a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entries</em></a>,
-submission <strong><strong>SHOULD NOT</strong></strong> include any claim data from the claim.
-(for example: a <a class="term-reference" href="#term:verifier">Verifier</a> may simply want to know a Holder has a valid,
-signed claims of a particular type, without disclosing any of the
-data it contains).</li>
-<li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present, and it
-contains a <code>subject_is_issuer</code> property set to the value <code>required</code>, ensure
-that any submission of data in relation to the candidate input is fulfilled
-using a <em>self_attested</em> claim.</li>
-<li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present,
+submission <strong><strong>SHOULD NOT</strong></strong> include any <a class="term-reference" href="#term:claim">Claim</a> data from the
+<a class="term-reference" href="#term:claim">Claim</a>. For example, a <a class="term-reference" href="#term:verifier">Verifier</a> may simply want to know a
+<a class="term-reference" href="#term:holder">Holder</a> has a valid, signed <a class="term-reference" href="#term:claims">Claims</a> of a particular type,
+without disclosing any of the data it contains.</p>
+</li>
+<li>
+<p>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present,
+and it contains a <code>subject_is_issuer</code> property set to the value <code>required</code>,
+ensure that any submission of data in relation to the candidate input is
+fulfilled using a <em>self_attested</em> <a class="term-reference" href="#term:claim">Claim</a>.</p>
+</li>
+<li>
+<p>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present,
 and it contains an <code>is_holder</code> property, ensure that for each object in the
 array, any submission of data in relation to the candidate input is
-fulfilled by the subject of the attributes so identified by the strings in
-the <code>field_id</code> array.</li>
-<li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present,
+fulfilled by the <a class="term-reference" href="#term:subject">Subject</a> of the attributes so identified by the
+strings in the <code>field_id</code> array.</p>
+</li>
+<li>
+<p>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present,
 and it contains a <code>same_subject</code> property, ensure that for each object in
 the array, all of the attributes so identified by the strings in the
-<code>field_id</code> array are about the same subject.</li>
+<code>field_id</code> array are about the same <a class="term-reference" href="#term:subject">Subject</a>.</p>
+</li>
 </ol>
-<div id="note-1" class="notice note"><a class="notice-link" href="#note-1">NOTE</a><p>The above evaluation process assumes the User Agent will test each candidate
+<div id="note-1" class="notice note"><a class="notice-link" href="#note-1">NOTE</a><p>The above evaluation process assumes the proceng entity will test each candidate
 input (JWT, Verifiable Credential, etc.) it holds to determine if it meets the
 criteria for inclusion in submission. Any additional testing of a candidate
-input for a schema match beyond comparison of the schema <code>uri</code> (e.g. specific
+input for a schema match beyond comparison of the schema <code>uri</code> (e.g., specific
 requirements or details expressed in schema <code>metadata</code>) is at the discretion
 of the implementer.</p>
 </div>
-</div>
 <h4 id="expired-and-revoked-data"><a class="toc-anchor" href="#expired-and-revoked-data" >§</a> Expired and Revoked Data</h4>
-<p>Certain types of claims have concepts of <em>expiration</em> and <em>revocation</em>.
-<em>Expiration</em> is mechanism normally used to communicate a time bound up until
-which a claim is valid. <em>Revocation</em> is a mechanism normally used to give
-an issuer control over the status of a claim after issuance. Different
-claim specifications handle these concepts in different ways.</p>
-<p><code>Presentation Definitions</code> have a need to specify whether expired, revoked,
-or claims of other statuses can be accepted. For claims that have
-simple status properties <a href="#input-descriptor-objects" >Input Descriptor Filters</a>
-JSON Schema can be used to write specify acceptable criteria.</p>
-<p>The first example demonstrates <em>expiry</em> using the <a path-0="w3c.github.io"path-1="vc-data-model"path-2="#expiration-0"href="https://w3c.github.io/vc-data-model/#expiration-0" >VC Data Model’s
+<p>Certain types of <a class="term-reference" href="#term:claims">Claims</a> have concepts of <em>expiration</em> and <em>revocation</em>.
+<em>Expiration</em> is mechanism used to communicate a time after which a <a class="term-reference" href="#term:claim">Claim</a>
+will no longer be valid. <em>Revocation</em> is a mechanism used by an issuer to
+express the status of a <a class="term-reference" href="#term:claim">Claim</a> after issuance. Different <a class="term-reference" href="#term:claim">Claim</a>
+specifications handle these concepts in different ways.</p>
+<p><a class="term-reference" href="#term:presentation-definitions">Presentation Definitions</a> have a need to specify whether expired,
+revoked, or <a class="term-reference" href="#term:claims">Claims</a> of other statuses can be accepted. For <a class="term-reference" href="#term:claims">Claims</a>
+that have simple status properties,
+<a href="#input-descriptor-objects" >Input Descriptor Filters</a> JSON Schema can be used to
+specify acceptable criteria.</p>
+<p>The first example below demonstrates <em>expiry</em> using the <a path-0="w3c.github.io"path-1="vc-data-model"path-2="#expiration-0"href="https://w3c.github.io/vc-data-model/#expiration-0" >VC Data Model’s
 <code>expirationDate</code> property</a>.
-The second demonstrates <em>revocation</em>, or more generally, <em>credential status</em>
-using the <a path-0="w3c.github.io"path-1="vc-data-model"path-2="#status-0"href="https://w3c.github.io/vc-data-model/#status-0" >VC Data Model’s <code>credentialStatus</code> property</a>.
-Using the syntax provided in the example a <a class="term-reference" href="#term:verifier">Verifier</a> will have all requisite
-information to resolve the status of a claim.</p>
+The second example below demonstrates <em>revocation</em>, or more generally,
+<em>credential status</em> using the
+<a path-0="w3c.github.io"path-1="vc-data-model"path-2="#status-0"href="https://w3c.github.io/vc-data-model/#status-0" >VC Data Model’s <code>credentialStatus</code> property</a>.
+Using the syntax provided in the example, a <a class="term-reference" href="#term:verifier">Verifier</a> will have all
+requisite information to resolve the status of a <a class="term-reference" href="#term:claim">Claim</a>.</p>
 <tab-panels selected-index="0">
 <nav>
   <button type="button">Verifiable Credential Expiration</button>
@@ -1467,45 +1525,61 @@ information to resolve the status of a claim.</p>
 </div>
 </section>
 </tab-panel>
-<h4 id="holder-binding"><a class="toc-anchor" href="#holder-binding" >§</a> Holder Binding</h4>
-<p>Credentials often rely on proofs of holder binding for their validity. A
-verifier may wish to determine that a particular claim, or set of claims is
-bound to the claim holder. This can help the verifier to determine the
-legitimacy of the presented proofs. Some examples of holder binding include
-proof of identifier control, proof the holder knows a secret, or biometrics.</p>
-<p>The claim issuer makes proofs of holder binding possible by including holder
-information either in the claim or the claim signature.</p>
+<h4 id="holder-and-subject-binding"><a class="toc-anchor" href="#holder-and-subject-binding" >§</a> Holder and Subject Binding</h4>
+<p><a class="term-reference" href="#term:claims">Claims</a> often rely on proofs of <a class="term-reference" href="#term:holder">Holder</a> or <a class="term-reference" href="#term:subject">Subject</a> binding
+for their validity. A <a class="term-reference" href="#term:verifier">Verifier</a> may wish to determine that a particular
+<a class="term-reference" href="#term:claim">Claim</a>, or set of <a class="term-reference" href="#term:claims">Claims</a> is bound to a particular <a class="term-reference" href="#term:holder">Holder</a>
+or <a class="term-reference" href="#term:subject">Subject</a>. This can help the <a class="term-reference" href="#term:verifier">Verifier</a> to determine the
+legitimacy of the presented proofs.</p>
+<p>Some mechanisms which enable proof of <a class="term-reference" href="#term:holder">Holder</a> binding are described
+below. These include proof of identifier control, proof the <a class="term-reference" href="#term:holder">Holder</a> knows
+a secret value, and biometrics. An <a class="term-reference" href="#term:issuer">Issuer</a> can make proofs of
+<a class="term-reference" href="#term:holder">Holder</a> binding possible by including <a class="term-reference" href="#term:holder">Holder</a> information either
+in the <a class="term-reference" href="#term:claim">Claim</a> or the <a class="term-reference" href="#term:claim">Claim</a> signature.</p>
+<p>Some examples of <a class="term-reference" href="#term:subject">Subject</a> binding include matching the <a class="term-reference" href="#term:subject">Subject</a> of
+one <a class="term-reference" href="#term:claim">Claim</a> with that of another, or matching the <a class="term-reference" href="#term:subject">Subject</a> of a
+<a class="term-reference" href="#term:claim">Claim</a> with the <a class="term-reference" href="#term:holder">Holder</a>.</p>
 <h5 id="proof-of-identifier-control"><a class="toc-anchor" href="#proof-of-identifier-control" >§</a> Proof of Identifier Control</h5>
-<p>A number of claim types include an identifier for the claim subject. A verifier
-may wish to ascertain that one of the subject identified in the claim is the one
-submitting the proof, or has consented to the proof submission. A claim may also
-include an identifier for the holder, independent of the subject identifiers.</p>
-<p>One mechanism for providing such proofs is the use of a DID as the identifier
-for the claim subject or holder. DIDs enable an entity to provide a
-cryptographic proof of control of the identifier, usually through a
-demonstration that the holder knows some secret value, such as a private key.
-The holder can demonstrate the same proof of control when presenting the claim.
-In addition to verifying the authenticity and origin of the claim itself, a
-verifier can verify that the holder of the claim still controls the identifier.</p>
+<p>A number of <a class="term-reference" href="#term:claim">Claim</a> types include an identifier for the <a class="term-reference" href="#term:claim">Claim</a>
+<a class="term-reference" href="#term:subject">Subject</a>. A <a class="term-reference" href="#term:verifier">Verifier</a> may wish to ascertain that one of the
+<a class="term-reference" href="#term:subject">Subject</a> identified in the <a class="term-reference" href="#term:claim">Claim</a> is the one submitting the proof,
+or has consented to the proof submission. A <a class="term-reference" href="#term:claim">Claim</a> may also include an
+identifier for the <a class="term-reference" href="#term:holder">Holder</a>, independent of the <a class="term-reference" href="#term:subject">Subject</a>
+identifiers.</p>
+<p>One mechanism for providing such proofs is the use of a <a class="term-reference" href="#term:did">DID</a> as the
+identifier for the <a class="term-reference" href="#term:claim">Claim</a> <a class="term-reference" href="#term:subject">Subject</a> or <a class="term-reference" href="#term:holder">Holder</a>. DIDs enable
+an entity to provide a cryptographic proof of control of the identifier, usually
+through a demonstration that the <a class="term-reference" href="#term:did">DID</a> Controller knows some secret value,
+such as a private key.</p>
+<p>The <a class="term-reference" href="#term:holder">Holder</a> or <a class="term-reference" href="#term:subject">Subject</a> can demonstrate this proof of control when
+the <a class="term-reference" href="#term:claim">Claim</a> is presented. In addition to verifying the authenticity and
+origin of the <a class="term-reference" href="#term:claim">Claim</a> itself, a <a class="term-reference" href="#term:verifier">Verifier</a> can verify that the
+<a class="term-reference" href="#term:holder">Holder</a> or <a class="term-reference" href="#term:subject">Subject</a> of the <a class="term-reference" href="#term:claim">Claim</a> still controls the
+identifier.</p>
 <h5 id="link-secrets"><a class="toc-anchor" href="#link-secrets" >§</a> Link Secrets</h5>
-<p>Some claim signatures support the inclusion of holder-provided secrets that
-become incorporated into the signature, but remain hidden from the claim issuer.
-One common use of this capability is to bind the claim to the holder. This is
-sometimes called a link secret. Just as with proof of control of an identifier,
-link secret proofs demonstrate that the holder knows some secret value. Upon
-presentation to a verifier, the holder demonstrates knowledge of the secret
-without revealing it. The verifier can verify that the holder knows the link
-secret, and that the link secret is contained in the claim signature.</p>
+<p>Some <a class="term-reference" href="#term:claim">Claim</a> signatures support the inclusion of <a class="term-reference" href="#term:holder">Holder</a>-provided
+secrets that become incorporated into the signature, but remain hidden from the
+<a class="term-reference" href="#term:claim">Claim</a> issuer. One common use of this capability is to bind the
+<a class="term-reference" href="#term:claim">Claim</a> to the <a class="term-reference" href="#term:holder">Holder</a>. This is sometimes called a <em>link secret</em>.</p>
+<p>Just as with proof of control of an identifier, link secret proofs demonstrate
+that the <a class="term-reference" href="#term:holder">Holder</a> knows some secret value. Upon presentation to a
+<a class="term-reference" href="#term:verifier">Verifier</a>, the <a class="term-reference" href="#term:holder">Holder</a> demonstrates knowledge of the secret
+without revealing it. The <a class="term-reference" href="#term:verifier">Verifier</a> can verify that the <a class="term-reference" href="#term:holder">Holder</a>
+knows the link secret, and that the link secret is contained in the
+<a class="term-reference" href="#term:claim">Claim</a> signature. The <a class="term-reference" href="#term:holder">Holder</a> can provide this proof for each
+presented <a class="term-reference" href="#term:claim">Claim</a>, thereby linking them together.</p>
 <h5 id="biometrics"><a class="toc-anchor" href="#biometrics" >§</a> Biometrics</h5>
-<p>This type of holder binding, instead of relying on demonstrating knowledge of
-some secret value, relies on the evaluation of biometric data. There are a
-number of mechanisms for safely embedding biometric information in a claim such
-that only a person who can confirm the biometric may present the claim.</p>
+<p>This type of <a class="term-reference" href="#term:holder">Holder</a> binding, instead of relying on demonstrating
+knowledge of some secret value, relies on the evaluation of biometric data.
+There are a number of mechanisms for safely embedding biometric information in a
+<a class="term-reference" href="#term:claim">Claim</a> such that only a person who can confirm the biometric may present
+the <a class="term-reference" href="#term:claim">Claim</a>.</p>
 <h3 id="json-schema-2"><a class="toc-anchor" href="#json-schema-2" >§</a> JSON Schema</h3>
 <p>The following JSON Schema Draft 7 definition summarizes the
 format-related rules above:</p>
 <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"$schema"</span><span class="token operator">:</span> <span class="token string">"http://json-schema.org/draft-07/schema#"</span><span class="token punctuation">,</span>
+  <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"Presentation Definition"</span><span class="token punctuation">,</span>
   <span class="token property">"definitions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
@@ -1633,7 +1707,10 @@ format-related rules above:</p>
         <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
           <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-            <span class="token property">"limit_disclosure"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"boolean"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"limit_disclosure"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+              <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"required"</span><span class="token punctuation">,</span> <span class="token string">"preferred"</span><span class="token punctuation">]</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"statuses"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
               <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -1761,7 +1838,6 @@ format-related rules above:</p>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-        <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"format"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/format"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"submission_requirements"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
@@ -1781,70 +1857,80 @@ format-related rules above:</p>
 <span class="token punctuation">}</span>
 </code></pre>
 <h3 id="presentation-requests"><a class="toc-anchor" href="#presentation-requests" >§</a> Presentation Requests</h3>
-<p>Presentation Definitions may be sent from a <a class="term-reference" href="#term:verifier">Verifier</a> to a Holder using
-a wide variety of transport mechanisms or claim exchange protocols. This
-specification does not define a transport mechanism for <code>Presentation Definitions</code> (or <a class="term-reference" href="#term:presentation-request">Presentation Request</a>), but does note that different
-use cases, supported signature schemes, protocols, and threat models may
-require a <a class="term-reference" href="#term:presentation-request">Presentation Request</a>to have certain properties:</p>
+<p>A <a class="term-reference" href="#term:presentation-request">Presentation Request</a> is any transport mechanism used to send a
+<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> from a <a class="term-reference" href="#term:verifier">Verifier</a> to a <a class="term-reference" href="#term:holder">Holder</a>. A
+wide variety of transport mechanisms or <a class="term-reference" href="#term:claim">Claim</a> exchange protocols may be
+used to send <a class="term-reference" href="#term:presentation-definitions">Presentation Definitions</a>. This specification does not
+define <a class="term-reference" href="#term:presentation-requests">Presentation Requests</a> and is designed to be agnostic to them.
+Please note, however, that different use cases, supported signature schemes,
+protocols, and threat models may require a <a class="term-reference" href="#term:presentation-request">Presentation Request</a>to have
+certain properties. Some of these are expressed below:</p>
 <ul>
-<li>Signature verification - A Holder may wish to have assurances as to the
-provenance, identity, or status of a <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>. In this case,
-a <a class="term-reference" href="#term:presentation-request">Presentation Request</a> that uses digital signatures may be required.</li>
-<li><code>domain</code>, <code>challenge</code>, or <code>nonce</code> - Some presentation protocols may require
-that presentations be unique, i.e., it should be possible for a <a class="term-reference" href="#term:verifier">Verifier</a> to
-detect if a presentation has been used before. Other protocols may require
-that a presentation to be bound to a particular communication exchange, or
-session. In these cases, a <a class="term-reference" href="#term:presentation-request">Presentation Request</a> that provides a <code>domain</code>,
-<code>challenge</code>,or <code>nonce</code> property may be required.</li>
+<li>Signature verification -  Strongly identifying the entity making a request via
+a <a class="term-reference" href="#term:presentation-definition">presentation definition</a> is outside the scope of this specification,
+however a <a class="term-reference" href="#term:holder">Holder</a> may wish to have assurances as to the provenance,
+identity, or status of a <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>. In this case, a
+<a class="term-reference" href="#term:presentation-request">Presentation Request</a> that uses digital signatures may be required.</li>
+<li>Replay protection - Some presentation protocols may require that presentations
+be unique, i.e., it should be possible for a <a class="term-reference" href="#term:verifier">Verifier</a> to detect if a
+presentation has been used before. Other protocols may require that a
+presentation be bound to a particular communication exchange or session. In
+these cases, a <a class="term-reference" href="#term:presentation-request">Presentation Request</a> that provides a <code>domain</code>,
+<code>challenge</code>,or <code>nonce</code> value may be required.</li>
 </ul>
 <h2 id="presentation-submission"><a class="toc-anchor" href="#presentation-submission" >§</a> Presentation Submission</h2>
-<p><em>Presentation Submissions</em> are objects embedded within target claim
-negotiation formats that unify the presentation of proofs to a <a class="term-reference" href="#term:verifier">Verifier</a>
-in accordance with the requirements a <a class="term-reference" href="#term:verifier">Verifier</a> specified in a
-<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>. Embedded <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>
-objects <strong><strong>MUST</strong></strong> be located within target data format as a
-<code>presentation_submission</code> property, which are composed and embedded as follows:</p>
-<ol>
-<li>The <code>presentation_submission</code> object <strong><strong>MUST</strong></strong> be included at the top-level of an Embed Target, or in the specific location described in the
+<p><a class="term-reference" href="#term:presentation-submissions">Presentation Submissions</a> are objects embedded within target
+<a class="term-reference" href="#term:claim">Claim</a> negotiation formats that express how the inputs presented as
+proofs to a <a class="term-reference" href="#term:verifier">Verifier</a> are provided in accordance with the requirements
+specified in a <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>. Embedded
+<a class="term-reference" href="#term:presentation-submission">Presentation Submission</a> objects <strong><strong>MUST</strong></strong> be located within target
+data format as the value of a <code>presentation_submission</code> property, which is
+composed and embedded as follows:</p>
+<ul>
+<li>The <code>presentation_submission</code> object <strong><strong>MUST</strong></strong> be included at the
+top-level of an Embed Target, or in the specific location described in the
 <a href="#embed-locations" >Embed Locations table</a> in the <a href="#embed-target" >Embed Target</a>
 section below.</li>
-<li>The object <strong><strong>MUST</strong></strong> include <code>id</code> and <code>definition_id</code> properties.
-<ul>
-<li>The <code>id</code> property exists to uniquely identify the resource. The property
-<strong><strong>MUST</strong></strong> be a unique identifier, such as a <a path-0="tools.ietf.org"path-1="html"path-2="rfc4122"href="https://tools.ietf.org/html/rfc4122" >UUID</a>.</li>
-<li>The <code>definition_id</code> property exists to link the submission to
-its definition and <strong><strong>MUST</strong></strong> be the <code>id</code> value of a valid
+<li>The <code>presentation_submission</code> object <strong><strong>MUST</strong></strong> contain an <code>id</code> property.
+The value of this property <strong><strong>MUST</strong></strong> be a unique identifier, such as a
+<a path-0="tools.ietf.org"path-1="html"path-2="rfc4122"href="https://tools.ietf.org/html/rfc4122" >UUID</a>.</li>
+<li>The <code>presentation_submission</code> object <strong><strong>MUST</strong></strong> contain a <code>definition_id</code>
+property. e value of this property <strong><strong>MUST</strong></strong> be the <code>id</code> value of a valid
 <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>.</li>
-</ul>
-</li>
-<li>The object <strong><strong>MUST</strong></strong> include a <code>descriptor_map</code> property, and its value
-<strong><strong>MUST</strong></strong> be an array of <em>Input Descriptor Mapping Objects</em>, each being
-composed as follows:
+<li>The <code>presentation_submission</code> object <strong><strong>MUST</strong></strong> include a <code>descriptor_map</code>
+property. The value of this property <strong><strong>MUST</strong></strong> be an array of
+<em>Input Descriptor Mapping Objects</em>, composed as follows:
 <ul>
-<li>The object <strong><strong>MUST</strong></strong> include an <code>id</code> property, and its value
-<strong><strong>MUST</strong></strong> be a string matching the <code>id</code> property of the <em>Input
-Descriptor</em> in the <em>Presentation Definition</em> the submission is related to.</li>
-<li>The object <strong><strong>MUST</strong></strong> include a <code>format</code> property, and its value
-<strong><strong>MUST</strong></strong> be a string value matching one of the
-<a href="#claim-format-designations" >Claim Format Designation</a> (<code>jwt</code>,
-<code>jwt_vc</code>, <code>jwt_vp</code>, <code>ldp_vc</code>, <code>ldp_vp</code>, <code>ldp</code>), to denote what data format the claim is being
-submitted in.</li>
-<li>The object <strong><strong>MUST</strong></strong> include a <code>path</code> property, and its value
-<strong><strong>MUST</strong></strong> be a <a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a>
-string expression that selects the claim to be submit in relation
-to the identified <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> identified, when executed against
-the top-level of the object the <em>Presentation Submission</em> is embedded
-within.</li>
-<li>The object <strong><strong>MAY</strong></strong> include a <code>path_nested</code> object to specify the
-presence of a multi-claim envelope format, meaning the claim indending to be selected must be decoded separately from its parent enclosure.
+<li>The <code>descriptor_map</code> object <strong><strong>MUST</strong></strong> include an <code>id</code> property. The
+value of this property <strong><strong>MUST</strong></strong> be a string that matches the <code>id</code>
+property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> in the
+<a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> that this <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>
+is related to.</li>
+<li>The <code>descriptor_map</code> object <strong><strong>MUST</strong></strong> include a <code>format</code> property. The
+value of this property <strong><strong>MUST</strong></strong> be a string that matches one of the
+<a href="#claim-format-designations" >Claim Format Designation</a>. This denotes the
+data format of the <a class="term-reference" href="#term:claim">Claim</a>.</li>
+<li>The <code>descriptor_map</code> object <strong><strong>MUST</strong></strong> include a <code>path</code> property. The
+value of this property <strong><strong>MUST</strong></strong> be a
+<a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> string expression. The
+<code>path</code> property indicates the <a class="term-reference" href="#term:claim">Claim</a> submitted in relation to the
+identified <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a>, when executed against the top-level
+of the object the <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a> is embedded within.</li>
+<li>The object <strong><strong>MAY</strong></strong> include a <code>path_nested</code> object to indicate the
+presence of a multi-<a class="term-reference" href="#term:claim">Claim</a> envelope format. This means the
+<a class="term-reference" href="#term:claim">Claim</a> indicated is to be decoded separately from its parent
+enclosure.
 <ul>
-<li>The format of a <code>path_nested</code> object mirrors that of a <code>descriptor_map</code> property. The nesting may be any number of levels deep. The <code>id</code> property <strong><strong>MUST</strong></strong> be the same for each level of nesting.</li>
-<li>The <code>path</code> property inside each <code>path_nested</code> property provides a <em>relative path</em> within a given nested value.</li>
+<li>The format of a <code>path_nested</code> object mirrors that of a <code>descriptor_map</code>
+property. The nesting may be any number of levels deep. The <code>id</code>
+property <strong><strong>MUST</strong></strong> be the same for each level of nesting.</li>
+<li>The <code>path</code> property inside each <code>path_nested</code> property provides a
+<em>relative path</em> within a given nested value.</li>
 </ul>
 </li>
 </ul>
 </li>
-</ol>
+</ul>
 <h3 id="processing-of-path_nested-entries"><a class="toc-anchor" href="#processing-of-path_nested-entries" >§</a> Processing of <code>path_nested</code> Entries</h3>
 <p><strong><strong>Example Nested Submission</strong></strong></p>
 <pre class="language-javascript"><code class="language-javascript"><span class="token punctuation">{</span>
@@ -1870,52 +1956,59 @@ presence of a multi-claim envelope format, meaning the claim indending to be sel
   <span class="token punctuation">]</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p>When the <code>path_nested</code> property is present in a <em>Presentation Submission</em> object,
-process as follows:</p>
+<p>When the <code>path_nested</code> property is present in a <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>
+object, process as follows:</p>
 <ol>
-<li>For each Nested Submission Traversal Object in the <code>path_nested</code> array,
-process as follows:
-a. Execute the <a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> expression string
-on the <a href="#current-traversal-object" id="current-traversal-object" ><em>Current Traversal Object</em></a>, or if none is designated,
-the top level of the Embed Target.
-b. Decode and parse the value returned from <a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a>
-execution in accordance with the <a href="#claim-format-designations" >Claim Format Designation</a>
-specified in the object’s <code>format</code> property. If value parses and validates in accordance
-with the <a href="#claim-format-designations" >Claim Format Designation</a> specified, let
-the resulting object be the <a href="#current-traversal-object" ><em>Current Traversal Object</em></a>
-c. If present, process the next Nested Submission Traversal Object in the
+<li>For each <em>Nested Submission Traversal Object</em> in the <code>path_nested</code> array:
+<ol>
+<li>Execute the <a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a>
+expression string on the
+<a href="#current-traversal-object" id="current-traversal-object" ><em>Current Traversal Object</em></a>,
+or if none is designated, the top level of the Embed Target.</li>
+<li>Decode and parse the value returned from
+<a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> execution in
+accordance with the <a href="#claim-format-designations" >Claim Format Designation</a>
+specified in the object’s <code>format</code> property. If the value parses and
+validates in accordance with the
+<a href="#claim-format-designations" >Claim Format Designation</a> specified, let the
+resulting object be the
+<a href="#current-traversal-object" ><em>Current Traversal Object</em></a></li>
+<li>If present, process the next <em>Nested Submission Traversal Object</em> in the
 current <code>path_nested</code> property.</li>
-<li>If parsing of the Nested Submission Traversal Objects in the <code>path_nested</code>
+</ol>
+</li>
+<li>If parsing of the <em>Nested Submission Traversal Objects</em> in the <code>path_nested</code>
 property produced a valid value, process it as the submission against the
-<a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> indicated by the  <code>id</code> property of the containing
+<a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> indicated by the <code>id</code> property of the containing
 <em>Input Descriptor Mapping Object</em>.</li>
 </ol>
 <h3 id="limited-disclosure-submissions"><a class="toc-anchor" href="#limited-disclosure-submissions" >§</a> Limited Disclosure Submissions</h3>
-<p>If for all claims submitted in relation to
-<a href="#input-descriptor-objects" ><em>Input Descriptor Objects</em></a> that include a
-<code>constraints</code> object with a <code>limit_disclosure</code> property set to the boolean value
-<code>true</code>, ensure that the data submitted is limited to the entries specified in
-the <code>fields</code> property of the <code>constraints</code> object. If the <code>fields</code> property
-<strong><strong>is not</strong></strong> present, or contains zero
+<p>For all <a class="term-reference" href="#term:claims">Claims</a> submitted in relation to <a class="term-reference" href="#term:input-descriptor-objects">Input Descriptor Objects</a>
+that include a <code>constraints</code> object with a <code>limit_disclosure</code> property set to
+the string value <code>required</code>, ensure that the data submitted is limited to the
+entries specified in the <code>fields</code> property of the <code>constraints</code> object. If the
+<code>fields</code> property <strong><strong>is not</strong></strong> present, or contains zero
 <a href="#input-descriptor-field-entry" ><em>Input Descriptor Field Entries</em></a>, the
-submission <strong><strong>SHOULD NOT</strong></strong> include any claim data from the claim. (for
-example: a Verifier may simply want to know a Holder has a valid, signed
-claim of a particular type, without disclosing any of the data it contains).</p>
+submission <strong><strong>SHOULD NOT</strong></strong> include any data from the <a class="term-reference" href="#term:claim">Claim</a>. For
+example, a <a class="term-reference" href="#term:verifier">Verifier</a> may simply want to know whether a <a class="term-reference" href="#term:holder">Holder</a> has
+a valid, signed <a class="term-reference" href="#term:claim">Claim</a> of a particular type, without disclosing any of
+the data it contains.</p>
 <h3 id="validation-of-claims"><a class="toc-anchor" href="#validation-of-claims" >§</a> Validation of Claims</h3>
-<p>Once a claim has been ingested via a Presentation Submission, any validation
-beyond the process of evaluation defined by the <a href="#input-evaluation" >Input Evaluation</a>
-section is outside the scope of Presentation Exchange. Validation of signatures
-and other cryptographic proofs are a function of a given claim format, and
-should be evaluated in accordance with a given claim format’s standardized
-processing steps. Additional verification of claim data or subsequent
-validation required by a given <a class="term-reference" href="#term:verifier">Verifier</a> are left to the Verifier’s systems, code
-and business processes to define and execute.</p>
-<p>During validation, each Input Descriptor Object <strong><strong>MUST</strong></strong> refer to only a
-single discrete container within a <em>Presentation Submission</em>, such that all
-checks refer to properties within the same container and are protected by the
-same digital signature, if the container format supports digital signatures.
-Examples of discrete container formats include a single Verifiable Credential
-within a Verifiable Presentation as defined in
+<p>Once a <a class="term-reference" href="#term:claim">Claim</a> has been ingested via a <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>,
+any validation beyond the process of evaluation defined by the
+<a href="#input-evaluation" >Input Evaluation</a> section is outside the scope of
+Presentation Exchange. Validation of signatures and other cryptographic proofs
+are a function of the given <a class="term-reference" href="#term:claim">Claim</a> format, and should be evaluated in
+accordance with the given <a class="term-reference" href="#term:claim">Claim</a> format’s standardized processing steps.
+Additional verification of <a class="term-reference" href="#term:claim">Claim</a> data or subsequent validation required
+by a given <a class="term-reference" href="#term:verifier">Verifier</a> are left to the <a class="term-reference" href="#term:verifier">Verifier</a>'s systems, code and
+business processes to define and execute.</p>
+<p>During validation, each <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> Object <strong><strong>MUST</strong></strong> only refer
+to a single discrete container within a <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>, such
+that all checks refer to properties within the same container and are protected
+by the same digital signature, if the container format supports digital
+signatures. Examples of discrete container formats include a single Verifiable
+Credential within a Verifiable Presentation as defined in
 <a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3=""href="https://www.w3.org/TR/vc-data-model/" >W3C Verifiable Credentials</a>, OpenID
 Connect Tokens, and JSON Web Tokens. This is to ensure that related
 requirements, for example, “given name” and “family name” within the same
@@ -1924,7 +2017,7 @@ requirements, for example, “given name” and “family name” within the sam
 <p>The following section details where the <em>Presentation Submission</em> is to be
 embedded within a target data structure, as well as how to formulate the
 <a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> expressions to select the
-claims within the target data structure.</p>
+<a class="term-reference" href="#term:claims">Claims</a> within the target data structure.</p>
 <h4 id="embed-locations"><a class="toc-anchor" href="#embed-locations" >§</a> Embed Locations</h4>
 <p>The following are the locations at which the <code>presentation_submission</code> object
 <strong><strong>MUST</strong></strong> be embedded for known target formats. For any location besides
@@ -1967,7 +2060,6 @@ the top level of the embed target, the location is described in JSONPath syntax.
       <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"id"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"definition_id"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-        <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
         <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
           <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"$ref"</span><span class="token operator">:</span> <span class="token string">"#/definitions/descriptor"</span> <span class="token punctuation">}</span>
@@ -2002,31 +2094,35 @@ the top level of the embed target, the location is described in JSONPath syntax.
 </code></pre>
 <h2 id="claim-format-designations"><a class="toc-anchor" href="#claim-format-designations" >§</a> Claim Format Designations</h2>
 <p>Within the <em>Presentation Exchange</em> specification, there are numerous sections
-where <a class="term-reference" href="#term:verifiers">Verifiers</a> and Holders convey what claim variants they support and
-are submitting. The following are the normalized references used within the
-specification:</p>
+where <a class="term-reference" href="#term:verifiers">Verifiers</a> and <a class="term-reference" href="#term:holders">Holders</a> convey what <a class="term-reference" href="#term:claim">Claim</a> variants
+they support and are submitting. The following are the normalized references
+used within the specification:</p>
 <ul>
 <li><code>jwt</code> - the format is a JSON Web Token (JWTs) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>]
 that will be submitted in the form of a JWT encoded string. Expression of
-supported algorithms in relation to this format <strong><strong>MUST</strong></strong> be conveyed using an <code>alg</code> property
-paired with values that are identifiers from the
-JSON Web Algorithms registry [<a class="spec-reference" href="#ref:RFC7518">RFC7518</a>].</li>
+supported algorithms in relation to this format <strong><strong>MUST</strong></strong> be conveyed using
+an <code>alg</code> property paired with values that are identifiers from the JSON Web
+Algorithms registry [<a class="spec-reference" href="#ref:RFC7518">RFC7518</a>].</li>
 <li><code>jwt_vc</code>, <code>jwt_vp</code> - these formats are JSON Web Tokens (JWTs) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>]
-that will be submitted in the form of a JWT encoded string, and the body of the decoded
-JWT string is defined in the JSON Web Token (JWT) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>] section
-of the <a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3="#json-web-token"href="https://www.w3.org/TR/vc-data-model/#json-web-token" >W3C Verifiable Credentials specification</a>.
-Expression of supported algorithms in relation to these formats <strong><strong>MUST</strong></strong> be conveyed using
-an <code>alg</code> property paired with values that are identifiers from the JSON Web Algorithms registry
-[<a class="spec-reference" href="#ref:RFC7518">RFC7518</a>].</li>
-<li><code>ldp_vc</code>, <code>ldp_vp</code> - these formats are W3C Verifiable Credentials [<a class="spec-reference" href="#ref:VC-DATA-MODEL">VC-DATA-MODEL</a>]
-that will be submitted in the form of a JSON object. Expression of supported
-algorithms in relation to these formats <strong><strong>MUST</strong></strong> be conveyed using a <code>proof_type</code> property
-paired with values that are identifiers from the
+that will be submitted in the form of a JWT encoded string, and the body of
+the decoded JWT string is defined in the JSON Web Token (JWT) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>]
+section of the
+<a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3="#json-web-token"href="https://www.w3.org/TR/vc-data-model/#json-web-token" >W3C Verifiable Credentials specification</a>.
+Expression of supported algorithms in relation to these formats <strong><strong>MUST</strong></strong>
+be conveyed using an <code>alg</code> property paired with values that are identifiers
+from the JSON Web Algorithms registry [<a class="spec-reference" href="#ref:RFC7518">RFC7518</a>].</li>
+<li><code>ldp_vc</code>, <code>ldp_vp</code> - these formats are W3C Verifiable Credentials
+[<a class="spec-reference" href="#ref:VC-DATA-MODEL">VC-DATA-MODEL</a>] that will be submitted in the form of a JSON object.
+Expression of supported algorithms in relation to these formats <strong><strong>MUST</strong></strong>
+be conveyed using a <code>proof_type</code> property paired with values that are
+identifiers from the
 <a path-0="w3c-ccg.github.io"path-1="ld-cryptosuite-registry"path-2=""href="https://w3c-ccg.github.io/ld-cryptosuite-registry/" >Linked Data Cryptographic Suite Registry</a>.</li>
-<li><code>ldp</code> - this format is defined in the <a path-0="w3c-ccg.github.io"path-1="ld-proofs"path-2=""href="https://w3c-ccg.github.io/ld-proofs/" >W3C CCG Linked Data Proofs</a>
-specification [[spec: Linked Data Proofs]], and will be submitted as objects. Expression of supported algorithms
-in relation to these formats <strong><strong>MUST</strong></strong> be conveyed using a <code>proof_type</code> property
-with values that are identifiers from the
+<li><code>ldp</code> - this format is defined in the
+<a path-0="w3c-ccg.github.io"path-1="ld-proofs"path-2=""href="https://w3c-ccg.github.io/ld-proofs/" >W3C CCG Linked Data Proofs</a>
+specification [[spec: Linked Data Proofs]], and will be submitted as objects.
+Expression of supported algorithms in relation to these formats <strong><strong>MUST</strong></strong>
+be conveyed using a <code>proof_type</code> property with values that are identifiers
+from the
 <a path-0="w3c-ccg.github.io"path-1="ld-cryptosuite-registry"path-2=""href="https://w3c-ccg.github.io/ld-cryptosuite-registry/" >Linked Data Cryptographic Suite Registry</a>.</li>
 </ul>
 <h2 id="json-schema-vocabulary-definition"><a class="toc-anchor" href="#json-schema-vocabulary-definition" >§</a> JSON Schema Vocabulary Definition</h2>
@@ -2562,7 +2658,9 @@ specification that call for JSONPath expression execution.</p>
 </ul>
 <h3 id="iana-considerations"><a class="toc-anchor" href="#iana-considerations" >§</a> IANA Considerations</h3>
 <h4 id="json-web-token-claims-registration"><a class="toc-anchor" href="#json-web-token-claims-registration" >§</a> JSON Web Token Claims Registration</h4>
-<p>This specification registers the claims in section <a href="" >Registry Contents</a> in the IANA JSON Web Token Claims registry defined in <a path-0="tools.ietf.org"path-1="html"path-2="rfc7519"href="https://tools.ietf.org/html/rfc7519" >RFC 751 JSON Web Token (JWT)</a>.</p>
+<p>This specification registers the <a class="term-reference" href="#term:claims">Claims</a> in section <a href="" >Registry Contents</a>
+in the IANA JSON Web Token <a class="term-reference" href="#term:claims">Claims</a> registry defined in
+<a path-0="tools.ietf.org"path-1="html"path-2="rfc7519"href="https://tools.ietf.org/html/rfc7519" >RFC 751 JSON Web Token (JWT)</a>.</p>
 <h5 id="registry-contents"><a class="toc-anchor" href="#registry-contents" >§</a> Registry Contents</h5>
 <table>
 <thead>
@@ -2643,9 +2741,13 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="#abstract" >Abstract</a></li>
 <li><a href="#status-of-this-document" >Status of This Document</a></li>
 <li><a href="#terminology" >Terminology</a></li>
-<li><a href="#localization" >Localization</a></li>
 <li><a href="#presentation-definition" >Presentation Definition</a>
 <ul>
+<li><a href="#input-descriptors" >Input Descriptors</a>
+<ul>
+<li><a href="#input-descriptor-objects" >Input Descriptor Objects</a></li>
+</ul>
+</li>
 <li><a href="#submission-requirements" >Submission Requirements</a>
 <ul>
 <li><a href="#submission-requirement-objects" >Submission Requirement Objects</a></li>
@@ -2654,15 +2756,10 @@ specification that call for JSONPath expression execution.</p>
 <li><a href="#property-values-and-evaluation" >Property Values and Evaluation</a></li>
 </ul>
 </li>
-<li><a href="#input-descriptors" >Input Descriptors</a>
-<ul>
-<li><a href="#input-descriptor-objects" >Input Descriptor Objects</a></li>
-</ul>
-</li>
 <li><a href="#input-evaluation" >Input Evaluation</a>
 <ul>
 <li><a href="#expired-and-revoked-data" >Expired and Revoked Data</a></li>
-<li><a href="#holder-binding" >Holder Binding</a></li>
+<li><a href="#holder-and-subject-binding" >Holder and Subject Binding</a></li>
 </ul>
 </li>
 <li><a href="#json-schema-2" >JSON Schema</a></li>

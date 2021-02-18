@@ -1,0 +1,64 @@
+{
+  "presentation_definition": {
+    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
+    "input_descriptors": [
+      {
+        "id": "banking_input_1",
+        "name": "Bank Account Information",
+        "purpose": "We need your bank and account information.",
+        "group": [
+          "A"
+        ],
+        "schema": [
+          {
+            "uri": "https://bank-schemas.org/1.0.0/accounts.json"
+          },
+          {
+            "uri": "https://bank-schemas.org/2.0.0/accounts.json"
+          }
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.issuer",
+                "$.vc.issuer",
+                "$.iss"
+              ],
+              "purpose": "The claim must be from one of the specified issuers",
+              "filter": {
+                "type": "string",
+                "pattern": "did:example:123|did:example:456"
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.account[*].id",
+                "$.vc.credentialSubject.account[*].id",
+                "$.account[*].id"
+              ],
+              "purpose": "We need your bank account number for processing purposes",
+              "filter": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 12
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.account[*].route",
+                "$.vc.credentialSubject.account[*].route",
+                "$.account[*].route"
+              ],
+              "purpose": "You must have an account with a German, US, or Japanese bank account",
+              "filter": {
+                "type": "string",
+                "pattern": "^DE|^US|^JP"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -6,19 +6,17 @@
         "id": "banking_input",
         "name": "Bank Account Information",
         "purpose": "We need your bank and account information.",
-        "schema": [{
-          "uri": "https://bank-standards.com/customer.json"
-        }],
+        "schema": [
+          {
+            "uri": "https://bank-standards.com/customer.json"
+          }
+        ],
         "constraints": {
           "limit_disclosure": "required",
           "fields": [
             {
-              "path": [
-                "$.issuer",
-                "$.vc.issuer",
-                "$.iss"
-              ],
-              "purpose": "The credential must be from one of the specified issuers",
+              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
+              "purpose": "The claim must be from one of the specified issuers",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
@@ -30,29 +28,24 @@
       {
         "id": "citizenship_input",
         "name": "US Passport",
-        "schema": [{
-          "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
-        }],
+        "schema": [
+          {
+            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
+          }
+        ],
         "constraints": {
-          "is_holder": {
-            "field_id": ["1"],
-            "directive": "required"
-          },
           "fields": [
             {
-              "id": "1",
-              "path": [
-                "$.credentialSubject.birth_date",
-                "$.vc.credentialSubject.birth_date",
-                "$.birth_date"
-              ],
+              "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {
-                "type": "date",
+                "type": "string",
+                "format": "date",
                 "minimum": "1999-5-16"
               }
             }
           ]
         }
+
       }
     ]
   }
