@@ -9,7 +9,7 @@ Presentation Exchange
 **Editors:**
 ~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Microsoft)
 ~ [Brent Zundel](https://www.linkedin.com/in/bzundel/) (Evernym)
-~ [Martin Riedel](https://www.linkedin.com/in/rado0x54/) (Civic Technologies)
+~ [Martin Riedel](https://www.linkedin.com/in/rado0x54/) (Consensys Mesh)
 
 **Contributors:**
 ~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
@@ -205,7 +205,7 @@ requirement.
           }
         ],
         "constraints": {
-          "limit_disclosure": true,
+          "limit_disclosure": "required",
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
@@ -363,7 +363,7 @@ requirement.
           }
         ],
         "constraints": {
-          "limit_disclosure": true,
+          "limit_disclosure": "required",
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
@@ -562,6 +562,8 @@ be ignored:
       ```json
       {
         "presentation_definition": {
+          "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
+          "input_descriptors": [...],
           "format": {
             "jwt": {
               "alg": ["EdDSA", "ES256K", "ES384"]
@@ -674,33 +676,35 @@ values, and an explanation why a certain item or set of data is being requested:
 
 ::: example
 ```json
-{
-  "id": "employment_input_xyz_gov",
-  "group": ["B"],
-  "schema": [
-    {
-      "uri": "https://login.idp.com/xyz.gov/.well-known/openid-configuration",
-      "required": true
-    }
-  ],
-  "name": "Verify XYZ Government Employment",
-  "purpose": "We need to know if you currently work at an agency in the XYZ government",
-  "metadata": {
-    "client_id": "40be4fb5-7f3a-470b-aa37-66ed43821bd7",
-    "redirect_uri": "https://tokens.xyz.gov/verify"
-  },
-  "constraints": {
-    "fields": [
+"input_descriptors": [
+  {
+    "id": "employment_input_xyz_gov",
+    "group": ["B"],
+    "schema": [
       {
-        "path": ["$.status"],
-        "filter": {
-          "type": "string",
-          "pattern": "active"
-        }
+        "uri": "https://login.idp.com/xyz.gov/.well-known/openid-configuration",
+        "required": true
       }
-    ]
+    ],
+    "name": "Verify XYZ Government Employment",
+    "purpose": "We need to know if you currently work at an agency in the XYZ government",
+    "metadata": {
+      "client_id": "40be4fb5-7f3a-470b-aa37-66ed43821bd7",
+      "redirect_uri": "https://tokens.xyz.gov/verify"
+    },
+    "constraints": {
+      "fields": [
+        {
+          "path": ["$.status"],
+          "filter": {
+            "type": "string",
+            "pattern": "active"
+          }
+        }
+      ]
+    }
   }
-}
+]
 ```
 
 </section>
@@ -1262,6 +1266,8 @@ format-related rules above:
               "enum": ["all", "pick"]
             },
             "count": { "type": "integer", "minimum": 1 },
+            "min": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 },
             "from": { "type": "string" }
           },
           "required": ["rule", "from"],
@@ -1276,6 +1282,8 @@ format-related rules above:
               "enum": ["all", "pick"]
             },
             "count": { "type": "integer", "minimum": 1 },
+            "min": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 },
             "from_nested": {
               "type": "array",
               "minItems": 1,
@@ -1470,7 +1478,7 @@ requisite information to resolve the status of a [[ref:Claim]].
         "filter": {
           "type": "string",
           "format": "date-time",
-          "min": "2020-12-31T23:59:59.000Z"
+          "minimum": "2020-12-31T23:59:59.000Z"
         }
       }
     ]
@@ -1578,6 +1586,7 @@ format-related rules above:
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Presentation Definition",
   "definitions": {
     "schema": {
       "type": "object",
@@ -1929,28 +1938,29 @@ composed and embedded as follows:
 
 ****Example Nested Submission****
 
-```javascript
+```json
 {
   "presentation_submission": {
     "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
-    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-    "descriptor_map": [
-      { 
+      "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
+      "descriptor_map": [
+      {
         "id": "banking_input_2",
         "format": "jwt_vp",
         "path": "$.outerClaim[0]",
         "path_nested": {
+          "id": "banking_input_2",
+          "format": "ldp_vc",
+          "path": "$.innerClaim[1]",
+          "path_nested": {
             "id": "banking_input_2",
-            "format": "ldp_vc",
-            "path": "$.innerClaim[1]",
-            "path_nested": {
-                "id": "banking_input_2",
-                "format": "jwt_vc",
-                "path": "$.mostInnerClaim[2]"
-            }
+            "format": "jwt_vc",
+            "path": "$.mostInnerClaim[2]"
+          }
         }
-    }
-  ]
+      }
+    ]
+  }
 }
 ```
 
