@@ -70,5 +70,27 @@ describe('Presentation Definition', function () {
       assert.equal(null, validate.errors);
       assert.equal(true, valid);
     });
+
+    it('should validate the VC expiration example object using JSON Schema Draft 7', function () {
+      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const data = JSON.parse(fs.readFileSync(__dirname + '/VC_expiration_example.json'));
+      const jv = new ajv({allErrors: true});
+      const validate = jv.compile(schema);
+      const valid = validate(data);
+
+      assert.equal(null, validate.errors);
+      assert.equal(true, valid);
+    });
+
+    it('should validate the VC revocation example object using JSON Schema Draft 7', function () {
+      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const data = JSON.parse(fs.readFileSync(__dirname + '/VC_revocation_example.json'));
+      const jv = new ajv({allErrors: true});
+      const validate = jv.compile(schema);
+      const valid = validate(data);
+
+      assert.equal(null, validate.errors);
+      assert.equal(true, valid);
+    });
   });
 });

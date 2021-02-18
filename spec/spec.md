@@ -1253,6 +1253,8 @@ format-related rules above:
               "enum": ["all", "pick"]
             },
             "count": { "type": "integer", "minimum": 1 },
+            "min": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 },
             "from": { "type": "string" }
           },
           "required": ["rule", "from"],
@@ -1267,6 +1269,8 @@ format-related rules above:
               "enum": ["all", "pick"]
             },
             "count": { "type": "integer", "minimum": 1 },
+            "min": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 },
             "from_nested": {
               "type": "array",
               "minItems": 1,
@@ -1463,7 +1467,7 @@ requisite information to resolve the status of a [[ref:Claim]].
         "filter": {
           "type": "string",
           "format": "date-time",
-          "min": "2020-12-31T23:59:59.000Z"
+          "minimum": "2020-12-31T23:59:59.000Z"
         }
       }
     ]
@@ -1923,28 +1927,29 @@ composed and embedded as follows:
 
 ****Example Nested Submission****
 
-```javascript
+```json
 {
   "presentation_submission": {
     "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
-    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-    "descriptor_map": [
-      { 
+      "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
+      "descriptor_map": [
+      {
         "id": "banking_input_2",
         "format": "jwt_vp",
         "path": "$.outerClaim[0]",
         "path_nested": {
+          "id": "banking_input_2",
+          "format": "ldp_vc",
+          "path": "$.innerClaim[1]",
+          "path_nested": {
             "id": "banking_input_2",
-            "format": "ldp_vc",
-            "path": "$.innerClaim[1]",
-            "path_nested": {
-                "id": "banking_input_2",
-                "format": "jwt_vc",
-                "path": "$.mostInnerClaim[2]"
-            }
+            "format": "jwt_vc",
+            "path": "$.mostInnerClaim[2]"
+          }
         }
-    }
-  ]
+      }
+    ]
+  }
 }
 ```
 

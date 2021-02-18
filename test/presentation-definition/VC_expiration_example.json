@@ -1,0 +1,34 @@
+{
+  "presentation_definition": {
+    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
+    "input_descriptors": [
+      {
+        "id": "drivers_license_information",
+        "name": "Verify Valid License",
+        "purpose": "We need to know you have a license valid through December.",
+        "metadata": {
+          "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
+          "redirect_uri": "https://yourwatchful.gov/verify"
+        },
+        "schema": [
+          {
+            "uri": "https://yourwatchful.gov/drivers-license-schema.json",
+            "required": true
+          }
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": ["$.expirationDate"],
+              "filter": {
+                "type": "string",
+                "format": "date-time",
+                "minimum": "2020-12-31T23:59:59.000Z"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

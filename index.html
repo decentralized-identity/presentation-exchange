@@ -559,6 +559,8 @@ format-specific algorithmic identifier references, as noted in the
 <p>For example:</p>
 <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
+    <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>...<span class="token punctuation">]</span><span class="token punctuation">,</span>
     <span class="token property">"format"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"jwt"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"alg"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"EdDSA"</span><span class="token punctuation">,</span> <span class="token string">"ES256K"</span><span class="token punctuation">,</span> <span class="token string">"ES384"</span><span class="token punctuation">]</span>
@@ -663,33 +665,35 @@ values, and an explanation why a certain item or set of data is being requested:
 </div>
 </section>
 <section>
-<div id="example-2" class="notice example"><a class="notice-link" href="#example-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
-  <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">{</span>
-      <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://login.idp.com/xyz.gov/.well-known/openid-configuration"</span><span class="token punctuation">,</span>
-      <span class="token property">"required"</span><span class="token operator">:</span> <span class="token boolean">true</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify XYZ Government Employment"</span><span class="token punctuation">,</span>
-  <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you currently work at an agency in the XYZ government"</span><span class="token punctuation">,</span>
-  <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"40be4fb5-7f3a-470b-aa37-66ed43821bd7"</span><span class="token punctuation">,</span>
-    <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://tokens.xyz.gov/verify"</span>
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<div id="example-2" class="notice example"><a class="notice-link" href="#example-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input_xyz_gov"</span><span class="token punctuation">,</span>
+    <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
-        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.status"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-          <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
-          <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"active"</span>
-        <span class="token punctuation">}</span>
+        <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://login.idp.com/xyz.gov/.well-known/openid-configuration"</span><span class="token punctuation">,</span>
+        <span class="token property">"required"</span><span class="token operator">:</span> <span class="token boolean">true</span>
       <span class="token punctuation">}</span>
-    <span class="token punctuation">]</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Verify XYZ Government Employment"</span><span class="token punctuation">,</span>
+    <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We need to know if you currently work at an agency in the XYZ government"</span><span class="token punctuation">,</span>
+    <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"client_id"</span><span class="token operator">:</span> <span class="token string">"40be4fb5-7f3a-470b-aa37-66ed43821bd7"</span><span class="token punctuation">,</span>
+      <span class="token property">"redirect_uri"</span><span class="token operator">:</span> <span class="token string">"https://tokens.xyz.gov/verify"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"$.status"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+            <span class="token property">"pattern"</span><span class="token operator">:</span> <span class="token string">"active"</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
 </code></pre>
 </section>
 </tab-panels>
@@ -1274,6 +1278,8 @@ format-related rules above:</p>
               <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"all"</span><span class="token punctuation">,</span> <span class="token string">"pick"</span><span class="token punctuation">]</span>
             <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"count"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"min"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"max"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"from"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">}</span>
           <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"rule"</span><span class="token punctuation">,</span> <span class="token string">"from"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -1288,6 +1294,8 @@ format-related rules above:</p>
               <span class="token property">"enum"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"all"</span><span class="token punctuation">,</span> <span class="token string">"pick"</span><span class="token punctuation">]</span>
             <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"count"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"min"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"max"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
             <span class="token property">"from_nested"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
               <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"array"</span><span class="token punctuation">,</span>
               <span class="token property">"minItems"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
@@ -1490,7 +1498,7 @@ requisite information to resolve the status of a <a class="term-reference" href=
         <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
           <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"date-time"</span><span class="token punctuation">,</span>
-          <span class="token property">"min"</span><span class="token operator">:</span> <span class="token string">"2020-12-31T23:59:59.000Z"</span>
+          <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token string">"2020-12-31T23:59:59.000Z"</span>
         <span class="token punctuation">}</span>
       <span class="token punctuation">}</span>
     <span class="token punctuation">]</span>
@@ -1933,27 +1941,28 @@ property <strong><strong>MUST</strong></strong> be the same for each level of ne
 </ul>
 <h3 id="processing-of-path_nested-entries"><a class="toc-anchor" href="#processing-of-path_nested-entries" >§</a> Processing of <code>path_nested</code> Entries</h3>
 <p><strong><strong>Example Nested Submission</strong></strong></p>
-<pre class="language-javascript"><code class="language-javascript"><span class="token punctuation">{</span>
-  <span class="token string">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token string">"id"</span><span class="token operator">:</span> <span class="token string">"a30e3b91-fb77-4d22-95fa-871689c322e2"</span><span class="token punctuation">,</span>
-    <span class="token string">"definition_id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
-    <span class="token string">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-      <span class="token punctuation">{</span> 
-        <span class="token string">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
-        <span class="token string">"format"</span><span class="token operator">:</span> <span class="token string">"jwt_vp"</span><span class="token punctuation">,</span>
-        <span class="token string">"path"</span><span class="token operator">:</span> <span class="token string">"$.outerClaim[0]"</span><span class="token punctuation">,</span>
-        <span class="token string">"path_nested"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-            <span class="token string">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
-            <span class="token string">"format"</span><span class="token operator">:</span> <span class="token string">"ldp_vc"</span><span class="token punctuation">,</span>
-            <span class="token string">"path"</span><span class="token operator">:</span> <span class="token string">"$.innerClaim[1]"</span><span class="token punctuation">,</span>
-            <span class="token string">"path_nested"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-                <span class="token string">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
-                <span class="token string">"format"</span><span class="token operator">:</span> <span class="token string">"jwt_vc"</span><span class="token punctuation">,</span>
-                <span class="token string">"path"</span><span class="token operator">:</span> <span class="token string">"$.mostInnerClaim[2]"</span>
-            <span class="token punctuation">}</span>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"a30e3b91-fb77-4d22-95fa-871689c322e2"</span><span class="token punctuation">,</span>
+      <span class="token property">"definition_id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
+      <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
+        <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"jwt_vp"</span><span class="token punctuation">,</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.outerClaim[0]"</span><span class="token punctuation">,</span>
+        <span class="token property">"path_nested"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
+          <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"ldp_vc"</span><span class="token punctuation">,</span>
+          <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.innerClaim[1]"</span><span class="token punctuation">,</span>
+          <span class="token property">"path_nested"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
+            <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"jwt_vc"</span><span class="token punctuation">,</span>
+            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.mostInnerClaim[2]"</span>
+          <span class="token punctuation">}</span>
         <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
 <p>When the <code>path_nested</code> property is present in a <a class="term-reference" href="#term:presentation-submission">Presentation Submission</a>
