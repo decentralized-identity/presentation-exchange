@@ -13,7 +13,7 @@ const ajv = require('ajv');
  * 	or more proofs from category B. I don't see a way to model that
  * 	real-world use case. It think that's because we imagine the rules to
  * 	only exist *within* a single requirement, never across requirements.
- * 	And we don't imagine arbitrary combinations of booleans.  
+ * 	And we don't imagine arbitrary combinations of booleans.
  *
  * reponse here:
  * 	we will support all of the above except for the "or more" specifier for
@@ -26,6 +26,50 @@ describe('Submission Requirement', function () {
     it('should validate the example object using JSON Schema Draft 7', function () {
       const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
       const data = JSON.parse(fs.readFileSync(__dirname + '/example.json'));
+      const jv = new ajv({allErrors: true});
+      const validate = jv.compile(schema);
+      const valid = validate(data);
+
+      assert.equal(null, validate.errors);
+      assert.equal(true, valid);
+    });
+
+    it('should validate the all example object using JSON Schema Draft 7', function () {
+      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const data = JSON.parse(fs.readFileSync(__dirname + '/all_example.json'));
+      const jv = new ajv({allErrors: true});
+      const validate = jv.compile(schema);
+      const valid = validate(data);
+
+      assert.equal(null, validate.errors);
+      assert.equal(true, valid);
+    });
+
+    it('should validate the pick 1 example object using JSON Schema Draft 7', function () {
+      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const data = JSON.parse(fs.readFileSync(__dirname + '/pick_1_example.json'));
+      const jv = new ajv({allErrors: true});
+      const validate = jv.compile(schema);
+      const valid = validate(data);
+
+      assert.equal(null, validate.errors);
+      assert.equal(true, valid);
+    });
+
+    it('should validate the pick 2 example object using JSON Schema Draft 7', function () {
+      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const data = JSON.parse(fs.readFileSync(__dirname + '/pick_2_example.json'));
+      const jv = new ajv({allErrors: true});
+      const validate = jv.compile(schema);
+      const valid = validate(data);
+
+      assert.equal(null, validate.errors);
+      assert.equal(true, valid);
+    });
+
+    it('should validate the pick 3 example object using JSON Schema Draft 7', function () {
+      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const data = JSON.parse(fs.readFileSync(__dirname + '/pick_3_example.json'));
       const jv = new ajv({allErrors: true});
       const validate = jv.compile(schema);
       const valid = validate(data);

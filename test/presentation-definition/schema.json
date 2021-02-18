@@ -1,5 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Presentation Definition",
   "definitions": {
     "schema": {
       "type": "object",
@@ -23,7 +24,7 @@
         "exclusiveMaximum": { "type": ["number", "string"] },
         "maximum": { "type": ["number", "string"] },
         "const": { "type": ["number", "string"] },
-        "enum": { 
+        "enum": {
           "type": "array",
           "items": { "type": ["number", "string"] }
         },
@@ -61,8 +62,8 @@
           },
           "required": ["proof_type"],
           "additionalProperties": false
-        }, 
-        "additionalProperties": false  
+        },
+        "additionalProperties": false
       },
       "additionalProperties": false
     },
@@ -131,6 +132,38 @@
               "type": "string",
               "enum": ["required", "preferred"]
             },
+            "statuses": {
+              "type": "object",
+              "properties": {
+                "active": {
+                  "type": "object",
+                  "properties": {
+                    "directive": {
+                      "type": "string",
+                      "enum": ["required", "allowed", "disallowed"]
+                    }
+                  }
+                },
+                "suspended": {
+                  "type": "object",
+                  "properties": {
+                    "directive": {
+                      "type": "string",
+                      "enum": ["required", "allowed", "disallowed"]
+                    }
+                  }
+                },
+                "revoked": {
+                  "type": "object",
+                  "properties": {
+                    "directive": {
+                      "type": "string",
+                      "enum": ["required", "allowed", "disallowed"]
+                    }
+                  }
+                }
+              }
+            },
             "fields": {
               "type": "array",
               "items": { "$ref": "#/definitions/field" }
@@ -187,6 +220,7 @@
       "oneOf": [
         {
           "properties": {
+            "id": { "type": "string" },
             "path": {
               "type": "array",
               "items": { "type": "string" }
@@ -199,13 +233,14 @@
         },
         {
           "properties": {
+            "id": { "type": "string" },
             "path": {
               "type": "array",
               "items": { "type": "string" }
             },
             "purpose": { "type": "string" },
             "filter": { "$ref": "#/definitions/filter" },
-            "predicate": { 
+            "predicate": {
               "type": "string",
               "enum": ["required", "preferred"]
             }
