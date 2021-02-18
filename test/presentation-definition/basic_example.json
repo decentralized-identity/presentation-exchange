@@ -1,5 +1,5 @@
 {
-  "comment": "Note: VP, OIDC, DIDComm, or CHAPI outer wrapper would be here."
+  "comment": "Note: VP, OIDC, DIDComm, or CHAPI outer wrapper would be here.",
   "presentation_definition": {
     "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "input_descriptors": [
