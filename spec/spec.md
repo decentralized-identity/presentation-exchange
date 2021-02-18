@@ -101,6 +101,9 @@ requirements described in a [[def:Presentation Definition]].
 the [[ref:Holder]] and the [[ref:Claims]] within the [[ref:Presentation
 Submission]]. See [Holder Binding](#holder-and-subject-binding).
 
+[[def:Identity Hub]]
+~ Some examples refer to an unfamiliar query protocol, hub:// , as a way of storing and querying schemata and other resources. While orthogonal to this specification and not yet on a standards track, they propose an architecture that may be of interest or utility to implementers of this specification. For more information, see the pre-draft specification hosted at the decentralized identity foundation [here](https://github.com/decentralized-identity/identity-hub/blob/master/explainer.md)
+
 [[def:Input Descriptor, Input Descriptors]]
 ~ Input Descriptors are used by a Verifier to describe the information required
 of a [[ref:Holder]] before an interaction can proceed. See
@@ -388,6 +391,15 @@ values, and an explanation why a certain item or set of data is being requested:
               "revoked": {...}
             } 
           ```
+      ```note
+      There is no assumed direct mapping between these values and a
+      corresponding status object in the underlying credentials. On the
+      contrary, the encoding and decoding of a credential status (which may
+      include fetching remote status information or cryptographic operations) is
+      an implementation detail which takes place at a lower layer of abstraction
+      and in accordance with the supported verifiable credential formats and
+      presentation protocols.
+      ```
     - The _constraints object_ ****MAY**** contain a `subject_is_issuer`
       property. If present, its value ****MUST**** be one of the following
       strings:
