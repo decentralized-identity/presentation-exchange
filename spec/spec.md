@@ -85,15 +85,12 @@ distributed ledger).
 [[def:Embed Locations]]
 ~ Embed Locations are the specific paths and indexes per [[ref:Embed Target]]
 where the [[ref:Verifier]] can expect to find the [[ref:Presentation
-Submission]].
+Submission]]. See [Embed Locations](#embed-locations).
 
 [[def:Embed Target, Embed Targets]]
 ~ Embed Targets are data formats used in messaging protocols that may be used
-to transport a [[ref:Presentation Submission]].
-
-[[def:Field Query Result]]
-~ Field Query Results are values returned from paths specified in an
-[[ref:Input Descriptor Object]].
+to transport a [[ref:Presentation Submission]]. See
+[Embed Targets](#embed-targets).
 
 [[def:Holder, Holders]]
 ~ Holders are entities that submit proofs to [[ref:Verifiers]] to satisfy the
@@ -102,22 +99,25 @@ requirements described in a [[def:Presentation Definition]].
 [[def:Holder Binding]]
 ~ Holder Bindings are requirements of a certain type of relationship between
 the [[ref:Holder]] and the [[ref:Claims]] within the [[ref:Presentation
-Submission]].
+Submission]]. See [Holder Binding](#holder-and-subject-binding).
 
 [[def:Input Descriptor, Input Descriptors]]
 ~ Input Descriptors are used by a Verifier to describe the information required
-of a [[ref:Holder]] before an interaction can proceed.
+of a [[ref:Holder]] before an interaction can proceed. See
+[Input Descriptor](#input-descriptor).
 
 [[def:Input Descriptor Object, Input Descriptor Objects]]
 ~ Input Descriptors Objects are populated with properties describing what type
 of input data/[[ref:Claim]], or sub-fields thereof, are required for submission
-to the [[ref:Verifier]].
+to the [[ref:Verifier]]. See
+[Input Descriptor Object](#input-descriptor-object).
 
 [[def:Link Secrets]]
 ~ Link Secrets are values held by the [[ref:Holder]] but hidden from other
 parties. They are typically incorporated into cryptographic signatures used in
 claims to demonstrate correlation while preventing replay attacks. An Issuer
 may ascertain that a Holder possesses a link secret without its disclosure.
+See [Link Secrets](#link-secrets).
 
 [[def:Presentation Definition]]
 ~ Presentation Definitions are objects that articulate what proofs a Verifier
@@ -125,19 +125,23 @@ requires. These help the Verifier to decide how or whether to interact with a
 [[ref:Holder]]. Presentation Definitions are composed of inputs, which describe
 the forms and details of the proofs they require, and optional sets of
 selection rules, to allow Holders flexibility in cases where many different
-types of proofs may satisfy an input requirement.
+types of proofs may satisfy an input requirement. See
+[Presentation Definition](#presentation-definition).
 
 [[def:Presentation Request]]
 ~ Presentation Requests are transport mechanisms for [[ref:Presentation
 Definitions]].  Presentation Requests can take multiple shapes, using a variety
 of protocols and signature schemes not refined in this specification. They are
-sent by a [[ref:Verifier]] to a [[ref:Holder]].
+sent by a [[ref:Verifier]] to a [[ref:Holder]]. Defining Presentation Requests
+is outside the scope of this specification. See
+[Presentation Request](#presentation-request).
 
 [[def:Presentation Submission]]
 ~ Presentation Submissions are objects embedded within target claim negotiation
 formats that unify the presentation of proofs to a [[ref:Verifier]] in
 accordance with the requirements a [[ref:Verifier]] specified in a
-[[ref:Presentation Definition]].
+[[ref:Presentation Definition]]. See
+[Presentation Submission](#presentation-submission).
 
 [[def:Subject, Subjects]]
 ~ Subjects are the entities about which [[r:Claims]] are made. The Subject may
@@ -147,16 +151,17 @@ not be the same entity as the [[ref:Holder]]
 ~ Submission Requirements are objects that define what combinations of inputs
 must be submitted to comply with the requirements a [[ref:Verifier]] has for
 proceeding in a flow (e.g. credential issuance, allowing entry, accepting an
-application).
+application). See [Submission Requirements](#submission-requirements).
 
 [[def:Submission Requirement Object, Submission Requirement Objects]]
 ~ Submission Requirement Objects describe valid combinations of inputs in a
-[[ref:Presentation Submission]].
+[[ref:Presentation Submission]]. See
+[Submission Requirement Objects](#submission-requirement-objects).
 
 [[def:Submission Requirement Rule, Submission Requirement Rules]]
 ~ Submission Requirement Rules describe combinatorical rules within a
 [[ref:Submission Requirement Object]] when processing inputs. They may be
-nested.
+nested. See [Submission Requirement Rules](#submission-requirement-rules).
 
 [[def:Verifier, Verifiers]]
 ~ Verifiers are entities that define what proofs they require from a
@@ -594,7 +599,7 @@ be ignored:
   If not present, all inputs listed in the `input_descriptors` array are
   required for submission. 
 
-### Input Descriptors
+### Input Descriptor
 [[ref:Input Descriptors]] are objects used to describe the information a
 [[ref:Verifier]] requires of a [[ref:Holder]]. If no
 [[ref: Submission Requirements]] are present, all [[ref:Input Descriptors]]
@@ -702,7 +707,7 @@ values, and an explanation why a certain item or set of data is being requested:
 
 </tab-panels>
 
-#### Input Descriptor Objects
+#### Input Descriptor Object
 [[ref: Input Descriptor Objects]] are composed as follows:
 
 - The [[ref:Input Descriptor Object]] ****MUST**** contain an `id` property.
@@ -807,10 +812,9 @@ values, and an explanation why a certain item or set of data is being requested:
       value ****MUST**** be an array of objects composed as follows:
         - The _is-holder object_ ****MUST**** contain a `field_id` property. The
           value of this property ****MUST**** be an array of strings, with each
-          string matching the string value from an
-          [_Input Descriptor Field Entry_](#input-descriptor-field-entry)
-          object's `id` property. This identifies the attribute whose
-          [[Ref:Subject]] is of concern to the [[ref:Verifier]].
+          string matching the string value from a _field object_'s `id`
+          property. This identifies the attribute whose [[Ref:Subject]] is of
+          concern to the [[ref:Verifier]].
         - The _is-holder object_ ****MUST**** contain a `directive` property.
           The value of this property ****MUST****  be one of the following
           strings:
@@ -840,14 +844,12 @@ values, and an explanation why a certain item or set of data is being requested:
       follows:
         - The _same-subject object_ ****MUST**** contain a `field_id` property.
           The value of this property ****MUST**** be an array of strings, with
-          each string matching the string value from a
-          [_Input Descriptor Field Entry_](#input-descriptor-field-entry)
-          object's `id` property. This identifies the attributes whose
-          [[Ref:Subject]] is of concern to the [[ref:Verifier]]. It is important
-          to note that the attributes whose [[Ref:Subject]] is of concern to the
-          [[ref:Verifier]] ****MAY**** be identified in the
-          [_Input Descriptor Field Entry_](#input-descriptor-field-entry) of a
-          different [[ref:Input Descriptor Object]].
+          each string matching the string value from a _field object_'s `id`
+          property. This identifies the attributes whose [[Ref:Subject]] is of
+          concern to the [[ref:Verifier]]. It is important to note that the
+          attributes whose [[Ref:Subject]] is of concern to the [[ref:Verifier]]
+          ****MAY**** be identified in the _field object_ of a different
+          [[ref:Input Descriptor Object]].
         - The _same-subject object_ ****MUST**** contain a `directive` property.
           The value of this property ****MUST****  be one of the following
           strings:
@@ -873,9 +875,8 @@ values, and an explanation why a certain item or set of data is being requested:
       same as the [[Ref:Subject]] of the name attribute.
 
     - The _constraints object_ ****MAY**** contain a `fields` property. If
-      present, its value ****MUST**** be an array of
-      [_Input Descriptor Field Entry_](#input-descriptor-field-entry) objects,
-      each being composed as follows:
+      present, its value ****MUST**** be an array of objects composed as
+      follows:
         - The _fields object_ ****MUST**** contain a `path` property. The value
           of this property ****MUST**** be an array of one or more
           [JSONPath](https://goessner.net/articles/JsonPath/) string
@@ -1113,7 +1114,7 @@ all input_descriptors ****MUST**** be grouped. Any unused
 [[ref:Submission Requirement Rules]] are used within 
 [[ref:Submission Requirement Objects]] to describe the specific combinatorial
 rules that must be applied to submit a particular subset of reqested inputs. The
-specified [[ref:Submission Requirements Rule]] determines the behavior of the
+specified [[ref:Submission Requirement Rule]] determines the behavior of the
 corresponding `from` or `from_nested` property, as described below. A conformant
 implementation ****MUST**** support the following rules:
 
@@ -1150,16 +1151,16 @@ For a `pick` rule [[ref:Submission Requirement Object]]:
 - The [[ref:Submission Requirement Object]] ****MAY**** contain a `count`
   property. If present, its value ****MUST**** be an integer greater than zero.
   This indicates the number of [[ref:input Descriptors]] or
-  [[ref:Submission Requirements Objects]] to be submitted.
+  [[ref:Submission Requirement Objects]] to be submitted.
 - The [[ref:Submission Requirement Object]] ****MAY**** contain a `min`
   property. If present, its value ****MUST**** be an integer greater than or
   equal to zero. This indicates the minimum number of [[ref:input Descriptors]]
-  or [[ref:Submission Requirements Objects]] to be submitted.
+  or [[ref:Submission Requirement Objects]] to be submitted.
 - The [[ref:Submission Requirement Object]] ****MAY**** contain a `max`
   property. If present, its value ****MUST**** be an integer greater than zero
   and, if also present, greater than the value of the `min` property. This
   indicates the maximum number of [[ref:input Descriptors]] or
-  [[ref:Submission Requirements Objects]] to be submitted.
+  [[ref:Submission Requirement Objects]] to be submitted.
 - The following behavior is required for the `from` or `from_nested` property:
     - `from` - The specified number of [[ref:Input Descriptors]] matching the
       `group` string of the `from` value ****MUST**** be submitted to the
@@ -1345,9 +1346,8 @@ For each candidate input:
      If one of the values is an exact match, proceed, if there are no
      exact matches, skip to the next candidate input.
   2. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-     and it contains a `fields` property with one or more
-     [_Input Descriptor Field Entries_](#input-descriptor-field-entry), evaluate
-     each against the candidate input as follows:
+     and it contains a `fields` property with one or more _field objects_,
+     evaluate each against the candidate input as follows:
      1. Iterate the [[ref:Input Descriptor]] `path` array of
         [JSONPath](https://goessner.net/articles/JsonPath/) string expressions
         from 0-index, executing each expression against the candidate input.
@@ -1377,11 +1377,10 @@ For each candidate input:
      `required`, ensure that any subsequent submission of data in relation to the
      candidate input is limited to the entries specified in the `fields`
      property. If the `fields` property ****is not**** present, or contains zero
-     [_Input Descriptor Field Entries_](#input-descriptor-field-entry),
-     submission ****SHOULD NOT**** include any [[ref:Claim]] data from the
-     [[ref:Claim]]. For example, a [[ref:Verifier]] may simply want to know a
-     [[ref:Holder]] has a valid, signed [[ref:Claims]] of a particular type,
-     without disclosing any of the data it contains.
+     _field objects_, submission ****SHOULD NOT**** include any [[ref:Claim]]
+     data from the [[ref:Claim]]. For example, a [[ref:Verifier]] may simply
+     want to know a [[ref:Holder]] has a valid, signed [[ref:Claims]] of a
+     particular type, without disclosing any of the data it contains.
   5. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `subject_is_issuer` property set to the value `required`,
      ensure that any submission of data in relation to the candidate input is
@@ -1844,7 +1843,7 @@ format-related rules above:
 }
 ```
 
-### Presentation Requests
+### Presentation Request
 A [[ref:Presentation Request]] is any transport mechanism used to send a
 [[ref:Presentation Definition]] from a [[ref:Verifier]] to a [[ref:Holder]]. A
 wide variety of transport mechanisms or [[ref:Claim]] exchange protocols may be
@@ -1972,8 +1971,7 @@ For all [[ref:Claims]] submitted in relation to [[ref:Input Descriptor Objects]]
 that include a `constraints` object with a `limit_disclosure` property set to
 the string value `required`, ensure that the data submitted is limited to the
 entries specified in the `fields` property of the `constraints` object. If the
-`fields` property ****is not**** present, or contains zero
-[_Input Descriptor Field Entries_](#input-descriptor-field-entry), the
+`fields` property ****is not**** present, or contains zero _field objects_, the
 submission ****SHOULD NOT**** include any data from the [[ref:Claim]]. For
 example, a [[ref:Verifier]] may simply want to know whether a [[ref:Holder]] has
 a valid, signed [[ref:Claim]] of a particular type, without disclosing any of
