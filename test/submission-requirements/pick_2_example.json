@@ -1,11 +1,10 @@
 {
   "submission_requirements": [
     {
-      "name": "Citizenship Proof",
-      "purpose": "We need to confirm you are a citizen of one of the following countries",
+      "name": "Eligibility to Work Proof",
+      "purpose": "We need to prove you are eligible for full-time employment in 2 or more of the following countries",
       "rule": "pick",
       "min": 2,
-      "max": 4,
       "from": "B"
     }
   ]

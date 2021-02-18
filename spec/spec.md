@@ -199,72 +199,7 @@ requirement.
 
 ::: example Presentation Definition - Single Group Example
 ```json
-{
-  // VP, OIDC, DIDComm, or CHAPI outer wrapper
-  "presentation_definition": {
-    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-    "submission_requirements": [{
-      "name": "Citizenship Information",
-      "rule": "pick",
-      "count": 1,
-      "from": "A"
-    }],
-    "input_descriptors": [
-      {
-        "id": "citizenship_input_1",
-        "name": "EU Driver's License",
-        "group": ["A"],
-        "schema": [
-          {
-            "uri": "https://eu.com/claims/DriversLicense.json"
-          }
-        ],
-        "constraints": {
-          "fields": [
-            {
-              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "We can only accept digital driver's licenses issued by national authorities of member states or trusted notarial auditors.",
-              "filter": {
-                "type": "string",
-                "pattern": "did:example:gov1|did:example:gov2"
-              }
-            },
-            {
-              "path": ["$.credentialSubject.dob", "$.vc.credentialSubject.dob", "$.dob"],
-              "filter": {
-                "type": "string",
-                "format": "date",
-                "maximum": "1999-06-15"
-              }
-            }
-          ]
-        }
-      },
-      {
-        "id": "citizenship_input_2",
-        "name": "US Passport",
-        "group": ["A"],
-        "schema": [
-          {
-            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
-          }
-        ],
-        "constraints": {
-          "fields": [
-            {
-              "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
-              "filter": {
-                "type": "string",
-                "format": "date",
-                "maximum": "1999-05-16"
-              }
-            }
-          ]
-        }
-      }
-    ]
-  }
-}
+[[import: ../test/presentation-definition/single_group_example.json]]
 ```
 
 
@@ -274,208 +209,7 @@ requirement.
 
 ::: example Presentation Definition - Multi-Group Example
 ```json
-{
-  // VP, OIDC, DIDComm, or CHAPI outer wrapper
-  "presentation_definition": {
-    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-    "submission_requirements": [
-      {
-        "name": "Banking Information",
-        "purpose": "We can only remit payment to a currently-valid bank account in the US, Germany or France.",
-        "rule": "pick",
-        "count": 1,
-        "from": "A"
-      },
-      {
-        "name": "Employment Information",
-        "purpose": "We are only verifying one current employment relationship, not any other information about employment.",
-        "rule": "all",
-        "from": "B"
-      },
-      {
-        "name": "Eligibility to Drive on US Roads",
-        "purpose": "We need to verify eligibility to drive on US roads via US or EU driver's license, but no biometric or identifying information contained there.",
-        "rule": "pick",
-        "count": 1,
-        "from": "C"
-      }
-    ],
-    "input_descriptors": [
-      {
-        "id": "banking_input_1",
-        "name": "Bank Account Information",
-        "purpose": "Bank Account required to remit payment.",
-        "group": ["A"],
-        "schema": [
-          {
-            "uri": "https://bank-standards.example.com#accounts",
-            "required": true
-          },
-          {
-            "uri": "https://bank-standards.example.com#investments",
-            "required": true
-          }
-        ],
-        "constraints": {
-          "limit_disclosure": "required",
-          "fields": [
-            {
-              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "We can only verify bank accounts if they are attested by a trusted bank, auditor or regulatory authority.",
-              "filter": {
-                "type": "string",
-                "pattern": "did:example:123|did:example:456"
-              }
-            },
-            {
-              "path": ["$.credentialSubject.account[*].account_number", "$.vc.credentialSubject.account[*].account_number", "$.account[*].account_number"],
-              "purpose": "We can only remit payment to a currently-valid bank account in the US, France, or Germany, submitted as an ABA Acct # or IBAN.",
-              "filter": {
-                "type": "string",
-                "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
-              }
-            },
-            {
-              "path": ["$.credentialSubject.portfolio_value", "$.vc.credentialSubject.portfolio_value", "$.portfolio_value"],
-              "purpose": "You must have a portfolio value of at least one million dollars",
-              "filter": {
-                "type": "number",
-                "minimum": 1000000
-              }
-            }
-          ]
-        }
-      },
-      {
-        "id": "banking_input_2",
-        "name": "Bank Account Information",
-        "purpose": "We can only remit payment to a currently-valid bank account.",
-        "group": ["A"],
-        "schema": [
-          {
-            "uri": "https://bank-schemas.org/1.0.0/accounts.json"
-          },
-          {
-            "uri": "https://bank-schemas.org/2.0.0/accounts.json"
-          }
-        ],
-        "constraints": {
-          "fields": [
-            {
-              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "We can only verify bank accounts if they are attested by a trusted bank, auditor or regulatory authority.",
-              "filter": {
-                "type": "string",
-                "pattern": "did:example:123|did:example:456"
-              }
-            },
-            { 
-              "path": ["$.credentialSubject.account[*].id", "$.vc.credentialSubject.account[*].id", "$.account[*].id"],
-              "purpose": "We can only remit payment to a currently-valid bank account in the US, France, or Germany, submitted as an ABA Acct # or IBAN.",
-              "filter": {
-                "type": "string",
-                "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
-              }
-            },
-            {
-              "path": ["$.credentialSubject.account[*].route", "$.vc.credentialSubject.account[*].route", "$.account[*].route"],
-              "purpose": "We can only remit payment to a currently-valid account at a US, Japanese, or German federally-accredited bank, submitted as an ABA RTN or SWIFT code.",
-              "filter": {
-                "type": "string",
-                "pattern": "^[0-9]{9}|^([a-zA-Z]){4}([a-zA-Z]){2}([0-9a-zA-Z]){2}([0-9a-zA-Z]{3})?$"
-              }
-            }
-          ]
-        }
-      },
-      {
-        "id": "employment_input",
-        "name": "Employment History",
-        "purpose": "We are only verifying one current employment relationship, not any other information about employment.",
-        "group": ["B"],
-        "schema": [
-          {
-            "uri": "https://business-standards.org/schemas/employment-history.json"
-          }
-        ],
-        "constraints": {
-          "limit_disclosure": "required",
-          "fields": [
-            {
-              "path": ["$.jobs[*].active"],
-              "filter": {
-                "type": "boolean",
-                "pattern": "true"
-              }
-            }
-          ]
-        }
-      },
-      {
-        "id": "drivers_license_input_1",
-        "name": "EU Driver's License",
-        "group": ["C"],
-        "schema": [
-          {
-            "uri": "https://schema.eu/claims/DriversLicense.json"
-          }
-        ],
-        "constraints": {
-          "fields": [
-            {
-              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "We can only accept digital driver's licenses issued by national authorities of EU member states or trusted notarial auditors.",
-              "filter": {
-                "type": "string",
-                "pattern": "did:example:gov1|did:example:gov2"
-              }
-            },
-            {
-              "path": ["$.credentialSubject.dob", "$.vc.credentialSubject.dob", "$.dob"],
-              "purpose": "We must confirm that the driver was at least 21 years old on April 16, 2020.",
-              "filter": {
-                "type": "string",
-                "format": "date",
-                "maximum": "1999-05-16"
-              }
-            }
-          ]
-        }
-      },
-      {
-        "id": "drivers_license_input_2",
-        "name": "Driver's License from one of 50 US States",
-        "group": ["C"],
-        "schema": [
-          {
-            "uri": "hub://did:foo:123/Collections/schema.us.gov/american_drivers_license.json"
-          }
-        ],
-        "constraints": {
-          "fields": [
-            {
-              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "We can only accept digital driver's licenses issued by the 50 US states' automative affairs agencies.",
-              "filter": {
-                "type": "string",
-                "pattern": "did:example:gov1|did:web:dmv.ca.gov|did:example:oregonDMV"
-              }
-            },
-            {
-              "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
-              "purpose": "We must confirm that the driver was at least 21 years old on April 16, 2020.",
-              "filter": {
-                "type": "string",
-                "format": "date",
-                "maximum": "1999-05-16"
-              }
-            }
-          ]
-        }
-      }
-    ]
-  }
-}
+[[import: ../test/presentation-definition/multi_group_example.json]]
 ```
 :::
 
@@ -523,37 +257,7 @@ be ignored:
       
       For example:
       ```json
-      {
-        "presentation_definition": {
-          "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-          "input_descriptors": [...],
-          "format": {
-            "jwt": {
-              "alg": ["EdDSA", "ES256K", "ES384"]
-            },
-            "jwt_vc": {
-              "alg": ["ES256K", "ES384"]
-            },
-            "jwt_vp": {
-              "alg": ["EdDSA", "ES256K"]
-            },
-            "ldp_vc": {
-              "proof_type": [
-                "JsonWebSignature2020",
-                "Ed25519Signature2018",
-                "EcdsaSecp256k1Signature2019",
-                "RsaSignature2018"
-              ]
-            },
-            "ldp_vp": {
-              "proof_type": ["Ed25519Signature2018"]
-            },
-            "ldp": {
-              "proof_type": ["RsaSignature2018"]
-            }
-          }
-        }
-      }
+      [[import: ../test/presentation-definition/format_example.json]]
       ```
 - `submission_requirements` - The [[ref:Presentation Definition]] ****MAY****
   contain a `submission_requirements` property. If present, its value
@@ -585,50 +289,7 @@ values, and an explanation why a certain item or set of data is being requested:
 
 ::: example
 ```json
-"input_descriptors": [
-  {
-    "id": "banking_input_1",
-    "name": "Bank Account Information",
-    "purpose": "We can only remit payment to a currently-valid bank account.",
-    "group": ["A"],
-    "schema": [
-      {
-        "uri": "https://bank-schemas.org/1.0.0/accounts.json"
-      },
-      {
-        "uri": "https://bank-schemas.org/2.0.0/accounts.json"
-      }
-    ],
-    "constraints": {
-      "fields": [
-        {
-          "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-          "purpose": "We can only verify bank accounts if they are attested by a trusted bank, auditor, or regulatory authority.",
-          "filter": {
-            "type": "string",
-            "pattern": "did:example:123|did:example:456"
-          }
-        },
-        { 
-          "path": ["$.credentialSubject.account[*].id", "$.vc.credentialSubject.account[*].id", "$.account[*].id"],
-          "purpose": "We can only remit payment to a currently-valid bank account, submitted as an ABA RTN + Acct # or IBAN.",
-          "filter": {
-            "type": "string",
-            "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
-          }
-        },
-        {
-          "path": ["$.credentialSubject.account[*].route", "$.vc.credentialSubject.account[*].route", "$.account[*].route"],
-          "purpose": "We can only remit payment to a currently-valid bank account in the US, Germany or France.",
-          "filter": {
-            "type": "string",
-            "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
-          }
-        }
-      ]
-    }
-  }
-]
+[[import: ../test/presentation-definition/input_descriptors_example.json]]
 ```
 :::
 
@@ -638,35 +299,7 @@ values, and an explanation why a certain item or set of data is being requested:
 
 ::: example
 ```json
-"input_descriptors": [
-  {
-    "id": "employment_input_xyz_gov",
-    "group": ["B"],
-    "schema": [
-      {
-        "uri": "https://login.idp.com/xyz.gov/.well-known/openid-configuration",
-        "required": true
-      }
-    ],
-    "name": "Verify XYZ Government Employment",
-    "purpose": "We need to know if you currently work at an agency in the XYZ government",
-    "metadata": {
-      "client_id": "40be4fb5-7f3a-470b-aa37-66ed43821bd7",
-      "redirect_uri": "https://tokens.xyz.gov/verify"
-    },
-    "constraints": {
-      "fields": [
-        {
-          "path": ["$.status"],
-          "filter": {
-            "type": "string",
-            "pattern": "active"
-          }
-        }
-      ]
-    }
-  }
-]
+[[import: ../test/presentation-definition/input_descriptor_id_tokens_example.json]]
 ```
 
 </section>
@@ -1024,40 +657,7 @@ all input_descriptors ****MUST**** be grouped. Any unused
 
 ::: example Submission Requirement
 ```json 12
-  "submission_requirements": [
-    {
-      "name": "Banking Information",
-      "purpose": "We need you to prove you currently hold a bank account older than 12months.",
-      "rule": "pick",
-      "count": 1,
-      "from": "A"
-    },
-    {
-      "name": "Employment Information",
-      "purpose": "We are only verifying one current employment relationship, not any other information about employment.",
-      "rule": "all",
-      "from": "B"
-    },
-    {
-      "name": "Citizenship Information",
-      "rule": "pick",
-      "count": 1,
-      "from_nested": [
-        {
-          "name": "United States Citizenship Proofs",
-          "purpose": "We need you to prove your US citizenship.",
-          "rule": "all",
-          "from": "C"
-        },
-        {
-          "name": "European Union Citizenship Proofs",
-          "purpose": "We need you to prove you are a citizen of an EU member state.",
-          "rule": "all",
-          "from": "D"
-        }
-      ]
-    }
-  ]
+[[import: ../test/submission-requirements/example.json ]]
 ```
 :::
 
@@ -1112,14 +712,7 @@ For an `all` rule [[ref:Submission Requirement Object]]:
 
 ::: example Submission Requirement, all, group
 ```json
-  "submission_requirements": [
-    {
-      "name": "Submission of educational transcripts",
-      "purpose": "We need your complete educational transcripts to process your application",
-      "rule": "all",
-      "from": "A"
-    }
-  ]
+[[import: ../test/submission-requirements/all_example.json]]
 ```
 :::
 
@@ -1159,29 +752,13 @@ with a matching `group` string. In the first example that follows, the
 
 ::: example Submission Requirement, pick, group
 ```json
-  "submission_requirements": [
-    {
-      "name": "Citizenship Proof",
-      "purpose": "We need to confirm you are a citizen of one of the following countries",
-      "rule": "pick",
-      "count": 1,
-      "from": "B"
-    }
-  ]
+[[import: ../test/submission-requirements/pick_1_example.json]]
 ```
 :::
 
 ::: example Submission Requirement, pick, min/max
 ```json
-  "submission_requirements": [
-    {
-      "name": "Eligibility to Work Proof",
-      "purpose": "We need to prove you are eligible for full-time employment in 2 or more of the following countries",
-      "rule": "pick",
-      "min": 2,
-      "from": "B"
-    }
-  ]
+[[import: ../test/submission-requirements/pick_2_example.json]]
 ```
 :::
 
@@ -1194,18 +771,7 @@ from group `"A"` or two members from group `"B"`:
 
 ::: example Submission Requirement, pick, nested
 ```json
-  "submission_requirements": [
-    {
-      "name": "Confirm banking relationship or employment and residence proofs",
-      "purpose": "Recent bank statements or proofs of both employment and residence will be validated to initiate your loan application but not stored",
-      "rule": "pick",
-      "count": 1,
-      "from_nested": [
-        { "rule": "all", "from": "A" },
-        { "rule": "pick", "count": 2, "from": "B" }
-      ]
-    }
-  ]
+[[import: ../test/submission-requirements/pick_3_example.json]]
 ```
 :::
 
@@ -1214,65 +780,7 @@ The following JSON Schema Draft 7 definition summarizes many of the
 format-related rules above:
 
 ```json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "submission_requirements": {
-      "type": "object",
-      "oneOf": [
-        {
-          "properties": {
-            "name": { "type": "string" },
-            "purpose": { "type": "string" },
-            "rule": {
-              "type": "string",
-              "enum": ["all", "pick"]
-            },
-            "count": { "type": "integer", "minimum": 1 },
-            "min": { "type": "integer", "minimum": 0 },
-            "max": { "type": "integer", "minimum": 0 },
-            "from": { "type": "string" }
-          },
-          "required": ["rule", "from"],
-          "additionalProperties": false
-        },
-        {
-          "properties": {
-            "name": { "type": "string" },
-            "purpose": { "type": "string" },
-            "rule": {
-              "type": "string",
-              "enum": ["all", "pick"]
-            },
-            "count": { "type": "integer", "minimum": 1 },
-            "min": { "type": "integer", "minimum": 0 },
-            "max": { "type": "integer", "minimum": 0 },
-            "from_nested": {
-              "type": "array",
-              "minItems": 1,
-              "items": {
-                "$ref": "#/definitions/submission_requirements"
-              }
-            }
-          },
-          "required": ["rule", "from_nested"],
-          "additionalProperties": false
-        }
-      ]
-    }
-  },
-  "type": "object",
-  "properties": {
-    "submission_requirements": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/submission_requirements"
-      }
-    }
-  },
-  "required": ["submission_requirements"],
-  "additionalProperties": false
-}
+[[import: ../test/submission-requirements/schema.json]]
 ```
 
 #### Property Values and Evaluation
@@ -1420,33 +928,7 @@ requisite information to resolve the status of a [[ref:Claim]].
 
 ::: example Drivers License Expiration
 ```json
-{
-  "id": "drivers_license_information",
-  "name": "Verify Valid License",
-  "purpose": "We need you to show that your driver's license will be valid through December of this year.",
-  "metadata": {
-    "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
-    "redirect_uri": "https://yourwatchful.gov/verify"
-  },
-  "schema": [
-    {
-      "uri": "https://yourwatchful.gov/drivers-license-schema.json",
-      "required": true
-    }
-  ],
-  "constraints": {
-    "fields": [
-      {
-        "path": ["$.expirationDate"],
-        "filter": {
-          "type": "string",
-          "format": "date-time",
-          "minimum": "2020-12-31T23:59:59.000Z"
-        }
-      }
-    ]
-  }
-}
+[[import: ../test/presentation-definition/VC_expiration_example.json]]
 ```
 :::
 
@@ -1456,27 +938,7 @@ requisite information to resolve the status of a [[ref:Claim]].
 
 ::: example Drivers License Revocation
 ```json
-{
-  "id": "drivers_license_information",
-  "name": "Verify Valid License",
-  "purpose": "We need to know that your license has not been revoked.",
-  "metadata": {
-    "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
-    "redirect_uri": "https://yourwatchful.gov/verify"
-  },
-  "schema": [
-    {
-      "uri": "https://yourwatchful.gov/drivers-license-schema.json"
-    }
-  ],
-  "constraints": {
-    "fields": [
-      {
-        "path": ["$.credentialStatus"]
-      }
-    ]
-  }
-}
+[[import: ../test/presentation-definition/VC_revocation_example.json]]
 ```
 :::
 </section>
@@ -1547,284 +1009,7 @@ The following JSON Schema Draft 7 definition summarizes the
 format-related rules above:
 
 ```json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Presentation Definition",
-  "definitions": {
-    "schema": {
-      "type": "object",
-      "properties": {
-        "uri": { "type": "string" },
-        "required": { "type": "boolean" }
-      },
-      "required": ["uri"],
-      "additionalProperties": false
-    },
-    "filter": {
-      "type": "object",
-      "properties": {
-        "type": { "type": "string" },
-        "format": { "type": "string" },
-        "pattern": { "type": "string" },
-        "minimum": { "type": ["number", "string"] },
-        "minLength": { "type": "integer" },
-        "maxLength": { "type": "integer" },
-        "exclusiveMinimum": { "type": ["number", "string"] },
-        "exclusiveMaximum": { "type": ["number", "string"] },
-        "maximum": { "type": ["number", "string"] },
-        "const": { "type": ["number", "string"] },
-        "enum": { 
-          "type": "array",
-          "items": { "type": ["number", "string"] }
-        },
-        "not": {
-          "type": "object",
-          "minProperties": 1
-        }
-      },
-      "required": ["type"],
-      "additionalProperties": false
-    },
-    "format": {
-      "type": "object",
-      "patternProperties": {
-        "^jwt$|^jwt_vc$|^jwt_vp$": {
-          "type": "object",
-          "properties": {
-            "alg": {
-              "type": "array",
-              "minItems": 1,
-              "items": { "type": "string" }
-            }
-          },
-          "required": ["alg"],
-          "additionalProperties": false
-        },
-        "^ldp_vc$|^ldp_vp$|^ldp$": {
-          "type": "object",
-          "properties": {
-            "proof_type": {
-              "type": "array",
-              "minItems": 1,
-              "items": { "type": "string" }
-            }
-          },
-          "required": ["proof_type"],
-          "additionalProperties": false
-        }, 
-        "additionalProperties": false  
-      },
-      "additionalProperties": false
-    },
-    "submission_requirements": {
-      "type": "object",
-      "oneOf": [
-        {
-          "properties": {
-            "name": { "type": "string" },
-            "purpose": { "type": "string" },
-            "rule": {
-              "type": "string",
-              "enum": ["all", "pick"]
-            },
-            "count": { "type": "integer", "minimum": 1 },
-            "min": { "type": "integer", "minimum": 0 },
-            "max": { "type": "integer", "minimum": 0 },
-            "from": { "type": "string" }
-          },
-          "required": ["rule", "from"],
-          "additionalProperties": false
-        },
-        {
-          "properties": {
-            "name": { "type": "string" },
-            "purpose": { "type": "string" },
-            "rule": {
-              "type": "string",
-              "enum": ["all", "pick"]
-            },
-            "count": { "type": "integer", "minimum": 1 },
-            "min": { "type": "integer", "minimum": 0 },
-            "max": { "type": "integer", "minimum": 0 },
-            "from_nested": {
-              "type": "array",
-              "minItems": 1,
-              "items": {
-                "$ref": "#/definitions/submission_requirements"
-              }
-            }
-          },
-          "required": ["rule", "from_nested"],
-          "additionalProperties": false
-        }
-      ]
-    },
-    "input_descriptors": {
-      "type": "object",
-      "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "purpose": { "type": "string" },
-        "metadata": { "type": "object" },
-        "group": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "schema": {
-          "type": "array",
-          "items": { "$ref": "#/definitions/schema" }
-        },
-        "constraints": {
-          "type": "object",
-          "properties": {
-            "limit_disclosure": {
-              "type": "string",
-              "enum": ["required", "preferred"]
-            },
-            "statuses": {
-              "type": "object",
-              "properties": {
-                "active": {
-                  "type": "object",
-                  "properties": {
-                    "directive": {
-                      "type": "string",
-                      "enum": ["required", "allowed", "disallowed"]
-                    }
-                  }
-                },
-                "suspended": {
-                  "type": "object",
-                  "properties": {
-                    "directive": {
-                      "type": "string",
-                      "enum": ["required", "allowed", "disallowed"]
-                    }
-                  }
-                },
-                "revoked": {
-                  "type": "object",
-                  "properties": {
-                    "directive": {
-                      "type": "string",
-                      "enum": ["required", "allowed", "disallowed"]
-                    }
-                  }
-                }
-              }
-            },
-            "fields": {
-              "type": "array",
-              "items": { "$ref": "#/definitions/field" }
-            },
-            "subject_is_issuer": {
-              "type": "string",
-              "enum": ["required", "preferred"]
-            },
-            "is_holder": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties":  {
-                  "field_id": {
-                    "type": "array",
-                    "items": { "type": "string" }
-                  },
-                  "directive": {
-                    "type": "string",
-                    "enum": ["required", "preferred"]
-                  }
-                },
-                "required": ["field_id", "directive"],
-                "additionalProperties": false
-              }
-            },
-            "same_subject": {
-              "type":  "array",
-              "items": {
-                "type": "object",
-                "properties":  {
-                  "field_id": {
-                    "type": "array",
-                    "items": { "type": "string" }
-                  },
-                  "directive": {
-                    "type": "string",
-                    "enum": ["required", "preferred"]
-                  }
-                },
-                "required": ["field_id", "directive"],
-                "additionalProperties": false
-              }
-            }
-          },
-          "additionalProperties": false
-        }
-      },
-      "required": ["id", "schema"],
-      "additionalProperties": false
-    },
-    "field": {
-      "type": "object",
-      "oneOf": [
-        {
-          "properties": {
-            "id": { "type": "string" },
-            "path": {
-              "type": "array",
-              "items": { "type": "string" }
-            },
-            "purpose": { "type": "string" },
-            "filter": { "$ref": "#/definitions/filter" }
-          },
-          "required": ["path"],
-          "additionalProperties": false
-        },
-        {
-          "properties": {
-            "id": { "type": "string" },
-            "path": {
-              "type": "array",
-              "items": { "type": "string" }
-            },
-            "purpose": { "type": "string" },
-            "filter": { "$ref": "#/definitions/filter" },
-            "predicate": { 
-              "type": "string",
-              "enum": ["required", "preferred"]
-            }
-          },
-          "required": ["path", "filter", "predicate"],
-          "additionalProperties": false
-        }
-      ]
-    }
-  },
-  "type": "object",
-  "properties": {
-    "presentation_definition": {
-      "type": "object",
-      "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "purpose": { "type": "string" },
-        "format": { "$ref": "#/definitions/format"},
-        "submission_requirements": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/submission_requirements"
-          }
-        },
-        "input_descriptors": {
-          "type": "array",
-          "items": { "$ref": "#/definitions/input_descriptors" }
-        }
-      },
-      "required": ["id", "input_descriptors"],
-      "additionalProperties": false
-    }
-  }
-}
+[[import: ../test/presentation-definition/schema.json]]
 ```
 
 ### Presentation Request
@@ -1902,29 +1087,7 @@ composed and embedded as follows:
 ****Example Nested Submission****
 
 ```json
-{
-  "presentation_submission": {
-    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
-      "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-      "descriptor_map": [
-      {
-        "id": "banking_input_2",
-        "format": "jwt_vp",
-        "path": "$.outerClaim[0]",
-        "path_nested": {
-          "id": "banking_input_2",
-          "format": "ldp_vc",
-          "path": "$.innerClaim[1]",
-          "path_nested": {
-            "id": "banking_input_2",
-            "format": "jwt_vc",
-            "path": "$.mostInnerClaim[2]"
-          }
-        }
-      }
-    ]
-  }
-}
+[[import: ../test/nested_submission_example.json]]
 ```
 
 When the `path_nested` property is present in a [[ref:Presentation Submission]]
@@ -2009,47 +1172,7 @@ CHAPI      | `$.data`
 The following JSON Schema Draft 7 definition summarizes the rules above:
 
 ```json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Presentation Submission",
-  "type": "object",
-  "properties": {
-    "presentation_submission": {
-      "type": "object",
-      "properties": {
-        "id": { "type": "string" },
-        "definition_id": { "type": "string" },
-        "descriptor_map": {
-          "type": "array",
-          "items": { "$ref": "#/definitions/descriptor" }
-        }
-      },
-      "required": ["id", "definition_id", "descriptor_map"],
-      "additionalProperties": false
-    }
-  },
-  "definitions": {
-    "descriptor": {
-      "type": "object",
-      "properties": {
-        "id": { "type": "string" },
-        "path": { "type": "string" },
-        "path_nested": { 
-          "type": "object",
-            "$ref": "#/definitions/descriptor"
-        },
-        "format": { 
-          "type": "string",
-          "enum": ["jwt", "jwt_vc", "jwt_vp", "ldp", "ldp_vc", "ldp_vp"]
-        }
-      },
-      "required": ["id", "path", "format"],
-      "additionalProperties": false
-    }
-  },
-  "required": ["presentation_submission"],
-  "additionalProperties": false
-}
+[[import: ../test/presentation-submission/schema.json]]
 ```
 
 ## Claim Format Designations
@@ -2223,109 +1346,7 @@ JSONPath                      | Description
 
 ::: example Presentation Submission - Verifiable Presentation
 ```json
-{
-  "@context": [
-    "https://www.w3.org/2018/credentials/v1",
-    "https://identity.foundation/presentation-exchange/submission/v1"
-  ],
-  "type": [
-    "VerifiablePresentation",
-    "PresentationSubmission"
-  ],
-  "presentation_submission": {
-    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
-    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-    "descriptor_map": [
-      {
-        "id": "banking_input_2",
-        "format": "jwt_vc",
-        "path": "$.verifiableCredential[0]"
-      },
-      {
-        "id": "employment_input",
-        "format": "ldp_vc",
-        "path": "$.verifiableCredential[1]"
-      },
-      {
-        "id": "citizenship_input_1",
-        "format": "ldp_vc",
-        "path": "$.verifiableCredential[2]"
-      }
-    ]
-  },
-  "verifiableCredential": [
-    { // DECODED JWT PAYLOAD, ASSUME THIS WILL BE A BIG UGLY OBJECT
-      "vc": {
-        "@context": "https://www.w3.org/2018/credentials/v1",
-        "id": "https://eu.com/claims/DriversLicense",
-        "type": ["EUDriversLicense"],
-        "issuer": "did:example:123",
-        "issuanceDate": "2010-01-01T19:73:24Z",
-        "credentialSubject": {
-          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-          "accounts": [
-            {
-              "id": "1234567890",
-              "route": "DE-9876543210"
-            },
-            {
-              "id": "2457913570",
-              "route": "DE-0753197542"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "@context": "https://www.w3.org/2018/credentials/v1",
-      "id": "https://business-standards.org/schemas/employment-history.json",
-      "type": ["VerifiableCredential", "GenericEmploymentCredential"],
-      "issuer": "did:foo:123",
-      "issuanceDate": "2010-01-01T19:73:24Z",
-      "credentialSubject": {
-        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-        "active": true
-      },
-      "proof": {
-        "type": "EcdsaSecp256k1VerificationKey2019",
-        "created": "2017-06-18T21:19:10Z",
-        "proofPurpose": "assertionMethod",
-        "verificationMethod": "https://example.edu/issuers/keys/1",
-        "jws": "..."
-      }
-    },
-    {
-      "@context": "https://www.w3.org/2018/credentials/v1",
-      "id": "https://eu.com/claims/DriversLicense",
-      "type": ["EUDriversLicense"],
-      "issuer": "did:foo:123",
-      "issuanceDate": "2010-01-01T19:73:24Z",
-      "credentialSubject": {
-        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-        "license": {
-          "number": "34DGE352",
-          "dob": "07/13/80"
-        }
-      },
-      "proof": {
-        "type": "RsaSignature2018",
-        "created": "2017-06-18T21:19:10Z",
-        "proofPurpose": "assertionMethod",
-        "verificationMethod": "https://example.edu/issuers/keys/1",
-        "jws": "..."
-      }
-    }
-  ],
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2018-09-14T21:19:10Z",
-    "proofPurpose": "authentication",
-    "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21#keys-1",
-    "challenge": "1f44d55f-f161-4938-a659-f8026467f126",
-    "domain": "4jt78h47fh47",
-    "jws": "..."
-  }
-}
+[[import: ../test/presentation-submission/appendix_VP_example.json]]
 ```
 :::
 
@@ -2335,103 +1356,7 @@ JSONPath                      | Description
 
 ::: example Presentation Submission with OIDC JWT
 ```json
-{
-  "iss": "https://self-issued.me",
-  "sub": "248289761001",
-  "preferred_username": "superman445",
-  "presentation_submission": {
-    "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
-    "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-    "descriptor_map": [
-      {
-        "id": "banking_input_2",
-        "format": "jwt",
-        "path": "$._claim_sources.banking_input_2.JWT"
-      },
-      {
-        "id": "employment_input",
-        "format": "jwt_vc",
-        "path": "$._claim_sources.employment_input.VC_JWT"
-      },
-      {
-        "id": "citizenship_input_1",
-        "format": "ldp_vc",
-        "path": "$._claim_sources.citizenship_input_1.VC"
-      }
-    ]
-  },
-  "_claim_names": {
-    "verified_claims": [
-      "banking_input_2",
-      "employment_input",
-      "citizenship_input_1"
-    ]
-  },
-  "_claim_sources": {
-    "banking_input_2": {
-      "JWT": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwcz
-      ovL3NlcnZlci5vdGhlcm9wLmNvbSIsInN1YiI6ImU4MTQ4NjAzLTg5MzQtNDI0N
-      S04MjViLWMxMDhiOGI2Yjk0NSIsInZlcmlmaWVkX2NsYWltcyI6eyJ2ZXJpZmlj
-      YXRpb24iOnsidHJ1c3RfZnJhbWV3b3JrIjoiaWFsX2V4YW1wbGVfZ29sZCJ9LCJ
-      jbGFpbXMiOnsiZ2l2ZW5fbmFtZSI6Ik1heCIsImZhbWlseV9uYW1lIjoiTWVpZX
-      IiLCJiaXJ0aGRhdGUiOiIxOTU2LTAxLTI4In19fQ.FArlPUtUVn95HCExePlWJQ
-      6ctVfVpQyeSbe3xkH9MH1QJjnk5GVbBW0qe1b7R3lE-8iVv__0mhRTUI5lcFhLj
-      oGjDS8zgWSarVsEEjwBK7WD3r9cEw6ZAhfEkhHL9eqAaED2rhhDbHD5dZWXkJCu
-      XIcn65g6rryiBanxlXK0ZmcK4fD9HV9MFduk0LRG_p4yocMaFvVkqawat5NV9QQ
-      3ij7UBr3G7A4FojcKEkoJKScdGoozir8m5XD83Sn45_79nCcgWSnCX2QTukL8Ny
-      wIItu_K48cjHiAGXXSzydDm_ccGCe0sY-Ai2-iFFuQo2PtfuK2SqPPmAZJxEFrF
-      oLY4g"
-    },
-    "employment_input": {
-      "VC": {
-        "@context": "https://www.w3.org/2018/credentials/v1",
-        "id": "https://business-standards.org/schemas/employment-history.json",
-        "type": ["VerifiableCredential", "GenericEmploymentCredential"],
-        "issuer": "did:foo:123",
-        "issuanceDate": "2010-01-01T19:73:24Z",
-        "credentialSubject": {
-          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-        },
-        "credentialStatus": {
-            "id": "https://hr-services.com/credentials/status/123#94567",
-            "type": "RevocationList2020Status",
-            "revocationListIndex": "94567",
-            "revocationListCredential": "https://hr-services.com/credentials/status/123"
-        },
-        "proof": {
-          "type": "EcdsaSecp256k1VerificationKey2019",
-          "created": "2017-06-18T21:19:10Z",
-          "proofPurpose": "assertionMethod",
-          "verificationMethod": "https://example.edu/issuers/keys/1",
-          "jws": "..."
-        }
-      }
-    },
-    "citizenship_input_1": {
-      "VC": {
-        "@context": "https://www.w3.org/2018/credentials/v1",
-        "id": "https://eu.com/claims/DriversLicense",
-        "type": ["EUDriversLicense"],
-        "issuer": "did:foo:123",
-        "issuanceDate": "2010-01-01T19:73:24Z",
-        "credentialSubject": {
-          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-          "license": {
-            "number": "34DGE352",
-            "dob": "1980-07-13"
-          }
-        },
-        "proof": {
-          "type": "EcdsaSecp256k1VerificationKey2019",
-          "created": "2017-06-18T21:19:10Z",
-          "proofPurpose": "assertionMethod",
-          "verificationMethod": "https://example.edu/issuers/keys/1",
-          "jws": "..."
-        }
-      }
-    }
-  }
-}
+[[import: ../test/presentation-submission/appendix_OIDC_example.json]]
 ```
 :::
 
@@ -2441,13 +1366,7 @@ JSONPath                      | Description
 
 ::: example Presentation Submission using CHAPI
 ```json
-{
-  "type": "web",
-  "dataType": "VerifiablePresentation",
-  "data": {
-    // Presentation Submission goes here
-  }
-}
+[[import: ../test/presentation-submission/appendix_CHAPI_example.json]]
 ```
 
 </section>
@@ -2456,24 +1375,7 @@ JSONPath                      | Description
 
 ::: example Presentation Submission using DIDComm
 ```json
-{
-    "@type": "https://didcomm.org/present-proof/%VER/presentation",
-    "@id": "f1ca8245-ab2d-4d9c-8d7d-94bf310314ef",
-    "comment": "some comment",
-    "formats" : [{
-        "attach_id" : "2a3f1c4c-623c-44e6-b159-179048c51260",
-        "format" : "dif/presentation-exchange/submission@v1.0"
-    }],
-    "presentations~attach": [{
-        "@id": "2a3f1c4c-623c-44e6-b159-179048c51260",
-        "mime-type": "application/ld+json",
-        "data": {
-            "json": {
-              // Presentation Submission goes here
-            }
-        }
-    }]
-}
+[[import: ../test/presentation-submission/appendix_DIDComm_example.json]]
 ```
 :::
 

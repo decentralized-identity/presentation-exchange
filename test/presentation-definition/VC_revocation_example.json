@@ -1,27 +1,20 @@
 {
-  "presentation_definition": {
-    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-    "input_descriptors": [
+  "id": "drivers_license_information",
+  "name": "Verify Valid License",
+  "purpose": "We need to know that your license has not been revoked.",
+  "metadata": {
+    "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
+    "redirect_uri": "https://yourwatchful.gov/verify"
+  },
+  "schema": [
+    {
+      "uri": "https://yourwatchful.gov/drivers-license-schema.json"
+    }
+  ],
+  "constraints": {
+    "fields": [
       {
-        "id": "drivers_license_information",
-        "name": "Verify Valid License",
-        "purpose": "We need to know that your license has not been revoked.",
-        "metadata": {
-          "client_id": "4fb540be-3a7f-0b47-bb37-3821bd766ed4",
-          "redirect_uri": "https://yourwatchful.gov/verify"
-        },
-        "schema": [
-          {
-            "uri": "https://yourwatchful.gov/drivers-license-schema.json"
-          }
-        ],
-        "constraints": {
-          "fields": [
-            {
-              "path": ["$.credentialStatus"]
-            }
-          ]
-        }
+        "path": ["$.credentialStatus"]
       }
     ]
   }

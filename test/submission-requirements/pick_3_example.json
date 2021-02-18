@@ -2,7 +2,7 @@
   "submission_requirements": [
     {
       "name": "Confirm banking relationship or employment and residence proofs",
-      "purpose": "Submit your bank statement or proofs of employment and residence to process your loan",
+      "purpose": "Recent bank statements or proofs of both employment and residence will be validated to initiate your loan application but not stored",
       "rule": "pick",
       "count": 1,
       "from_nested": [
