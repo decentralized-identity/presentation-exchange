@@ -11,7 +11,7 @@
             "uri": "https://bank-standards.example.com/fullaccountroute.json"
         }],
         "constraints": {
-          "limit_disclosure": true,
+          "limit_disclosure": "required",
           "fields": [
             {
               "path": [
