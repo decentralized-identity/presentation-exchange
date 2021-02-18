@@ -186,58 +186,7 @@ requirement.
 ::: example Presentation Definition - Basic Example
 ```json
 {
-  // VP, OIDC, DIDComm, or CHAPI outer wrapper
-  "presentation_definition": {
-    "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
-    "input_descriptors": [
-      {
-        "id": "bankaccount_input",
-        "name": "Full Bank Account Routing Information",
-        "purpose": "We can only remit payment to a currently-valid bank account, submitted as an ABA RTN + Acct # or IBAN.",
-        "schema": [
-          {
-            "uri": "https://bank-standards.com/fullaccountroute.json"
-          }
-        ],
-        "constraints": {
-          "limit_disclosure": true,
-          "fields": [
-            {
-              "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "We can only verify bank accounts if they are attested by a trusted bank, auditor, or regulatory authority.",
-              "filter": {
-                "type": "string",
-                "pattern": "did:example:123|did:example:456"
-              }
-            }
-          ]
-        }
-      },
-      {
-        "id": "us_passport_input",
-        "name": "US Passport",
-        "schema": [
-          {
-            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
-          }
-        ],
-        "constraints": {
-          "fields": [
-            {
-              "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
-              "filter": {
-                "type": "string",
-                "format": "date",
-                "minimum": "1999-5-16"
-              }
-            }
-          ]
-        }
-
-      }
-    ]
-  }
-}
+[[import ../test/presentation-definition/example.json ]]
 ```
 
 </section>
