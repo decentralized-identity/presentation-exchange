@@ -102,7 +102,13 @@ the [[ref:Holder]] and the [[ref:Claims]] within the [[ref:Presentation
 Submission]]. See [Holder Binding](#holder-and-subject-binding).
 
 [[def:Identity Hub]]
-~ Some examples refer to an unfamiliar query protocol, hub:// , as a way of storing and querying schemata and other resources. While orthogonal to this specification and not yet on a standards track, they propose an architecture that may be of interest or utility to implementers of this specification. For more information, see the pre-draft specification hosted at the decentralized identity foundation [here](https://github.com/decentralized-identity/identity-hub/blob/master/explainer.md)
+~ Some examples refer to an unfamiliar query protocol, hub:// , as a way of 
+storing and querying schemata and other resources. While orthogonal to this 
+specification and not yet on a standards track, the concept of "identity hubs"
+proposes an architecture that may be of interest or utility to implementers of
+ this specification. For more information, see the pre-draft specification 
+hosted at the decentralized identity foundation 
+[here](https://github.com/decentralized-identity/identity-hub/blob/master/explainer.md)
 
 [[def:Input Descriptor, Input Descriptors]]
 ~ Input Descriptors are used by a Verifier to describe the information required
