@@ -1,4 +1,5 @@
 {
+  "comment": "VP, OIDC, DIDComm, or CHAPI outer wrapper here",
   "presentation_definition": {
     "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
     "submission_requirements": [{
@@ -21,7 +22,7 @@
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
-              "purpose": "The claim must be from one of the specified issuers",
+              "purpose": "We can only accept digital driver's licenses issued by national authorities of member states or trusted notarial auditors.",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:gov1|did:example:gov2"
@@ -32,7 +33,7 @@
               "filter": {
                 "type": "string",
                 "format": "date",
-                "maximum": "1999-6-15"
+                "maximum": "1999-06-15"
               }
             }
           ]
@@ -54,7 +55,7 @@
               "filter": {
                 "type": "string",
                 "format": "date",
-                "maximum": "1999-5-16"
+                "maximum": "1999-05-16"
               }
             }
           ]

@@ -30,6 +30,7 @@
   },
   "verifiableCredential": [
     {
+      "comment": "IN REALWORLD VPs, THIS WILL BE A BIG UGLY OBJECT INSTEAD OF THE DECODED JWT PAYLOAD THAT FOLLOWS",
       "vc": {
         "@context": "https://www.w3.org/2018/credentials/v1",
         "id": "https://eu.com/claims/DriversLicense",

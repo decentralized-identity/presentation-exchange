@@ -5,7 +5,7 @@
       {
         "id": "banking_input_1",
         "name": "Bank Account Information",
-        "purpose": "We need your bank and account information.",
+        "purpose": "We can only remit payment to a currently-valid bank account.",
         "group": [
           "A"
         ],
@@ -25,7 +25,7 @@
                 "$.vc.issuer",
                 "$.iss"
               ],
-              "purpose": "The claim must be from one of the specified issuers",
+              "purpose": "We can only verify bank accounts if they are attested by a trusted bank, auditor or regulatory authority.",
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
@@ -37,11 +37,10 @@
                 "$.vc.credentialSubject.account[*].id",
                 "$.account[*].id"
               ],
-              "purpose": "We need your bank account number for processing purposes",
+              "purpose": "We can only remit payment to a currently-valid bank account in the US, France, or Germany, submitted as an ABA Acct # or IBAN.",
               "filter": {
                 "type": "string",
-                "minLength": 10,
-                "maxLength": 12
+                "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
               }
             },
             {
@@ -50,10 +49,10 @@
                 "$.vc.credentialSubject.account[*].route",
                 "$.account[*].route"
               ],
-              "purpose": "You must have an account with a German, US, or Japanese bank account",
+              "purpose": "We can only remit payment to a currently-valid account at a US, Japanese, or German federally-accredited bank, submitted as an ABA RTN or SWIFT code.",
               "filter": {
                 "type": "string",
-                "pattern": "^DE|^US|^JP"
+                "pattern": "^[0-9]{9}|^([a-zA-Z]){4}([a-zA-Z]){2}([0-9a-zA-Z]){2}([0-9a-zA-Z]{3})?$"
               }
             }
           ]

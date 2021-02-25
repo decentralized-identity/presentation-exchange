@@ -12,7 +12,7 @@
           }
         ],
         "name": "Verify XYZ Government Employment",
-        "purpose": "We need to know if you currently work at an agency in the XYZ government",
+        "purpose": "Verifying current employment at XYZ Government agency as proxy for permission to access this resource",
         "metadata": {
           "client_id": "40be4fb5-7f3a-470b-aa37-66ed43821bd7",
           "redirect_uri": "https://tokens.xyz.gov/verify"
