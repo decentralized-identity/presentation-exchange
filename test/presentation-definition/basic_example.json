@@ -43,7 +43,7 @@
               "filter": {
                 "type": "string",
                 "format": "date",
-                "minimum": "1999-5-16"
+                "minimum": "1999-05-16"
               }
             }
           ]
