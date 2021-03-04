@@ -211,7 +211,6 @@ requirement.
 [[insert: ./test/presentation-definition/single_group_example.json]]
 ```
 
-
 </section>
 
 <section>
@@ -265,9 +264,11 @@ be ignored:
       [Claim Format Designations](#claim-format-designations) section.
       
       For example:
-      ```json
-      [[insert: ./test/presentation-definition/format_example.json]]
-      ```
+
+```json
+[[insert: ./test/presentation-definition/format_example.json]]
+```
+
 - `submission_requirements` - The [[ref:Presentation Definition]] ****MAY****
   contain a `submission_requirements` property. If present, its value
   ****MUST**** be an object conforming to the [[ref:Submission Requirement]]
@@ -341,15 +342,6 @@ values, and an explanation why a certain item or set of data is being requested:
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `purpose` property.
   If present, its value ****MUST**** be a string that describes the purpose for
   which the [[ref:Claim]]'s data is being requested.
-- The [[ref:Input Descriptor Object]] ****MAY**** contain a `metadata` property.
-  If present, its value ****MUST**** be an object with metadata properties that
-  describe any information specific to the acquisition, formulation, or details
-  of the [[ref:Claim]] in question.
-  
-  Note: this specification does not specify the `metadata` property beyond
-  stating that it is an object. This property is provided to implementers as a
-  means of providing additional information that may be required by their
-  implementation, but which does not fit within another property. 
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
@@ -908,8 +900,7 @@ For each candidate input:
 The above evaluation process assumes the processing entity will test
 each candidate input (JWT, Verifiable Credential, etc.) it holds to determine if
 it meets the criteria for inclusion in submission. Any additional testing of a
-candidate input for a schema match beyond comparison of the schema `uri` (e.g.,
-specific requirements or details expressed in schema `metadata`) is at the
+candidate input for a schema match beyond comparison of the schema `uri` is at the
 discretion of the implementer.
 :::
 
