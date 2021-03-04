@@ -199,7 +199,7 @@ requirement.
 
 ::: example Presentation Definition - Basic Example
 ```json
-[[import ../test/presentation-definition/example.json ]]
+[[insert ./test/presentation-definition/basic_example.json ]]
 ```
 
 </section>
@@ -208,9 +208,8 @@ requirement.
 
 ::: example Presentation Definition - Single Group Example
 ```json
-[[insert: ../test/presentation-definition/single_group_example.json]]
+[[insert: ./test/presentation-definition/single_group_example.json]]
 ```
-
 
 </section>
 
@@ -218,7 +217,7 @@ requirement.
 
 ::: example Presentation Definition - Multi-Group Example
 ```json
-[[insert: ../test/presentation-definition/multi_group_example.json]]
+[[insert: ./test/presentation-definition/multi_group_example.json]]
 ```
 :::
 
@@ -265,9 +264,11 @@ be ignored:
       [Claim Format Designations](#claim-format-designations) section.
       
       For example:
-      ```json
-      [[insert: ../test/presentation-definition/format_example.json]]
-      ```
+
+```json
+[[insert: ./test/presentation-definition/format_example.json]]
+```
+
 - `submission_requirements` - The [[ref:Presentation Definition]] ****MAY****
   contain a `submission_requirements` property. If present, its value
   ****MUST**** be an object conforming to the [[ref:Submission Requirement]]
@@ -298,7 +299,7 @@ values, and an explanation why a certain item or set of data is being requested:
 
 ::: example
 ```json
-[[insert: ../test/presentation-definition/input_descriptors_example.json]]
+[[insert: ./test/presentation-definition/input_descriptors_example.json]]
 ```
 :::
 
@@ -308,7 +309,7 @@ values, and an explanation why a certain item or set of data is being requested:
 
 ::: example
 ```json
-[[insert: ../test/presentation-definition/input_descriptor_id_tokens_example.json]]
+[[insert: ./test/presentation-definition/input_descriptor_id_tokens_example.json]]
 ```
 
 </section>
@@ -341,15 +342,6 @@ values, and an explanation why a certain item or set of data is being requested:
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `purpose` property.
   If present, its value ****MUST**** be a string that describes the purpose for
   which the [[ref:Claim]]'s data is being requested.
-- The [[ref:Input Descriptor Object]] ****MAY**** contain a `metadata` property.
-  If present, its value ****MUST**** be an object with metadata properties that
-  describe any information specific to the acquisition, formulation, or details
-  of the [[ref:Claim]] in question.
-  
-  Note: this specification does not specify the `metadata` property beyond
-  stating that it is an object. This property is provided to implementers as a
-  means of providing additional information that may be required by their
-  implementation, but which does not fit within another property. 
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
@@ -397,7 +389,7 @@ values, and an explanation why a certain item or set of data is being requested:
               "revoked": {...}
             } 
           ```
-      ```note
+      ::: note
       There is no assumed direct mapping between these values and a
       corresponding status object in the underlying credentials. On the
       contrary, the encoding and decoding of a credential status (which may
@@ -405,7 +397,7 @@ values, and an explanation why a certain item or set of data is being requested:
       an implementation detail which takes place at a lower layer of abstraction
       and in accordance with the supported verifiable credential formats and
       presentation protocols.
-      ```
+      :::
     - The _constraints object_ ****MAY**** contain a `subject_is_issuer`
       property. If present, its value ****MUST**** be one of the following
       strings:
@@ -675,7 +667,7 @@ all input_descriptors ****MUST**** be grouped. Any unused
 
 ::: example Submission Requirement
 ```json 12
-[[insert: ../test/submission-requirements/example.json ]]
+[[insert: ./test/submission-requirements/example.json ]]
 ```
 :::
 
@@ -730,7 +722,7 @@ For an `all` rule [[ref:Submission Requirement Object]]:
 
 ::: example Submission Requirement, all, group
 ```json
-[[insert: ../test/submission-requirements/all_example.json]]
+[[insert: ./test/submission-requirements/all_example.json]]
 ```
 :::
 
@@ -770,13 +762,13 @@ with a matching `group` string. In the first example that follows, the
 
 ::: example Submission Requirement, pick, group
 ```json
-[[insert: ../test/submission-requirements/pick_1_example.json]]
+[[insert: ./test/submission-requirements/pick_1_example.json]]
 ```
 :::
 
 ::: example Submission Requirement, pick, min/max
 ```json
-[[insert: ../test/submission-requirements/pick_2_example.json]]
+[[insert: ./test/submission-requirements/pick_2_example.json]]
 ```
 :::
 
@@ -789,7 +781,7 @@ from group `"A"` or two members from group `"B"`:
 
 ::: example Submission Requirement, pick, nested
 ```json
-[[insert: ../test/submission-requirements/pick_3_example.json]]
+[[insert: ./test/submission-requirements/pick_3_example.json]]
 ```
 :::
 
@@ -798,7 +790,7 @@ The following JSON Schema Draft 7 definition summarizes many of the
 format-related rules above:
 
 ```json
-[[insert: ../test/submission-requirements/schema.json]]
+[[insert: ./test/submission-requirements/schema.json]]
 ```
 
 #### Property Values and Evaluation
@@ -908,8 +900,7 @@ For each candidate input:
 The above evaluation process assumes the processing entity will test
 each candidate input (JWT, Verifiable Credential, etc.) it holds to determine if
 it meets the criteria for inclusion in submission. Any additional testing of a
-candidate input for a schema match beyond comparison of the schema `uri` (e.g.,
-specific requirements or details expressed in schema `metadata`) is at the
+candidate input for a schema match beyond comparison of the schema `uri` is at the
 discretion of the implementer.
 :::
 
@@ -946,7 +937,7 @@ requisite information to resolve the status of a [[ref:Claim]].
 
 ::: example Drivers License Expiration
 ```json
-[[insert: ../test/presentation-definition/VC_expiration_example.json]]
+[[insert: ./test/presentation-definition/VC_expiration_example.json]]
 ```
 :::
 
@@ -956,7 +947,7 @@ requisite information to resolve the status of a [[ref:Claim]].
 
 ::: example Drivers License Revocation
 ```json
-[[insert: ../test/presentation-definition/VC_revocation_example.json]]
+[[insert: ./test/presentation-definition/VC_revocation_example.json]]
 ```
 :::
 </section>
@@ -1027,7 +1018,7 @@ The following JSON Schema Draft 7 definition summarizes the
 format-related rules above:
 
 ```json
-[[insert: ../test/presentation-definition/schema.json]]
+[[insert: ./test/presentation-definition/schema.json]]
 ```
 
 ### Presentation Request
@@ -1105,7 +1096,7 @@ composed and embedded as follows:
 ****Example Nested Submission****
 
 ```json
-[[insert: ../test/nested_submission_example.json]]
+[[insert: ./test/presentation-submission/nested_submission_example.json]]
 ```
 
 When the `path_nested` property is present in a [[ref:Presentation Submission]]
@@ -1190,7 +1181,7 @@ CHAPI      | `$.data`
 The following JSON Schema Draft 7 definition summarizes the rules above:
 
 ```json
-[[insert: ../test/presentation-submission/schema.json]]
+[[insert: ./test/presentation-submission/schema.json]]
 ```
 
 ## Claim Format Designations
@@ -1364,7 +1355,7 @@ JSONPath                      | Description
 
 ::: example Presentation Submission - Verifiable Presentation
 ```json
-[[insert: ../test/presentation-submission/appendix_VP_example.json]]
+[[insert: ./test/presentation-submission/appendix_VP_example.json]]
 ```
 :::
 
@@ -1374,7 +1365,7 @@ JSONPath                      | Description
 
 ::: example Presentation Submission with OIDC JWT
 ```json
-[[insert: ../test/presentation-submission/appendix_OIDC_example.json]]
+[[insert: ./test/presentation-submission/appendix_OIDC_example.json]]
 ```
 :::
 
@@ -1384,7 +1375,7 @@ JSONPath                      | Description
 
 ::: example Presentation Submission using CHAPI
 ```json
-[[insert: ../test/presentation-submission/appendix_CHAPI_example.json]]
+[[insert: ./test/presentation-submission/appendix_CHAPI_example.json]]
 ```
 
 </section>
@@ -1393,7 +1384,7 @@ JSONPath                      | Description
 
 ::: example Presentation Submission using DIDComm
 ```json
-[[insert: ../test/presentation-submission/appendix_DIDComm_example.json]]
+[[insert: ./test/presentation-submission/appendix_DIDComm_example.json]]
 ```
 :::
 
