@@ -1303,7 +1303,16 @@ JSONPath                      | Description
 `$..book[?(@.price<30 && @.category=="fiction")]`        | Filter all fiction books cheaper than 30
 `$..*`                        | All members of JSON structure
 
-## External References
+## Normative References
+
+[[def: CHAPI, Credential Handler API]]
+~ [W3C Credential Handler API 1.0](https://w3c-ccg.github.io/credential-handler-api/). Dave Longley, Manu Sporny. 2020-2-19. Status: Draft Community Group Report.
+
+[[def: DIDComm]]
+~ [DIF DIDComm Messaging](https://github.com/decentralized-identity/didcomm-messaging). Daniel Hardman, Sam Curren. Status: Working Group Draft.
+
+[[def: OIDC]]
+~ [Open ID Connect](https://openid.net/specs/openid-connect-core-1_0.html). Jones, M., Bradley, J., and N. Sakimura. Status: Approved Specification
 
 [[spec]]
 
