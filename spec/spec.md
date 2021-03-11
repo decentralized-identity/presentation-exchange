@@ -1305,16 +1305,18 @@ JSONPath                      | Description
 
 ## Normative References
 
+[[def: OIDC]]
+~ [Open ID Connect](https://openid.net/specs/openid-connect-core-1_0.html). Jones, M., Bradley, J., and N. Sakimura. Status: Approved Specification
+
+[[spec]]
+
+## Informative References
+
 [[def: CHAPI, Credential Handler API]]
 ~ [W3C Credential Handler API 1.0](https://w3c-ccg.github.io/credential-handler-api/). Dave Longley, Manu Sporny. 2020-2-19. Status: Draft Community Group Report.
 
 [[def: DIDComm]]
 ~ [DIF DIDComm Messaging](https://github.com/decentralized-identity/didcomm-messaging). Daniel Hardman, Sam Curren. Status: Working Group Draft.
-
-[[def: OIDC]]
-~ [Open ID Connect](https://openid.net/specs/openid-connect-core-1_0.html). Jones, M., Bradley, J., and N. Sakimura. Status: Approved Specification
-
-[[spec]]
 
 ## Appendix
 
