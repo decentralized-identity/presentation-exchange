@@ -253,7 +253,7 @@ requirement.</p>
               <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
                 <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
                 <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"date"</span><span class="token punctuation">,</span>
-                <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token string">"1999-5-16"</span>
+                <span class="token property">"minimum"</span><span class="token operator">:</span> <span class="token string">"1999-05-16"</span>
               <span class="token punctuation">}</span>
             <span class="token punctuation">}</span>
           <span class="token punctuation">]</span>
@@ -670,7 +670,7 @@ values, and an explanation why a certain item or set of data is being requested:
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-39" class="notice example"><a class="notice-link" href="#example-39">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-25" class="notice example"><a class="notice-link" href="#example-25">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -738,7 +738,7 @@ values, and an explanation why a certain item or set of data is being requested:
 </div>
 </section>
 <section>
-<div id="example-40" class="notice example"><a class="notice-link" href="#example-40">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-26" class="notice example"><a class="notice-link" href="#example-26">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -857,7 +857,7 @@ status.</li>
 </code></pre>
 </li>
 </ul>
-<div id="note-58" class="notice note"><a class="notice-link" href="#note-58">NOTE</a><p>There is no assumed direct mapping between these values and a
+<div id="note-37" class="notice note"><a class="notice-link" href="#note-37">NOTE</a><p>There is no assumed direct mapping between these values and a
 corresponding status object in the underlying credentials. On the
 contrary, the encoding and decoding of a credential status (which may
 include fetching remote status information or cryptographic operations) is
@@ -880,7 +880,7 @@ processing entity submit a response that has been <em>self-attested</em>,
 i.e., the <a class="term-reference" href="#term:claim">Claim</a> used in the presentation was ‘issued’ by the
 <a class="term-reference" href="#term:subject">Subject</a> of the <a class="term-reference" href="#term:claim">Claim</a>.</li>
 </ul>
-<div id="note-59" class="notice note"><a class="notice-link" href="#note-59">NOTE</a><p>The <code>subject_is_issuer</code> property could be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to
+<div id="note-38" class="notice note"><a class="notice-link" href="#note-38">NOTE</a><p>The <code>subject_is_issuer</code> property could be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to
 require that certain inputs be <em>self_attested</em>. For example, a college
 application <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> might contain an
 <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> for an essay submission. In this case, the
@@ -1528,7 +1528,7 @@ the array, all of the attributes so identified by the strings in the
 <code>field_id</code> array are about the same <a class="term-reference" href="#term:subject">Subject</a>.</p>
 </li>
 </ol>
-<div id="note-60" class="notice note"><a class="notice-link" href="#note-60">NOTE</a><p>The above evaluation process assumes the processing entity will test
+<div id="note-39" class="notice note"><a class="notice-link" href="#note-39">NOTE</a><p>The above evaluation process assumes the processing entity will test
 each candidate input (JWT, Verifiable Credential, etc.) it holds to determine if
 it meets the criteria for inclusion in submission. Any additional testing of a
 candidate input for a schema match beyond comparison of the schema <code>uri</code> is at the
@@ -2371,7 +2371,11 @@ specification that call for JSONPath expression execution.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="external-references"><a class="toc-anchor" href="#external-references" >§</a> External References</h2>
+<h2 id="normative-references"><a class="toc-anchor" href="#normative-references" >§</a> Normative References</h2>
+<dl>
+<dt><span id="term:oidc">OIDC</span></dt>
+<dd><a path-0="openid.net"path-1="specs"path-2="openid-connect-core-1_0.html"href="https://openid.net/specs/openid-connect-core-1_0.html" >Open ID Connect</a>. Jones, M., Bradley, J., and N. Sakimura. Status: Approved Specification</dd>
+</dl>
 <p>
 <dl class="reference-list">
         <dt id="ref:RFC7518">RFC7518</dt>
@@ -2394,6 +2398,13 @@ specification that call for JSONPath expression execution.</p>
       
 </dl>
 </p>
+<h2 id="informative-references"><a class="toc-anchor" href="#informative-references" >§</a> Informative References</h2>
+<dl>
+<dt><span id="term:credential-handler-api"><span id="term:chapi">CHAPI</span></span></dt>
+<dd><a path-0="w3c-ccg.github.io"path-1="credential-handler-api"path-2=""href="https://w3c-ccg.github.io/credential-handler-api/" >W3C Credential Handler API 1.0</a>. Dave Longley, Manu Sporny. 2020-2-19. Status: Draft Community Group Report.</dd>
+<dt><span id="term:didcomm">DIDComm</span></dt>
+<dd><a path-0="github.com"path-1="decentralized-identity"path-2="didcomm-messaging"href="https://github.com/decentralized-identity/didcomm-messaging" >DIF DIDComm Messaging</a>. Daniel Hardman, Sam Curren. Status: Working Group Draft.</dd>
+</dl>
 <h2 id="appendix"><a class="toc-anchor" href="#appendix" >§</a> Appendix</h2>
 <h3 id="embed-target-examples"><a class="toc-anchor" href="#embed-target-examples" >§</a> Embed Target Examples</h3>
 <!-- #### Presentation Definitions
@@ -2858,7 +2869,8 @@ in the IANA JSON Web Token <a class="term-reference" href="#term:claims">Claims<
 <li><a href="#claim-format-designations" >Claim Format Designations</a></li>
 <li><a href="#json-schema-vocabulary-definition" >JSON Schema Vocabulary Definition</a></li>
 <li><a href="#jsonpath-syntax-definition" >JSONPath Syntax Definition</a></li>
-<li><a href="#external-references" >External References</a></li>
+<li><a href="#normative-references" >Normative References</a></li>
+<li><a href="#informative-references" >Informative References</a></li>
 <li><a href="#appendix" >Appendix</a>
 <ul>
 <li><a href="#embed-target-examples" >Embed Target Examples</a>
