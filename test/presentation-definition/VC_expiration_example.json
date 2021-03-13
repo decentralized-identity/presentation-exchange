@@ -2,22 +2,25 @@
   "id": "drivers_license_information",
   "name": "Verify Valid License",
   "purpose": "We need you to show that your driver's license will be valid through December of this year.",
-  "schema": [
-    {
-      "uri": "https://yourwatchful.gov/drivers-license-schema.json",
-      "required": true
-    }
-  ],
-  "constraints": {
-    "fields": [
+  "input_descriptors": [{
+    "id": "example_1",
+    "schema": [
       {
-        "path": ["$.expirationDate"],
-        "filter": {
-          "type": "string",
-          "format": "date-time",
-          "minimum": "2020-12-31T23:59:59.000Z"
-        }
+        "uri": "https://yourwatchful.gov/drivers-license-schema.json",
+        "required": true
       }
-    ]
-  }
+    ],
+    "constraints": {
+      "fields": [
+        {
+          "path": ["$.expirationDate"],
+          "filter": {
+            "type": "string",
+            "format": "date-time",
+            "minimum": "2020-12-31T23:59:59.000Z"
+          }
+        }
+      ]
+    }
+  }]
 }
