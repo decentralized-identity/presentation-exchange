@@ -47,7 +47,7 @@ customElements.define("slide-panels",class extends HTMLElement{static get observ
                     </header>
       
                     <article id="content">
-                      <h1 id="presentation-exchange"><a class="toc-anchor" href="#presentation-exchange" >§</a> Presentation Exchange</h1>
+                      <h1 id="presentation-exchange-v100"><a class="toc-anchor" href="#presentation-exchange-v100" >§</a> Presentation Exchange v1.0.0</h1>
 <p><strong>Specification Status:</strong> Working Group Approved Draft</p>
 <p><strong>Latest Draft:</strong>
 <a path-0="identity.foundation"path-1="presentation-exchange"href="https://identity.foundation/presentation-exchange" >identity.foundation/presentation-exchange</a></p>
@@ -203,10 +203,31 @@ flexibility in cases where different types of proofs may satisfy an input
 requirement.</p>
 <tab-panels selected-index="0">
 <nav>
+  <button type="button">Minimal Example</button>
   <button type="button">Basic Example</button>
   <button type="button">Single Group Example</button>
   <button type="button">Multi-Group Example</button>
 </nav>
+<section>
+<div id="presentation-definition---minimal-example" class="notice example"><a class="notice-link" href="#presentation-definition---minimal-example">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"comment"</span><span class="token operator">:</span> <span class="token string">"Note: VP, OIDC, DIDComm, or CHAPI outer wrapper would be here."</span><span class="token punctuation">,</span>
+  <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
+    <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"wa_driver_license"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Washington State Business License"</span><span class="token punctuation">,</span>
+        <span class="token property">"purpose"</span><span class="token operator">:</span> <span class="token string">"We can only allow licensed Washington State business representatives into the WA Business Conference"</span><span class="token punctuation">,</span>
+        <span class="token property">"schema"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+            <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"https://licenses.example.com/business-license.json"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+</section>
 <section>
 <div id="presentation-definition---basic-example" class="notice example"><a class="notice-link" href="#presentation-definition---basic-example">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"comment"</span><span class="token operator">:</span> <span class="token string">"Note: VP, OIDC, DIDComm, or CHAPI outer wrapper would be here."</span><span class="token punctuation">,</span>
@@ -559,6 +580,7 @@ requirement.</p>
 </div>
 </div>
 </div>
+</div>
 </section>
 </tab-panels>
 <p>The following properties are for use at the top-level of a
@@ -670,7 +692,7 @@ values, and an explanation why a certain item or set of data is being requested:
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-27" class="notice example"><a class="notice-link" href="#example-27">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-23" class="notice example"><a class="notice-link" href="#example-23">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -738,7 +760,7 @@ values, and an explanation why a certain item or set of data is being requested:
 </div>
 </section>
 <section>
-<div id="example-28" class="notice example"><a class="notice-link" href="#example-28">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-24" class="notice example"><a class="notice-link" href="#example-24">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -857,7 +879,7 @@ status.</li>
 </code></pre>
 </li>
 </ul>
-<div id="note-40" class="notice note"><a class="notice-link" href="#note-40">NOTE</a><p>There is no assumed direct mapping between these values and a
+<div id="note-34" class="notice note"><a class="notice-link" href="#note-34">NOTE</a><p>There is no assumed direct mapping between these values and a
 corresponding status object in the underlying credentials. On the
 contrary, the encoding and decoding of a credential status (which may
 include fetching remote status information or cryptographic operations) is
@@ -880,7 +902,7 @@ processing entity submit a response that has been <em>self-attested</em>,
 i.e., the <a class="term-reference" href="#term:claim">Claim</a> used in the presentation was ‘issued’ by the
 <a class="term-reference" href="#term:subject">Subject</a> of the <a class="term-reference" href="#term:claim">Claim</a>.</li>
 </ul>
-<div id="note-41" class="notice note"><a class="notice-link" href="#note-41">NOTE</a><p>The <code>subject_is_issuer</code> property could be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to
+<div id="note-35" class="notice note"><a class="notice-link" href="#note-35">NOTE</a><p>The <code>subject_is_issuer</code> property could be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to
 require that certain inputs be <em>self_attested</em>. For example, a college
 application <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> might contain an
 <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> for an essay submission. In this case, the
@@ -1528,7 +1550,7 @@ the array, all of the attributes so identified by the strings in the
 <code>field_id</code> array are about the same <a class="term-reference" href="#term:subject">Subject</a>.</p>
 </li>
 </ol>
-<div id="note-42" class="notice note"><a class="notice-link" href="#note-42">NOTE</a><p>The above evaluation process assumes the processing entity will test
+<div id="note-36" class="notice note"><a class="notice-link" href="#note-36">NOTE</a><p>The above evaluation process assumes the processing entity will test
 each candidate input (JWT, Verifiable Credential, etc.) it holds to determine if
 it meets the criteria for inclusion in submission. Any additional testing of a
 candidate input for a schema match beyond comparison of the schema <code>uri</code> is at the
@@ -2012,6 +2034,34 @@ property <strong><strong>MUST</strong></strong> be the same for each level of ne
 </ul>
 </li>
 </ul>
+<div id="basic-presentation-submission-object" class="notice example"><a class="notice-link" href="#basic-presentation-submission-object">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span> 
+  <span class="token comment">// NOTE: VP, OIDC, DIDComm, or CHAPI outer wrapper properties would be here.</span>
+  
+  <span class="token property">"presentation_submission"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"a30e3b91-fb77-4d22-95fa-871689c322e2"</span><span class="token punctuation">,</span>
+    <span class="token property">"definition_id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
+    <span class="token property">"descriptor_map"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"banking_input_2"</span><span class="token punctuation">,</span>
+        <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"jwt_vc"</span><span class="token punctuation">,</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.verifiableCredential[0]"</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"employment_input"</span><span class="token punctuation">,</span>
+        <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"ldp_vc"</span><span class="token punctuation">,</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.verifiableCredential[1]"</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"citizenship_input_1"</span><span class="token punctuation">,</span>
+        <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"ldp_vc"</span><span class="token punctuation">,</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"$.verifiableCredential[2]"</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+  
+<span class="token punctuation">}</span>
+</code></pre>
+</div>
 <h3 id="processing-of-path_nested-entries"><a class="toc-anchor" href="#processing-of-path_nested-entries" >§</a> Processing of <code>path_nested</code> Entries</h3>
 <p><strong><strong>Example Nested Submission</strong></strong></p>
 <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
