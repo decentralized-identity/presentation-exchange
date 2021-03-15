@@ -8,7 +8,7 @@
         "purpose": "We need your bank and account information."
       },
       "constraints": {
-        "limit_disclosure": true,
+        "limit_disclosure": "required",
         "fields": [
           {
             "path": ["$.issuer", "$.vc.issuer", "$.iss"],

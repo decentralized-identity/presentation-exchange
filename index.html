@@ -48,7 +48,7 @@ customElements.define("slide-panels",class extends HTMLElement{static get observ
       
                     <article id="content">
                       <h1 id="presentation-exchange"><a class="toc-anchor" href="#presentation-exchange" >§</a> Presentation Exchange</h1>
-<p><strong>Specification Status:</strong> Working Group Draft</p>
+<p><strong>Specification Status:</strong> Working Group Approved Draft</p>
 <p><strong>Latest Draft:</strong>
 <a path-0="identity.foundation"path-1="presentation-exchange"href="https://identity.foundation/presentation-exchange" >identity.foundation/presentation-exchange</a></p>
 <!-- -->
@@ -670,7 +670,7 @@ values, and an explanation why a certain item or set of data is being requested:
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-25" class="notice example"><a class="notice-link" href="#example-25">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-27" class="notice example"><a class="notice-link" href="#example-27">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -738,7 +738,7 @@ values, and an explanation why a certain item or set of data is being requested:
 </div>
 </section>
 <section>
-<div id="example-26" class="notice example"><a class="notice-link" href="#example-26">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-28" class="notice example"><a class="notice-link" href="#example-28">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -857,7 +857,7 @@ status.</li>
 </code></pre>
 </li>
 </ul>
-<div id="note-37" class="notice note"><a class="notice-link" href="#note-37">NOTE</a><p>There is no assumed direct mapping between these values and a
+<div id="note-40" class="notice note"><a class="notice-link" href="#note-40">NOTE</a><p>There is no assumed direct mapping between these values and a
 corresponding status object in the underlying credentials. On the
 contrary, the encoding and decoding of a credential status (which may
 include fetching remote status information or cryptographic operations) is
@@ -880,7 +880,7 @@ processing entity submit a response that has been <em>self-attested</em>,
 i.e., the <a class="term-reference" href="#term:claim">Claim</a> used in the presentation was ‘issued’ by the
 <a class="term-reference" href="#term:subject">Subject</a> of the <a class="term-reference" href="#term:claim">Claim</a>.</li>
 </ul>
-<div id="note-38" class="notice note"><a class="notice-link" href="#note-38">NOTE</a><p>The <code>subject_is_issuer</code> property could be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to
+<div id="note-41" class="notice note"><a class="notice-link" href="#note-41">NOTE</a><p>The <code>subject_is_issuer</code> property could be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to
 require that certain inputs be <em>self_attested</em>. For example, a college
 application <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> might contain an
 <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> for an essay submission. In this case, the
@@ -1528,7 +1528,7 @@ the array, all of the attributes so identified by the strings in the
 <code>field_id</code> array are about the same <a class="term-reference" href="#term:subject">Subject</a>.</p>
 </li>
 </ol>
-<div id="note-39" class="notice note"><a class="notice-link" href="#note-39">NOTE</a><p>The above evaluation process assumes the processing entity will test
+<div id="note-42" class="notice note"><a class="notice-link" href="#note-42">NOTE</a><p>The above evaluation process assumes the processing entity will test
 each candidate input (JWT, Verifiable Credential, etc.) it holds to determine if
 it meets the criteria for inclusion in submission. Any additional testing of a
 candidate input for a schema match beyond comparison of the schema <code>uri</code> is at the

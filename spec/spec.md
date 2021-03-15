@@ -1,7 +1,7 @@
 Presentation Exchange
 ==================
 
-**Specification Status:** Working Group Draft
+**Specification Status:** Working Group Approved Draft
 
 **Latest Draft:**
   [identity.foundation/presentation-exchange](https://identity.foundation/presentation-exchange)
