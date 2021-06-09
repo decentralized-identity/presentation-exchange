@@ -59,16 +59,12 @@ these data formats within their flows.
 
 ## Status of This Document
 
-Presentation Exchange v1.0 is a _DRAFT_ specification under development within
-the Decentralized Identity Foundation (DIF). It incorporates requirements and
-learnings from related work of many active industry players into a shared
-specification that meets the collective needs of the community.
+Presentation Exchange v1.0 is a _Working Group Approved_  specification
+developed within the Decentralized Identity Foundation (DIF).
 
-This specification is ready for feedback from other decentralized
-identity-related and -adjacent communities. It will be updated to incorporate
-that feedback, then implementations will be sought so that the specification can
-move to _Working Group Approved_ status. We encourage reviewers to submit issues
-on [GitHub](https://github.com/decentralized-identity/presentation-exchange/issues).
+We encourage reviewers to submit issues that may be incorporated into future
+versions of this specification on
+[GitHub](https://github.com/decentralized-identity/presentation-exchange/issues).
 
 ## Terminology
 
