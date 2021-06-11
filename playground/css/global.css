@@ -1,0 +1,238 @@
+
+:root {
+  --panels-width: 45vw;
+  --panels-min: 450px;
+  --panels-max: 650px;
+}
+
+html, body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0 0.75em !important;
+}
+
+tags[required] {
+  border-color: #f14668 !important;
+}
+
+/* COMPONENTS */
+
+.constraint-fields ace-editor {
+  height: auto;
+  min-height: 5em;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+}
+
+.ace_placeholder {
+  padding: 0 0.6em;
+  margin: 0;
+  opacity: 0.5;
+  transform: none;
+  font-style: italic;
+}
+
+.ace_active-line {
+  display: none;
+}
+
+.is-checkbox {
+  cursor: pointer;
+}
+
+.revealing-checkbox + .select {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.revealing-checkbox[checked] + .select {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.input-descriptor {
+  margin: 0;
+  padding: 0 0 1.25em;
+}
+
+.input-descriptor > detail-box > header {
+  display: flex;
+  position: sticky;
+  top: 1em;
+  margin: 0 0 1em;
+  background: #ddd;
+  padding: 0.5em;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px 0px rgb(0 0 0 / 45%), 0 -0.6em 0 0.4em rgb(255 255 255);
+  z-index: 2;
+}
+
+.input-descriptor > detail-box > header .field {
+  flex: 1;
+  margin: 0;
+}
+
+.input-descriptor > detail-box > header label {
+  margin: auto 0.5em auto 0;
+}
+
+.input-descriptor > detail-box > header [detail-box-toggle] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  width: 2.75em;
+  margin: -0.5em 1em -0.5em -0.5em;
+  border-radius: 3px 0 0 3px;
+  border-right: 1px solid rgba(0,0,0,0.15);
+}
+
+.input-descriptor > detail-box > section {
+  padding: 0 0 0 1em;
+}
+
+.constraint-fields {
+  margin-bottom: 0.75em;
+}
+
+.constraint-fields > header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4em 0;
+  color: #000;
+  background: #d0d0d0;
+  border-radius: 2px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.constraint-fields[open] > header {
+  border-radius: 2px 2px 0 0;
+}
+
+.constraint-fields > header:hover {
+  opacity: 1;
+}
+
+.constraint-fields section > div {
+  padding: 1em 1em 0.8em;
+  background: #fafafa;
+  border: 1px solid #e9e9e9;
+}
+
+.add-field {
+  margin: 1em 0;
+}
+
+.submission-requirement {
+  margin: 1.5em 0 0;
+  padding: 0 0 2em;
+}
+
+.submission-requirement:not(:last-of-type) {
+  border-bottom: 3px solid #ccc;
+}
+
+
+.submission-rule {
+  margin-right: 1em;
+}
+
+.submission-requirement .select ~ .control {
+  display: none;
+}
+
+.submission-requirement .select:not([value]) ~ .control, 
+.submission-requirement .select[value="pick"] ~ .control {
+  display: block;
+}
+
+#definition_panels {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: var(--panels-width);
+  min-width: var(--panels-min);
+  max-width: var(--panels-max);
+  padding: 1em;
+}
+
+#definition_panels > nav {
+  margin: 0 0 1em;
+}
+
+#definition_panels > nav a {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  color: unset;
+  text-align: center;
+  border-bottom: 3px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+#definition_panels > nav a:hover {
+  border-color: #ddd;
+}
+
+#definition_panels > nav a[selected] {
+  color: #073255;
+  border-color: rgb(30 111 176);
+  transition: none;
+}
+
+#definition_panels > section {
+  padding: 0 0.75em;
+}
+
+#outputs {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1em;
+  width: calc(100% - var(--panels-width));
+  min-width: calc(100% - var(--panels-max));
+  max-width: calc(100% - var(--panels-min));
+}
+
+#presentation_definition {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  border-radius: 4px;
+}
+
+/*** PANELS ***/
+
+#format_panel > div {
+  margin-bottom: 2.5em;
+}
+
+/*** OVERRIDES ***/
+
+.token.number {
+  align-items: unset;
+  background-color: unset;
+  border-radius: unset;
+  display: unset;
+  font-size: unset;
+  height: unset;
+  justify-content: unset;
+  margin-right: unset;
+  min-width: unset;
+  padding: unset;
+  text-align: unset;
+  vertical-align: unset;
+}
