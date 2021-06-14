@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>PE Playground</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/web-components/tab-panels.css">
+  <link rel="stylesheet" href="css/web-components/detail-box.css">
+  <link rel="stylesheet" href="css/bulma.css">
+  <link rel="stylesheet" href="css/prism.css">
+  <link rel="stylesheet" href="css/tagify.css">
+  <link rel="stylesheet" href="css/global.css">
+
+  <script src="js/web-components/tab-panels.js" type="module"></script>
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+
+    <tab-panels id="definition_panels" selected-index="0">
+        <nav>
+          <a href="#basics"><span>Basic Info</span></a>
+          <a href="#formats"><span>Formats</span></a>
+          <a href="#input-descriptors"><span>Input Descriptors</span></a>
+          <a href="#submission-requirements"><span>Submission Requirements</span></a>
+        </nav>
+
+
+        <section>
+          <div class="field">
+            <label class="label">ID</label>
+            <div class="control">
+              <input id="definition_id" class="input" type="text" disabled>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+              <input id="definition_name" class="input" type="text" placeholder="Enter a name to present to the user">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Purpose</label>
+            <div class="control">
+              <input id="definition_purpose" class="input" type="text" placeholder="Enter the purpose of this exchange">
+            </div>
+          </div>
+        </section>
+
+        <section id="format_panel">
+
+          <div id="jwt_variants" proof-prop="alg">
+
+            <h4 class="title is-5">JWT Variants</h4>
+            <label class="control label is-checkbox">
+              <input type="checkbox" checked="checked" value="jwt" />
+              <span>JWT</span>
+            </label>
+            <label class="control label is-checkbox">
+              <input type="checkbox" checked="checked" value="jwt_vc" />
+              <span>JWT VC</span>
+            </label>
+            <label class="control label is-checkbox">
+              <input type="checkbox" checked="checked" value="jwt_vp" />
+              <span>JWT VP</span>
+            </label>
+
+            <input id="alg_list" class="tagify proof-list" placeholder="Enter your supported alg values" />
+
+          </div>
+
+          <div id="ldp_variants" proof-prop="proof_type">
+
+            <h4 class="title is-5">LD-Proof Variants</h4>
+            <label class="control label is-checkbox">
+              <input type="checkbox" checked="checked" value="ldp" />
+              <span>LDP</span>
+            </label>
+            <label class="control label is-checkbox">
+              <input type="checkbox" checked="checked" value="ldp_vc" />
+              <span>LDP VC</span>
+            </label>
+            <label class="control label is-checkbox">
+              <input type="checkbox" checked="checked" value="ldp_vp" />
+              <span>LDP VP</span>
+            </label>
+
+            <input id="proof_type_list" class="tagify proof-list" placeholder="Enter your supported proof_type values" />
+
+          </div>
+
+        </section>
+
+        <section>
+          <button id="add_input_descriptor" class="button is-primary is-fullwidth">+ Add Input Descriptor</button>
+        </section>
+
+        <section>
+          <button id="add_submission_requirement" class="button is-primary is-fullwidth">+ Add Submission Rule</button>
+        </section>
+        
+    </tab-panels>
+
+  <section id="outputs">
+    <pre id="presentation_definition" class="language-json"></pre>
+  </section>
+
+
+<!-- TEMPLATES -->
+
+<template id="input_descriptor_template">
+
+  <form class="input-descriptor">
+
+  <detail-box open>
+    <header>
+        <span detail-box-toggle></span>
+        <label class="label">ID </label>
+        <div class="field is-horizontal input-descriptor-id">
+          <div class="field-body">
+            <div class="field is-narrow">
+              <div class="control">
+                <input name="descriptor-id" class="input descriptor-id  is-danger" type="text" placeholder="Enter a unique ID" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span></span>
+    </header>
+
+    <section>
+
+        <div class="field">
+          <label class="label">Name</label>
+          <p class="help">Provide a name for this input that can be presented in UI</p>
+          <div class="control">
+            <input name="descriptor-name" class="input descriptor-name" type="text" placeholder="Add a helpful name users will understand">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Purpose</label>
+          <div class="control">
+            <input name="descriptor-purpose" class="input descriptor-purpose" type="text" placeholder="Why are you asking for this?">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Groups</label>
+          <div class="control">
+            <tagify-input>
+              <input name="group-list" class="group-list"  pattern="[^\s]+" placeholder="Enter a one or more group names" />
+            </tagify-input>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Schemas</label>
+          <div class="control">
+            <tagify-input>
+              <input name="schema-list" class="schema-list" placeholder="Enter one or more schema URIs" required />
+            </tagify-input>
+            <p class="help is-danger">
+              This field is required
+            </p>
+          </div>
+        </div>
+
+        <div class="field has-addons is-align-items-center">
+          <label class="revealing-checkbox control label is-checkbox m-0 mr-4">
+            <input name="limit-disclosure-checkbox" type="checkbox" />
+            <span>Limit Disclosure</span>
+          </label>
+          <div class="select">
+            <select name="limit-disclosure">
+              <option value="preferred" selected="selected">Preferred</option>
+              <option value="required">Required</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field has-addons is-align-items-center">
+          <label class="revealing-checkbox control label is-checkbox m-0 mr-4">
+            <input name="subject-issuer-checkbox" type="checkbox" />
+            <span>Subject is Issuer</span>
+          </label>
+          <div class="select">
+            <select name="subject-issuer">
+              <option value="preferred" selected="selected">Preferred</option>
+              <option value="required">Required</option>
+            </select>
+          </div>
+        </div>
+
+        <h4 class="title is-5">Fields</h4>
+
+        <button class="add-field button is-info is-small">Add Field</button>
+    </section>
+  </detail-box>
+
+  </form>
+
+</template>
+
+  <template id="field_template">
+
+    <detail-box class="constraint-fields" open>
+      <header detail-box-toggle></header>
+      <section>
+
+        <div>
+
+          <div class="field">
+            <label class="label">Path Selectors</label>
+            <div class="control">
+              <tagify-input>
+                <input class="path-list" placeholder="Enter one or more JSON Path selectors" />
+              </tagify-input>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">JSON Schema Filter</label>
+            <div class="control">       
+              <ace-editor hide-gutter-line-highlight></ace-editor>
+            </div>
+          </div>
+
+          <div class="field has-addons is-align-items-center">
+            <label class="revealing-checkbox control label is-checkbox m-0 mr-4">
+              <input class="predicate-checkbox" type="checkbox" />
+              <span>Predicate Proof</span>
+            </label>
+            <div class="select">
+              <select class="predicate">
+                <option value="preferred" selected="selected">Preferred</option>
+                <option value="required">Required</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+    </detail-box>
+
+  </template>
+
+
+  <template id="submission_requirement_template">
+
+    <form class="submission-requirement">
+
+      <label class="label">Rule Type</label>
+      <div class="field has-addons is-align-items-center">
+        <div class="select submission-rule">
+          <select name="rule-select">
+            <option value="pick" selected="selected">Pick</option>
+            <option value="all">All</option>
+          </select>
+        </div>
+        <div class="control">
+          <input name="rule-count" class="input" type="number" min="1" value="1">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Group</label>
+        <p class="help">Enter the group this Submission Rule applies to</p>
+        <!-- <div class="control">
+          <tagify-input>
+            <input name="group-list" class="group-list" placeholder="Enter a group name" pattern="[^\s]+" />
+          </tagify-input>
+        </div> -->
+        <div class="control">
+          <input class="input" type="text" name="group" list="group_list" />
+        </div>
+      </div>
+
+    </form>
+
+  </template>
+
+<!-- TEMPLATES --> 
+
+
+<!-- DATALISTS -->
+
+<datalist id="group_list">
+  <!-- <option value="A"> -->
+</datalist>
+
+
+  <script src="js/prism.js"></script>
+  <script src="js/tagify.js"></script>
+  <script src="js/web-components/detail-box.js" type="module"></script>
+  <script src="js/web-components/tagify-input.js" type="module"></script>
+  <script src="js/global.js" type="module"></script>
+  <script type="module" src="js/ace/index.min.js"></script>
+
+</body>
+
+</html>
