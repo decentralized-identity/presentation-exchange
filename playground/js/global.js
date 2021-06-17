@@ -223,8 +223,13 @@ new Tagify(alg_list, Object.assign({
 
 new Tagify(proof_type_list, Object.assign({
   whitelist: [
-    'ES256K', 'EdDSA', 'ES256', 'ES384', 'ES512', 'PS256', 'PS384', 
-    'PS512', 'RS256', 'RS384', 'RS512'
+    'Ed25519Signature2018',
+    'RsaSignature2018',
+    'EcdsaSecp256k1Signature2019',
+    'JsonWebSignature2020',
+    'GpgSignature2020',
+    'JcsEd25519Signature2020',
+    'BbsBlsSignature2020'
   ]
 }, tagifyOptions));
 
