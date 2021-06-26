@@ -7,7 +7,7 @@ Presentation Exchange
   [identity.foundation/presentation-exchange](https://identity.foundation/presentation-exchange)
 
 **Ratified Versions:**
-- [https://identity.foundation/presentation-exchange/spec/v1.0.0](https://identity.foundation/presentation-exchange/spec/v1.0.0)
+~ **v1.0.0** - [https://identity.foundation/presentation-exchange/spec/v1.0.0](https://identity.foundation/presentation-exchange/spec/v1.0.0)
 
 <!-- -->
 **Editors:**
