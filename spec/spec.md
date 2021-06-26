@@ -1,10 +1,14 @@
-Presentation Exchange v1.0.0
+Presentation Exchange
 ==================
 
-**Specification Status:** Working Group Approved Draft
+**Specification Status:** Latest Draft
 
 **Latest Draft:**
   [identity.foundation/presentation-exchange](https://identity.foundation/presentation-exchange)
+
+**Ratified Versions:**
+~ **v1.0.0** - [https://identity.foundation/presentation-exchange/spec/v1.0.0](https://identity.foundation/presentation-exchange/spec/v1.0.0)
+
 <!-- -->
 **Editors:**
 ~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Microsoft)
