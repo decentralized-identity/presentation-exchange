@@ -229,7 +229,8 @@ new Tagify(proof_type_list, Object.assign({
     'JsonWebSignature2020',
     'GpgSignature2020',
     'JcsEd25519Signature2020',
-    'BbsBlsSignature2020'
+    'BbsBlsSignature2020',
+    'BbsBlsSignatureProof2020'
   ]
 }, tagifyOptions));
 
