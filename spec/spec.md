@@ -244,8 +244,12 @@ The following properties are for use at the top-level of a
 be ignored:
 
 - `id` - The [[ref:Presentation Definition]] ****MUST**** contain an `id`
-  property. The value of this property ****MUST**** be a unique identifier, such
-  as a [UUID](https://tools.ietf.org/html/rfc4122).
+  property. The value of this property ****MUST**** be a string. The string
+  ****SHOULD**** provide a unique ID for the desired context. For example, a
+  [UUID](https://tools.ietf.org/html/rfc4122) such as `32f54163-7166-48f1-93d8-f
+  f217bdb0653` could provide an ID that is unique in a global context, while a
+  simple string such as `my_presentation_definition_1` could be suitably unique
+  in a local context.
 - `input_descriptors` - The [[ref:Presentation Definition]]  ****MUST****
   contain an `input_descriptors` property. Its value ****MUST**** be an array of
   [[ref:Input Descriptor Objects]], the composition of which are described in
