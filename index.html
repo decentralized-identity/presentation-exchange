@@ -696,7 +696,7 @@ values, and an explanation why a certain item or set of data is being requested:
   <button type="button">Descriptor for ID Tokens</button>
 </nav>
 <section>
-<div id="example-17" class="notice example"><a class="notice-link" href="#example-17">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-1" class="notice example"><a class="notice-link" href="#example-1">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -764,7 +764,7 @@ values, and an explanation why a certain item or set of data is being requested:
 </div>
 </section>
 <section>
-<div id="example-18" class="notice example"><a class="notice-link" href="#example-18">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+<div id="example-2" class="notice example"><a class="notice-link" href="#example-2">EXAMPLE</a><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"presentation_definition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"32f54163-7166-48f1-93d8-ff217bdb0653"</span><span class="token punctuation">,</span>
     <span class="token property">"input_descriptors"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -883,7 +883,7 @@ status.</li>
 </code></pre>
 </li>
 </ul>
-<div id="note-25" class="notice note"><a class="notice-link" href="#note-25">NOTE</a><p>There is no assumed direct mapping between these values and a
+<div id="note-1" class="notice note"><a class="notice-link" href="#note-1">NOTE</a><p>There is no assumed direct mapping between these values and a
 corresponding status object in the underlying credentials. On the
 contrary, the encoding and decoding of a credential status (which may
 include fetching remote status information or cryptographic operations) is
@@ -906,7 +906,7 @@ processing entity submit a response that has been <em>self-attested</em>,
 i.e., the <a class="term-reference" href="#term:claim">Claim</a> used in the presentation was ‘issued’ by the
 <a class="term-reference" href="#term:subject">Subject</a> of the <a class="term-reference" href="#term:claim">Claim</a>.</li>
 </ul>
-<div id="note-26" class="notice note"><a class="notice-link" href="#note-26">NOTE</a><p>The <code>subject_is_issuer</code> property could be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to
+<div id="note-2" class="notice note"><a class="notice-link" href="#note-2">NOTE</a><p>The <code>subject_is_issuer</code> property could be used by a <a class="term-reference" href="#term:verifier">Verifier</a> to
 require that certain inputs be <em>self_attested</em>. For example, a college
 application <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> might contain an
 <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> for an essay submission. In this case, the
@@ -1003,12 +1003,13 @@ of this property <strong><strong>MUST</strong></strong> be an array of one or mo
 expressions (as defined in the
 <a href="#jsonpath-syntax-definition" >JSONPath Syntax Definition</a> section)
 that select a target value from the input. The array <strong><strong>MUST</strong></strong>
-be evaluated from 0-index forward, and the first expressions to
-return a value will be used for the rest of the entry’s evaluation.
-The ability to declare multiple expressions in this way allows the
-<a class="term-reference" href="#term:verifier">Verifier</a> to account for format differences - for
-example: normalizing the differences in structure between
-JSON-LD/JWT-based
+be evaluated from 0-index forward, breaking as soon as a <em>Field
+Query Result</em> is found (as described in
+<a href="#input-evaluation" >Input Evaluation</a>), which will be used for the
+rest of the entry’s evaluation. The ability to declare multiple
+expressions in this way allows the <a class="term-reference" href="#term:verifier">Verifier</a> to account for
+format differences - for example: normalizing the differences in
+structure between JSON-LD/JWT-based
 <a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3=""href="https://www.w3.org/TR/vc-data-model/" >Verifiable Credentials</a> and
 vanilla JSON Web Tokens (JWTs) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>].</p>
 </li>
@@ -1493,28 +1494,42 @@ exact matches, skip to the next candidate input.</p>
 </li>
 <li>
 <p>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present,
-and it contains a <code>fields</code> property with one or more <em>field objects</em>,
-evaluate each against the candidate input as follows:</p>
+and it contains a <code>fields</code> property with one or more <em>fields objects</em>,
+evaluate each <em>fields object</em> against the candidate input as described
+in the following subsequence.</p>
+<p>Accept the candidate input if every <em>fields object</em> yields a <em>Field Query
+Result</em>; else, reject.</p>
 <ol>
-<li>Iterate the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> <code>path</code> array of
-<a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> string expressions
-from 0-index, executing each expression against the candidate input.
-Cease iteration at the first expression that returns a matching <em>Field
-Query Result</em> and use the result for the rest of the field’s evaluation.
-If no result is returned for any of the expressions, skip to the next
-candidate input.</li>
-<li>If the <code>filter</code> property of the field entry is present, validate the
-<em>Field Query Result</em> from the step above against the
-<a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a> descriptor
-value.</li>
-<li>If the <code>predicate</code> property of the field entry is present, a boolean
-value should be returned rather than the value of the <em>Field Query
-Result</em>. Calculate this boolean value by evaluating the <em>Field Query
+<li>
+<p>For each <a path-0="goessner.net"path-1="articles"path-2="JsonPath"path-3=""href="https://goessner.net/articles/JsonPath/" >JSONPath</a> expression
+in the <code>path</code> array (incrementing from the 0-index), evaluate the
+JSONPath expression against the candidate input and repeat the
+following subsequence on the result.</p>
+<p>Reqpeat until a <em>Field Query Result</em> is found, or the <code>path</code> array
+elements are exhausted.</p>
+<ol>
+<li>If the result returned no JSONPath match, skip to the next
+<code>path</code> array element</li>
+<li>Else, evaluate the first JSONPath match (<em>candidate</em>) as follows:
+<ol>
+<li>If the <em>fields object</em> has no <code>filter</code>, or if <em>candidate</em>
+validates against the
+<a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a>
+descriptor specified in <code>filter</code>, then:
+<ul>
+<li>If the <em>fields object</em> has no <code>predicate</code>, set <em>Field Query
+Result</em> to be <em>candidate</em>; else, set <em>Field Query Result</em> to
+the boolean value resulting from evaluating the <em>Field Query
 Result</em> against the
-<a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a> descriptor
-value of the <code>filter</code> property.</li>
-<li>If the result is valid, proceed iterating the rest of the <code>fields</code>
-entries.</li>
+<a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a>
+descriptor value of the <code>filter</code> property.</li>
+</ul>
+</li>
+<li>Else, skip to the next <code>path</code> array element</li>
+</ol>
+</li>
+</ol>
+</li>
 </ol>
 </li>
 <li>
@@ -1554,7 +1569,7 @@ the array, all of the attributes so identified by the strings in the
 <code>field_id</code> array are about the same <a class="term-reference" href="#term:subject">Subject</a>.</p>
 </li>
 </ol>
-<div id="note-27" class="notice note"><a class="notice-link" href="#note-27">NOTE</a><p>The above evaluation process assumes the processing entity will test
+<div id="note-3" class="notice note"><a class="notice-link" href="#note-3">NOTE</a><p>The above evaluation process assumes the processing entity will test
 each candidate input (JWT, Verifiable Credential, etc.) it holds to determine if
 it meets the criteria for inclusion in submission. Any additional testing of a
 candidate input for a schema match beyond comparison of the schema <code>uri</code> is at the
