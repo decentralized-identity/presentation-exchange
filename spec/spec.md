@@ -14,6 +14,7 @@ Presentation Exchange
 ~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Microsoft)
 ~ [Brent Zundel](https://www.linkedin.com/in/bzundel/) (Evernym)
 ~ [Martin Riedel](https://www.linkedin.com/in/rado0x54/) (Consensys Mesh)
+~ [Kim Hamilton Duffy](https://www.linkedin.com/in/kimdhamilton/) (Centre Consortium)
 
 **Contributors:**
 ~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
@@ -106,7 +107,7 @@ the [[ref:Holder]] and the [[ref:Claims]] within the [[ref:Presentation
 Submission]]. See [Holder Binding](#holder-and-subject-binding).
 
 [[def:Identity Hub]]
-~ Some examples refer to an unfamiliar query protocol, hub:// , as a way of 
+~ Some examples refer to an unfamiliar query protocol, hub://, as a way of 
 storing and querying schemata and other resources. While orthogonal to this 
 specification and not yet on a standards track, the concept of "identity hubs"
 proposes an architecture that may be of interest or utility to implementers of
@@ -1086,7 +1087,7 @@ composed and embedded as follows:
   The value of this property ****MUST**** be a unique identifier, such as a
   [UUID](https://tools.ietf.org/html/rfc4122).
 - The `presentation_submission` object ****MUST**** contain a `definition_id`
-  property. e value of this property ****MUST**** be the `id` value of a valid
+  property. The value of this property ****MUST**** be the `id` value of a valid
   [[ref:Presentation Definition]].
 - The `presentation_submission` object ****MUST**** include a `descriptor_map`
   property. The value of this property ****MUST**** be an array of
