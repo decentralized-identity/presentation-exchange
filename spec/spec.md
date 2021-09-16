@@ -521,7 +521,7 @@ values, and an explanation why a certain item or set of data is being requested:
           format differences - for example: normalizing the differences in
           structure between JSON-LD/JWT-based
           [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
-          vanilla JSON Web Tokens (JWTs) [[spec:rfc7797]].
+          vanilla JSON Web Tokens (JWTs) [[spec:rfc7519]].
         - The _fields object_ ****MAY**** contain an `id` property. If present,
           its value ****MUST**** be a string that is unique from every other
           field object's `id` property, including those contained in other
@@ -1248,14 +1248,14 @@ where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] variants
 they support and are submitting. The following are the normalized references
 used within the specification:
 
-- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7797]] 
+- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7519]] 
   that will be submitted in the form of a JWT encoded string. Expression of 
   supported algorithms in relation to this format ****MUST**** be conveyed using
   an `alg` property paired with values that are identifiers from the JSON Web
   Algorithms registry [[spec:RFC7518]].
-- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7797]] 
+- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7519]] 
   that will be submitted in the form of a JWT encoded string, and the body of
-  the decoded JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7797]]
+  the decoded JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7519]]
   section of the
   [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token). 
   Expression of supported algorithms in relation to these formats ****MUST****
