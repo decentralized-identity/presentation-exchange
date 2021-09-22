@@ -63,7 +63,7 @@ these data formats within their flows.
 
 ## Status of This Document
 
-Presentation Exchange v1.0 is a _DRAFT_ specification under development within
+Presentation Exchange v2.0 is a _PRE-DRAFT_ specification under development within
 the Decentralized Identity Foundation (DIF). It incorporates requirements and
 learnings from related work of many active industry players into a shared
 specification that meets the collective needs of the community.
