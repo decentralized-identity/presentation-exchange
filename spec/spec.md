@@ -14,6 +14,7 @@ Presentation Exchange
 ~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Microsoft)
 ~ [Brent Zundel](https://www.linkedin.com/in/bzundel/) (Evernym)
 ~ [Martin Riedel](https://www.linkedin.com/in/rado0x54/) (Consensys Mesh)
+~ [Kim Hamilton Duffy](https://www.linkedin.com/in/kimdhamilton/) (Centre Consortium)
 
 **Contributors:**
 ~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
@@ -106,7 +107,7 @@ the [[ref:Holder]] and the [[ref:Claims]] within the [[ref:Presentation
 Submission]]. See [Holder Binding](#holder-and-subject-binding).
 
 [[def:Identity Hub]]
-~ Some examples refer to an unfamiliar query protocol, hub:// , as a way of 
+~ Some examples refer to an unfamiliar query protocol, hub://, as a way of 
 storing and querying schemata and other resources. While orthogonal to this 
 specification and not yet on a standards track, the concept of "identity hubs"
 proposes an architecture that may be of interest or utility to implementers of
@@ -244,8 +245,12 @@ The following properties are for use at the top-level of a
 be ignored:
 
 - `id` - The [[ref:Presentation Definition]] ****MUST**** contain an `id`
-  property. The value of this property ****MUST**** be a unique identifier, such
-  as a [UUID](https://tools.ietf.org/html/rfc4122).
+  property. The value of this property ****MUST**** be a string. The string
+  ****SHOULD**** provide a unique ID for the desired context. For example, a
+  [UUID](https://tools.ietf.org/html/rfc4122) such as `32f54163-7166-48f1-93d8-f
+  f217bdb0653` could provide an ID that is unique in a global context, while a
+  simple string such as `my_presentation_definition_1` could be suitably unique
+  in a local context.
 - `input_descriptors` - The [[ref:Presentation Definition]]  ****MUST****
   contain an `input_descriptors` property. Its value ****MUST**** be an array of
   [[ref:Input Descriptor Objects]], the composition of which are described in
@@ -508,14 +513,15 @@ values, and an explanation why a certain item or set of data is being requested:
           expressions (as defined in the
           [JSONPath Syntax Definition](#jsonpath-syntax-definition) section)
           that select a target value from the input. The array ****MUST****
-          be evaluated from 0-index forward, and the first expressions to
-          return a value will be used for the rest of the entry's evaluation.
-          The ability to declare multiple expressions in this way allows the
-          [[ref:Verifier]] to account for format differences - for
-          example: normalizing the differences in structure between
-          JSON-LD/JWT-based
+          be evaluated from 0-index forward, breaking as soon as a _Field
+          Query Result_ is found (as described in 
+          [Input Evaluation](#input-evaluation)), which will be used for the
+          rest of the entry's evaluation. The ability to declare multiple
+          expressions in this way allows the [[ref:Verifier]] to account for
+          format differences - for example: normalizing the differences in
+          structure between JSON-LD/JWT-based
           [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
-          vanilla JSON Web Tokens (JWTs) [[spec:rfc7797]].
+          vanilla JSON Web Tokens (JWTs) [[spec:rfc7519]].
         - The _fields object_ ****MAY**** contain an `id` property. If present,
           its value ****MUST**** be a string that is unique from every other
           field object's `id` property, including those contained in other
@@ -861,27 +867,33 @@ For each candidate input:
      If one of the values is an exact match, proceed, if there are no
      exact matches, skip to the next candidate input.
   2. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-     and it contains a `fields` property with one or more _field objects_,
-     evaluate each against the candidate input as follows:
-     1. Iterate the [[ref:Input Descriptor]] `path` array of
-        [JSONPath](https://goessner.net/articles/JsonPath/) string expressions
-        from 0-index, executing each expression against the candidate input.
-        Cease iteration at the first expression that returns a matching _Field
-        Query Result_ and use the result for the rest of the field's evaluation.
-        If no result is returned for any of the expressions, skip to the next
-        candidate input.
-     2. If the `filter` property of the field entry is present, validate the
-        _Field Query Result_ from the step above against the
-        [JSON Schema](https://json-schema.org/specification.html) descriptor
-        value.
-     3. If the `predicate` property of the field entry is present, a boolean
-        value should be returned rather than the value of the _Field Query
-        Result_. Calculate this boolean value by evaluating the _Field Query
-        Result_ against the
-        [JSON Schema](https://json-schema.org/specification.html) descriptor
-        value of the `filter` property.         
-     4. If the result is valid, proceed iterating the rest of the `fields`
-        entries.
+     and it contains a `fields` property with one or more _fields objects_,
+     evaluate each _fields object_ against the candidate input as described 
+     in the following subsequence.
+     
+     Accept the candidate input if every _fields object_ yields a _Field Query
+     Result_; else, reject.
+     1. For each [JSONPath](https://goessner.net/articles/JsonPath/) expression
+        in the `path` array (incrementing from the 0-index), evaluate the
+        JSONPath expression against the candidate input and repeat the 
+        following subsequence on the result.
+        
+        Reqpeat until a _Field Query Result_ is found, or the `path` array 
+        elements are exhausted. 
+        1. If the result returned no JSONPath match, skip to the next 
+          `path` array element
+        2. Else, evaluate the first JSONPath match (_candidate_) as follows:
+           1. If the _fields object_ has no `filter`, or if _candidate_
+              validates against the 
+              [JSON Schema](https://json-schema.org/specification.html)
+              descriptor specified in `filter`, then:
+              - If the _fields object_ has no `predicate`, set _Field Query
+                Result_ to be _candidate_; else, set _Field Query Result_ to
+                the boolean value resulting from evaluating the _Field Query
+                Result_ against the 
+                [JSON Schema](https://json-schema.org/specification.html)
+                descriptor value of the `filter` property.
+           2. Else, skip to the next `path` array element
   3. If all of the previous validation steps are successful, mark the candidate
      input as a match for use in a [[ref:Presentation Submission]].
      
@@ -1075,7 +1087,7 @@ composed and embedded as follows:
   The value of this property ****MUST**** be a unique identifier, such as a
   [UUID](https://tools.ietf.org/html/rfc4122).
 - The `presentation_submission` object ****MUST**** contain a `definition_id`
-  property. e value of this property ****MUST**** be the `id` value of a valid
+  property. The value of this property ****MUST**** be the `id` value of a valid
   [[ref:Presentation Definition]].
 - The `presentation_submission` object ****MUST**** include a `descriptor_map`
   property. The value of this property ****MUST**** be an array of
@@ -1236,14 +1248,14 @@ where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] variants
 they support and are submitting. The following are the normalized references
 used within the specification:
 
-- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7797]] 
+- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7519]] 
   that will be submitted in the form of a JWT encoded string. Expression of 
   supported algorithms in relation to this format ****MUST**** be conveyed using
   an `alg` property paired with values that are identifiers from the JSON Web
   Algorithms registry [[spec:RFC7518]].
-- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7797]] 
+- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7519]] 
   that will be submitted in the form of a JWT encoded string, and the body of
-  the decoded JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7797]]
+  the decoded JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7519]]
   section of the
   [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token). 
   Expression of supported algorithms in relation to these formats ****MUST****
