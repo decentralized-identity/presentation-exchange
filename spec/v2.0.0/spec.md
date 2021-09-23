@@ -269,7 +269,7 @@ be ignored:
   location (the `format` property of the `presentation_definition` object), the 
   value ****MUST**** be an object with one or more properties matching the registered 
   [Claim Format Designations](#claim-format-designations) (e.g., `jwt`, `jwt_vc`, 
-  `jwt_vp`, etc.). Te properties inform the [[ref:Holder]] of the [[ref:Claim]] 
+  `jwt_vp`, etc.). The properties inform the [[ref:Holder]] of the [[ref:Claim]] 
   format configurations the [[ref:Verifier]] can process. The value for each 
   claim format property ****MUST**** be an object composed as
   follows:
@@ -362,6 +362,12 @@ values, and an explanation why a certain item or set of data is being requested:
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `purpose` property.
   If present, its value ****MUST**** be a string that describes the purpose for
   which the [[ref:Claim]]'s data is being requested.
+- The [[ref:Input Descriptor Object]] ****MAY**** contain a `format` property.
+  If present, its value ****MUST**** be an object with one or more properties 
+  matching the registered [Claim Format Designations](#claim-format-designations) 
+  (e.g., `jwt`, `jwt_vc`, `jwt_vp`, etc.). This `format` property is identical in 
+  value signature to the top-level `forma`t object, but can be used to specifically 
+  constrain submission of a single input to a subset of formats or algorithms.
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
@@ -866,7 +872,11 @@ For each candidate input:
      
      If one of the values is an exact match, proceed, if there are no
      exact matches, skip to the next candidate input.
-  2. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  2. If top-level `format` restrictions are declared, ensure the candidate 
+     input is of the formats or algorithms declared. If the [[ref:Input Descriptor]] 
+     being tested against declares its own `format` restrictions, ensure that 
+     the candidate input is of the formats or algorithms declared.
+  3. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `fields` property with one or more _field objects_,
      evaluate each against the candidate input as follows:
      1. Iterate the [[ref:Input Descriptor]] `path` array of
@@ -888,12 +898,12 @@ For each candidate input:
         value of the `filter` property.         
      4. If the result is valid, proceed iterating the rest of the `fields`
         entries.
-  3. If all of the previous validation steps are successful, mark the candidate
+  4. If all of the previous validation steps are successful, mark the candidate
      input as a match for use in a [[ref:Presentation Submission]].
-     
+
      If present at the top level of the [[ref:Input Descriptor]], keep a
      relative reference to the `group` values the input is designated for.
-  4. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  5. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `limit_disclosure` property set to the string value
      `required`, ensure that any subsequent submission of data in relation to the
      candidate input is limited to the entries specified in the `fields`
@@ -902,16 +912,16 @@ For each candidate input:
      data from the [[ref:Claim]]. For example, a [[ref:Verifier]] may simply
      want to know a [[ref:Holder]] has a valid, signed [[ref:Claims]] of a
      particular type, without disclosing any of the data it contains.
-  5. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `subject_is_issuer` property set to the value `required`,
      ensure that any submission of data in relation to the candidate input is
      fulfilled using a _self_attested_ [[ref:Claim]].
-  6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  7. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains an `is_holder` property, ensure that for each object in the
      array, any submission of data in relation to the candidate input is
      fulfilled by the [[Ref:Subject]] of the attributes so identified by the
      strings in the `field_id` array.
-  7. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  8. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `same_subject` property, ensure that for each object in
      the array, all of the attributes so identified by the strings in the
      `field_id` array are about the same [[Ref:Subject]].
