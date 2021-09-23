@@ -1,7 +1,7 @@
-Presentation Exchange
+Presentation Exchange 2.0.0
 ==================
 
-**Specification Status:** Latest Draft
+**Specification Status:** Working Group Draft
 
 **Latest Draft:**
   [identity.foundation/presentation-exchange](https://identity.foundation/presentation-exchange)
@@ -64,16 +64,15 @@ these data formats within their flows.
 
 ## Status of This Document
 
-Presentation Exchange v1.0 is a _DRAFT_ specification under development within
+Presentation Exchange v2.0.0 is a _PRE-DRAFT_ specification under development within
 the Decentralized Identity Foundation (DIF). It incorporates requirements and
 learnings from related work of many active industry players into a shared
 specification that meets the collective needs of the community.
 
-This specification is ready for feedback from other decentralized
-identity-related and -adjacent communities. It will be updated to incorporate
-that feedback, then implementations will be sought so that the specification can
-move to _Working Group Approved_ status. We encourage reviewers to submit issues
-on [GitHub](https://github.com/decentralized-identity/presentation-exchange/issues).
+This specification is regularly updated to reflect relevant changes, and we
+encourage active engagement on
+[GitHub](https://github.com/decentralized-identity/presentation-exchange/issues)
+and other mediums (e.g., [DIF Slack](https://difdn.slack.com/archives/C4X50SNUX).
 
 ## Terminology
 
@@ -107,7 +106,7 @@ the [[ref:Holder]] and the [[ref:Claims]] within the [[ref:Presentation
 Submission]]. See [Holder Binding](#holder-and-subject-binding).
 
 [[def:Identity Hub]]
-~ Some examples refer to an unfamiliar query protocol, hub://, as a way of 
+~ Some examples refer to an unfamiliar query protocol, `hub://`, as a way of 
 storing and querying schemata and other resources. While orthogonal to this 
 specification and not yet on a standards track, the concept of "identity hubs"
 proposes an architecture that may be of interest or utility to implementers of
@@ -268,13 +267,16 @@ be ignored:
   `purpose` property. If present, its value ****MUST**** be a string that
   describes the purpose for which the [[ref:Presentation Definition]]'s inputs
   are being requested.
-- The [[ref:Presentation Definition]] ****MAY**** include a `format` property.
-  If present, its value ****MUST**** be an object with one or more properties
-  matching the registered 
-  [Claim Format Designations](#claim-format-designations) (e.g., `jwt`,
-  `jwt_vc`, `jwt_vp`, etc.). Te properties inform the [[ref:Holder]] of the
-  [[ref:Claim]] format configurations the [[ref:Verifier]] can process. The
-  value for each claim format property ****MUST**** be an object composed as
+- The [[ref:Presentation Definition]] ****MAY**** include a `format` property. 
+  Some envelope transport protocols may include the value of this property in 
+  other locations and use different property names (See the [Format Embed Locations](#) 
+  section for details), but regardless of whether it resides at the default 
+  location (the `format` property of the `presentation_definition` object), the 
+  value ****MUST**** be an object with one or more properties matching the registered 
+  [Claim Format Designations](#claim-format-designations) (e.g., `jwt`, `jwt_vc`, 
+  `jwt_vp`, etc.). The properties inform the [[ref:Holder]] of the [[ref:Claim]] 
+  format configurations the [[ref:Verifier]] can process. The value for each 
+  claim format property ****MUST**** be an object composed as
   follows:
     - The object ****MUST**** include a format-specific property (i.e., `alg`, 
       `proof_type`) that expresses which algorithms the [[ref:Verifier]]
@@ -361,6 +363,12 @@ values, and an explanation why a certain item or set of data is being requested:
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `purpose` property.
   If present, its value ****MUST**** be a string that describes the purpose for
   which the [[ref:Claim]]'s data is being requested.
+- The [[ref:Input Descriptor Object]] ****MAY**** contain a `format` property.
+  If present, its value ****MUST**** be an object with one or more properties 
+  matching the registered [Claim Format Designations](#claim-format-designations) 
+  (e.g., `jwt`, `jwt_vc`, `jwt_vp`, etc.). This `format` property is identical in 
+  value signature to the top-level `forma`t object, but can be used to specifically 
+  constrain submission of a single input to a subset of formats or algorithms.
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
@@ -878,7 +886,7 @@ For each candidate input:
         JSONPath expression against the candidate input and repeat the 
         following subsequence on the result.
         
-        Reqpeat until a _Field Query Result_ is found, or the `path` array 
+        Repeat until a _Field Query Result_ is found, or the `path` array 
         elements are exhausted. 
         1. If the result returned no JSONPath match, skip to the next 
           `path` array element
