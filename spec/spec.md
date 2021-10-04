@@ -360,147 +360,6 @@ values, and an explanation why a certain item or set of data is being requested:
   constrain submission of a single input to a subset of formats or algorithms.
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
-    - The _constraints object_ ****MAY**** contain a `limit_disclosure`
-      property. If present, its value ****MUST**** be onf the following strings:
-
-        - `required` - This indicates that the processing entity ****MUST****
-          limit submitted fields to those listed in the `fields` array (if
-          present).
-        - `preferred` - This indicates that the processing entity ****SHOULD****
-          limit submitted fields to those listed in the `fields` array (if
-          present).
-
-      Omission of the `limit_disclosure` property indicates the processing
-      entity ****MAY**** submit a response that contains more than the data
-      described in the `fields` array.
-    - The _constraints object_ ****MAY**** contain a `statuses` property. If
-      present, its value ****MUST**** be an object that includes one or more of
-      the following status properties:
-        - `active` - A credential is active if it is not revoked, expired,
-          suspended, or in any type of deactivated state.
-        - `suspended` - A credential is suspended if the Issuer has published an
-          explicit signal that the credential is in an inactive state and
-          ****should not**** currently be relied upon, but may become active
-          again in the future.
-        - `revoked` - A credential is revoked if the Issuer has published an
-          explicit signal that the credential in question ****should not**** be
-          relied upon going forward as an accurate reflection of the Issuer's
-          statements about the [[Ref:Subject]] within the scope of the
-          credential.
-
-      The values of all status properties are objects, composed as follows:
-        - _status objects_ ****MUST**** include a `directive` property, and its
-          value ****MUST**** be one of the following strings:
-            - `required` - the credential ****MUST**** be of the specified
-              status.
-            - `allowed` - the credential ****MAY**** be of the specified status.
-            - `disallowed` - the credential ****MUST NOT**** be of the specified
-              status.
-          ```json
-            "statuses": {
-              "active": {
-                "directive": "required"  // other values: "allowed", "disallowed"
-              },
-              "suspended": {...},
-              "revoked": {...}
-            }
-          ```
-      ::: note
-      There is no assumed direct mapping between these values and a
-      corresponding status object in the underlying credentials. On the
-      contrary, the encoding and decoding of a credential status (which may
-      include fetching remote status information or cryptographic operations) is
-      an implementation detail which takes place at a lower layer of abstraction
-      and in accordance with the supported verifiable credential formats and
-      presentation protocols.
-      :::
-    - The _constraints object_ ****MAY**** contain a `subject_is_issuer`
-      property. If present, its value ****MUST**** be one of the following
-      strings:
-        - `required` - This indicates that the processing entity ****MUST****
-          submit a response that has been _self-attested_, i.e., the
-          [[ref:Claim]] used in the presentation was 'issued' by the
-          [[Ref:Subject]] of the [[ref:Claim]].
-        - `preferred` - This indicates that it is ****RECOMMENDED**** that the
-          processing entity submit a response that has been _self-attested_,
-          i.e., the [[ref:Claim]] used in the presentation was 'issued' by the
-          [[Ref:Subject]] of the [[ref:Claim]].
-      :::note
-      The `subject_is_issuer` property could be used by a [[ref:Verifier]] to
-      require that certain inputs be _self_attested_. For example, a college
-      application [[ref:Presentation Definition]] might contain an
-      [[ref:Input Descriptor]] for an essay submission. In this case, the
-      [[ref:Verifier]] would be able to require that the essay be provided by
-      the same [[Ref:Subject]] as any other [[ref:Claims]] in the presented
-      application.
-      :::
-    - The _constraints object_ ****MAY**** contain an `is_holder` property. If
-      present, its value ****MUST**** be an array of objects composed as
-      follows:
-        - The _is-holder object_ ****MUST**** contain a `field_id` property. The
-          value of this property ****MUST**** be an array of strings, with each
-          string matching the string value from a _field object_'s `id`
-          property. This identifies the attribute whose [[Ref:Subject]] is of
-          concern to the [[ref:Verifier]].
-        - The _is-holder object_ ****MUST**** contain a `directive` property.
-          The value of this property ****MUST****  be one of the following
-          strings:
-            - `required` - This indicates that the processing entity
-              ****MUST**** include proof that the [[Ref:Subject]] of each
-              attribute identified by a value in the `field_id` array is the
-              same as the entity submitting the response.
-            - `preferred` - This indicates that it is ****RECOMMENDED**** that
-              the processing entity include proof that the [[Ref:Subject]] of
-              each attribute identified by a value in the `field_id` array is
-              the same as the entity submitting the response.
-
-      The `is_holder` property would be used by a [[ref:Verifier]] to require
-      that certain inputs be provided by a certain [[Ref:Subject]]. For example,
-      an identity verification [[ref:Presentation Definition]] might contain an
-      [[ref:Input Descriptor]] for a birthdate from a birth certificate. Using
-      `is_holder`, the [[ref:Verifier]] would be able to require that the
-      [[ref:Holder]] of the birth certificate [[ref:Claim]] is the same as the
-      [[Ref:Subject]] of the birthdate attribute. This is especially useful in
-      cases where a [[ref:Claim]] may have multiple [[Ref:Subjects]].
-
-      For more information about techniques used to prove binding to a
-      [[ref:Holder]], please see [_Holder Binding_](#holder-binding).
-
-    - The _constraints object_ ****MAY**** contain a `same_subject` property. If
-      present, its value ****MUST**** be an array of objects composed as
-      follows:
-        - The _same-subject object_ ****MUST**** contain a `field_id` property.
-          The value of this property ****MUST**** be an array of strings, with
-          each string matching the string value from a _field object_'s `id`
-          property. This identifies the attributes whose [[Ref:Subject]] is of
-          concern to the [[ref:Verifier]]. It is important to note that the
-          attributes whose [[Ref:Subject]] is of concern to the [[ref:Verifier]]
-          ****MAY**** be identified in the _field object_ of a different
-          [[ref:Input Descriptor Object]].
-        - The _same-subject object_ ****MUST**** contain a `directive` property.
-          The value of this property ****MUST****  be one of the following
-          strings:
-            - `required` - This indicates that the processing entity
-              ****MUST**** include proof that the [[Ref:Subject]] of each
-              attribute identified by a value in the `field_id` array is the
-              same as the [[Ref:Subject]] of the attributes identified by the
-              other values in the `field_id` array.
-            - `preferred` - This indicates that it is ****RECOMMENDED**** that
-              the processing entity include proof that the [[Ref:Subject]] of
-              each attribute identified by a value in the `field_id` array is
-              the same as the [[Ref:Subject]] of the attributes identified by
-              the other values in the `field_id` array.
-
-      The `same_subject` property would be used by a [[ref:Verifier]] to require
-      that certain provided inputs be about the same [[Ref:Subject]]. For
-      example, a [[ref:Presentation Definition]] might contain an
-      [[ref:Input Descriptor]] which calls for a street address from a driver
-      license [[ref:Claim]] and another [[ref:Input Descriptor]] which calls
-      for a name from a birth certificate [[ref:Claim]]. Using the
-      `same_subject` property, [[ref:Verifier]] would be able to require that
-      the [[Ref:Subject]] of the street address attribute [[ref:Claim]] is the
-      same as the [[Ref:Subject]] of the name attribute.
-
     - The _constraints objext_ ****MAY**** contain a `types` property. If present it's value ****MUST**** be an array of objects as composed as follows:
       - The _types object_ ****MUST**** contains a `path` property. The value of this property has the same requirements as the _fields object_'s `path` property
       - The _types object_ ****MUST**** contain a `filter` property. The value of this property has the same requirements as the _fields object_'s `filter` property
@@ -666,6 +525,146 @@ values, and an explanation why a certain item or set of data is being requested:
                   ```
 
           At this time, additional predicate operations are not supported.
+    - The _constraints object_ ****MAY**** contain a `limit_disclosure`
+      property. If present, its value ****MUST**** be onf the following strings:
+
+        - `required` - This indicates that the processing entity ****MUST****
+          limit submitted fields to those listed in the `fields` array (if
+          present).
+        - `preferred` - This indicates that the processing entity ****SHOULD****
+          limit submitted fields to those listed in the `fields` array (if
+          present).
+
+      Omission of the `limit_disclosure` property indicates the processing
+      entity ****MAY**** submit a response that contains more than the data
+      described in the `fields` array.
+    - The _constraints object_ ****MAY**** contain a `statuses` property. If
+      present, its value ****MUST**** be an object that includes one or more of
+      the following status properties:
+        - `active` - A credential is active if it is not revoked, expired,
+          suspended, or in any type of deactivated state.
+        - `suspended` - A credential is suspended if the Issuer has published an
+          explicit signal that the credential is in an inactive state and
+          ****should not**** currently be relied upon, but may become active
+          again in the future.
+        - `revoked` - A credential is revoked if the Issuer has published an
+          explicit signal that the credential in question ****should not**** be
+          relied upon going forward as an accurate reflection of the Issuer's
+          statements about the [[Ref:Subject]] within the scope of the
+          credential.
+
+      The values of all status properties are objects, composed as follows:
+        - _status objects_ ****MUST**** include a `directive` property, and its
+          value ****MUST**** be one of the following strings:
+            - `required` - the credential ****MUST**** be of the specified
+              status.
+            - `allowed` - the credential ****MAY**** be of the specified status.
+            - `disallowed` - the credential ****MUST NOT**** be of the specified
+              status.
+          ```json
+            "statuses": {
+              "active": {
+                "directive": "required"  // other values: "allowed", "disallowed"
+              },
+              "suspended": {...},
+              "revoked": {...}
+            }
+          ```
+      ::: note
+      There is no assumed direct mapping between these values and a
+      corresponding status object in the underlying credentials. On the
+      contrary, the encoding and decoding of a credential status (which may
+      include fetching remote status information or cryptographic operations) is
+      an implementation detail which takes place at a lower layer of abstraction
+      and in accordance with the supported verifiable credential formats and
+      presentation protocols.
+      :::
+    - The _constraints object_ ****MAY**** contain a `subject_is_issuer`
+      property. If present, its value ****MUST**** be one of the following
+      strings:
+        - `required` - This indicates that the processing entity ****MUST****
+          submit a response that has been _self-attested_, i.e., the
+          [[ref:Claim]] used in the presentation was 'issued' by the
+          [[Ref:Subject]] of the [[ref:Claim]].
+        - `preferred` - This indicates that it is ****RECOMMENDED**** that the
+          processing entity submit a response that has been _self-attested_,
+          i.e., the [[ref:Claim]] used in the presentation was 'issued' by the
+          [[Ref:Subject]] of the [[ref:Claim]].
+      :::note
+      The `subject_is_issuer` property could be used by a [[ref:Verifier]] to
+      require that certain inputs be _self_attested_. For example, a college
+      application [[ref:Presentation Definition]] might contain an
+      [[ref:Input Descriptor]] for an essay submission. In this case, the
+      [[ref:Verifier]] would be able to require that the essay be provided by
+      the same [[Ref:Subject]] as any other [[ref:Claims]] in the presented
+      application.
+      :::
+    - The _constraints object_ ****MAY**** contain an `is_holder` property. If
+      present, its value ****MUST**** be an array of objects composed as
+      follows:
+        - The _is-holder object_ ****MUST**** contain a `field_id` property. The
+          value of this property ****MUST**** be an array of strings, with each
+          string matching the string value from a _field object_'s `id`
+          property. This identifies the attribute whose [[Ref:Subject]] is of
+          concern to the [[ref:Verifier]].
+        - The _is-holder object_ ****MUST**** contain a `directive` property.
+          The value of this property ****MUST****  be one of the following
+          strings:
+            - `required` - This indicates that the processing entity
+              ****MUST**** include proof that the [[Ref:Subject]] of each
+              attribute identified by a value in the `field_id` array is the
+              same as the entity submitting the response.
+            - `preferred` - This indicates that it is ****RECOMMENDED**** that
+              the processing entity include proof that the [[Ref:Subject]] of
+              each attribute identified by a value in the `field_id` array is
+              the same as the entity submitting the response.
+
+      The `is_holder` property would be used by a [[ref:Verifier]] to require
+      that certain inputs be provided by a certain [[Ref:Subject]]. For example,
+      an identity verification [[ref:Presentation Definition]] might contain an
+      [[ref:Input Descriptor]] for a birthdate from a birth certificate. Using
+      `is_holder`, the [[ref:Verifier]] would be able to require that the
+      [[ref:Holder]] of the birth certificate [[ref:Claim]] is the same as the
+      [[Ref:Subject]] of the birthdate attribute. This is especially useful in
+      cases where a [[ref:Claim]] may have multiple [[Ref:Subjects]].
+
+      For more information about techniques used to prove binding to a
+      [[ref:Holder]], please see [_Holder Binding_](#holder-binding).
+
+    - The _constraints object_ ****MAY**** contain a `same_subject` property. If
+      present, its value ****MUST**** be an array of objects composed as
+      follows:
+        - The _same-subject object_ ****MUST**** contain a `field_id` property.
+          The value of this property ****MUST**** be an array of strings, with
+          each string matching the string value from a _field object_'s `id`
+          property. This identifies the attributes whose [[Ref:Subject]] is of
+          concern to the [[ref:Verifier]]. It is important to note that the
+          attributes whose [[Ref:Subject]] is of concern to the [[ref:Verifier]]
+          ****MAY**** be identified in the _field object_ of a different
+          [[ref:Input Descriptor Object]].
+        - The _same-subject object_ ****MUST**** contain a `directive` property.
+          The value of this property ****MUST****  be one of the following
+          strings:
+            - `required` - This indicates that the processing entity
+              ****MUST**** include proof that the [[Ref:Subject]] of each
+              attribute identified by a value in the `field_id` array is the
+              same as the [[Ref:Subject]] of the attributes identified by the
+              other values in the `field_id` array.
+            - `preferred` - This indicates that it is ****RECOMMENDED**** that
+              the processing entity include proof that the [[Ref:Subject]] of
+              each attribute identified by a value in the `field_id` array is
+              the same as the [[Ref:Subject]] of the attributes identified by
+              the other values in the `field_id` array.
+
+      The `same_subject` property would be used by a [[ref:Verifier]] to require
+      that certain provided inputs be about the same [[Ref:Subject]]. For
+      example, a [[ref:Presentation Definition]] might contain an
+      [[ref:Input Descriptor]] which calls for a street address from a driver
+      license [[ref:Claim]] and another [[ref:Input Descriptor]] which calls
+      for a name from a birth certificate [[ref:Claim]]. Using the
+      `same_subject` property, [[ref:Verifier]] would be able to require that
+      the [[Ref:Subject]] of the street address attribute [[ref:Claim]] is the
+      same as the [[Ref:Subject]] of the name attribute.
 
 ### Submission Requirements
 
