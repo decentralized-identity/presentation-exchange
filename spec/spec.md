@@ -41,17 +41,17 @@ describe submissions of proof which align with those requirements.
 To address these needs, this Presentation Exchange specification codifies a
 [[ref:Presentation Definition]] data format [[ref:Verifiers]] can use to
 articulate proof requirements, and a [[ref:Presentation Submission]] data format
-[[ref:Holders]] can use to describe proofs submitted in accordance with them. 
+[[ref:Holders]] can use to describe proofs submitted in accordance with them.
 
 This specification is designed to be both [[ref:Claim]] format and transport
 envelope agnostic, meaning an implementer can use
-[JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519), 
-[Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/), 
-[JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions), 
+[JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519),
+[Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/),
+[JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions),
 or any other [[ref:Claim]] format, and convey them via
 [Open ID Connect](https://openid.net/connect/),
-[DIDComm](https://identity.foundation/didcomm-messaging/spec/), 
-[Credential Handler API](https://w3c-ccg.github.io/credential-handler-api/), 
+[DIDComm](https://identity.foundation/didcomm-messaging/spec/),
+[Credential Handler API](https://w3c-ccg.github.io/credential-handler-api/),
 or any other transport envelope. The goal of this flexible format- and
 transport-agnostic mechanism is to nullify the redundant handling, code, and
 hassle involved in presenting and satisfying logical requirements across formats
@@ -106,12 +106,12 @@ the [[ref:Holder]] and the [[ref:Claims]] within the [[ref:Presentation
 Submission]]. See [Holder Binding](#holder-and-subject-binding).
 
 [[def:Identity Hub]]
-~ Some examples refer to an unfamiliar query protocol, `hub://`, as a way of 
-storing and querying schemata and other resources. While orthogonal to this 
+~ Some examples refer to an unfamiliar query protocol, `hub://`, as a way of
+storing and querying schemata and other resources. While orthogonal to this
 specification and not yet on a standards track, the concept of "identity hubs"
 proposes an architecture that may be of interest or utility to implementers of
- this specification. For more information, see the pre-draft specification 
-hosted at the decentralized identity foundation 
+ this specification. For more information, see the pre-draft specification
+hosted at the decentralized identity foundation
 [here](https://github.com/decentralized-identity/identity-hub/blob/master/explainer.md)
 
 [[def:Input Descriptor, Input Descriptors]]
@@ -258,7 +258,7 @@ be ignored:
   The [[ref:Input Descriptors]] required for submission are described by the
   `submission_requirements`. If no `submission_requirements` value is present,
   all inputs listed in the `input_descriptors` array are required for submission.
-  
+
 - `name` - The [[ref:Presentation Definition]] ****MAY**** contain a `name`
   property. If present, its value ****SHOULD**** be a human-friendly string
   intended to constitute a distinctive designation of the
@@ -267,23 +267,23 @@ be ignored:
   `purpose` property. If present, its value ****MUST**** be a string that
   describes the purpose for which the [[ref:Presentation Definition]]'s inputs
   are being requested.
-- The [[ref:Presentation Definition]] ****MAY**** include a `format` property. 
-  Some envelope transport protocols may include the value of this property in 
-  other locations and use different property names (See the [Format Embed Locations](#) 
-  section for details), but regardless of whether it resides at the default 
-  location (the `format` property of the `presentation_definition` object), the 
-  value ****MUST**** be an object with one or more properties matching the registered 
-  [Claim Format Designations](#claim-format-designations) (e.g., `jwt`, `jwt_vc`, 
-  `jwt_vp`, etc.). The properties inform the [[ref:Holder]] of the [[ref:Claim]] 
-  format configurations the [[ref:Verifier]] can process. The value for each 
+- The [[ref:Presentation Definition]] ****MAY**** include a `format` property.
+  Some envelope transport protocols may include the value of this property in
+  other locations and use different property names (See the [Format Embed Locations](#)
+  section for details), but regardless of whether it resides at the default
+  location (the `format` property of the `presentation_definition` object), the
+  value ****MUST**** be an object with one or more properties matching the registered
+  [Claim Format Designations](#claim-format-designations) (e.g., `jwt`, `jwt_vc`,
+  `jwt_vp`, etc.). The properties inform the [[ref:Holder]] of the [[ref:Claim]]
+  format configurations the [[ref:Verifier]] can process. The value for each
   claim format property ****MUST**** be an object composed as
   follows:
-    - The object ****MUST**** include a format-specific property (i.e., `alg`, 
+    - The object ****MUST**** include a format-specific property (i.e., `alg`,
       `proof_type`) that expresses which algorithms the [[ref:Verifier]]
-      supports for the format. Its value ****MUST**** be an array of one or more 
-      format-specific algorithmic identifier references, as noted in the 
+      supports for the format. Its value ****MUST**** be an array of one or more
+      format-specific algorithmic identifier references, as noted in the
       [Claim Format Designations](#claim-format-designations) section.
-      
+
       For example:
 
 ```json
@@ -295,9 +295,9 @@ be ignored:
   ****MUST**** be an object conforming to the [[ref:Submission Requirement]]
   format described in the [`Submission Requirement`](#submission-requirement)
   section below.
-  
+
   If not present, all inputs listed in the `input_descriptors` array are
-  required for submission. 
+  required for submission.
 
 ### Input Descriptor
 [[ref:Input Descriptors]] are objects used to describe the information a
@@ -305,8 +305,7 @@ be ignored:
 [[ref: Submission Requirements]] are present, all [[ref:Input Descriptors]]
 ****MUST**** be satisfied.
 
-[[ref: Input Descriptor Objects]] contain an identifier, a schema URI that links
-to the schema of the requested input data, and may contain constraints on data
+[[ref: Input Descriptor Objects]] contain an identifier and may contain constraints on data
 values, and an explanation why a certain item or set of data is being requested:
 
 <tab-panels selected-index="0">
@@ -344,16 +343,6 @@ values, and an explanation why a certain item or set of data is being requested:
   The value of the `id` property ****MUST**** be a string that does not conflict
   with the `id` of another [[ref:Input Descriptor Object]] in the same
   [[ref:Presentation Definition]].
-- The [[ref:Input Descriptor Object]] ****MUST**** contain a `schema` property.
-  The value of the `schema` property ****MUST**** be an array composed of
-  objects as follows:
-    - The _schema object_ ****MUST**** contain a `uri` property, and its value
-      ****MUST**** be a string consisting of a valid URI for an acceptable
-      [[ref:Claim]] schema. 
-    - The _schema object_ ****MAY**** contain a `required` property. If present,
-      the value of this property ****MUST**** be a boolean. A value of `true`
-      indicates that the given schema object is required to be the schema of the
-      inputs used to fulfill the given [[ref:Submission Requirement]].
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `group` property. If
   present, its value ****MUST**** match one of the grouping strings listed in
   the `from` values of a [[ref:Submission Requirement Rule]] object.
@@ -364,10 +353,10 @@ values, and an explanation why a certain item or set of data is being requested:
   If present, its value ****MUST**** be a string that describes the purpose for
   which the [[ref:Claim]]'s data is being requested.
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `format` property.
-  If present, its value ****MUST**** be an object with one or more properties 
-  matching the registered [Claim Format Designations](#claim-format-designations) 
-  (e.g., `jwt`, `jwt_vc`, `jwt_vp`, etc.). This `format` property is identical in 
-  value signature to the top-level `forma`t object, but can be used to specifically 
+  If present, its value ****MUST**** be an object with one or more properties
+  matching the registered [Claim Format Designations](#claim-format-designations)
+  (e.g., `jwt`, `jwt_vc`, `jwt_vp`, etc.). This `format` property is identical in
+  value signature to the top-level `forma`t object, but can be used to specifically
   constrain submission of a single input to a subset of formats or algorithms.
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
@@ -380,7 +369,7 @@ values, and an explanation why a certain item or set of data is being requested:
         - `preferred` - This indicates that the processing entity ****SHOULD****
           limit submitted fields to those listed in the `fields` array (if
           present).
-          
+
       Omission of the `limit_disclosure` property indicates the processing
       entity ****MAY**** submit a response that contains more than the data
       described in the `fields` array.
@@ -397,8 +386,8 @@ values, and an explanation why a certain item or set of data is being requested:
           explicit signal that the credential in question ****should not**** be
           relied upon going forward as an accurate reflection of the Issuer's
           statements about the [[Ref:Subject]] within the scope of the
-          credential. 
-          
+          credential.
+
       The values of all status properties are objects, composed as follows:
         - _status objects_ ****MUST**** include a `directive` property, and its
           value ****MUST**** be one of the following strings:
@@ -414,7 +403,7 @@ values, and an explanation why a certain item or set of data is being requested:
               },
               "suspended": {...},
               "revoked": {...}
-            } 
+            }
           ```
       ::: note
       There is no assumed direct mapping between these values and a
@@ -512,6 +501,12 @@ values, and an explanation why a certain item or set of data is being requested:
       the [[Ref:Subject]] of the street address attribute [[ref:Claim]] is the
       same as the [[Ref:Subject]] of the name attribute.
 
+    - The _constraints objext_ ****MAY**** contain a `types` property. If present it's value ****MUST**** be an array of objects as composed as follows:
+      - The _types object_ ****MUST**** contains a `path` property. The value of this property has the same requirements as the _fields object_'s `path` property
+      - The _types object_ ****MUST**** contain a `filter` property. The value of this property has the same requirements as the _fields object_'s `filter` property
+      - The _types object_ ****MAY**** contain an `id` property. The value of this property has the same requirements as the _fields object_'s `id` property
+      - The _types object_ ****MAY**** contain an `purpose` property. The value of this property has the same requirements as the _fields object_'s `purpose` property
+
     - The _constraints object_ ****MAY**** contain a `fields` property. If
       present, its value ****MUST**** be an array of objects composed as
       follows:
@@ -522,7 +517,7 @@ values, and an explanation why a certain item or set of data is being requested:
           [JSONPath Syntax Definition](#jsonpath-syntax-definition) section)
           that select a target value from the input. The array ****MUST****
           be evaluated from 0-index forward, breaking as soon as a _Field
-          Query Result_ is found (as described in 
+          Query Result_ is found (as described in
           [Input Evaluation](#input-evaluation)), which will be used for the
           rest of the entry's evaluation. The ability to declare multiple
           expressions in this way allows the [[ref:Verifier]] to account for
@@ -545,8 +540,8 @@ values, and an explanation why a certain item or set of data is being requested:
           expressions in the `path` array.
         - The _fields object_ ****MAY**** contain a `predicate` property. If the
           `predicate` property is present, the `filter` property ****MUST****
-          also be present. 
-          
+          also be present.
+
           :::note The inclusion of the `predicate` property indicates that the
           processing entity returns a boolean, rather than a value returned
           from evaluation of the
@@ -560,7 +555,7 @@ values, and an explanation why a certain item or set of data is being requested:
           [JSONPath](https://goessner.net/articles/JsonPath/) string
           expressions in the `path` array.
           :::
-          
+
           The value of `predicate` ****MUST**** be one of the following strings:
             - `required` - This indicates that the returned value ****MUST****
               be the boolean result of applying the value of the `filter`
@@ -576,10 +571,10 @@ values, and an explanation why a certain item or set of data is being requested:
             - `preferred` - This indicates that the returned value
               ****SHOULD**** be the boolean result of applying the value of the
               `filter` property to the result of evaluating the `path` property.
-            
+
           If the `predicate` property is not present, a processing entity
           ****MUST NOT**** return derived predicate values.
-    
+
           If the `predicate` property is present, the set of JSON Schema
           descriptors which comprise the value of the `filter` property
           ****MUST**** be restricted according to the desired predicate
@@ -590,16 +585,16 @@ values, and an explanation why a certain item or set of data is being requested:
                 - `greater-than` - Use the `exclusiveMinimum` descriptor. For
                   example, to request a proof that an attribute is greater than
                   10000, use the following as the value of the `filter` object:
-                  ```json             
+                  ```json
                   {
                     "type": "number",
                     "exclusiveMinimum": 10000,
                   }
-                  ``` 
+                  ```
                 - `less-than` - Use the `exclusiveMaximum` descriptor. For
                   example, to request a proof that an attribute is less than 85,
                   use the following as the value of the `filter` object:
-                  ```json             
+                  ```json
                   {
                     "type": "number",
                     "exclusiveMaximum": 85,
@@ -609,17 +604,17 @@ values, and an explanation why a certain item or set of data is being requested:
                   example, to request a proof that an attribute is greater than or
                   equal to 18, use the following as the value of the `filter`
                   object:
-                  ```json             
+                  ```json
                   {
                     "type": "number",
                     "minimum": 18,
                   }
-                  ``` 
+                  ```
                 - `less-than or equal-to` - Use the `maximum` descriptor. For
                   example, to request a proof that an attribute is less than or
                   equal to 65536, use the following as the value of the `filter`
                   object:
-                  ```json             
+                  ```json
                   {
                     "type": "number",
                     "maximum": 65536,
@@ -645,7 +640,7 @@ values, and an explanation why a certain item or set of data is being requested:
                       "const": "Karen"
                     }
                   }
-                  ``` 
+                  ```
             - to express set-membership proofs, use the JSON Schema `enum`
               descriptor:
                 - `in-set` - Use the `enum` descriptor. For example, to
@@ -664,14 +659,14 @@ values, and an explanation why a certain item or set of data is being requested:
                   as the value of the `filter` object:
                   ```json
                   {
-                    "not": { 
-                      "enum": ["red", "yellow", "blue"] 
+                    "not": {
+                      "enum": ["red", "yellow", "blue"]
                     }
                   }
                   ```
 
           At this time, additional predicate operations are not supported.
-    
+
 ### Submission Requirements
 
 [[ref:Presentation Definitions]] ****MAY**** include
@@ -711,7 +706,7 @@ all input_descriptors ****MUST**** be grouped. Any unused
   `from` or `from_nested` property. If both properties are present, the
   implementation ***MUST*** produce an error. The values of the `from` and
   `from_nested` properties are defined as follows:
-    - `from` - The value of the `from` property ****MUST**** be a `group` string 
+    - `from` - The value of the `from` property ****MUST**** be a `group` string
       matching one of the `group` strings specified for one or more
       [[ref:Input Descriptor Objects].
     - `from_nested` - The value of the `from_nested` property ****MUST**** be an
@@ -729,7 +724,7 @@ all input_descriptors ****MUST**** be grouped. Any unused
 
 #### Submission Requirement Rules
 
-[[ref:Submission Requirement Rules]] are used within 
+[[ref:Submission Requirement Rules]] are used within
 [[ref:Submission Requirement Objects]] to describe the specific combinatorial
 rules that must be applied to submit a particular subset of reqested inputs. The
 specified [[ref:Submission Requirement Rule]] determines the behavior of the
@@ -867,44 +862,44 @@ there is a match.
 For each candidate input:
   1. The URI for the schema of the candidate input ****MUST**** match one of the
     [[ref:Input Descriptor]] `schema` object `uri` values exactly.
-     
+
      If the [[ref:Input Descriptor]] `schema` object `uri` is a hashlink or
      similar value that points to immutable content, then the content of the
      retrieved schema must also match.
-     
+
      If one of the values is an exact match, proceed, if there are no
      exact matches, skip to the next candidate input.
   2. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `fields` property with one or more _fields objects_,
-     evaluate each _fields object_ against the candidate input as described 
+     evaluate each _fields object_ against the candidate input as described
      in the following subsequence.
-     
+
      Accept the candidate input if every _fields object_ yields a _Field Query
      Result_; else, reject.
      1. For each [JSONPath](https://goessner.net/articles/JsonPath/) expression
         in the `path` array (incrementing from the 0-index), evaluate the
-        JSONPath expression against the candidate input and repeat the 
+        JSONPath expression against the candidate input and repeat the
         following subsequence on the result.
-        
-        Repeat until a _Field Query Result_ is found, or the `path` array 
-        elements are exhausted. 
-        1. If the result returned no JSONPath match, skip to the next 
+
+        Repeat until a _Field Query Result_ is found, or the `path` array
+        elements are exhausted.
+        1. If the result returned no JSONPath match, skip to the next
           `path` array element
         2. Else, evaluate the first JSONPath match (_candidate_) as follows:
            1. If the _fields object_ has no `filter`, or if _candidate_
-              validates against the 
+              validates against the
               [JSON Schema](https://json-schema.org/specification.html)
               descriptor specified in `filter`, then:
               - If the _fields object_ has no `predicate`, set _Field Query
                 Result_ to be _candidate_; else, set _Field Query Result_ to
                 the boolean value resulting from evaluating the _Field Query
-                Result_ against the 
+                Result_ against the
                 [JSON Schema](https://json-schema.org/specification.html)
                 descriptor value of the `filter` property.
            2. Else, skip to the next `path` array element
   3. If all of the previous validation steps are successful, mark the candidate
      input as a match for use in a [[ref:Presentation Submission]].
-     
+
      If present at the top level of the [[ref:Input Descriptor]], keep a
      relative reference to the `group` values the input is designated for.
   4. If the `constraints` property of the [[ref:Input Descriptor]] is present,
@@ -930,7 +925,7 @@ For each candidate input:
      the array, all of the attributes so identified by the strings in the
      `field_id` array are about the same [[Ref:Subject]].
 
-::: note 
+::: note
 The above evaluation process assumes the processing entity will test
 each candidate input (JWT, Verifiable Credential, etc.) it holds to determine if
 it meets the criteria for inclusion in submission. Any additional testing of a
@@ -944,7 +939,7 @@ Certain types of [[ref:Claims]] have concepts of _expiration_ and _revocation_.
 _Expiration_ is mechanism used to communicate a time after which a [[ref:Claim]]
 will no longer be valid. _Revocation_ is a mechanism used by an issuer to
 express the status of a [[ref:Claim]] after issuance. Different [[ref:Claim]]
-specifications handle these concepts in different ways. 
+specifications handle these concepts in different ways.
 
 [[ref:Presentation Definitions]] have a need to specify whether expired,
 revoked, or [[ref:Claims]] of other statuses can be accepted. For [[ref:Claims]]
@@ -993,7 +988,7 @@ requisite information to resolve the status of a [[ref:Claim]].
 for their validity. A [[ref:Verifier]] may wish to determine that a particular
 [[ref:Claim]], or set of [[ref:Claims]] is bound to a particular [[ref:Holder]]
 or [[ref:Subject]]. This can help the [[ref:Verifier]] to determine the
-legitimacy of the presented proofs. 
+legitimacy of the presented proofs.
 
 Some mechanisms which enable proof of [[ref:Holder]] binding are described
 below. These include proof of identifier control, proof the [[ref:Holder]] knows
@@ -1011,7 +1006,7 @@ A number of [[ref:Claim]] types include an identifier for the [[ref:Claim]]
 [[Ref:Subject]] identified in the [[ref:Claim]] is the one submitting the proof,
 or has consented to the proof submission. A [[ref:Claim]] may also include an
 identifier for the [[ref:Holder]], independent of the [[Ref:Subject]]
-identifiers. 
+identifiers.
 
 One mechanism for providing such proofs is the use of a [[ref:DID]] as the
 identifier for the [[ref:Claim]] [[Ref:Subject]] or [[ref:Holder]]. DIDs enable
@@ -1044,7 +1039,7 @@ This type of [[ref:Holder]] binding, instead of relying on demonstrating
 knowledge of some secret value, relies on the evaluation of biometric data.
 There are a number of mechanisms for safely embedding biometric information in a
 [[ref:Claim]] such that only a person who can confirm the biometric may present
-the [[ref:Claim]]. 
+the [[ref:Claim]].
 
 ### JSON Schema
 
@@ -1090,7 +1085,7 @@ composed and embedded as follows:
 - The `presentation_submission` object ****MUST**** be included at the
   top-level of an Embed Target, or in the specific location described in the
   [Embed Locations table](#embed-locations) in the [Embed Target](#embed-target)
-  section below. 
+  section below.
 - The `presentation_submission` object ****MUST**** contain an `id` property.
   The value of this property ****MUST**** be a unique identifier, such as a
   [UUID](https://tools.ietf.org/html/rfc4122).
@@ -1106,7 +1101,7 @@ composed and embedded as follows:
       [[ref:Presentation Definition]] that this [[ref:Presentation Submission]]
       is related to.
     - The `descriptor_map` object ****MUST**** include a `format` property. The
-      value of this property ****MUST**** be a string that matches one of the 
+      value of this property ****MUST**** be a string that matches one of the
       [Claim Format Designation](#claim-format-designations). This denotes the
       data format of the [[ref:Claim]].
     - The `descriptor_map` object ****MUST**** include a `path` property. The
@@ -1127,9 +1122,9 @@ composed and embedded as follows:
 
 ::: example Basic Presentation Submission object
 ```json
-{ 
+{
   // NOTE: VP, OIDC, DIDComm, or CHAPI outer wrapper properties would be here.
-  
+
   "presentation_submission": {
     "id": "a30e3b91-fb77-4d22-95fa-871689c322e2",
     "definition_id": "32f54163-7166-48f1-93d8-ff217bdb0653",
@@ -1151,7 +1146,7 @@ composed and embedded as follows:
       }
     ]
   }
-  
+
 }
 ```
 :::
@@ -1174,7 +1169,7 @@ object, process as follows:
       or if none is designated, the top level of the Embed Target.
    1. Decode and parse the value returned from
       [JSONPath](https://goessner.net/articles/JsonPath/) execution in
-      accordance with the [Claim Format Designation](#claim-format-designations) 
+      accordance with the [Claim Format Designation](#claim-format-designations)
       specified in the object's `format` property. If the value parses and
       validates in accordance with the
       [Claim Format Designation](#claim-format-designations) specified, let the
@@ -1216,7 +1211,7 @@ to a single discrete container within a [[ref:Presentation Submission]], such
 that all checks refer to properties within the same container and are protected
 by the same digital signature, if the container format supports digital
 signatures. Examples of discrete container formats include a single Verifiable
-Credential within a Verifiable Presentation as defined in 
+Credential within a Verifiable Presentation as defined in
 [W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/), OpenID
 Connect Tokens, and JSON Web Tokens. This is to ensure that related
 requirements, for example, "given name" and "family name" within the same
@@ -1231,13 +1226,13 @@ embedded within a target data structure, as well as how to formulate the
 
 #### Embed Locations
 
-The following are the locations at which the `presentation_submission` object 
-****MUST**** be embedded for known target formats. For any location besides 
+The following are the locations at which the `presentation_submission` object
+****MUST**** be embedded for known target formats. For any location besides
 the top level of the embed target, the location is described in JSONPath syntax.
 
-Target     | Location      
+Target     | Location
 ---------- | --------
-OpenID     | top-level 
+OpenID     | top-level
 DIDComms   | `$.presentations~attach.data.json`
 VP         | top-level
 CHAPI      | `$.data`
@@ -1251,21 +1246,21 @@ The following JSON Schema Draft 7 definition summarizes the rules above:
 
 ## Claim Format Designations
 
-Within the _Presentation Exchange_ specification, there are numerous sections 
+Within the _Presentation Exchange_ specification, there are numerous sections
 where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] variants
 they support and are submitting. The following are the normalized references
 used within the specification:
 
-- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7519]] 
-  that will be submitted in the form of a JWT encoded string. Expression of 
+- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7519]]
+  that will be submitted in the form of a JWT encoded string. Expression of
   supported algorithms in relation to this format ****MUST**** be conveyed using
   an `alg` property paired with values that are identifiers from the JSON Web
   Algorithms registry [[spec:RFC7518]].
-- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7519]] 
+- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7519]]
   that will be submitted in the form of a JWT encoded string, and the body of
   the decoded JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7519]]
   section of the
-  [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token). 
+  [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token).
   Expression of supported algorithms in relation to these formats ****MUST****
   be conveyed using an `alg` property paired with values that are identifiers
   from the JSON Web Algorithms registry [[spec:RFC7518]].
@@ -1273,14 +1268,14 @@ used within the specification:
   [[spec:VC-DATA MODEL]] that will be submitted in the form of a JSON object.
   Expression of supported algorithms in relation to these formats ****MUST****
   be conveyed using a `proof_type` property paired with values that are
-  identifiers from the 
+  identifiers from the
   [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 - `ldp` - this format is defined in the
   [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/)
   specification [[spec:Linked Data Proofs]], and will be submitted as objects.
   Expression of supported algorithms in relation to these formats ****MUST****
   be conveyed using a `proof_type` property with values that are identifiers
-  from the 
+  from the
   [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 
 ## JSON Schema Vocabulary Definition
@@ -1309,14 +1304,14 @@ JSONPath              | Description
 `[,]`	                | Union operator for alternate names or array indices as a set
 `[start:end:step]`    | Array slice operator borrowed from ES4 / Python
 `?()`                 | Applies a filter (script) expression via static evaluation
-`()`	                | Script expression via static evaluation 
+`()`	                | Script expression via static evaluation
 
 **Example JSON Object**
 
 ```javascript
 {
   "store": {
-    "book": [ 
+    "book": [
       {
         "category": "reference",
         "author": "Nigel Rees",

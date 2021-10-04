@@ -13,12 +13,16 @@
         "id": "citizenship_input_1",
         "name": "EU Driver's License",
         "group": ["A"],
-        "schema": [
-          {
-            "uri": "https://eu.com/claims/DriversLicense.json"
-          }
-        ],
         "constraints": {
+          "types": [
+            {
+              "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
+              "filter": {
+                "type": "string",
+                "const": "https://eu.com/claims/DriversLicense.json"
+              }
+            }
+          ],
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
@@ -33,7 +37,7 @@
               "filter": {
                 "type": "string",
                 "format": "date",
-                "maximum": "1999-06-15"
+                "formatMaximum": "1999-06-15"
               }
             }
           ]
@@ -43,19 +47,23 @@
         "id": "citizenship_input_2",
         "name": "US Passport",
         "group": ["A"],
-        "schema": [
-          {
-            "uri": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
-          }
-        ],
         "constraints": {
+          "types": [
+            {
+              "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
+              "filter": {
+                "type": "string",
+                "const": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
+              }
+            }
+          ],
           "fields": [
             {
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {
                 "type": "string",
                 "format": "date",
-                "maximum": "1999-05-16"
+                "formatMaximum": "1999-05-16"
               }
             }
           ]

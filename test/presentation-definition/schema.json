@@ -2,40 +2,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Presentation Definition",
   "definitions": {
-    "schema": {
-      "type": "object",
-      "properties": {
-        "uri": { "type": "string" },
-        "required": { "type": "boolean" }
-      },
-      "required": ["uri"],
-      "additionalProperties": false
-    },
-    "filter": {
-      "type": "object",
-      "properties": {
-        "type": { "type": "string" },
-        "format": { "type": "string" },
-        "pattern": { "type": "string" },
-        "minimum": { "type": ["number", "string"] },
-        "minLength": { "type": "integer" },
-        "maxLength": { "type": "integer" },
-        "exclusiveMinimum": { "type": ["number", "string"] },
-        "exclusiveMaximum": { "type": ["number", "string"] },
-        "maximum": { "type": ["number", "string"] },
-        "const": { "type": ["number", "string"] },
-        "enum": {
-          "type": "array",
-          "items": { "type": ["number", "string"] }
-        },
-        "not": {
-          "type": "object",
-          "minProperties": 1
-        }
-      },
-      "required": ["type"],
-      "additionalProperties": false
-    },
     "format": {
       "type": "object",
       "patternProperties": {
@@ -120,10 +86,6 @@
           "type": "array",
           "items": { "type": "string" }
         },
-        "schema": {
-          "type": "array",
-          "items": { "$ref": "#/definitions/schema" }
-        },
         "constraints": {
           "type": "object",
           "properties": {
@@ -162,6 +124,10 @@
                   }
                 }
               }
+            },
+            "types": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/type" }
             },
             "fields": {
               "type": "array",
@@ -211,7 +177,7 @@
           "additionalProperties": false
         }
       },
-      "required": ["id", "schema"],
+      "required": ["id"],
       "additionalProperties": false
     },
     "field": {
@@ -225,7 +191,7 @@
               "items": { "type": "string" }
             },
             "purpose": { "type": "string" },
-            "filter": { "$ref": "#/definitions/filter" }
+            "filter": { "$ref": "http://json-schema.org/schema#" }
           },
           "required": ["path"],
           "additionalProperties": false
@@ -238,7 +204,7 @@
               "items": { "type": "string" }
             },
             "purpose": { "type": "string" },
-            "filter": { "$ref": "#/definitions/filter" },
+            "filter": { "$ref": "http://json-schema.org/schema#" },
             "predicate": {
               "type": "string",
               "enum": ["required", "preferred"]
@@ -248,6 +214,20 @@
           "additionalProperties": false
         }
       ]
+    },
+    "type": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "path": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "purpose": { "type": "string" },
+        "filter": { "$ref": "http://json-schema.org/schema#" }
+      },
+      "required": ["path", "filter"],
+      "additionalProperties": false
     }
   },
   "type": "object",
