@@ -363,7 +363,6 @@ values, and an explanation why a certain item or set of data is being requested:
     - The _constraints objext_ ****MAY**** contain a `types` property. If present it's value ****MUST**** be an array of objects as composed as follows:
       - The _types object_ ****MUST**** contains a `path` property. The value of this property has the same requirements as the _fields object_'s `path` property
       - The _types object_ ****MUST**** contain a `filter` property. The value of this property has the same requirements as the _fields object_'s `filter` property
-      - The _types object_ ****MAY**** contain an `id` property. The value of this property has the same requirements as the _fields object_'s `id` property
       - The _types object_ ****MAY**** contain an `purpose` property. The value of this property has the same requirements as the _fields object_'s `purpose` property
 
     - The _constraints object_ ****MAY**** contain a `fields` property. If
