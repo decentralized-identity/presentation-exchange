@@ -48,14 +48,13 @@ envelope agnostic, meaning an implementer can use
 [JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519), 
 [Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/), 
 [JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions), 
-or any other [[ref:Claim]] format, and convey them via
+or any other JSON [[ref:Claim]] format, and convey them via
 [Open ID Connect](https://openid.net/connect/),
 [DIDComm](https://identity.foundation/didcomm-messaging/spec/), 
 [Credential Handler API](https://w3c-ccg.github.io/credential-handler-api/), 
 or any other transport envelope. The goal of this flexible format- and
-transport-agnostic mechanism is to nullify the redundant handling, code, and
-hassle involved in presenting and satisfying logical requirements across formats
-and transport envelopes.
+transport-agnostic mechanism is to enable unified procedures and code, thereby
+reducing potentially redundant code and processing requirements.
 
 This specification does not define transport protocols, specific endpoints, or
 other means for conveying the formatted objects it codifies, but encourages
@@ -157,7 +156,7 @@ accordance with the requirements a [[ref:Verifier]] specified in a
 [Presentation Submission](#presentation-submission).
 
 [[def:Subject, Subjects]]
-~ Subjects are the entities about which [[r:Claims]] are made. The Subject may
+~ Subjects are the entities about which [[ref:Claims]] are made. The Subject may
 not be the same entity as the [[ref:Holder]]
 
 [[def:Submission Requirement, Submission Requirements]]
