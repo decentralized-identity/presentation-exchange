@@ -14,7 +14,6 @@ Presentation Exchange 2.0.0
 ~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Microsoft)
 ~ [Brent Zundel](https://www.linkedin.com/in/bzundel/) (Evernym)
 ~ [Martin Riedel](https://www.linkedin.com/in/rado0x54/) (Consensys Mesh)
-~ [Kim Hamilton Duffy](https://www.linkedin.com/in/kimdhamilton/) (Centre Consortium)
 
 **Contributors:**
 ~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
@@ -48,13 +47,14 @@ envelope agnostic, meaning an implementer can use
 [JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519), 
 [Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/), 
 [JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions), 
-or any other JSON [[ref:Claim]] format, and convey them via
+or any other [[ref:Claim]] format, and convey them via
 [Open ID Connect](https://openid.net/connect/),
 [DIDComm](https://identity.foundation/didcomm-messaging/spec/), 
 [Credential Handler API](https://w3c-ccg.github.io/credential-handler-api/), 
 or any other transport envelope. The goal of this flexible format- and
-transport-agnostic mechanism is to enable unified procedures and code, thereby
-reducing potentially redundant code and processing requirements.
+transport-agnostic mechanism is to nullify the redundant handling, code, and
+hassle involved in presenting and satisfying logical requirements across formats
+and transport envelopes.
 
 This specification does not define transport protocols, specific endpoints, or
 other means for conveying the formatted objects it codifies, but encourages
@@ -63,7 +63,7 @@ these data formats within their flows.
 
 ## Status of This Document
 
-Presentation Exchange v2.0.0 is a _PRE-DRAFT_ specification under development within
+Presentation Exchange v2.0 is a _PRE-DRAFT_ specification under development within
 the Decentralized Identity Foundation (DIF). It incorporates requirements and
 learnings from related work of many active industry players into a shared
 specification that meets the collective needs of the community.
@@ -105,7 +105,7 @@ the [[ref:Holder]] and the [[ref:Claims]] within the [[ref:Presentation
 Submission]]. See [Holder Binding](#holder-and-subject-binding).
 
 [[def:Identity Hub]]
-~ Some examples refer to an unfamiliar query protocol, `hub://`, as a way of 
+~ Some examples refer to an unfamiliar query protocol, hub:// , as a way of 
 storing and querying schemata and other resources. While orthogonal to this 
 specification and not yet on a standards track, the concept of "identity hubs"
 proposes an architecture that may be of interest or utility to implementers of
@@ -156,7 +156,7 @@ accordance with the requirements a [[ref:Verifier]] specified in a
 [Presentation Submission](#presentation-submission).
 
 [[def:Subject, Subjects]]
-~ Subjects are the entities about which [[ref:Claims]] are made. The Subject may
+~ Subjects are the entities about which [[r:Claims]] are made. The Subject may
 not be the same entity as the [[ref:Holder]]
 
 [[def:Submission Requirement, Submission Requirements]]
@@ -243,12 +243,8 @@ The following properties are for use at the top-level of a
 be ignored:
 
 - `id` - The [[ref:Presentation Definition]] ****MUST**** contain an `id`
-  property. The value of this property ****MUST**** be a string. The string
-  ****SHOULD**** provide a unique ID for the desired context. For example, a
-  [UUID](https://tools.ietf.org/html/rfc4122) such as `32f54163-7166-48f1-93d8-f
-  f217bdb0653` could provide an ID that is unique in a global context, while a
-  simple string such as `my_presentation_definition_1` could be suitably unique
-  in a local context.
+  property. The value of this property ****MUST**** be a unique identifier, such
+  as a [UUID](https://tools.ietf.org/html/rfc4122).
 - `input_descriptors` - The [[ref:Presentation Definition]]  ****MUST****
   contain an `input_descriptors` property. Its value ****MUST**** be an array of
   [[ref:Input Descriptor Objects]], the composition of which are described in
@@ -288,6 +284,10 @@ be ignored:
 ```json
 [[insert: ./test/presentation-definition/format_example.json]]
 ```
+
+::: note
+
+:::
 
 - `submission_requirements` - The [[ref:Presentation Definition]] ****MAY****
   contain a `submission_requirements` property. If present, its value
@@ -520,15 +520,14 @@ values, and an explanation why a certain item or set of data is being requested:
           expressions (as defined in the
           [JSONPath Syntax Definition](#jsonpath-syntax-definition) section)
           that select a target value from the input. The array ****MUST****
-          be evaluated from 0-index forward, breaking as soon as a _Field
-          Query Result_ is found (as described in 
-          [Input Evaluation](#input-evaluation)), which will be used for the
-          rest of the entry's evaluation. The ability to declare multiple
-          expressions in this way allows the [[ref:Verifier]] to account for
-          format differences - for example: normalizing the differences in
-          structure between JSON-LD/JWT-based
+          be evaluated from 0-index forward, and the first expressions to
+          return a value will be used for the rest of the entry's evaluation.
+          The ability to declare multiple expressions in this way allows the
+          [[ref:Verifier]] to account for format differences - for
+          example: normalizing the differences in structure between
+          JSON-LD/JWT-based
           [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
-          vanilla JSON Web Tokens (JWTs) [[spec:rfc7519]].
+          vanilla JSON Web Tokens (JWTs) [[spec:rfc7797]].
         - The _fields object_ ****MAY**** contain an `id` property. If present,
           its value ****MUST**** be a string that is unique from every other
           field object's `id` property, including those contained in other
@@ -873,40 +872,38 @@ For each candidate input:
      
      If one of the values is an exact match, proceed, if there are no
      exact matches, skip to the next candidate input.
-  2. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-     and it contains a `fields` property with one or more _fields objects_,
-     evaluate each _fields object_ against the candidate input as described 
-     in the following subsequence.
-     
-     Accept the candidate input if every _fields object_ yields a _Field Query
-     Result_; else, reject.
-     1. For each [JSONPath](https://goessner.net/articles/JsonPath/) expression
-        in the `path` array (incrementing from the 0-index), evaluate the
-        JSONPath expression against the candidate input and repeat the 
-        following subsequence on the result.
-        
-        Repeat until a _Field Query Result_ is found, or the `path` array 
-        elements are exhausted. 
-        1. If the result returned no JSONPath match, skip to the next 
-          `path` array element
-        2. Else, evaluate the first JSONPath match (_candidate_) as follows:
-           1. If the _fields object_ has no `filter`, or if _candidate_
-              validates against the 
-              [JSON Schema](https://json-schema.org/specification.html)
-              descriptor specified in `filter`, then:
-              - If the _fields object_ has no `predicate`, set _Field Query
-                Result_ to be _candidate_; else, set _Field Query Result_ to
-                the boolean value resulting from evaluating the _Field Query
-                Result_ against the 
-                [JSON Schema](https://json-schema.org/specification.html)
-                descriptor value of the `filter` property.
-           2. Else, skip to the next `path` array element
-  3. If all of the previous validation steps are successful, mark the candidate
+  2. If top-level `format` restrictions are declared, ensure the candidate 
+     input is of the formats or algorithms declared. If the [[ref:Input Descriptor]] 
+     being tested against declares its own `format` restrictions, ensure that 
+     the candidate input is of the formats or algorithms declared.
+  3. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+     and it contains a `fields` property with one or more _field objects_,
+     evaluate each against the candidate input as follows:
+     1. Iterate the [[ref:Input Descriptor]] `path` array of
+        [JSONPath](https://goessner.net/articles/JsonPath/) string expressions
+        from 0-index, executing each expression against the candidate input.
+        Cease iteration at the first expression that returns a matching _Field
+        Query Result_ and use the result for the rest of the field's evaluation.
+        If no result is returned for any of the expressions, skip to the next
+        candidate input.
+     2. If the `filter` property of the field entry is present, validate the
+        _Field Query Result_ from the step above against the
+        [JSON Schema](https://json-schema.org/specification.html) descriptor
+        value.
+     3. If the `predicate` property of the field entry is present, a boolean
+        value should be returned rather than the value of the _Field Query
+        Result_. Calculate this boolean value by evaluating the _Field Query
+        Result_ against the
+        [JSON Schema](https://json-schema.org/specification.html) descriptor
+        value of the `filter` property.         
+     4. If the result is valid, proceed iterating the rest of the `fields`
+        entries.
+  4. If all of the previous validation steps are successful, mark the candidate
      input as a match for use in a [[ref:Presentation Submission]].
-     
+
      If present at the top level of the [[ref:Input Descriptor]], keep a
      relative reference to the `group` values the input is designated for.
-  4. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  5. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `limit_disclosure` property set to the string value
      `required`, ensure that any subsequent submission of data in relation to the
      candidate input is limited to the entries specified in the `fields`
@@ -915,16 +912,16 @@ For each candidate input:
      data from the [[ref:Claim]]. For example, a [[ref:Verifier]] may simply
      want to know a [[ref:Holder]] has a valid, signed [[ref:Claims]] of a
      particular type, without disclosing any of the data it contains.
-  5. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `subject_is_issuer` property set to the value `required`,
      ensure that any submission of data in relation to the candidate input is
      fulfilled using a _self_attested_ [[ref:Claim]].
-  6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  7. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains an `is_holder` property, ensure that for each object in the
      array, any submission of data in relation to the candidate input is
      fulfilled by the [[Ref:Subject]] of the attributes so identified by the
      strings in the `field_id` array.
-  7. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  8. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `same_subject` property, ensure that for each object in
      the array, all of the attributes so identified by the strings in the
      `field_id` array are about the same [[Ref:Subject]].
@@ -1094,7 +1091,7 @@ composed and embedded as follows:
   The value of this property ****MUST**** be a unique identifier, such as a
   [UUID](https://tools.ietf.org/html/rfc4122).
 - The `presentation_submission` object ****MUST**** contain a `definition_id`
-  property. The value of this property ****MUST**** be the `id` value of a valid
+  property. e value of this property ****MUST**** be the `id` value of a valid
   [[ref:Presentation Definition]].
 - The `presentation_submission` object ****MUST**** include a `descriptor_map`
   property. The value of this property ****MUST**** be an array of
@@ -1255,14 +1252,14 @@ where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] variants
 they support and are submitting. The following are the normalized references
 used within the specification:
 
-- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7519]] 
+- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7797]] 
   that will be submitted in the form of a JWT encoded string. Expression of 
   supported algorithms in relation to this format ****MUST**** be conveyed using
   an `alg` property paired with values that are identifiers from the JSON Web
   Algorithms registry [[spec:RFC7518]].
-- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7519]] 
+- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7797]] 
   that will be submitted in the form of a JWT encoded string, and the body of
-  the decoded JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7519]]
+  the decoded JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7797]]
   section of the
   [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token). 
   Expression of supported algorithms in relation to these formats ****MUST****
