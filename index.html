@@ -61,7 +61,6 @@ customElements.define("slide-panels",class extends HTMLElement{static get observ
 <dd><a path-0="www.linkedin.com"path-1="in"path-2="dbuchner"path-3=""href="https://www.linkedin.com/in/dbuchner/" >Daniel Buchner</a> (Microsoft)</dd>
 <dd><a path-0="www.linkedin.com"path-1="in"path-2="bzundel"path-3=""href="https://www.linkedin.com/in/bzundel/" >Brent Zundel</a> (Evernym)</dd>
 <dd><a path-0="www.linkedin.com"path-1="in"path-2="rado0x54"path-3=""href="https://www.linkedin.com/in/rado0x54/" >Martin Riedel</a> (Consensys Mesh)</dd>
-<dd><a path-0="www.linkedin.com"path-1="in"path-2="kimdhamilton"path-3=""href="https://www.linkedin.com/in/kimdhamilton/" >Kim Hamilton Duffy</a> (Centre Consortium)</dd>
 <dt><strong>Contributors:</strong></dt>
 <dd><a path-0="www.linkedin.com"path-1="in"path-2="cohengabe"path-3=""href="https://www.linkedin.com/in/cohengabe/" >Gabe Cohen</a> (Workday)</dd>
 <dd><a path-0="www.linkedin.com"path-1="in"path-2="or13b"path-3=""href="https://www.linkedin.com/in/or13b/" >Orie Steele</a> (Transmute)</dd>
@@ -89,13 +88,14 @@ envelope agnostic, meaning an implementer can use
 <a path-0="tools.ietf.org"path-1="html"path-2="rfc7519"href="https://tools.ietf.org/html/rfc7519" >JSON Web Tokens (JWTs)</a>,
 <a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3=""href="https://www.w3.org/TR/vc-data-model/" >Verifiable Credentials (VCs)</a>,
 <a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3="#json-web-token-extensions"href="https://www.w3.org/TR/vc-data-model/#json-web-token-extensions" >JWT-VCs</a>,
-or any other JSON <a class="term-reference" href="#term:claim">Claim</a> format, and convey them via
+or any other <a class="term-reference" href="#term:claim">Claim</a> format, and convey them via
 <a path-0="openid.net"path-1="connect"path-2=""href="https://openid.net/connect/" >Open ID Connect</a>,
 <a path-0="identity.foundation"path-1="didcomm-messaging"path-2="spec"path-3=""href="https://identity.foundation/didcomm-messaging/spec/" >DIDComm</a>,
 <a path-0="w3c-ccg.github.io"path-1="credential-handler-api"path-2=""href="https://w3c-ccg.github.io/credential-handler-api/" >Credential Handler API</a>,
 or any other transport envelope. The goal of this flexible format- and
-transport-agnostic mechanism is to enable unified procedures and code, thereby
-reducing potentially redundant code and processing requirements.</p>
+transport-agnostic mechanism is to nullify the redundant handling, code, and
+hassle involved in presenting and satisfying logical requirements across formats
+and transport envelopes.</p>
 <p>This specification does not define transport protocols, specific endpoints, or
 other means for conveying the formatted objects it codifies, but encourages
 other specifications and projects that do define such mechanisms to utilize
@@ -134,7 +134,7 @@ requirements described in a <span id="term:presentation-definition">Presentation
 <dd>Holder Bindings are requirements of a certain type of relationship between
 the <a class="term-reference" href="#term:holder">Holder</a> and the <a class="term-reference" href="#term:claims">Claims</a> within the <a class="term-reference" href="#term:presentation">Presentation</a>. See <a href="#holder-and-subject-binding" >Holder Binding</a>.</dd>
 <dt><span id="term:identity-hub">Identity Hub</span></dt>
-<dd>Some examples refer to an unfamiliar query protocol, hub://, as a way of
+<dd>Some examples refer to an unfamiliar query protocol, hub:// , as a way of
 storing and querying schemata and other resources. While orthogonal to this
 specification and not yet on a standards track, the concept of “identity hubs”
 proposes an architecture that may be of interest or utility to implementers of
@@ -177,7 +177,7 @@ accordance with the requirements a <a class="term-reference" href="#term:verifie
 <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>. See
 <a href="#presentation-submission" >Presentation Submission</a>.</dd>
 <dt><span id="term:subjects"><span id="term:subject">Subject</span></span></dt>
-<dd>Subjects are the entities about which <a class="term-reference" href="#term:claims">Claims</a> are made. The Subject may
+<dd>Subjects are the entities about which [[r:Claims]] are made. The Subject may
 not be the same entity as the <a class="term-reference" href="#term:holder">Holder</a></dd>
 <dt><span id="term:submission-requirements"><span id="term:submission-requirement">Submission Requirement</span></span></dt>
 <dd>Submission Requirements are objects that define what combinations of inputs
@@ -593,11 +593,8 @@ be ignored:</p>
 <ul>
 <li>
 <p><code>id</code> - The <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> <strong><strong>MUST</strong></strong> contain an <code>id</code>
-property. The value of this property <strong><strong>MUST</strong></strong> be a string. The string
-<strong><strong>SHOULD</strong></strong> provide a unique ID for the desired context. For example, a
-<a path-0="tools.ietf.org"path-1="html"path-2="rfc4122"href="https://tools.ietf.org/html/rfc4122" >UUID</a> such as <code>32f54163-7166-48f1-93d8-f f217bdb0653</code> could provide an ID that is unique in a global context, while a
-simple string such as <code>my_presentation_definition_1</code> could be suitably unique
-in a local context.</p>
+property. The value of this property <strong><strong>MUST</strong></strong> be a unique identifier, such
+as a <a path-0="tools.ietf.org"path-1="html"path-2="rfc4122"href="https://tools.ietf.org/html/rfc4122" >UUID</a>.</p>
 </li>
 <li>
 <p><code>input_descriptors</code> - The <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>  <strong><strong>MUST</strong></strong>
@@ -1014,7 +1011,7 @@ expressions in this way allows the <a class="term-reference" href="#term:verifie
 format differences - for example: normalizing the differences in
 structure between JSON-LD/JWT-based
 <a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3=""href="https://www.w3.org/TR/vc-data-model/" >Verifiable Credentials</a> and
-vanilla JSON Web Tokens (JWTs) [<a class="spec-reference" href="#ref:RFC7519">RFC7519</a>].</p>
+vanilla JSON Web Tokens (JWTs) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>].</p>
 </li>
 <li>
 <p>The <em>fields object</em> <strong><strong>MAY</strong></strong> contain an <code>id</code> property. If present,
@@ -2020,7 +2017,7 @@ section below.</li>
 The value of this property <strong><strong>MUST</strong></strong> be a unique identifier, such as a
 <a path-0="tools.ietf.org"path-1="html"path-2="rfc4122"href="https://tools.ietf.org/html/rfc4122" >UUID</a>.</li>
 <li>The <code>presentation_submission</code> object <strong><strong>MUST</strong></strong> contain a <code>definition_id</code>
-property. The value of this property <strong><strong>MUST</strong></strong> be the <code>id</code> value of a valid
+property. e value of this property <strong><strong>MUST</strong></strong> be the <code>id</code> value of a valid
 <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a>.</li>
 <li>The <code>presentation_submission</code> object <strong><strong>MUST</strong></strong> include a <code>descriptor_map</code>
 property. The value of this property <strong><strong>MUST</strong></strong> be an array of
@@ -2253,14 +2250,14 @@ where <a class="term-reference" href="#term:verifiers">Verifiers</a> and <a clas
 they support and are submitting. The following are the normalized references
 used within the specification:</p>
 <ul>
-<li><code>jwt</code> - the format is a JSON Web Token (JWTs) [<a class="spec-reference" href="#ref:RFC7519">RFC7519</a>]
+<li><code>jwt</code> - the format is a JSON Web Token (JWTs) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>]
 that will be submitted in the form of a JWT encoded string. Expression of
 supported algorithms in relation to this format <strong><strong>MUST</strong></strong> be conveyed using
 an <code>alg</code> property paired with values that are identifiers from the JSON Web
 Algorithms registry [<a class="spec-reference" href="#ref:RFC7518">RFC7518</a>].</li>
-<li><code>jwt_vc</code>, <code>jwt_vp</code> - these formats are JSON Web Tokens (JWTs) [<a class="spec-reference" href="#ref:RFC7519">RFC7519</a>]
+<li><code>jwt_vc</code>, <code>jwt_vp</code> - these formats are JSON Web Tokens (JWTs) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>]
 that will be submitted in the form of a JWT encoded string, and the body of
-the decoded JWT string is defined in the JSON Web Token (JWT) [<a class="spec-reference" href="#ref:RFC7519">RFC7519</a>]
+the decoded JWT string is defined in the JSON Web Token (JWT) [<a class="spec-reference" href="#ref:RFC7797">RFC7797</a>]
 section of the
 <a path-0="www.w3.org"path-1="TR"path-2="vc-data-model"path-3="#json-web-token"href="https://www.w3.org/TR/vc-data-model/#json-web-token" >W3C Verifiable Credentials specification</a>.
 Expression of supported algorithms in relation to these formats <strong><strong>MUST</strong></strong>
@@ -2456,10 +2453,10 @@ specification that call for JSONPath expression execution.</p>
           M. Jones; 2015-05. <span class="reference-status">Status: Proposed Standard</span>.
         </dd>
       
-        <dt id="ref:RFC7519">RFC7519</dt>
+        <dt id="ref:RFC7797">RFC7797</dt>
         <dd>
-          <cite><a href="https://tools.ietf.org/html/rfc7519">JSON Web Token (JWT)</a></cite>. 
-          M. Jones; J. Bradley; N. Sakimura; 2015-05. <span class="reference-status">Status: Proposed Standard</span>.
+          <cite><a href="https://tools.ietf.org/html/rfc7797">JSON Web Signature (JWS) Unencoded Payload Option</a></cite>. 
+          M. Jones; 2016-02. <span class="reference-status">Status: Proposed Standard</span>.
         </dd>
       
         <dt id="ref:VC-DATA-MODEL">VC-DATA-MODEL</dt>
