@@ -9,15 +9,16 @@
         "group": [
           "A"
         ],
-        "schema": [
-          {
-            "uri": "https://bank-schemas.org/1.0.0/accounts.json"
-          },
-          {
-            "uri": "https://bank-schemas.org/2.0.0/accounts.json"
-          }
-        ],
         "constraints": {
+          "types": [
+            {
+              "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
+              "filter": {
+                "type": "string",
+                "pattern": "https://bank-schemas.org/1.0.0/accounts.json|https://bank-schemas.org/2.0.0/accounts.json"
+              }
+            }
+          ],
           "fields": [
             {
               "path": [
