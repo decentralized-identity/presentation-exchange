@@ -3,8 +3,8 @@
   "specs": [
     {
       "title": "DIF Presentation Exchange",
-      "spec_directory": "./spec",
-      "output_path": "./",
+      "spec_directory": "./spec/v1.0.0",
+      "output_path": "./build/spec/v1.0.0",
       "logo": "https://rawcdn.githack.com/decentralized-identity/decentralized-identity.github.io/a3ca39717e440302d1fd99a796e7f00e1c42eb2d/images/logo-flat.svg",
       "logo_link": "https://identity.foundation",
       "source": {
@@ -15,7 +15,8 @@
     },
     {
       "title": "DIF Presentation Exchange",
-      "spec_directory": "./spec/v2.0.0",
+      "spec_directory": "./spec",
+      "output_path": "./build",
       "logo": "https://rawcdn.githack.com/decentralized-identity/decentralized-identity.github.io/a3ca39717e440302d1fd99a796e7f00e1c42eb2d/images/logo-flat.svg",
       "logo_link": "https://identity.foundation",
       "source": {
