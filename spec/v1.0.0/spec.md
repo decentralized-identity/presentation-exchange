@@ -346,12 +346,6 @@ values, and an explanation why a certain item or set of data is being requested:
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `purpose` property.
   If present, its value ****MUST**** be a string that describes the purpose for
   which the [[ref:Claim]]'s data is being requested.
-- The [[ref:Input Descriptor Object]] ****MAY**** contain a `format` property.
-  If present, its value ****MUST**** be an object with one or more properties 
-  matching the registered [Claim Format Designations](#claim-format-designations) 
-  (e.g., `jwt`, `jwt_vc`, `jwt_vp`, etc.). This `format` property is identical in 
-  value signature to the top-level `format` object, but can be used to specifically 
-  constrain submission of a single input to a subset of formats or algorithms.
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
