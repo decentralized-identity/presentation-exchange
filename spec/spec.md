@@ -266,6 +266,8 @@ be ignored:
   `purpose` property. If present, its value ****MUST**** be a string that
   describes the purpose for which the [[ref:Presentation Definition]]'s inputs
   are being requested.
+- `frame` - The [[ref:Presentation Definition]] ****MAY**** contain a `frame`
+  property. If present, its value ****MUST**** be a [JSON LD Framing Document](https://w3c.github.io/json-ld-framing/) object.
 - The [[ref:Presentation Definition]] ****MAY**** include a `format` property.
   Some envelope transport protocols may include the value of this property in
   other locations and use different property names (See the [Format Embed Locations](#)
