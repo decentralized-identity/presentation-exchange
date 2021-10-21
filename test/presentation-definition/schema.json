@@ -238,6 +238,10 @@
         "name": { "type": "string" },
         "purpose": { "type": "string" },
         "format": { "$ref": "#/definitions/format"},
+        "frame": {
+          "type": "object",
+          "additionalProperties": true
+        },
         "submission_requirements": {
           "type": "array",
           "items": {
