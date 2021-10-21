@@ -6,10 +6,7 @@
       {
         "id": "wa_driver_license",
         "name": "Washington State Business License",
-        "purpose": "We can only allow licensed Washington State business representatives into the WA Business Conference",
-        "schema": [{
-            "uri": "https://licenses.example.com/business-license.json"
-        }]
+        "purpose": "We can only allow licensed Washington State business representatives into the WA Business Conference"
       }
     ]
   }

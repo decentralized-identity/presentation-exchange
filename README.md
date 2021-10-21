@@ -9,7 +9,7 @@ git clone git@github.com:decentralized-identity/presentation-exchange.git
 cd presentation-exchange
 npm i
 npm run edit
-npx serve .
+npx serve build
 ```
 
 Visit http://localhost:5000/

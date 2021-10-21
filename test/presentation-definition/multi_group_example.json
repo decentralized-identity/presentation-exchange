@@ -30,18 +30,44 @@
         "name": "Bank Account Information",
         "purpose": "Bank Account required to remit payment.",
         "group": ["A"],
-        "schema": [
-          {
-            "uri": "https://bank-standards.example.com#accounts",
-            "required": true
-          },
-          {
-            "uri": "https://bank-standards.example.com#investments",
-            "required": true
-          }
-        ],
         "constraints": {
           "limit_disclosure": "required",
+          "types": [
+            {
+              "path": ["$.credentialSchema", "$.vc.credentialSchema"],
+              "filter": {
+                "allOf": [
+                  {
+                    "type": "array",
+                    "contains": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "https://bank-standards.example.com#accounts"
+                        }
+                      },
+                      "required": ["id"]
+                    }
+                  },
+                  {
+                    "type": "array",
+                    "contains": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "https://bank-standards.example.com#investments"
+                        }
+                      },
+                      "required": ["id"]
+                    }
+                  }
+                ]
+              }
+
+            }
+          ],
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
@@ -53,8 +79,8 @@
             },
             {
               "path": [
-                "$.credentialSubject.account[*].account_number", 
-                "$.vc.credentialSubject.account[*].account_number", 
+                "$.credentialSubject.account[*].account_number",
+                "$.vc.credentialSubject.account[*].account_number",
                 "$.account[*].account_number"
               ],
               "purpose": "We can only remit payment to a currently-valid bank account in the US, France, or Germany, submitted as an ABA Acct # or IBAN.",
@@ -79,20 +105,21 @@
         "name": "Bank Account Information",
         "purpose": "We can only remit payment to a currently-valid bank account.",
         "group": ["A"],
-        "schema": [
-          {
-            "uri": "https://bank-schemas.org/1.0.0/accounts.json"
-          },
-          {
-            "uri": "https://bank-schemas.org/2.0.0/accounts.json"
-          }
-        ],
         "constraints": {
+          "types": [
+            {
+              "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
+              "filter": {
+                "type": "string",
+                "pattern": "https://bank-schemas.org/1.0.0/accounts.json|https://bank-schemas.org/2.0.0/accounts.json"
+              }
+            }
+          ],
           "fields": [
             {
               "path": [
-                "$.issuer", 
-                "$.vc.issuer", 
+                "$.issuer",
+                "$.vc.issuer",
                 "$.iss"
               ],
               "purpose": "We can only verify bank accounts if they are attested by a trusted bank, auditor or regulatory authority.",
@@ -101,10 +128,10 @@
                 "pattern": "did:example:123|did:example:456"
               }
             },
-            { 
+            {
               "path": [
-                "$.credentialSubject.account[*].id", 
-                "$.vc.credentialSubject.account[*].id", 
+                "$.credentialSubject.account[*].id",
+                "$.vc.credentialSubject.account[*].id",
                 "$.account[*].id"
               ],
               "purpose": "We can only remit payment to a currently-valid bank account in the US, France, or Germany, submitted as an ABA Acct # or IBAN.",
@@ -115,8 +142,8 @@
             },
             {
               "path": [
-                "$.credentialSubject.account[*].route", 
-                "$.vc.credentialSubject.account[*].route", 
+                "$.credentialSubject.account[*].route",
+                "$.vc.credentialSubject.account[*].route",
                 "$.account[*].route"
               ],
               "purpose": "We can only remit payment to a currently-valid account at a US, Japanese, or German federally-accredited bank, submitted as an ABA RTN or SWIFT code.",
@@ -133,13 +160,17 @@
         "name": "Employment History",
         "purpose": "We are only verifying one current employment relationship, not any other information about employment.",
         "group": ["B"],
-        "schema": [
-          {
-            "uri": "https://business-standards.org/schemas/employment-history.json"
-          }
-        ],
         "constraints": {
           "limit_disclosure": "required",
+          "types": [
+            {
+              "path": ["$.credentialSchema", "$.vc.credentialSchema"],
+              "filter": {
+                "type": "string",
+                "const": "https://business-standards.org/schemas/employment-history.json"
+              }
+            }
+          ],
           "fields": [
             {
               "path": ["$.jobs[*].active"],
@@ -155,12 +186,16 @@
         "id": "drivers_license_input_1",
         "name": "EU Driver's License",
         "group": ["C"],
-        "schema": [
-          {
-            "uri": "https://schema.eu/claims/DriversLicense.json"
-          }
-        ],
         "constraints": {
+          "types": [
+            {
+              "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
+              "filter": {
+                "type": "string",
+                "const": "https://schema.eu/claims/DriversLicense.json"
+              }
+            }
+          ],
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
@@ -176,7 +211,7 @@
               "filter": {
                 "type": "string",
                 "format": "date",
-                "maximum": "1999-05-16"
+                "formatMaximum": "1999-05-16"
               }
             }
           ]
@@ -186,12 +221,16 @@
         "id": "drivers_license_input_2",
         "name": "Driver's License from one of 50 US States",
         "group": ["C"],
-        "schema": [
-          {
-            "uri": "hub://did:foo:123/Collections/schema.us.gov/american_drivers_license.json"
-          }
-        ],
         "constraints": {
+          "types": [
+            {
+              "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
+              "filter": {
+                "type": "string",
+                "const": "hub://did:foo:123/Collections/schema.us.gov/american_drivers_license.json"
+              }
+            }
+          ],
           "fields": [
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
@@ -207,7 +246,7 @@
               "filter": {
                 "type": "string",
                 "format": "date",
-                "maximum": "1999-05-16"
+                "forrmatMaximum": "1999-05-16"
               }
             }
           ]

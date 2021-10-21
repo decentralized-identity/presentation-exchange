@@ -3,3 +3,4 @@ node_modules
 .python-version
 .DS_Store
 .vscode
+build
