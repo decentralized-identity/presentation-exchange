@@ -266,6 +266,8 @@ be ignored:
   `purpose` property. If present, its value ****MUST**** be a string that
   describes the purpose for which the [[ref:Presentation Definition]]'s inputs
   are being requested.
+- `frame` - The [[ref:Presentation Definition]] ****MAY**** contain a `frame`
+  property. If present, its value ****MUST**** be a [JSON LD Framing Document](https://w3c.github.io/json-ld-framing/) object.
 - The [[ref:Presentation Definition]] ****MAY**** include a `format` property.
   Some envelope transport protocols may include the value of this property in
   other locations and use different property names (See the [Format Embed Locations](#)
@@ -355,7 +357,7 @@ values, and an explanation why a certain item or set of data is being requested:
   If present, its value ****MUST**** be an object with one or more properties
   matching the registered [Claim Format Designations](#claim-format-designations)
   (e.g., `jwt`, `jwt_vc`, `jwt_vp`, etc.). This `format` property is identical in
-  value signature to the top-level `forma`t object, but can be used to specifically
+  value signature to the top-level `format` object, but can be used to specifically
   constrain submission of a single input to a subset of formats or algorithms.
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
