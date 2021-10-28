@@ -59,7 +59,7 @@ these data formats within their flows.
 
 ## Status of This Document
 
-Presentation Exchange v1.0 is a _DIF Ratified Specification_ that has been developed within
+Presentation Exchange v1.0 is a _DIF Ratified_ specification that has been developed within
 the Decentralized Identity Foundation (DIF). It incorporates requirements and
 learnings from related work of many active industry players into a shared
 specification that meets the collective needs of the community.
@@ -194,7 +194,7 @@ requirement.
 
 ::: example Presentation Definition - Minimal Example
 ```json
-[[insert ./test/presentation-definition/minimal_example.json ]]
+[[insert: ./test/v1.0.0/presentation-definition/minimal_example.json ]]
 ```
 
 </section>
@@ -203,7 +203,7 @@ requirement.
 
 ::: example Presentation Definition - Basic Example
 ```json
-[[insert ./test/presentation-definition/basic_example.json ]]
+[[insert: ./test/v1.0.0/presentation-definition/basic_example.json ]]
 ```
 
 </section>
@@ -212,7 +212,7 @@ requirement.
 
 ::: example Presentation Definition - Single Group Example
 ```json
-[[insert: ./test/presentation-definition/single_group_example.json]]
+[[insert: ./test/v1.0.0/presentation-definition/single_group_example.json]]
 ```
 
 </section>
@@ -221,7 +221,7 @@ requirement.
 
 ::: example Presentation Definition - Multi-Group Example
 ```json
-[[insert: ./test/presentation-definition/multi_group_example.json]]
+[[insert: ./test/v1.0.0/presentation-definition/multi_group_example.json]]
 ```
 :::
 
@@ -270,7 +270,7 @@ be ignored:
       For example:
 
 ```json
-[[insert: ./test/presentation-definition/format_example.json]]
+[[insert: ./test/v1.0.0/presentation-definition/format_example.json]]
 ```
 
 - `submission_requirements` - The [[ref:Presentation Definition]] ****MAY****
@@ -303,7 +303,7 @@ values, and an explanation why a certain item or set of data is being requested:
 
 ::: example
 ```json
-[[insert: ./test/presentation-definition/input_descriptors_example.json]]
+[[insert: ./test/v1.0.0/presentation-definition/input_descriptors_example.json]]
 ```
 :::
 
@@ -313,7 +313,7 @@ values, and an explanation why a certain item or set of data is being requested:
 
 ::: example
 ```json
-[[insert: ./test/presentation-definition/input_descriptor_id_tokens_example.json]]
+[[insert: ./test/v1.0.0/presentation-definition/input_descriptor_id_tokens_example.json]]
 ```
 
 </section>
@@ -671,7 +671,7 @@ all input_descriptors ****MUST**** be grouped. Any unused
 
 ::: example Submission Requirement
 ```json 12
-[[insert: ./test/submission-requirements/example.json ]]
+[[insert: ./test/v1.0.0/submission-requirements/example.json ]]
 ```
 :::
 
@@ -726,7 +726,7 @@ For an `all` rule [[ref:Submission Requirement Object]]:
 
 ::: example Submission Requirement, all, group
 ```json
-[[insert: ./test/submission-requirements/all_example.json]]
+[[insert: ./test/v1.0.0/submission-requirements/all_example.json]]
 ```
 :::
 
@@ -766,13 +766,13 @@ with a matching `group` string. In the first example that follows, the
 
 ::: example Submission Requirement, pick, group
 ```json
-[[insert: ./test/submission-requirements/pick_1_example.json]]
+[[insert: ./test/v1.0.0/submission-requirements/pick_1_example.json]]
 ```
 :::
 
 ::: example Submission Requirement, pick, min/max
 ```json
-[[insert: ./test/submission-requirements/pick_2_example.json]]
+[[insert: ./test/v1.0.0/submission-requirements/pick_2_example.json]]
 ```
 :::
 
@@ -785,7 +785,7 @@ from group `"A"` or two members from group `"B"`:
 
 ::: example Submission Requirement, pick, nested
 ```json
-[[insert: ./test/submission-requirements/pick_3_example.json]]
+[[insert: ./test/v1.0.0/submission-requirements/pick_3_example.json]]
 ```
 :::
 
@@ -794,7 +794,7 @@ The following JSON Schema Draft 7 definition summarizes many of the
 format-related rules above:
 
 ```json
-[[insert: ./test/submission-requirements/schema.json]]
+[[insert: ./test/v1.0.0/submission-requirements/schema.json]]
 ```
 
 #### Property Values and Evaluation
@@ -941,7 +941,7 @@ requisite information to resolve the status of a [[ref:Claim]].
 
 ::: example Drivers License Expiration
 ```json
-[[insert: ./test/presentation-definition/VC_expiration_example.json]]
+[[insert: ./test/v1.0.0/presentation-definition/VC_expiration_example.json]]
 ```
 :::
 
@@ -951,7 +951,7 @@ requisite information to resolve the status of a [[ref:Claim]].
 
 ::: example Drivers License Revocation
 ```json
-[[insert: ./test/presentation-definition/VC_revocation_example.json]]
+[[insert: ./test/v1.0.0/presentation-definition/VC_revocation_example.json]]
 ```
 :::
 </section>
@@ -1022,7 +1022,7 @@ The following JSON Schema Draft 7 definition summarizes the
 format-related rules above:
 
 ```json
-[[insert: ./test/presentation-definition/schema.json]]
+[[insert: ./test/v1.0.0/presentation-definition/schema.json]]
 ```
 
 ### Presentation Request
@@ -1131,7 +1131,7 @@ composed and embedded as follows:
 ****Example Nested Submission****
 
 ```json
-[[insert: ./test/presentation-submission/nested_submission_example.json]]
+[[insert: ./test/v1.0.0/presentation-submission/nested_submission_example.json]]
 ```
 
 When the `path_nested` property is present in a [[ref:Presentation Submission]]
@@ -1216,7 +1216,7 @@ CHAPI      | `$.data`
 The following JSON Schema Draft 7 definition summarizes the rules above:
 
 ```json
-[[insert: ./test/presentation-submission/schema.json]]
+[[insert: ./test/v1.0.0/presentation-submission/schema.json]]
 ```
 
 ## Claim Format Designations
@@ -1401,7 +1401,7 @@ JSONPath                      | Description
 
 ::: example Presentation Submission - Verifiable Presentation
 ```json
-[[insert: ./test/presentation-submission/appendix_VP_example.json]]
+[[insert: ./test/v1.0.0/presentation-submission/appendix_VP_example.json]]
 ```
 :::
 
@@ -1411,7 +1411,7 @@ JSONPath                      | Description
 
 ::: example Presentation Submission with OIDC JWT
 ```json
-[[insert: ./test/presentation-submission/appendix_OIDC_example.json]]
+[[insert: ./test/v1.0.0/presentation-submission/appendix_OIDC_example.json]]
 ```
 :::
 
@@ -1421,7 +1421,7 @@ JSONPath                      | Description
 
 ::: example Presentation Submission using CHAPI
 ```json
-[[insert: ./test/presentation-submission/appendix_CHAPI_example.json]]
+[[insert: ./test/v1.0.0/presentation-submission/appendix_CHAPI_example.json]]
 ```
 
 </section>
@@ -1430,7 +1430,7 @@ JSONPath                      | Description
 
 ::: example Presentation Submission using DIDComm
 ```json
-[[insert: ./test/presentation-submission/appendix_DIDComm_example.json]]
+[[insert: ./test/v1.0.0/presentation-submission/appendix_DIDComm_example.json]]
 ```
 :::
 

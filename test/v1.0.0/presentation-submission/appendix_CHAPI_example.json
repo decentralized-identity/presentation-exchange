@@ -1,0 +1,8 @@
+{
+    "type": "web",
+    "dataType": "VerifiablePresentation",
+    "data": {
+      "comment": "Presentation Submission goes here"
+    }
+  }
+  

@@ -1,0 +1,10 @@
+{
+  "submission_requirements": [
+    {
+      "name": "Submission of educational transcripts",
+      "purpose": "We need your complete educational transcripts to process your application",
+      "rule": "all",
+      "from": "A"
+    }
+  ]
+}
