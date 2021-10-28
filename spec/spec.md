@@ -1263,19 +1263,21 @@ used within the specification:
   Expression of supported algorithms in relation to these formats ****MUST****
   be conveyed using an `alg` property paired with values that are identifiers
   from the JSON Web Algorithms registry [[spec:RFC7518]].
-- `ldp_vc`, `ldp_vp` - these formats are W3C Verifiable Credentials
-  [[spec:VC-DATA MODEL]] that will be submitted in the form of a JSON object.
-  Expression of supported algorithms in relation to these formats ****MUST****
-  be conveyed using a `proof_type` property paired with values that are
-  identifiers from the
-  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
-- `ldp` - this format is defined in the
-  [W3C CCG Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/)
-  specification [[spec:Linked Data Proofs]], and will be submitted as objects.
+- `ldp` - the format is a Linked Data Proof [[spec:Linked Data Proofs]] that will 
+  be submitted as an object.
   Expression of supported algorithms in relation to these formats ****MUST****
   be conveyed using a `proof_type` property with values that are identifiers
   from the
   [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+- `ldp_vc`, `ldp_vp` - Verifiable Credential Linked Data Proof and Verifiable Presentation Linked
+  Data Proof formats. These are descriptions of formats normatively defined in the W3C Verifiable
+  Credentials specification [[spec:VC-DATA MODEL]], and will be submitted in the form of a JSON
+  object. 
+  Expression of supported algorithms in relation to these formats ****MUST****
+  be conveyed using a `proof_type` property paired with values that are
+  identifiers from the
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+
 
 ## JSON Schema Vocabulary Definition
 
