@@ -859,16 +859,7 @@ candidate input (JWT, Verifiable Credential, etc.) it holds to determine whether
 there is a match.
 
 For each candidate input:
-  1. The URI for the schema of the candidate input ****MUST**** match one of the
-    [[ref:Input Descriptor]] `schema` object `uri` values exactly.
-
-     If the [[ref:Input Descriptor]] `schema` object `uri` is a hashlink or
-     similar value that points to immutable content, then the content of the
-     retrieved schema must also match.
-
-     If one of the values is an exact match, proceed, if there are no
-     exact matches, skip to the next candidate input.
-  2. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  1. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `fields` property with one or more _fields objects_,
      evaluate each _fields object_ against the candidate input as described
      in the following subsequence.
@@ -896,12 +887,12 @@ For each candidate input:
                 [JSON Schema](https://json-schema.org/specification.html)
                 descriptor value of the `filter` property.
            2. Else, skip to the next `path` array element
-  3. If all of the previous validation steps are successful, mark the candidate
+  2. If all of the previous validation steps are successful, mark the candidate
      input as a match for use in a [[ref:Presentation Submission]].
 
      If present at the top level of the [[ref:Input Descriptor]], keep a
      relative reference to the `group` values the input is designated for.
-  4. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  3. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `limit_disclosure` property set to the string value
      `required`, ensure that any subsequent submission of data in relation to the
      candidate input is limited to the entries specified in the `fields`
@@ -910,27 +901,19 @@ For each candidate input:
      data from the [[ref:Claim]]. For example, a [[ref:Verifier]] may simply
      want to know a [[ref:Holder]] has a valid, signed [[ref:Claims]] of a
      particular type, without disclosing any of the data it contains.
-  5. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  4. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `subject_is_issuer` property set to the value `required`,
      ensure that any submission of data in relation to the candidate input is
      fulfilled using a _self_attested_ [[ref:Claim]].
-  6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  5. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains an `is_holder` property, ensure that for each object in the
      array, any submission of data in relation to the candidate input is
      fulfilled by the [[Ref:Subject]] of the attributes so identified by the
      strings in the `field_id` array.
-  7. If the `constraints` property of the [[ref:Input Descriptor]] is present,
+  6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `same_subject` property, ensure that for each object in
      the array, all of the attributes so identified by the strings in the
      `field_id` array are about the same [[Ref:Subject]].
-
-::: note
-The above evaluation process assumes the processing entity will test
-each candidate input (JWT, Verifiable Credential, etc.) it holds to determine if
-it meets the criteria for inclusion in submission. Any additional testing of a
-candidate input for a schema match beyond comparison of the schema `uri` is at the
-discretion of the implementer.
-:::
 
 #### Expired and Revoked Data
 
