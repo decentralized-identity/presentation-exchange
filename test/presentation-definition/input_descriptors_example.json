@@ -10,16 +10,14 @@
           "A"
         ],
         "constraints": {
-          "types": [
+          "fields": [
             {
               "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
               "filter": {
                 "type": "string",
                 "pattern": "https://bank-schemas.org/1.0.0/accounts.json|https://bank-schemas.org/2.0.0/accounts.json"
               }
-            }
-          ],
-          "fields": [
+            },
             {
               "path": [
                 "$.issuer",

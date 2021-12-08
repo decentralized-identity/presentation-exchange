@@ -9,16 +9,14 @@
         "purpose": "We can only remit payment to a currently-valid bank account, submitted as an ABA RTN + Acct # or IBAN.",
         "constraints": {
           "limit_disclosure": "required",
-          "types": [
+          "fields": [
             {
               "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
               "filter": {
                 "type": "string",
                 "const": "https://bank-standards.example.com/fullaccountroute.json"
               }
-            }
-          ],
-          "fields": [
+            },
             {
               "path": [
                   "$.issuer",
@@ -38,16 +36,14 @@
         "id": "us_passport_input",
         "name": "US Passport",
         "constraints": {
-          "types": [
+          "fields": [
             {
               "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
               "filter": {
                 "type": "string",
                 "const": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
               }
-            }
-          ],
-          "fields": [
+            },
             {
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {

@@ -14,16 +14,14 @@
         "name": "EU Driver's License",
         "group": ["A"],
         "constraints": {
-          "types": [
+          "fields": [
             {
               "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
               "filter": {
                 "type": "string",
                 "const": "https://eu.com/claims/DriversLicense.json"
               }
-            }
-          ],
-          "fields": [
+            },
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
               "purpose": "We can only accept digital driver's licenses issued by national authorities of member states or trusted notarial auditors.",
@@ -48,16 +46,14 @@
         "name": "US Passport",
         "group": ["A"],
         "constraints": {
-          "types": [
+          "fields": [
             {
               "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
               "filter": {
                 "type": "string",
                 "const": "hub://did:foo:123/Collections/schema.us.gov/passport.json"
               }
-            }
-          ],
-          "fields": [
+            },
             {
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {

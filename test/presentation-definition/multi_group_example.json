@@ -32,7 +32,7 @@
         "group": ["A"],
         "constraints": {
           "limit_disclosure": "required",
-          "types": [
+          "fields": [
             {
               "path": ["$.credentialSchema", "$.vc.credentialSchema"],
               "filter": {
@@ -65,10 +65,7 @@
                   }
                 ]
               }
-
-            }
-          ],
-          "fields": [
+            },
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
               "purpose": "We can only verify bank accounts if they are attested by a trusted bank, auditor or regulatory authority.",
@@ -106,16 +103,14 @@
         "purpose": "We can only remit payment to a currently-valid bank account.",
         "group": ["A"],
         "constraints": {
-          "types": [
+          "fields": [
             {
               "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
               "filter": {
                 "type": "string",
                 "pattern": "https://bank-schemas.org/1.0.0/accounts.json|https://bank-schemas.org/2.0.0/accounts.json"
               }
-            }
-          ],
-          "fields": [
+            },
             {
               "path": [
                 "$.issuer",
@@ -162,16 +157,14 @@
         "group": ["B"],
         "constraints": {
           "limit_disclosure": "required",
-          "types": [
+          "fields": [
             {
               "path": ["$.credentialSchema", "$.vc.credentialSchema"],
               "filter": {
                 "type": "string",
                 "const": "https://business-standards.org/schemas/employment-history.json"
               }
-            }
-          ],
-          "fields": [
+            },
             {
               "path": ["$.jobs[*].active"],
               "filter": {
@@ -187,16 +180,14 @@
         "name": "EU Driver's License",
         "group": ["C"],
         "constraints": {
-          "types": [
+          "fields": [
             {
               "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
               "filter": {
                 "type": "string",
                 "const": "https://schema.eu/claims/DriversLicense.json"
               }
-            }
-          ],
-          "fields": [
+            },
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
               "purpose": "We can only accept digital driver's licenses issued by national authorities of EU member states or trusted notarial auditors.",
@@ -222,16 +213,14 @@
         "name": "Driver's License from one of 50 US States",
         "group": ["C"],
         "constraints": {
-          "types": [
+          "fields": [
             {
               "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
               "filter": {
                 "type": "string",
                 "const": "hub://did:foo:123/Collections/schema.us.gov/american_drivers_license.json"
               }
-            }
-          ],
-          "fields": [
+            },
             {
               "path": ["$.issuer", "$.vc.issuer", "$.iss"],
               "purpose": "We can only accept digital driver's licenses issued by the 50 US states' automative affairs agencies.",

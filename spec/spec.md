@@ -361,11 +361,6 @@ values, and an explanation why a certain item or set of data is being requested:
   constrain submission of a single input to a subset of formats or algorithms.
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
-    - The _constraints objext_ ****MAY**** contain a `types` property. If present it's value ****MUST**** be an array of objects as composed as follows:
-      - The _types object_ ****MUST**** contains a `path` property. The value of this property has the same requirements as the _fields object_'s `path` property
-      - The _types object_ ****MUST**** contain a `filter` property. The value of this property has the same requirements as the _fields object_'s `filter` property
-      - The _types object_ ****MAY**** contain an `purpose` property. The value of this property has the same requirements as the _fields object_'s `purpose` property
-
     - The _constraints object_ ****MAY**** contain a `fields` property. If
       present, its value ****MUST**** be an array of objects composed as
       follows:
@@ -397,7 +392,7 @@ values, and an explanation why a certain item or set of data is being requested:
           used to filter against the values returned from evaluation of the
           [JSONPath](https://goessner.net/articles/JsonPath/) string
           expressions in the `path` array.
-        - The _fields object_ ****MAY**** contain a `predicate` property. If the
+        - The _fields object_ ****MAY**** contain a [`predicate` property](#predicate-property). If the
           `predicate` property is present, the `filter` property ****MUST****
           also be present.
 
@@ -434,7 +429,7 @@ values, and an explanation why a certain item or set of data is being requested:
           If the `predicate` property is not present, a processing entity
           ****MUST NOT**** return derived predicate values.
 
-          If the `predicate` property is present, the set of JSON Schema
+          If the [`predicate` property](#predicate-filters) is present, the set of JSON Schema
           descriptors which comprise the value of the `filter` property
           ****MUST**** be restricted according to the desired predicate
           operation, as follows:

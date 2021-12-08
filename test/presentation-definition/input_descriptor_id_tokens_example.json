@@ -8,16 +8,14 @@
         "name": "Verify XYZ Government Employment",
         "purpose": "Verifying current employment at XYZ Government agency as proxy for permission to access this resource",
         "constraints": {
-          "types": [
+          "fields": [
             {
               "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
               "filter": {
                 "type": "string",
                 "const": "https://login.idp.com/xyz.gov/.well-known/openid-configuration"
               }
-            }
-          ],
-          "fields": [
+            },
             {
               "path": ["$.status"],
               "filter": {
