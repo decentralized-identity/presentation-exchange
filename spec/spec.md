@@ -361,9 +361,13 @@ values, and an explanation why a certain item or set of data is being requested:
   constrain submission of a single input to a subset of formats or algorithms.
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
-    - The _constraints object_ ****MAY**** contain a `fields` property. If
-      present, its value ****MUST**** be an array of objects composed as
-      follows:
+    - The _constraints object_ ****MAY**** contain a `fields` property. Fields 
+    ****SHALL**** be processed forward from 0-index, so if a [[ref:Verifier]] 
+    desires to reduce processing by checking the most defining characteristics of a 
+    credential (e.g the type or schema of a credential) implementers ****SHOULD**** 
+    order these field checks before all others to ensure earliest termination of 
+    evaluation. If the `fields` property is present, its value ****MUST**** be an 
+    array of objects composed as follows:
         - The _fields object_ ****MUST**** contain a `path` property. The value
           of this property ****MUST**** be an array of one or more
           [JSONPath](https://goessner.net/articles/JsonPath/) string
@@ -1046,7 +1050,7 @@ certain properties. Some of these are expressed below:
   presentation has been used before. Other protocols may require that a
   presentation be bound to a particular communication exchange or session. In
   these cases, a [[ref:Presentation Request]] that provides a `domain`,
-  `challenge`,or `nonce` value may be required.
+  `challenge`, or `nonce` value may be required.
 
 
 ## Presentation Submission
