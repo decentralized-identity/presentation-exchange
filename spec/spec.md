@@ -1448,7 +1448,7 @@ JSONPath                      | Description
 
 ### Developer Resources
 
-#### JSONPath
+#### JSONPath implementations
 
 - **Node.js**
     - https://www.npmjs.com/package/jsonpath
@@ -1462,7 +1462,7 @@ JSONPath                      | Description
 - **Go**
     - https://github.com/PaesslerAG/jsonpath
 
-#### JSON Schema
+#### JSON Schema implementations
 
 - **Node.js**
     - https://www.npmjs.com/package/ajv
