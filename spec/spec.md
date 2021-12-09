@@ -1452,6 +1452,7 @@ JSONPath                      | Description
 
 - **Node.js**
     - https://www.npmjs.com/package/jsonpath
+    - https://www.npmjs.com/package/jsonpath-plus (Ships its own TS types and have newer updates)
 - **Java**
     - https://github.com/json-path/JsonPath
 - **Kotlin**
