@@ -82,6 +82,7 @@
         "id": { "type": "string" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
+        "format": {"ref":"#/definitions/format"},
         "group": {
           "type": "array",
           "items": { "type": "string" }
