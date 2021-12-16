@@ -806,14 +806,6 @@ from group `"A"` or two members from group `"B"`:
 ```
 :::
 
-#### JSON Schema
-The following JSON Schema Draft 7 definition summarizes many of the
-format-related rules above:
-
-```json
-[[insert: ./test/submission-requirements/schema.json]]
-```
-
 #### Property Values and Evaluation
 The following property value and evaluation guidelines summarize many of the
 processing-related rules above:
@@ -1022,15 +1014,6 @@ There are a number of mechanisms for safely embedding biometric information in a
 [[ref:Claim]] such that only a person who can confirm the biometric may present
 the [[ref:Claim]].
 
-### JSON Schema
-
-The following JSON Schema Draft 7 definition summarizes the
-format-related rules above:
-
-```json
-[[insert: ./test/presentation-definition/schema.json]]
-```
-
 ### Presentation Request
 A [[ref:Presentation Request]] is any transport mechanism used to send a
 [[ref:Presentation Definition]] from a [[ref:Verifier]] to a [[ref:Holder]]. A
@@ -1218,13 +1201,6 @@ DIDComms   | `$.presentations~attach.data.json`
 VP         | top-level
 CHAPI      | `$.data`
 
-### JSON Schema
-The following JSON Schema Draft 7 definition summarizes the rules above:
-
-```json
-[[insert: ./test/presentation-submission/schema.json]]
-```
-
 ## Claim Format Designations
 
 Within the _Presentation Exchange_ specification, there are numerous sections
@@ -1261,13 +1237,33 @@ used within the specification:
   [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 
 
-## JSON Schema Vocabulary Definition
+## JSON Schemas
+
+### Vocabulary Definition
 
 The _Presentation Exchange_ specification adopts and defines the following JSON
 Schema data format and processing variant, which implementers ****MUST****
 support for evaluation of the portions of the _Presentation Exchange_
 specification that call for JSON Schema validation:
 https://tools.ietf.org/html/draft-handrews-json-schema-02
+
+### Presentation Definition
+
+```json
+[[insert: ./test/presentation-definition/schema.json]]
+```
+
+### Submission Requirements
+
+```json
+[[insert: ./test/submission-requirements/schema.json]]
+```
+
+### Format Declaration
+
+```json
+[[insert: ./test/presentation-definition/formats-schema.json]]
+```
 
 ## JSONPath Syntax Definition
 

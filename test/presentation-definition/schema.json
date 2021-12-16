@@ -210,19 +210,6 @@
           "additionalProperties": false
         }
       ]
-    },
-    "type": {
-      "type": "object",
-      "properties": {
-        "path": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "purpose": { "type": "string" },
-        "filter": { "$ref": "http://json-schema.org/schema#" }
-      },
-      "required": ["path", "filter"],
-      "additionalProperties": false
     }
   },
   "type": "object",
