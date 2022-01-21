@@ -1261,8 +1261,6 @@ For each candidate input:
 
  :::
 
-## Advanced Considerations
-
 ### Expired and Revoked Data
 
 Certain types of [[ref:Claims]] have concepts of _expiration_ and _revocation_.
