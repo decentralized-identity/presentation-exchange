@@ -372,8 +372,21 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
           used to filter against the values returned from evaluation of the
           [JSONPath](https://goessner.net/articles/JsonPath/) string
           expressions in the `path` array.
+    - The _constraints object_ ****MAY**** contain a `limit_disclosure`
+      property. If present, its value ****MUST**** be one of the following strings:
+        - `required` - This indicates that the processing entity ****MUST****
+          limit submitted fields to those listed in the `fields` array (if
+          present). Processing entities are not required to implement support
+          for this value, but they ****MUST**** understand this value
+          sufficiently to return nothing (or cease the interation) if they
+          do not implement it.
+        - `preferred` - This indicates that the processing entity ****SHOULD****
+          limit submitted fields to those listed in the `fields` array (if
+          present).
 
-
+      Omission of the `limit_disclosure` property indicates the processing
+      entity ****MAY**** submit a response that contains more than the data
+      described in the `fields` array.
 The processing entity ****MAY**** submit a response that contains more than the
 data described in the `fields` array, unless otherwise specified by a [[ref:Feature]].
 
@@ -868,31 +881,12 @@ processing-related rules above:
       or less than the value of the `max` property.
 
 
-## Data Minimization Feature
+## ?? Feature
 
 The Data Minimization [[ref:Feature]] introduces properties enabling [[ref:Verifier]]
 to request that processing entities minimize returned data, by limiting
 submitted fields to those requested or applying a predicate and returning the
 result.
-
-### Requiring Limited Disclosure
-
-The Data Minimization [[ref:Feature]] extends the [[ref:Input Descriptor Object]] 
-`constraints` object to add a `limit_disclosure` property.
-
-When using this [[ref:Feature]], the _constraints object_ ****MAY**** contain a
-`limit_disclosure` property. If present, its value ****MUST**** be one of the
- following strings:
-- `preferred` - This indicates that the processing entity ****SHOULD****
-  limit submitted fields to those listed in the `fields` array (if
-  present).
-- `required` - This indicates that the processing entity ****MUST****
-  limit submitted fields to those listed in the `fields` array (if
-  present).
-
-Omission of the `limit_disclosure` property indicates the processing
-entity ****MAY**** submit a response that contains more than the data
-described in the `fields` array.
 
 ### Applying a predicate
 
@@ -1029,9 +1023,9 @@ operation, as follows:
 At this time, additional predicate operations are not supported.
 
 
-## Additional Constraint Feature
+## Relational Constraints Feature
 
-The Additional Constraints [[ref:Feature]] extends the [[ref:Input Descriptor Object]]
+The Relational Constraints [[ref:Feature]] extends the [[ref:Input Descriptor Object]]
 `constraints` object with additional properties.
 
 When using this [[ref:Feature]]:
@@ -1121,6 +1115,9 @@ When using this [[ref:Feature]]:
   `same_subject` property, [[ref:Verifier]] would be able to require that
   the [[Ref:Subject]] of the street address attribute [[ref:Claim]] is the
   same as the [[Ref:Subject]] of the name attribute.
+
+
+## Credential Status Constraints Feature
 
 - The _constraints object_ ****MAY**** contain a `statuses` property. If
 present, its value ****MUST**** be an object that includes one or more of
