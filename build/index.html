@@ -439,14 +439,15 @@ constrain submission of a single input to a subset of formats or algorithms.</li
 property. If present, its value <strong><strong>MUST</strong></strong> be an object composed as
 follows, unless otherwise specified by a <a class="term-reference" href="#term:feature">Feature</a>:
 <ul>
-<li>The <em>constraints object</em> <strong><strong>MAY</strong></strong> contain a <code>fields</code> property. Fields
+<li>
+<p>The <em>constraints object</em> <strong><strong>MAY</strong></strong> contain a <code>fields</code> property. Fields
 <strong><strong>SHALL</strong></strong> be processed forward from 0-index, so if a <a class="term-reference" href="#term:verifier">Verifier</a>
 desires to reduce processing by checking the most defining characteristics
 of a credential (e.g the type or schema of a credential) implementers
 <strong><strong>SHOULD</strong></strong> order these field checks before all others to ensure
 earliest termination of evaluation. If the <code>fields</code> property is present,
 its value <strong><strong>MUST</strong></strong> be an array of objects composed as follows, unless
-otherwise specified by a faeture:
+otherwise specified by a faeture:</p>
 <ul>
 <li>The <em>fields object</em> <strong><strong>MUST</strong></strong> contain a <code>path</code> property. The value
 of this property <strong><strong>MUST</strong></strong> be an array of one or more
@@ -478,11 +479,29 @@ used to filter against the values returned from evaluation of the
 expressions in the <code>path</code> array.</li>
 </ul>
 </li>
+<li>
+<p>The <em>constraints object</em> <strong><strong>MAY</strong></strong> contain a <code>limit_disclosure</code>
+property. If present, its value <strong><strong>MUST</strong></strong> be one of the following strings:</p>
+<ul>
+<li><code>required</code> - This indicates that the processing entity <strong><strong>MUST</strong></strong>
+limit submitted fields to those listed in the <code>fields</code> array (if
+present). Processing entities are not required to implement support
+for this value, but they <strong><strong>MUST</strong></strong> understand this value
+sufficiently to return nothing (or cease the interation) if they
+do not implement it.</li>
+<li><code>preferred</code> - This indicates that the processing entity <strong><strong>SHOULD</strong></strong>
+limit submitted fields to those listed in the <code>fields</code> array (if
+present).</li>
+</ul>
+<p>Omission of the <code>limit_disclosure</code> property indicates the processing
+entity <strong><strong>MAY</strong></strong> submit a response that contains more than the data
+described in the <code>fields</code> array.
+The processing entity <strong><strong>MAY</strong></strong> submit a response that contains more than the
+data described in the <code>fields</code> array, unless otherwise specified by a <a class="term-reference" href="#term:feature">Feature</a>.</p>
+</li>
 </ul>
 </li>
 </ul>
-<p>The processing entity <strong><strong>MAY</strong></strong> submit a response that contains more than the
-data described in the <code>fields</code> array, unless otherwise specified by a <a class="term-reference" href="#term:feature">Feature</a>.</p>
 <h3 id="presentation-request"><a class="toc-anchor" href="#presentation-request" >§</a> Presentation Request</h3>
 <p>A <a class="term-reference" href="#term:presentation-request">Presentation Request</a> is any transport mechanism used to send a
 <a class="term-reference" href="#term:presentation-definition">Presentation Definition</a> from a <a class="term-reference" href="#term:verifier">Verifier</a> to a <a class="term-reference" href="#term:holder">Holder</a>. A
@@ -1449,28 +1468,11 @@ or less than the value of the <code>max</code> property.</li>
 </ul>
 </li>
 </ul>
-<h2 id="data-minimization-feature"><a class="toc-anchor" href="#data-minimization-feature" >§</a> Data Minimization Feature</h2>
+<h2 id="feature"><a class="toc-anchor" href="#feature" >§</a> ?? Feature</h2>
 <p>The Data Minimization <a class="term-reference" href="#term:feature">Feature</a> introduces properties enabling <a class="term-reference" href="#term:verifier">Verifier</a>
 to request that processing entities minimize returned data, by limiting
 submitted fields to those requested or applying a predicate and returning the
 result.</p>
-<h3 id="requiring-limited-disclosure"><a class="toc-anchor" href="#requiring-limited-disclosure" >§</a> Requiring Limited Disclosure</h3>
-<p>The Data Minimization <a class="term-reference" href="#term:feature">Feature</a> extends the <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a>
-<code>constraints</code> object to add a <code>limit_disclosure</code> property.</p>
-<p>When using this <a class="term-reference" href="#term:feature">Feature</a>, the <em>constraints object</em> <strong><strong>MAY</strong></strong> contain a
-<code>limit_disclosure</code> property. If present, its value <strong><strong>MUST</strong></strong> be one of the
-following strings:</p>
-<ul>
-<li><code>preferred</code> - This indicates that the processing entity <strong><strong>SHOULD</strong></strong>
-limit submitted fields to those listed in the <code>fields</code> array (if
-present).</li>
-<li><code>required</code> - This indicates that the processing entity <strong><strong>MUST</strong></strong>
-limit submitted fields to those listed in the <code>fields</code> array (if
-present).</li>
-</ul>
-<p>Omission of the <code>limit_disclosure</code> property indicates the processing
-entity <strong><strong>MAY</strong></strong> submit a response that contains more than the data
-described in the <code>fields</code> array.</p>
 <h3 id="applying-a-predicate"><a class="toc-anchor" href="#applying-a-predicate" >§</a> Applying a predicate</h3>
 <p>The data minimization <a class="term-reference" href="#term:feature">Feature</a> extends the <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a>
 <code>constraints.fields</code> object to add a <code>predicate</code> property.</p>
@@ -1601,8 +1603,8 @@ as the value of the <code>filter</code> object:<pre class="language-json"><code 
 </li>
 </ul>
 <p>At this time, additional predicate operations are not supported.</p>
-<h2 id="additional-constraint-feature"><a class="toc-anchor" href="#additional-constraint-feature" >§</a> Additional Constraint Feature</h2>
-<p>The Additional Constraints <a class="term-reference" href="#term:feature">Feature</a> extends the <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a>
+<h2 id="relational-constraints-feature"><a class="toc-anchor" href="#relational-constraints-feature" >§</a> Relational Constraints Feature</h2>
+<p>The Relational Constraints <a class="term-reference" href="#term:feature">Feature</a> extends the <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a>
 <code>constraints</code> object with additional properties.</p>
 <p>When using this <a class="term-reference" href="#term:feature">Feature</a>:</p>
 <ul>
@@ -1705,10 +1707,12 @@ for a name from a birth certificate <a class="term-reference" href="#term:claim"
 the <a class="term-reference" href="#term:subject">Subject</a> of the street address attribute <a class="term-reference" href="#term:claim">Claim</a> is the
 same as the <a class="term-reference" href="#term:subject">Subject</a> of the name attribute.</p>
 </li>
-<li>
-<p>The <em>constraints object</em> <strong><strong>MAY</strong></strong> contain a <code>statuses</code> property. If
+</ul>
+<h2 id="credential-status-constraints-feature"><a class="toc-anchor" href="#credential-status-constraints-feature" >§</a> Credential Status Constraints Feature</h2>
+<ul>
+<li>The <em>constraints object</em> <strong><strong>MAY</strong></strong> contain a <code>statuses</code> property. If
 present, its value <strong><strong>MUST</strong></strong> be an object that includes one or more of
-the following status properties:</p>
+the following status properties:
 <ul>
 <li><code>active</code> - A credential is active if it is not revoked, expired,
 suspended, or in any type of deactivated state.</li>
@@ -2986,13 +2990,13 @@ in the IANA JSON Web Token <a class="term-reference" href="#term:claims">Claims<
 </li>
 </ul>
 </li>
-<li><a href="#data-minimization-feature" >Data Minimization Feature</a>
+<li><a href="#feature" >?? Feature</a>
 <ul>
-<li><a href="#requiring-limited-disclosure" >Requiring Limited Disclosure</a></li>
 <li><a href="#applying-a-predicate" >Applying a predicate</a></li>
 </ul>
 </li>
-<li><a href="#additional-constraint-feature" >Additional Constraint Feature</a></li>
+<li><a href="#relational-constraints-feature" >Relational Constraints Feature</a></li>
+<li><a href="#credential-status-constraints-feature" >Credential Status Constraints Feature</a></li>
 <li><a href="#json-ld-framing-feature" >JSON-LD Framing Feature</a></li>
 <li><a href="#input-evaluation" >Input Evaluation</a>
 <ul>
