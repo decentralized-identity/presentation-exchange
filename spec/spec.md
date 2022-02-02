@@ -188,16 +188,15 @@ an interaction.
 ## Structure of this Document
 
 Objects are defined such that they may be used on their own or extended through 
-[[ref:Feature]] defined subsequently in the spec. A [[ref:Feature]] must 
+[[ref:Features]] defined subsequently in the spec. A [[ref:Feature]] must 
 declare if it has dependencies on other [[ref:Features]].
 
 A [[ref:Feature]] enables [[ref:Verifiers]] to express, and processing entities
 to support, extended functionality (relative to the base objects) by defining
 one or more properties on one or more objects. 
 
-::: todo
-Need warnings about impact of processing entities lacking Feature support.
-:::
+Processing entities are not required to support [[ref:Features]] on top of the 
+base [[ref:Feature]].
 
 ##  Presentation Definition
 
@@ -378,8 +377,8 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
           limit submitted fields to those listed in the `fields` array (if
           present). Processing entities are not required to implement support
           for this value, but they ****MUST**** understand this value
-          sufficiently to return nothing (or cease the interation) if they
-          do not implement it.
+          sufficiently to return nothing (or cease the interaction with the 
+          [[ref:Verifier]]) if they do not implement it.
         - `preferred` - This indicates that the processing entity ****SHOULD****
           limit submitted fields to those listed in the `fields` array (if
           present).
@@ -387,8 +386,6 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
       Omission of the `limit_disclosure` property indicates the processing
       entity ****MAY**** submit a response that contains more than the data
       described in the `fields` array.
-The processing entity ****MAY**** submit a response that contains more than the
-data described in the `fields` array, unless otherwise specified by a [[ref:Feature]].
 
 
 ### Presentation Request
@@ -881,16 +878,14 @@ processing-related rules above:
       or less than the value of the `max` property.
 
 
-## ?? Feature
+## Predicate Feature
 
-The Data Minimization [[ref:Feature]] introduces properties enabling [[ref:Verifier]]
-to request that processing entities minimize returned data, by limiting
-submitted fields to those requested or applying a predicate and returning the
-result.
+The predicate [[ref:Feature]] introduces properties enabling [[ref:Verifier]]
+to request that processing entities apply a predicate and return the result.
 
 ### Applying a predicate
 
-The data minimization [[ref:Feature]] extends the [[ref:Input Descriptor Object]]
+The predicate [[ref:Feature]] extends the [[ref:Input Descriptor Object]]
 `constraints.fields` object to add a `predicate` property.
 
 When using this [[ref:Feature]], the _fields object_ ****MAY**** contain a 
@@ -1023,9 +1018,9 @@ operation, as follows:
 At this time, additional predicate operations are not supported.
 
 
-## Relational Constraints Feature
+## Relational Constraint Feature
 
-The Relational Constraints [[ref:Feature]] extends the [[ref:Input Descriptor Object]]
+The Relational Constraint [[ref:Feature]] extends the [[ref:Input Descriptor Object]]
 `constraints` object with additional properties.
 
 When using this [[ref:Feature]]:
@@ -1117,7 +1112,7 @@ When using this [[ref:Feature]]:
   same as the [[Ref:Subject]] of the name attribute.
 
 
-## Credential Status Constraints Feature
+## Credential Status Constraint Feature
 
 - The _constraints object_ ****MAY**** contain a `statuses` property. If
 present, its value ****MUST**** be an object that includes one or more of
@@ -1209,7 +1204,7 @@ For each candidate input:
               [JSON Schema](https://json-schema.org/specification.html)
               descriptor specified in `filter`, then:
               ::: note  
-              **Data Minimization Feature Only**
+              **Predicate Feature Only**
 
               If the _fields object_ has a `predicate`, set _Field Query Result_ to
               the boolean value resulting from evaluating the _Field Query Result_ against
@@ -1230,9 +1225,6 @@ For each candidate input:
       relative reference to the `group` values the input is designated for.
       :::
 
- ::: note 
- **Additional Constraints Feature Only**
-
  3. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `limit_disclosure` property set to the string value
      `required`, ensure that any subsequent submission of data in relation to the
@@ -1242,6 +1234,10 @@ For each candidate input:
      data from the [[ref:Claim]]. For example, a [[ref:Verifier]] may simply
      want to know a [[ref:Holder]] has a valid, signed [[ref:Claims]] of a
      particular type, without disclosing any of the data it contains.
+
+ ::: note 
+ **Relational Constraint Feature Only**
+
   4. If the `constraints` property of the [[ref:Input Descriptor]] is present,
      and it contains a `subject_is_issuer` property set to the value `required`,
      ensure that any submission of data in relation to the candidate input is

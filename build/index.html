@@ -202,13 +202,13 @@ an interaction.</dd>
 </dl>
 <h2 id="structure-of-this-document"><a class="toc-anchor" href="#structure-of-this-document" >§</a> Structure of this Document</h2>
 <p>Objects are defined such that they may be used on their own or extended through
-<a class="term-reference" href="#term:feature">Feature</a> defined subsequently in the spec. A <a class="term-reference" href="#term:feature">Feature</a> must
+<a class="term-reference" href="#term:features">Features</a> defined subsequently in the spec. A <a class="term-reference" href="#term:feature">Feature</a> must
 declare if it has dependencies on other <a class="term-reference" href="#term:features">Features</a>.</p>
 <p>A <a class="term-reference" href="#term:feature">Feature</a> enables <a class="term-reference" href="#term:verifiers">Verifiers</a> to express, and processing entities
 to support, extended functionality (relative to the base objects) by defining
 one or more properties on one or more objects.</p>
-<div id="todo-1" class="notice todo"><a class="notice-link" href="#todo-1">TODO</a><p>Need warnings about impact of processing entities lacking Feature support.</p>
-</div>
+<p>Processing entities are not required to support <a class="term-reference" href="#term:features">Features</a> on top of the
+base <a class="term-reference" href="#term:feature">Feature</a>.</p>
 <h2 id="presentation-definition"><a class="toc-anchor" href="#presentation-definition" >§</a> Presentation Definition</h2>
 <p><a class="term-reference" href="#term:presentation-definitions">Presentation Definitions</a> are objects that articulate what proofs a
 <a class="term-reference" href="#term:verifier">Verifier</a> requires. These help the <a class="term-reference" href="#term:verifier">Verifier</a> to decide how or
@@ -487,17 +487,15 @@ property. If present, its value <strong><strong>MUST</strong></strong> be one of
 limit submitted fields to those listed in the <code>fields</code> array (if
 present). Processing entities are not required to implement support
 for this value, but they <strong><strong>MUST</strong></strong> understand this value
-sufficiently to return nothing (or cease the interation) if they
-do not implement it.</li>
+sufficiently to return nothing (or cease the interaction with the
+<a class="term-reference" href="#term:verifier">Verifier</a>) if they do not implement it.</li>
 <li><code>preferred</code> - This indicates that the processing entity <strong><strong>SHOULD</strong></strong>
 limit submitted fields to those listed in the <code>fields</code> array (if
 present).</li>
 </ul>
 <p>Omission of the <code>limit_disclosure</code> property indicates the processing
 entity <strong><strong>MAY</strong></strong> submit a response that contains more than the data
-described in the <code>fields</code> array.
-The processing entity <strong><strong>MAY</strong></strong> submit a response that contains more than the
-data described in the <code>fields</code> array, unless otherwise specified by a <a class="term-reference" href="#term:feature">Feature</a>.</p>
+described in the <code>fields</code> array.</p>
 </li>
 </ul>
 </li>
@@ -1468,13 +1466,11 @@ or less than the value of the <code>max</code> property.</li>
 </ul>
 </li>
 </ul>
-<h2 id="feature"><a class="toc-anchor" href="#feature" >§</a> ?? Feature</h2>
-<p>The Data Minimization <a class="term-reference" href="#term:feature">Feature</a> introduces properties enabling <a class="term-reference" href="#term:verifier">Verifier</a>
-to request that processing entities minimize returned data, by limiting
-submitted fields to those requested or applying a predicate and returning the
-result.</p>
+<h2 id="predicate-feature"><a class="toc-anchor" href="#predicate-feature" >§</a> Predicate Feature</h2>
+<p>The predicate <a class="term-reference" href="#term:feature">Feature</a> introduces properties enabling <a class="term-reference" href="#term:verifier">Verifier</a>
+to request that processing entities apply a predicate and return the result.</p>
 <h3 id="applying-a-predicate"><a class="toc-anchor" href="#applying-a-predicate" >§</a> Applying a predicate</h3>
-<p>The data minimization <a class="term-reference" href="#term:feature">Feature</a> extends the <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a>
+<p>The predicate <a class="term-reference" href="#term:feature">Feature</a> extends the <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a>
 <code>constraints.fields</code> object to add a <code>predicate</code> property.</p>
 <p>When using this <a class="term-reference" href="#term:feature">Feature</a>, the <em>fields object</em> <strong><strong>MAY</strong></strong> contain a
 <a href="#predicate-property" ><code>predicate</code> property</a>. If the <code>predicate</code> property is
@@ -1603,8 +1599,8 @@ as the value of the <code>filter</code> object:<pre class="language-json"><code 
 </li>
 </ul>
 <p>At this time, additional predicate operations are not supported.</p>
-<h2 id="relational-constraints-feature"><a class="toc-anchor" href="#relational-constraints-feature" >§</a> Relational Constraints Feature</h2>
-<p>The Relational Constraints <a class="term-reference" href="#term:feature">Feature</a> extends the <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a>
+<h2 id="relational-constraint-feature"><a class="toc-anchor" href="#relational-constraint-feature" >§</a> Relational Constraint Feature</h2>
+<p>The Relational Constraint <a class="term-reference" href="#term:feature">Feature</a> extends the <a class="term-reference" href="#term:input-descriptor-object">Input Descriptor Object</a>
 <code>constraints</code> object with additional properties.</p>
 <p>When using this <a class="term-reference" href="#term:feature">Feature</a>:</p>
 <ul>
@@ -1708,7 +1704,7 @@ the <a class="term-reference" href="#term:subject">Subject</a> of the street add
 same as the <a class="term-reference" href="#term:subject">Subject</a> of the name attribute.</p>
 </li>
 </ul>
-<h2 id="credential-status-constraints-feature"><a class="toc-anchor" href="#credential-status-constraints-feature" >§</a> Credential Status Constraints Feature</h2>
+<h2 id="credential-status-constraint-feature"><a class="toc-anchor" href="#credential-status-constraint-feature" >§</a> Credential Status Constraint Feature</h2>
 <ul>
 <li>The <em>constraints object</em> <strong><strong>MAY</strong></strong> contain a <code>statuses</code> property. If
 present, its value <strong><strong>MUST</strong></strong> be an object that includes one or more of
@@ -1803,7 +1799,7 @@ elements are exhausted:</p>
 validates against the
 <a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a>
 descriptor specified in <code>filter</code>, then:</p>
-<div id="" class="notice note"><a class="notice-link" href="#">NOTE</a><p><strong>Data Minimization Feature Only</strong></p>
+<div id="" class="notice note"><a class="notice-link" href="#">NOTE</a><p><strong>Predicate Feature Only</strong></p>
 <p>If the <em>fields object</em> has a <code>predicate</code>, set <em>Field Query Result</em> to
 the boolean value resulting from evaluating the <em>Field Query Result</em> against
 the <a path-0="json-schema.org"path-1="specification.html"href="https://json-schema.org/specification.html" >JSON Schema</a> descriptor value
@@ -1831,10 +1827,8 @@ input as a match for use in a <a class="term-reference" href="#term:presentation
 relative reference to the <code>group</code> values the input is designated for.</p>
 </div>
 </li>
-</ol>
-<div id="note-7" class="notice note"><a class="notice-link" href="#note-7">NOTE</a><p><strong>Additional Constraints Feature Only</strong></p>
-<ol start="3">
-<li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present,
+<li>
+<p>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present,
 and it contains a <code>limit_disclosure</code> property set to the string value
 <code>required</code>, ensure that any subsequent submission of data in relation to the
 candidate input is limited to the entries specified in the <code>fields</code>
@@ -1842,7 +1836,11 @@ property. If the <code>fields</code> property <strong><strong>is not</strong></s
 <em>field objects</em>, submission <strong><strong>SHOULD NOT</strong></strong> include any <a class="term-reference" href="#term:claim">Claim</a>
 data from the <a class="term-reference" href="#term:claim">Claim</a>. For example, a <a class="term-reference" href="#term:verifier">Verifier</a> may simply
 want to know a <a class="term-reference" href="#term:holder">Holder</a> has a valid, signed <a class="term-reference" href="#term:claims">Claims</a> of a
-particular type, without disclosing any of the data it contains.</li>
+particular type, without disclosing any of the data it contains.</p>
+</li>
+</ol>
+<div id="note-7" class="notice note"><a class="notice-link" href="#note-7">NOTE</a><p><strong>Relational Constraints Feature Only</strong></p>
+<ol start="4">
 <li>If the <code>constraints</code> property of the <a class="term-reference" href="#term:input-descriptor">Input Descriptor</a> is present,
 and it contains a <code>subject_is_issuer</code> property set to the value <code>required</code>,
 ensure that any submission of data in relation to the candidate input is
@@ -2990,13 +2988,13 @@ in the IANA JSON Web Token <a class="term-reference" href="#term:claims">Claims<
 </li>
 </ul>
 </li>
-<li><a href="#feature" >?? Feature</a>
+<li><a href="#predicate-feature" >Predicate Feature</a>
 <ul>
 <li><a href="#applying-a-predicate" >Applying a predicate</a></li>
 </ul>
 </li>
-<li><a href="#relational-constraints-feature" >Relational Constraints Feature</a></li>
-<li><a href="#credential-status-constraints-feature" >Credential Status Constraints Feature</a></li>
+<li><a href="#relational-constraint-feature" >Relational Constraint Feature</a></li>
+<li><a href="#credential-status-constraint-feature" >Credential Status Constraint Feature</a></li>
 <li><a href="#json-ld-framing-feature" >JSON-LD Framing Feature</a></li>
 <li><a href="#input-evaluation" >Input Evaluation</a>
 <ul>
