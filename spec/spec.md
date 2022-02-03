@@ -96,7 +96,7 @@ to transport a [[ref:Presentation Submission]]. See
 [Embed Targets](#embed-targets).
 
 [[def:Feature, Features]]
-~ Features enables [[ref:Verifiers]] to express, and processing entities to 
+~ Features enable [[ref:Verifiers]] to express, and processing entities to 
 support, extended functionality (relative to the base objects) by defining
 one or more properties on one or more objects. 
 
