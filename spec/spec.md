@@ -186,7 +186,8 @@ nested. See [Submission Requirement Rules](#submission-requirement-rules).
 an interaction.
 
 ## Structure of this Document
-
+This document has two primary sections: In the first, there is a model for defining the set of information a relying party would like to have presented, and in the second, there is a model for showing that the submitted presentation meets the related definition. 
+Each of these sections begins by defining a base set of properties considered essential for core uses of the model, then describes additional feature sets that expand upon the base to allow more complex uses.
 Objects are defined such that they may be used on their own or extended through 
 [[ref:Features]] defined subsequently in the spec. A [[ref:Feature]] must 
 declare if it has dependencies on other [[ref:Features]].
