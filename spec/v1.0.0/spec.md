@@ -12,6 +12,7 @@ Presentation Exchange v1.0.0
 ~ [Martin Riedel](https://www.linkedin.com/in/rado0x54/) (Consensys Mesh)
 
 **Contributors:**
+~ [Daniel McGrogan](www.linkedin.com/in/dtmcgrogan) (Workday)
 ~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
 ~ [Orie Steele](https://www.linkedin.com/in/or13b/) (Transmute)
 ~ [Wayne Chang](https://www.linkedin.com/in/waynebuilds/) (Spruce)
