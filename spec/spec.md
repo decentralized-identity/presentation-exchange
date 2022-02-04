@@ -17,6 +17,7 @@ Presentation Exchange 2.0.0
 ~ [Kim Hamilton Duffy](https://www.linkedin.com/in/kimdhamilton/) (Centre Consortium)
 
 **Contributors:**
+~ [Daniel McGrogan](www.linkedin.com/in/dtmcgrogan) (Workday)
 ~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
 ~ [Orie Steele](https://www.linkedin.com/in/or13b/) (Transmute)
 ~ [Wayne Chang](https://www.linkedin.com/in/waynebuilds/) (Spruce)
