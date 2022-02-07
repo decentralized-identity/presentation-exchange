@@ -21,6 +21,7 @@ Presentation Exchange 2.0.0
 ~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
 ~ [Orie Steele](https://www.linkedin.com/in/or13b/) (Transmute)
 ~ [Wayne Chang](https://www.linkedin.com/in/waynebuilds/) (Spruce)
+~ [David Chadwick](https://www.linkedin.com/in/davidwchadwick/) (Crossword Cybersecurity)
 
 **Participate:**
 ~ [GitHub repo](https://github.com/decentralized-identity/presentation-exchange)
