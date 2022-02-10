@@ -92,5 +92,27 @@ describe('Presentation Definition', function () {
       assert.equal(null, validate.errors);
       assert.equal(true, valid);
     });
+
+    it('should validate the Filter By Credential Type example using JSON Schema Draft 7', function () {
+      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const data = JSON.parse(fs.readFileSync(__dirname + '/pd_filter.json'));
+      const jv = new ajv({allErrors: true});
+      const validate = jv.compile(schema);
+      const valid = validate(data);
+
+      assert.equal(null, validate.errors);
+      assert.equal(true, valid);
+    });
+
+    it('should validate the Two Filters example object using JSON Schema Draft 7', function () {
+      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const data = JSON.parse(fs.readFileSync(__dirname + '/pd_filter2.json'));
+      const jv = new ajv({allErrors: true});
+      const validate = jv.compile(schema);
+      const valid = validate(data);
+
+      assert.equal(null, validate.errors);
+      assert.equal(true, valid);
+    });
   });
 });
