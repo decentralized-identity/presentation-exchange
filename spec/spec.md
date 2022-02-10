@@ -195,10 +195,9 @@ A [[ref:Feature]] enables [[ref:Verifiers]] to express, and processing entities
 to support, extended functionality (relative to the base objects) by defining
 one or more properties on one or more objects. 
 
-Processing entities are not required to support [[ref:Features]] on top of the 
-base [[ref:Feature]].
+Processing entities are not required to support [[ref:Features]].
 
-##  Presentation Definition
+## Presentation Definition
 
 [[ref:Presentation Definitions]] are objects that articulate what proofs a
 [[ref:Verifier]] requires. These help the [[ref:Verifier]] to decide how or
@@ -576,43 +575,10 @@ DIDComms   | `$.presentations~attach.data.json`
 VP         | top-level
 CHAPI      | `$.data`
 
-## Claim Format Designations
 
-Within the _Presentation Exchange_ specification, there are numerous sections
-where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] variants
-they support and are submitting. The following are the normalized references
-used within the specification:
+## Features
 
-- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7519]]
-  that will be submitted in the form of a JWT encoded string. Expression of
-  supported algorithms in relation to this format ****MUST**** be conveyed using
-  an `alg` property paired with values that are identifiers from the JSON Web
-  Algorithms registry [[spec:RFC7518]].
-- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7519]]
-  that will be submitted in the form of a JWT encoded string, and the body of
-  the decoded JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7519]]
-  section of the
-  [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token).
-  Expression of supported algorithms in relation to these formats ****MUST****
-  be conveyed using an `alg` property paired with values that are identifiers
-  from the JSON Web Algorithms registry [[spec:RFC7518]].
-- `ldp` - the format is a Linked Data Proof [[spec:Linked Data Proofs]] that will 
-  be submitted as an object.
-  Expression of supported algorithms in relation to these formats ****MUST****
-  be conveyed using a `proof_type` property with values that are identifiers
-  from the
-  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
-- `ldp_vc`, `ldp_vp` - Verifiable Credential Linked Data Proof and Verifiable Presentation Linked
-  Data Proof formats. These are descriptions of formats normatively defined in the W3C Verifiable
-  Credentials specification [[spec:VC-DATA MODEL]], and will be submitted in the form of a JSON
-  object. 
-  Expression of supported algorithms in relation to these formats ****MUST****
-  be conveyed using a `proof_type` property paired with values that are
-  identifiers from the
-  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
-
-
-## Submission Requirement Feature
+### Submission Requirement Feature
 
 The Submission Requirement Feature introduces extensions enabling
 [[ref:Verifiers]] to express what combinations of inputs must be submitted to
@@ -649,7 +615,7 @@ issuance, allowing entry, accepting an application).
 
 </tab-panels>
 
-### Presentation Definition Extensions
+#### Presentation Definition Extensions
 
 The Submission Requirement [[ref:Feature]] extends the [[ref:Presentation Definition]] 
 object to add a `submission_requirements` property.
@@ -666,7 +632,7 @@ When using this [[ref:Feature]]:
   in which all [[ref:Input Descriptors]] are required.
 
 
-### Input Descriptor Extensions
+#### Input Descriptor Extensions
 
 <tab-panels selected-index="0">
 
@@ -705,7 +671,7 @@ When using this [[ref:Feature]]:
   present, its value ****MUST**** match one of the grouping strings listed in
   the `from` values of a [[ref:Submission Requirement Rule]] object.
 
-### Submission Requirements
+#### Submission Requirements
 
 [[ref:Presentation Definitions]] ****MAY**** include
 [[ref:Submission Requirements]] which define what combinations of inputs a
@@ -732,7 +698,7 @@ all `input_descriptors` ****MUST**** be grouped. Any unused
 ```
 :::
 
-#### Submission Requirement Objects
+##### Submission Requirement Objects
 
 [[ref:Submission Requirement Objects]] are JSON objects constructed as follows:
 
@@ -760,7 +726,7 @@ all `input_descriptors` ****MUST**** be grouped. Any unused
   properties as required by certain [[ref:Submission Requirement Rules]]. For
   example, `count`, `min`, and `max` may be present with a `pick` rule.
 
-#### Submission Requirement Rules
+##### Submission Requirement Rules
 
 [[ref:Submission Requirement Rules]] are used within
 [[ref:Submission Requirement Objects]] to describe the specific combinatorial
@@ -846,7 +812,7 @@ from group `"A"` or two members from group `"B"`:
 ```
 :::
 
-#### Property Values and Evaluation
+##### Property Values and Evaluation
 
 The following property value and evaluation guidelines summarize many of the
 processing-related rules above:
@@ -878,12 +844,12 @@ processing-related rules above:
       or less than the value of the `max` property.
 
 
-## Predicate Feature
+### Predicate Feature
 
 The predicate [[ref:Feature]] introduces properties enabling [[ref:Verifier]]
 to request that processing entities apply a predicate and return the result.
 
-### Applying a predicate
+#### Applying a predicate
 
 The predicate [[ref:Feature]] extends the [[ref:Input Descriptor Object]]
 `constraints.fields` object to add a `predicate` property.
@@ -1018,7 +984,7 @@ operation, as follows:
 At this time, additional predicate operations are not supported.
 
 
-## Relational Constraint Feature
+### Relational Constraint Feature
 
 The Relational Constraint [[ref:Feature]] extends the [[ref:Input Descriptor Object]]
 `constraints` object with additional properties.
@@ -1112,7 +1078,7 @@ When using this [[ref:Feature]]:
   same as the [[Ref:Subject]] of the name attribute.
 
 
-## Credential Status Constraint Feature
+### Credential Status Constraint Feature
 
 - The _constraints object_ ****MAY**** contain a `statuses` property. If
 present, its value ****MUST**** be an object that includes one or more of
@@ -1157,7 +1123,7 @@ The values of all status properties are objects, composed as follows:
   :::
 
 
-## JSON-LD Framing Feature
+### JSON-LD Framing Feature
 
 The JSON-LD Framing [[ref:Feature]] extends [ref:Presentation Definition]] to support
 extended with the JSON-LD document framing.
@@ -1362,6 +1328,41 @@ There are a number of mechanisms for safely embedding biometric information in a
 [[ref:Claim]] such that only a person who can confirm the biometric may present
 the [[ref:Claim]].
 
+
+## Claim Format Designations
+
+Within the _Presentation Exchange_ specification, there are numerous sections
+where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] variants
+they support and are submitting. The following are the normalized references
+used within the specification:
+
+- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7519]]
+  that will be submitted in the form of a JWT encoded string. Expression of
+  supported algorithms in relation to this format ****MUST**** be conveyed using
+  an `alg` property paired with values that are identifiers from the JSON Web
+  Algorithms registry [[spec:RFC7518]].
+- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7519]]
+  that will be submitted in the form of a JWT encoded string, and the body of
+  the decoded JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7519]]
+  section of the
+  [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token).
+  Expression of supported algorithms in relation to these formats ****MUST****
+  be conveyed using an `alg` property paired with values that are identifiers
+  from the JSON Web Algorithms registry [[spec:RFC7518]].
+- `ldp` - the format is a Linked Data Proof [[spec:Linked Data Proofs]] that will 
+  be submitted as an object.
+  Expression of supported algorithms in relation to these formats ****MUST****
+  be conveyed using a `proof_type` property with values that are identifiers
+  from the
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+- `ldp_vc`, `ldp_vp` - Verifiable Credential Linked Data Proof and Verifiable Presentation Linked
+  Data Proof formats. These are descriptions of formats normatively defined in the W3C Verifiable
+  Credentials specification [[spec:VC-DATA MODEL]], and will be submitted in the form of a JSON
+  object. 
+  Expression of supported algorithms in relation to these formats ****MUST****
+  be conveyed using a `proof_type` property paired with values that are
+  identifiers from the
+  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
 
 ## JSON Schemas
 
