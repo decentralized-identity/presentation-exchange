@@ -156,7 +156,7 @@ is outside the scope of this specification. See
 [Presentation Request](#presentation-request).
 
 [[def:Presentation Submission]]
-~ Presentation Submissions are objects embedded within target claim negotiation
+~ Presentation Submissions are objects that ****MAY**** be embedded within target claim negotiation
 formats that unify the presentation of proofs to a [[ref:Verifier]] in
 accordance with the requirements a [[ref:Verifier]] specified in a
 [[ref:Presentation Definition]]. See
@@ -415,7 +415,7 @@ certain properties. Some of these are expressed below:
 
 ## Presentation Submission
 
-[[ref:Presentation Submissions]] are objects embedded within target
+[[ref:Presentation Submissions]] are objects that ****MAY**** be embedded within target
 [[ref:Claim]] negotiation formats that express how the inputs presented as
 proofs to a [[ref:Verifier]] are provided in accordance with the requirements
 specified in a [[ref:Presentation Definition]]. Embedded
@@ -560,14 +560,15 @@ _Input Descriptor Object_ also come from the same container.
 
 ### Embed Targets
 
-The following section details where the _Presentation Submission_ is to be
+The following section details where an embedded _Presentation Submission_
+, if present, ****SHOULD**** be
 embedded within a target data structure, as well as how to formulate the
 [JSONPath](https://goessner.net/articles/JsonPath/) expressions to select the
 [[ref:Claims]] within the target data structure.
 
 #### Embed Locations
 
-The following are the locations at which the `presentation_submission` object
+The following are the locations at which an embedded `presentation_submission` object
 ****MUST**** be embedded for known target formats. For any location besides
 the top level of the embed target, the location is described in JSONPath syntax.
 
