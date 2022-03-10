@@ -845,7 +845,7 @@ the inputs requested by the [[ref:Verifier]]. A conformant consumer of a
 validate whether or not its candidate inputs meet the requirements it describes:
 
 For each [[ref:Input Descriptor]] in the `input_descriptors` array of a
-[[ref:Presentation Definition]], a processing entity compares each
+[[ref:Presentation Definition]], a conformant consumer compares each
 candidate input (JWT, Verifiable Credential, etc.) it holds to determine whether
 there is a match.
 
