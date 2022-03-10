@@ -1139,14 +1139,14 @@ When using this [[ref:Feature]]:
 
 ## Input Evaluation
 
-A processing entity of a [[ref:Presentation Definition]] must filter inputs they
+A conformant consumer of a [[ref:Presentation Definition]] must filter inputs they
 hold (signed [[ref:Claims]], raw data, etc.) to determine whether they possess
-the inputs requested by the [[ref:Verifier]]. A processing entity of a
-[[ref:Presentation Definition]] ****SHOULD**** use the following process to
+the inputs requested by the [[ref:Verifier]]. A conformant consumer of a
+[[ref:Presentation Definition]] ****MUST**** use the following process to
 validate whether or not its candidate inputs meet the requirements it describes:
 
 For each [[ref:Input Descriptor]] in the `input_descriptors` array of a
-[[ref:Presentation Definition]], a processing entity ****SHOULD**** compare each
+[[ref:Presentation Definition]], a conformant consumer compares each
 candidate input (JWT, Verifiable Credential, etc.) it holds to determine whether
 there is a match.
 
