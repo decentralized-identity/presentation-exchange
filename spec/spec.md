@@ -279,6 +279,12 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
   `purpose` property. If present, its value ****MUST**** be a string that
   describes the purpose for which the [[ref:Presentation Definition]]'s inputs
   are being requested.
+- `presentation_submission_required` - The [[ref:Presentation Definition]] ****MAY**** 
+   contain a `presentation_submission_required` property. If present, its value 
+   ****MUST**** be null. This indicates that the [[ref:Presentation Submission]] must be
+   present in the result returned to the Verifier. If `presentation_submission_required`
+   is absent, the [[ref:Presentation Submission]] may be absent from the returned result
+   as the Verifier does not require it.
 - The [[ref:Presentation Definition]] ****MAY**** include a `format` property.
   Some envelope transport protocols may include the value of this property in
   other locations and use different property names (See the [Format Embed Locations](#)
@@ -415,10 +421,12 @@ certain properties. Some of these are expressed below:
 
 ## Presentation Submission
 
-[[ref:Presentation Submissions]] are objects embedded within target
-[[ref:Claim]] negotiation formats that express how the inputs presented as
+[[ref:Presentation Submissions]] are objects that ****MAY**** be embedded within target
+[[ref:Claim]] negotiation formats according to the setting of the 
+`presentation_submission_required` field of the [[ref:Presentation Definition]].
+[[ref:Presentation Submissions]] express how the inputs presented as
 proofs to a [[ref:Verifier]] are provided in accordance with the requirements
-specified in a [[ref:Presentation Definition]]. Embedded
+specified in a [[ref:Presentation Definition]]. If present, embedded
 [[ref:Presentation Submission]] objects ****MUST**** be located within target
 data format as the value of a `presentation_submission` property, which is
 composed and embedded as follows:
