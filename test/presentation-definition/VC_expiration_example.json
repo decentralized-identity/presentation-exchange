@@ -16,7 +16,7 @@
         "filter": {
           "type": "string",
           "format": "date-time",
-          "formatMinimum": "2020-12-31T23:59:59.000Z"
+          "minimum": "2020-12-31T23:59:59.000Z"
         }
       }
     ]

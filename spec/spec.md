@@ -11,14 +11,14 @@ Presentation Exchange 2.0.0
 
 <!-- -->
 **Editors:**
-~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Microsoft)
+~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Block)
 ~ [Brent Zundel](https://www.linkedin.com/in/bzundel/) (Evernym)
 ~ [Martin Riedel](https://www.linkedin.com/in/rado0x54/) (Consensys Mesh)
 ~ [Kim Hamilton Duffy](https://www.linkedin.com/in/kimdhamilton/) (Centre Consortium)
 
 **Contributors:**
 ~ [Daniel McGrogan](www.linkedin.com/in/dtmcgrogan) (Workday)
-~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Workday)
+~ [Gabe Cohen](https://www.linkedin.com/in/cohengabe/) (Block)
 ~ [Orie Steele](https://www.linkedin.com/in/or13b/) (Transmute)
 ~ [Wayne Chang](https://www.linkedin.com/in/waynebuilds/) (Spruce)
 ~ [David Chadwick](https://www.linkedin.com/in/davidwchadwick/) (Crossword Cybersecurity)
@@ -715,7 +715,7 @@ all `input_descriptors` ****MUST**** be grouped. Any unused
   `from_nested` properties are defined as follows:
     - `from` - The value of the `from` property ****MUST**** be a `group` string
       matching one of the `group` strings specified for one or more
-      [[ref:Input Descriptor Objects].
+      [[ref:Input Descriptor Objects]].
     - `from_nested` - The value of the `from_nested` property ****MUST**** be an
       array [[ref:Submission Requirement Objects]].
 - The [[ref:Submission Requirement Object]]  ****MAY**** contain a `name`
@@ -1128,12 +1128,12 @@ The values of all status properties are objects, composed as follows:
 
 ### JSON-LD Framing Feature
 
-The JSON-LD Framing [[ref:Feature]] extends [ref:Presentation Definition]] to support
+The JSON-LD Framing [[ref:Feature]] extends [[ref:Presentation Definition]] to support
 extended with the JSON-LD document framing.
 
 When using this [[ref:Feature]]:
 
-- `frame` - The [[ref:Presentation Definition]] ****MAY**** contain a `frame` ***
+- `frame` - The [[ref:Presentation Definition]] ****MAY**** contain a `frame`
   property. If present, its value ****MUST**** be a 
   [JSON LD Framing Document](https://w3c.github.io/json-ld-framing/) object.
 
@@ -1352,7 +1352,7 @@ used within the specification:
   Expression of supported algorithms in relation to these formats ****MUST****
   be conveyed using an `alg` property paired with values that are identifiers
   from the JSON Web Algorithms registry [[spec:RFC7518]].
-- `ldp` - the format is a Linked Data Proof [[spec:Linked Data Proofs]] that will 
+- `ldp` - the format is a Linked Data Proof [[ref:Linked Data Proofs]] that will 
   be submitted as an object.
   Expression of supported algorithms in relation to these formats ****MUST****
   be conveyed using a `proof_type` property with values that are identifiers
@@ -1476,6 +1476,9 @@ JSONPath                      | Description
 
 [[def: OIDC]]
 ~ [Open ID Connect](https://openid.net/specs/openid-connect-core-1_0.html). Jones, M., Bradley, J., and N. Sakimura. Status: Approved Specification
+
+[[def: Linked Data Proof, Linked Data Proofs]]
+~ [Data Integrity 1.0](https://w3c-ccg.github.io/data-integrity-spec/). Dave Longley, Manu Sporny. 2022-03. Status: Draft Community Group Report.
 
 [[spec]]
 
