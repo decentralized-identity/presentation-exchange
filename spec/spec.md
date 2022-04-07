@@ -373,6 +373,11 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
           used to filter against the values returned from evaluation of the
           [JSONPath](https://goessner.net/articles/JsonPath/) string
           expressions in the `path` array.
+          :::note IDO Filter
+          Remember a valid JSON Schema ****MAY**** contain [additional keywords](https://datatracker.ietf.org/doc/html/draft-handrews-json-schema-01#section-6.4) (e.g., `formatMinimum` and `formatMaximum`) that require extensions to handle properly.
+
+          A [[ref: Holder]] ****SHOULD**** be able to gracefully handle additional properties, even if this just means ignoring the added keywords.
+          :::
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
       property. If present, its value ****MUST**** be one of the following strings:
         - `required` - This indicates that the processing entity ****MUST****

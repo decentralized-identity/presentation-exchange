@@ -34,8 +34,7 @@
               "path": ["$.credentialSubject.dob", "$.vc.credentialSubject.dob", "$.dob"],
               "filter": {
                 "type": "string",
-                "format": "date",
-                "formatMaximum": "1999-06-15"
+                "format": "date"
               }
             }
           ]
@@ -58,8 +57,7 @@
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {
                 "type": "string",
-                "format": "date",
-                "formatMaximum": "1999-05-16"
+                "format": "date"
               }
             }
           ]
