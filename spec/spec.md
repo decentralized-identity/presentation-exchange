@@ -1133,7 +1133,7 @@ extended with the JSON-LD document framing.
 
 When using this [[ref:Feature]]:
 
-- `frame` - The [[ref:Presentation Definition]] ****MAY**** contain a `frame` ***
+- `frame` - The [[ref:Presentation Definition]] ****MAY**** contain a `frame`
   property. If present, its value ****MUST**** be a 
   [JSON LD Framing Document](https://w3c.github.io/json-ld-framing/) object.
 
