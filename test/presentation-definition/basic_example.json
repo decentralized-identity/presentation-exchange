@@ -48,8 +48,7 @@
               "path": ["$.credentialSubject.birth_date", "$.vc.credentialSubject.birth_date", "$.birth_date"],
               "filter": {
                 "type": "string",
-                "format": "date",
-                "minimum": "1999-05-16"
+                "format": "date"
               }
             }
           ]
