@@ -346,7 +346,16 @@ values, and an explanation why a certain item or set of data is being requested:
   the target schema represents.
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `purpose` property.
   If present, its value ****MUST**** be a string that describes the purpose for
-  which the [[ref:Claim]]'s data is being requested.
+  which the [[ref:Claim]]'s data is being used for.
+  By including purpose is not consent but is only informative to the user. In 
+  certain regulatory jurisdictions the usage of the purpose field may be in 
+  conflict with the privacy regulatory requirements. The field should not be 
+  included if prior data sharing agreements are not in place for transferring 
+  personal data using presentation exchange.
+  Roadmap: DIF Claims & Credentials data agreement work group is developing an 
+  addition for privacy regulator compliance (GDPR, CCPA, other) and method for 
+  creating immutable records of consent records (data agreements) for using 
+  personal data.
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as follows:
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
