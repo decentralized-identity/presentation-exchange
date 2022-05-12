@@ -279,15 +279,15 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
   `purpose` property. If present, its value ****MUST**** be a string that
   describes the purpose for which the [[ref:Presentation Definition]]'s inputs
   are being used for.
-  By including purpose it is not consent to process personal data but is only 
-  informative to the user. In certain jurisdictions the usage of the purpose 
-  field may be in conflict with the privacy regulatory requirements. The field
-  should not be included if prior data sharing agreements are not in place for
-  transferring personal data using presentation exchange.
-  Roadmap: DIF Claims & Credentials data agreement work group is developing an 
-  addition for privacy regulator compliance (GDPR, CCPA, other) and method for 
-  creating immutable records of consent records (data agreements) for using 
-  personal data.
+  Including purpose information should not be confused with consent to process 
+  personal data NOR as a substitute for an, e.g., GDPR-conformant expression of 
+  "purpose"; instead, it should be thought of as purely informative to the user.
+  Implementers are encouraged to do a proper review of applicable regulatory
+  requirements around consent and purpose disclosures. 
+  The DIF Claims & Credentials WG Data Agreement work item is developing a 
+  supplemental specification for privacy regulator compliance (GDPR, CCPA, other),
+  and a method for creating immutable records of consent records (data agreements) 
+  for using personal data.
 - The [[ref:Presentation Definition]] ****MAY**** include a `format` property.
   Some envelope transport protocols may include the value of this property in
   other locations and use different property names (See the [Format Embed Locations](#)
