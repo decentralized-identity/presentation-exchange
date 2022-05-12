@@ -280,8 +280,8 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
   describes the purpose for which the [[ref:Presentation Definition]]'s inputs
   are being used for.
   Including purpose information should not be confused with consent to process 
-  personal data NOR as a substitute for an, e.g., GDPR-conformant expression of 
-  "purpose"; instead, it should be thought of as purely informative to the user.
+  personal data NOR take as a substitute for an, e.g., GDPR-conformant expression 
+  of "purpose"; instead, it should be thought of as purely informative to the user.
   Implementers are encouraged to do a proper review of applicable regulatory
   requirements around consent and purpose disclosures. 
   The DIF Claims & Credentials WG Data Agreement work item is developing a 
