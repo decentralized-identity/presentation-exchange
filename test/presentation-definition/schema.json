@@ -82,6 +82,7 @@
         "id": { "type": "string" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
+        "format": { "$ref":"#/definitions/format" },
         "group": {
           "type": "array",
           "items": { "type": "string" }
@@ -187,7 +188,7 @@
               "items": { "type": "string" }
             },
             "purpose": { "type": "string" },
-            "filter": { "$ref": "http://json-schema.org/schema#" }
+            "filter": { "$ref": "http://json-schema.org/draft-07/schema#" }
           },
           "required": ["path"],
           "additionalProperties": false
@@ -200,7 +201,7 @@
               "items": { "type": "string" }
             },
             "purpose": { "type": "string" },
-            "filter": { "$ref": "http://json-schema.org/schema#" },
+            "filter": { "$ref": "http://json-schema.org/draft-07/schema#" },
             "predicate": {
               "type": "string",
               "enum": ["required", "preferred"]
