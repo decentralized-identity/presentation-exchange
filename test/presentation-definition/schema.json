@@ -103,6 +103,11 @@
                     "directive": {
                       "type": "string",
                       "enum": ["required", "allowed", "disallowed"]
+                    },
+                    "type": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": { "type": "string" }
                     }
                   }
                 },
@@ -112,6 +117,11 @@
                     "directive": {
                       "type": "string",
                       "enum": ["required", "allowed", "disallowed"]
+                    },
+                    "type": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": { "type": "string" }
                     }
                   }
                 },
@@ -121,6 +131,11 @@
                     "directive": {
                       "type": "string",
                       "enum": ["required", "allowed", "disallowed"]
+                    },
+                    "type": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": { "type": "string" }
                     }
                   }
                 }
