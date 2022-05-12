@@ -1115,23 +1115,16 @@ composed and embedded as follows:
 ```
 :::
 
-### Processing of `path_nested` Entries
+### Processing of Submission Entries
 
-****Example Nested Submission****
+To process the _Submission Entries_ of a Presentation Submission, use the following process:
 
-```json
-[[insert: ./test/presentation-submission/nested_submission_example.json]]
-```
-
-When the `path_nested` property is present in a [[ref:Presentation Submission]]
-object, process as follows:
-
-1. For each _Nested Submission Traversal Object_ in the `path_nested` array:
-   1. Execute the [JSONPath](https://goessner.net/articles/JsonPath/)
+1. For each _Submission Entry_ in the `descriptor_map` array:
+   1. Execute the `path` field's [JSONPath](https://goessner.net/articles/JsonPath/)
       expression string on the
       [_Current Traversal Object_](#current-traversal-object){id="current-traversal-object"},
-      or if none is designated, the top level of the Embed Target.
-   1. Decode and parse the value returned from
+      or if none is designated, the top level of the _Embed Target_.
+   2. Decode and parse the value returned from
       [JSONPath](https://goessner.net/articles/JsonPath/) execution in
       accordance with the [Claim Format Designation](#claim-format-designations)
       specified in the object's `format` property. If the value parses and
@@ -1139,12 +1132,18 @@ object, process as follows:
       [Claim Format Designation](#claim-format-designations) specified, let the
       resulting object be the
       [_Current Traversal Object_](#current-traversal-object)
-   1. If present, process the next _Nested Submission Traversal Object_ in the
-      current `path_nested` property.
-2. If parsing of the _Nested Submission Traversal Objects_ in the `path_nested`
-   property produced a valid value, process it as the submission against the
+   3. If the `path_nested` property is present, process the _Nested Submission Traversal Object_ 
+      value using the process described in Step 1.
+2. If parsing of the _Submission Entry_ (and any _Nested Submission Traversal Objects_ present 
+    within it) produces a valid result, process it as the submission against the
    [[ref:Input Descriptor]] indicated by the `id` property of the containing
    _Input Descriptor Mapping Object_.
+
+****Example Nested Submission****
+
+```json
+[[insert: ./test/presentation-submission/nested_submission_example.json]]
+```
 
 ### Limited Disclosure Submissions
 
