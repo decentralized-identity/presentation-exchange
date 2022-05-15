@@ -1110,12 +1110,20 @@ The values of all status properties are objects, composed as follows:
       - `allowed` - the credential ****MAY**** be of the specified status.
       - `disallowed` - the credential ****MUST NOT**** be of the specified
         status.
+  - _status objects_ ****MAY**** include a `type` property, and its value 
+    ****SHOULD**** express one or more methods by which a credential's status is
+    represented. The property is intended to align with the `type` field
+    in the `credentialStatus` property in the [VC Data Model](https://www.w3.org/TR/vc-data-model/#status).
+
     ```json
       "statuses": {
         "active": {
           "directive": "required"  // other values: "allowed", "disallowed"
         },
-        "suspended": {...},
+        "suspended": {
+          "directive": "allowed",
+          "type": ["CredentialStatusList2017"]
+        },
         "revoked": {...}
       }
     ```
