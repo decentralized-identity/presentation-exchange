@@ -1395,6 +1395,12 @@ https://tools.ietf.org/html/draft-handrews-json-schema-02
 [[insert: ./test/presentation-definition/schema.json]]
 ```
 
+### Presentation Submission
+
+```json
+[[insert: ./test/presentation-submission/schema.json]]
+```
+
 ### Submission Requirements
 
 ```json
