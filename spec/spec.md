@@ -879,9 +879,8 @@ When using this [[ref:Feature]], the _fields object_ ****MAY**** contain a
 present, the `filter` property ****MUST**** also be present.
 
 :::note The inclusion of the `predicate` property indicates that the
-[[def:Conformant Consumer]] returns a boolean, rather than a value returned
-from evaluation of the
-[JSONPath](https://goessner.net/articles/JsonPath/) string
+[[def:Holder]] returns a boolean, rather than a value returned from evaluation
+of the [JSONPath](https://goessner.net/articles/JsonPath/) string
 expressions in the `path` array. The boolean returned is the result
 of using the `filter` property's
 [JSON Schema](https://json-schema.org/specification.html)
