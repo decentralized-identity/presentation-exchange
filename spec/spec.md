@@ -83,12 +83,12 @@ Credential, Assertion, Attestation, etc.
 
 [[def:Conformant Consumer]]
 ~ An entity that follows the specified processing rules to consume a
-[[def:Presentation Definition]] or [[def:Presentation Submission]] that conforms
+[[ref:Presentation Definition]] or [[ref:Presentation Submission]] that conforms
 to this specification.
 
 [[def:Conformant Producer]]
-~ An entity that produces a [[def:Presentation Definition]] or
-[[def:Presentation Submission]] that conforms to this specification.
+~ An entity that produces a [[ref:Presentation Definition]] or
+[[ref:Presentation Submission]] that conforms to this specification.
 
 [[def:Decentralized Identifiers, Decentralized Identifier, DID]]
 ~ Unique ID URI string and PKI metadata document format for describing the
@@ -107,15 +107,15 @@ to transport a [[ref:Presentation Submission]]. See
 [Embed Targets](#embed-targets).
 
 [[def:Feature, Features]]
-~ Features enable [[ref:Verifiers]] to express, and [[def:Holders]] to support,
+~ Features enable [[ref:Verifiers]] to express, and [[ref:Holders]] to support,
 extended functionality (relative to the base objects) by defining one or more
 properties on one or more objects. 
 
 [[def:Holder, Holders]]
 ~ Holders are entities that submit proofs to [[ref:Verifiers]] to satisfy the
-requirements described in a [[def:Presentation Definition]]. A Holder is a
-[[def:Conformant Consumer]] of a [[def:Presentation Definition]] and a
-[[def:Conformant Producer]] of a [[def:Presentation Submission]].
+requirements described in a [[ref:Presentation Definition]]. A Holder is a
+[[ref:Conformant Consumer]] of a [[ref:Presentation Definition]] and a
+[[ref:Conformant Producer]] of a [[ref:Presentation Submission]].
 
 [[def:Holder Binding]]
 ~ Holder Bindings are requirements of a certain type of relationship between
@@ -196,9 +196,9 @@ nested. See [Submission Requirement Rules](#submission-requirement-rules).
 [[def:Verifier, Verifiers]]
 ~ Verifiers are entities that define what proofs they require from a
 [[ref:Holder]] (via a [[ref:Presentation Definition]]) in order to proceed with
-an interaction. A Verifier is a [[def:Conformant Producer]] of a
-[[def:Presentation Definition]] and a [[def:Conformant Consumer]] of a
-[[def:Presentation Submission]].
+an interaction. A Verifier is a [[ref:Conformant Producer]] of a
+[[ref:Presentation Definition]] and a [[ref:Conformant Consumer]] of a
+[[ref:Presentation Submission]].
 
 ## Structure of this Document
 This document has two primary sections: In the first, there is a model for defining the set of information a relying party would like to have presented, and in the second, there is a model for showing that the submitted presentation meets the related definition. 
@@ -207,11 +207,11 @@ Objects are defined such that they may be used on their own or extended through
 [[ref:Features]] defined subsequently in the spec. A [[ref:Feature]] must 
 declare if it has dependencies on other [[ref:Features]].
 
-A [[ref:Feature]] enables [[ref:Verifiers]] to express, and [[def:Holders]]
+A [[ref:Feature]] enables [[ref:Verifiers]] to express, and [[ref:Holders]]
 to support, extended functionality (relative to the base objects) by defining
 one or more properties on one or more objects. 
 
-[[def:Conformant Consumers]] are not required to support [[ref:Features]].
+[[ref:Conformant Consumers]] are not required to support [[ref:Features]].
 
 ## Presentation Definition
 
@@ -393,18 +393,18 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
           :::
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
       property. If present, its value ****MUST**** be one of the following strings:
-        - `required` - This indicates that the [[def:Conformant Consumer]]
+        - `required` - This indicates that the [[ref:Conformant Consumer]]
           ****MUST**** limit submitted fields to those listed in the `fields`
-          array (if present). [[def:Conformant Consumers]] are not required to
+          array (if present). [[ref:Conformant Consumers]] are not required to
           implement support for this value, but they ****MUST**** understand
           this value sufficiently to return nothing (or cease the interaction
           with the [[ref:Verifier]]) if they do not implement it.
-        - `preferred` - This indicates that the [[def:Conformant Consumer]]
+        - `preferred` - This indicates that the [[ref:Conformant Consumer]]
           ****SHOULD**** limit submitted fields to those listed in the `fields`
           array (if present).
 
       Omission of the `limit_disclosure` property indicates the
-      [[def:Conformant Consumer]] ****MAY**** submit a response that contains
+      [[ref:Conformant Consumer]] ****MAY**** submit a response that contains
       more than the data described in the `fields` array.
 
 
@@ -695,11 +695,11 @@ When using this [[ref:Feature]]:
 
 [[ref:Presentation Definitions]] ****MAY**** include
 [[ref:Submission Requirements]] which define what combinations of inputs a
-[[def:Holder]] must submit to comply with the requirements of a
+[[ref:Holder]] must submit to comply with the requirements of a
 [[ref:Verifier]].
 
 [[ref:Submission Requirements]] introduce a set of rule types and mapping
-instructions a [[def:Conformant Consumer]] can ingest to present requirement
+instructions a [[ref:Conformant Consumer]] can ingest to present requirement
 optionality to the user, and subsequently submit inputs in a way that maps back
 to the rules the [[ref:Verifier]] has asserted.
 
@@ -800,7 +800,7 @@ For a `pick` rule [[ref:Submission Requirement Object]]:
       satisfied by the inputs submitted to the [[ref:Verifier]].
 
 If [[ref:Submission Requirement Object]] has a `from` property, this directs the
-[[def:Conformant Consumer]] to submit inputs from the set of
+[[ref:Conformant Consumer]] to submit inputs from the set of
 [[ref:Input Descriptors]] with a matching `group` string. In the first example
 that follows, the [[ref:Submission Requirement]] requests a single input from
 [[ref:Input Descriptor]] group `"B"`. In the second example, the
@@ -820,7 +820,7 @@ that follows, the [[ref:Submission Requirement]] requests a single input from
 :::
 
 If the [[ref:Submission Requirement Object]] has a `from_nested` property, this
-directs the [[def:Conformant Consumer]] to submit inputs such that the number of
+directs the [[ref:Conformant Consumer]] to submit inputs such that the number of
 satisfied [[ref:Submission Requirement Objects]] matches the number requested.
 In the following example, the `from_nested` property contains an array of
 [[ref:Submission Requirement Objects]] which requests either all members
@@ -867,7 +867,7 @@ processing-related rules above:
 ### Predicate Feature
 
 The predicate [[ref:Feature]] introduces properties enabling [[ref:Verifier]]
-to request that [[def:Holder]] apply a predicate and return the result.
+to request that [[ref:Holder]] apply a predicate and return the result.
 
 #### Applying a predicate
 
@@ -879,13 +879,13 @@ When using this [[ref:Feature]], the _fields object_ ****MAY**** contain a
 present, the `filter` property ****MUST**** also be present.
 
 :::note The inclusion of the `predicate` property indicates that the
-[[def:Holder]] returns a boolean, rather than a value returned from evaluation
+[[ref:Holder]] returns a boolean, rather than a value returned from evaluation
 of the [JSONPath](https://goessner.net/articles/JsonPath/) string
 expressions in the `path` array. The boolean returned is the result
 of using the `filter` property's
 [JSON Schema](https://json-schema.org/specification.html)
 descriptors against the evaluated value. Exclusion of the `predicate`
-property indicates that the [[def:Conformant Consumer]] returns the value
+property indicates that the [[ref:Conformant Consumer]] returns the value
 returned from evaluation of the
 [JSONPath](https://goessner.net/articles/JsonPath/) string
 expressions in the `path` array.
@@ -907,7 +907,7 @@ The value of `predicate` ****MUST**** be one of the following strings:
   ****SHOULD**** be the boolean result of applying the value of the
   `filter` property to the result of evaluating the `path` property.
 
-If the `predicate` property is not present, a [[def:Conformant Consumer]]
+If the `predicate` property is not present, a [[ref:Conformant Consumer]]
 ****MUST NOT**** return derived predicate values.
 
 If the [`predicate` property](#predicate-filters) is present, the set of JSON Schema
@@ -1012,12 +1012,12 @@ When using this [[ref:Feature]]:
 - The _constraints object_ ****MAY**** contain a `subject_is_issuer`
   property. If present, its value ****MUST**** be one of the following
   strings:
-    - `required` - This indicates that the [[def:Conformant Consumer]]
+    - `required` - This indicates that the [[ref:Conformant Consumer]]
       ****MUST**** submit a response that has been _self-attested_, i.e., the
       [[ref:Claim]] used in the presentation was 'issued' by the
       [[Ref:Subject]] of the [[ref:Claim]].
     - `preferred` - This indicates that it is ****RECOMMENDED**** that the
-      [[def:Conformant Consumer]] submit a response that has been
+      [[ref:Conformant Consumer]] submit a response that has been
       _self-attested_, i.e., the [[ref:Claim]] used in the presentation was
       'issued' by the [[Ref:Subject]] of the [[ref:Claim]].
   :::note
@@ -1040,18 +1040,18 @@ When using this [[ref:Feature]]:
     - The _is-holder object_ ****MUST**** contain a `directive` property.
       The value of this property ****MUST****  be one of the following
       strings:
-        - `required` - This indicates that the [[def:Conformant Consumer]]
-          ****MUST**** include proof that the [[Ref:Subject]] of each
+        - `required` - This indicates that the [[ref:Conformant Consumer]]
+          ****MUST**** include proof that the [[ref:Subject]] of each
           attribute identified by a value in the `field_id` array is the
           same as the entity submitting the response.
         - `preferred` - This indicates that it is ****RECOMMENDED**** that
-          the [[def:Conformant Consumer]] include proof that the [[Ref:Subject]]
+          the [[ref:Conformant Consumer]] include proof that the [[Ref:Subject]]
           of each attribute identified by a value in the `field_id` array is
           the same as the entity submitting the response.
 
   The `is_holder` property would be used by a [[ref:Verifier]] to require
   that certain inputs be provided by a certain [[Ref:Subject]]. For example,
-  an identity verification [[ref:Presentation Definition]] might contain an
+  an identity verification [[ref:Presentation refinition]] might contain an
   [[ref:Input Descriptor]] for a birthdate from a birth certificate. Using
   `is_holder`, the [[ref:Verifier]] would be able to require that the
   [[ref:Holder]] of the birth certificate [[ref:Claim]] is the same as the
@@ -1074,13 +1074,13 @@ When using this [[ref:Feature]]:
     - The _same-subject object_ ****MUST**** contain a `directive` property.
       The value of this property ****MUST****  be one of the following
       strings:
-        - `required` - This indicates that the [[def:Conformant Consumer]]
-          ****MUST**** include proof that the [[Ref:Subject]] of each
+        - `required` - This indicates that the [[ref:Conformant Consumer]]
+          ****MUST**** include proof that the [[ref:Subject]] of each
           attribute identified by a value in the `field_id` array is the
-          same as the [[Ref:Subject]] of the attributes identified by the
+          same as the [[ref:Subject]] of the attributes identified by the
           other values in the `field_id` array.
         - `preferred` - This indicates that it is ****RECOMMENDED**** that
-          the [[def:Conformant Consumer]] include proof that the [[Ref:Subject]]
+          the [[ref:Conformant Consumer]] include proof that the [[Ref:Subject]]
           of each attribute identified by a value in the `field_id` array is
           the same as the [[Ref:Subject]] of the attributes identified by
           the other values in the `field_id` array.
