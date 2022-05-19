@@ -404,7 +404,7 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
           array (if present).
 
       Omission of the `limit_disclosure` property indicates the
-      [[def:Conformant Producer]] ****MAY**** submit a response that contains
+      [[def:Conformant Consumer]] ****MAY**** submit a response that contains
       more than the data described in the `fields` array.
 
 
