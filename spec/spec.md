@@ -46,7 +46,8 @@ articulate proof requirements, and a [[ref:Presentation Submission]] data format
 [[ref:Holders]] can use to describe proofs submitted in accordance with them.
 
 This specification is designed to be both [[ref:Claim]] format and transport
-envelope agnostic, meaning an implementer can use
+envelope agnostic,as long as the format can be serialized as JSON. This means
+an implementer can use
 [JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519),
 [Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/),
 [JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions),
@@ -110,6 +111,7 @@ to transport a [[ref:Presentation Submission]]. See
 ~ Features enable [[ref:Verifiers]] to express, and [[ref:Holders]] to support,
 extended functionality (relative to the base objects) by defining one or more
 properties on one or more objects. 
+
 
 [[def:Holder, Holders]]
 ~ Holders are entities that submit proofs to [[ref:Verifiers]] to satisfy the
@@ -201,15 +203,15 @@ an interaction. A Verifier is a [[ref:Conformant Producer]] of a
 [[ref:Presentation Submission]].
 
 ## Structure of this Document
-This document has two primary sections: In the first, there is a model for defining the set of information a relying party would like to have presented, and in the second, there is a model for showing that the submitted presentation meets the related definition. 
+This document has two primary sections: In the first, there is a model for defining the set of information a relying party would like to have presented, and in the second, there is a model for showing that the submitted presentation meets the related definition.
 Each of these sections begins by defining a base set of properties considered essential for core uses of the model, then describes additional feature sets that expand upon the base to allow more complex uses.
-Objects are defined such that they may be used on their own or extended through 
-[[ref:Features]] defined subsequently in the spec. A [[ref:Feature]] must 
+Objects are defined such that they may be used on their own or extended through
+[[ref:Features]] defined subsequently in the spec. A [[ref:Feature]] must
 declare if it has dependencies on other [[ref:Features]].
 
 A [[ref:Feature]] enables [[ref:Verifiers]] to express, and [[ref:Holders]]
 to support, extended functionality (relative to the base objects) by defining
-one or more properties on one or more objects. 
+one or more properties on one or more objects.
 
 [[ref:Conformant Consumers]] are not required to support [[ref:Features]].
 
@@ -350,10 +352,10 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
   property. If present, its value ****MUST**** be an object composed as
   follows, unless otherwise specified by a [[ref:Feature]]:
-    - The _constraints object_ ****MAY**** contain a `fields` property. Fields 
-    ****SHALL**** be processed forward from 0-index, so if a [[ref:Verifier]] 
+    - The _constraints object_ ****MAY**** contain a `fields` property. Fields
+    ****SHALL**** be processed forward from 0-index, so if a [[ref:Verifier]]
     desires to reduce processing by checking the most defining characteristics
-    of a credential (e.g the type or schema of a credential) implementers 
+    of a credential (e.g the type or schema of a credential) implementers
     ****SHOULD**** order these field checks before all others to ensure
     earliest termination of evaluation. If the `fields` property is present,
     its value ****MUST**** be an array of objects composed as follows, unless
@@ -527,9 +529,9 @@ To process the _Submission Entries_ of a Presentation Submission, use the follow
       [Claim Format Designation](#claim-format-designations) specified, let the
       resulting object be the
       [_Current Traversal Object_](#current-traversal-object)
-   3. If the `path_nested` property is present, process the _Nested Submission Traversal Object_ 
+   3. If the `path_nested` property is present, process the _Nested Submission Traversal Object_
       value using the process described in Step 1.
-2. If parsing of the _Submission Entry_ (and any _Nested Submission Traversal Objects_ present 
+2. If parsing of the _Submission Entry_ (and any _Nested Submission Traversal Objects_ present
     within it) produces a valid result, process it as the submission against the
    [[ref:Input Descriptor]] indicated by the `id` property of the containing
    _Input Descriptor Mapping Object_.
@@ -603,7 +605,7 @@ CHAPI      | `$.data`
 The Submission Requirement Feature introduces extensions enabling
 [[ref:Verifiers]] to express what combinations of inputs must be submitted to
 comply with its requirements for proceeding in a flow (e.g. credential
-issuance, allowing entry, accepting an application). 
+issuance, allowing entry, accepting an application).
 
 <tab-panels selected-index="0">
 
@@ -637,7 +639,7 @@ issuance, allowing entry, accepting an application).
 
 #### Presentation Definition Extensions
 
-The Submission Requirement [[ref:Feature]] extends the [[ref:Presentation Definition]] 
+The Submission Requirement [[ref:Feature]] extends the [[ref:Presentation Definition]]
 object to add a `submission_requirements` property.
 
 When using this [[ref:Feature]]:
@@ -647,8 +649,8 @@ When using this [[ref:Feature]]:
   format described in the [`Submission Requirement`](#submission-requirement)
   section below.
 
-  The `submission_requirements` property defines which [[ref:Input Descriptors]] 
-  are required for submission, overriding the default input evaluation behavior, 
+  The `submission_requirements` property defines which [[ref:Input Descriptors]]
+  are required for submission, overriding the default input evaluation behavior,
   in which all [[ref:Input Descriptors]] are required.
 
 
@@ -682,7 +684,7 @@ When using this [[ref:Feature]]:
 
 </tab-panels>
 
-The Submission Requirement [[ref:Feature]] extends the [[ref:Input Descriptor Object]] 
+The Submission Requirement [[ref:Feature]] extends the [[ref:Input Descriptor Object]]
 to add a `group` property.
 
 When using this [[ref:Feature]]:
@@ -874,8 +876,8 @@ to request that [[ref:Holder]] apply a predicate and return the result.
 The predicate [[ref:Feature]] extends the [[ref:Input Descriptor Object]]
 `constraints.fields` object to add a `predicate` property.
 
-When using this [[ref:Feature]], the _fields object_ ****MAY**** contain a 
-[`predicate` property](#predicate-property). If the `predicate` property is 
+When using this [[ref:Feature]], the _fields object_ ****MAY**** contain a
+[`predicate` property](#predicate-property). If the `predicate` property is
 present, the `filter` property ****MUST**** also be present.
 
 :::note The inclusion of the `predicate` property indicates that the
@@ -1122,7 +1124,7 @@ The values of all status properties are objects, composed as follows:
       - `allowed` - the credential ****MAY**** be of the specified status.
       - `disallowed` - the credential ****MUST NOT**** be of the specified
         status.
-  - _status objects_ ****MAY**** include a `type` property, and its value 
+  - _status objects_ ****MAY**** include a `type` property, and its value
     ****SHOULD**** express one or more methods by which a credential's status is
     represented. The property is intended to align with the `type` field
     in the `credentialStatus` property in the [VC Data Model](https://www.w3.org/TR/vc-data-model/#status).
@@ -1158,7 +1160,7 @@ extended with the JSON-LD document framing.
 When using this [[ref:Feature]]:
 
 - `frame` - The [[ref:Presentation Definition]] ****MAY**** contain a `frame`
-  property. If present, its value ****MUST**** be a 
+  property. If present, its value ****MUST**** be a
   [JSON LD Framing Document](https://w3c.github.io/json-ld-framing/) object.
 
 ## Input Evaluation
@@ -1196,14 +1198,14 @@ For each candidate input:
               validates against the
               [JSON Schema](https://json-schema.org/specification.html)
               descriptor specified in `filter`, then:
-              ::: note  
+              ::: note
               **Predicate Feature Only**
 
               If the _fields object_ has a `predicate`, set _Field Query Result_ to
               the boolean value resulting from evaluating the _Field Query Result_ against
               the [JSON Schema](https://json-schema.org/specification.html) descriptor value
               of the `filter` property.
-                            
+
               Else
               :::
               - set _Field Query Result_ to be _candidate_
@@ -1211,9 +1213,9 @@ For each candidate input:
            2. Else, skip to the next `path` array element
   2. If all of the previous validation steps are successful, mark the candidate
      input as a match for use in a [[ref:Presentation Submission]].
-      ::: note 
+      ::: note
       **Submission Requirement Feature Only**
-     
+
       If present at the top level of the [[ref:Input Descriptor]], keep a
       relative reference to the `group` values the input is designated for.
       :::
@@ -1228,7 +1230,7 @@ For each candidate input:
      want to know a [[ref:Holder]] has a valid, signed [[ref:Claims]] of a
      particular type, without disclosing any of the data it contains.
 
- ::: note 
+ ::: note
  **Relational Constraint Feature Only**
 
   4. If the `constraints` property of the [[ref:Input Descriptor]] is present,
@@ -1376,7 +1378,7 @@ used within the specification:
   Expression of supported algorithms in relation to these formats ****MUST****
   be conveyed using an `alg` property paired with values that are identifiers
   from the JSON Web Algorithms registry [[spec:RFC7518]].
-- `ldp` - the format is a Linked Data Proof [[ref:Linked Data Proofs]] that will 
+- `ldp` - the format is a Linked Data Proof [[ref:Linked Data Proofs]] that will
   be submitted as an object.
   Expression of supported algorithms in relation to these formats ****MUST****
   be conveyed using a `proof_type` property with values that are identifiers
@@ -1385,7 +1387,7 @@ used within the specification:
 - `ldp_vc`, `ldp_vp` - Verifiable Credential Linked Data Proof and Verifiable Presentation Linked
   Data Proof formats. These are descriptions of formats normatively defined in the W3C Verifiable
   Credentials specification [[spec:VC-DATA MODEL]], and will be submitted in the form of a JSON
-  object. 
+  object.
   Expression of supported algorithms in relation to these formats ****MUST****
   be conveyed using a `proof_type` property paired with values that are
   identifiers from the
@@ -1401,10 +1403,22 @@ support for evaluation of the portions of the _Presentation Exchange_
 specification that call for JSON Schema validation:
 https://tools.ietf.org/html/draft-handrews-json-schema-02
 
-### Presentation Definition
+### Presentation Definition (in an envelope)
 
 ```json
-[[insert: ./test/presentation-definition/schema.json]]
+[[insert: ./test/presentation-definition/schemas/presentation-definition-envelope.json]]
+```
+
+### Presentation Definition (plain object)
+
+```json
+[[insert: ./test/presentation-definition/schemas/presentation-definition.json]]
+```
+
+### Input Descriptor
+
+```json
+[[insert: ./test/presentation-definition/schemas/input-descriptor.json]]
 ```
 
 ### Presentation Submission
@@ -1419,10 +1433,16 @@ https://tools.ietf.org/html/draft-handrews-json-schema-02
 [[insert: ./test/submission-requirements/schema.json]]
 ```
 
+### Submission Requirement
+
+```json
+[[insert: ./test/presentation-definition/schemas/submission-requirement.json]]
+```
+
 ### Format Declaration
 
 ```json
-[[insert: ./test/presentation-definition/formats-schema.json]]
+[[insert: ./test/presentation-definition/schemas/format.json]]
 ```
 
 ## JSONPath Syntax Definition
