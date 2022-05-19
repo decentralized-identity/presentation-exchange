@@ -107,9 +107,9 @@ to transport a [[ref:Presentation Submission]]. See
 [Embed Targets](#embed-targets).
 
 [[def:Feature, Features]]
-~ Features enable [[ref:Verifiers]] to express, and [[def:Conformant Consumers]]
-to support, extended functionality (relative to the base objects) by defining
-one or more properties on one or more objects. 
+~ Features enable [[ref:Verifiers]] to express, and [[def:Holders]] to support,
+extended functionality (relative to the base objects) by defining one or more
+properties on one or more objects. 
 
 [[def:Holder, Holders]]
 ~ Holders are entities that submit proofs to [[ref:Verifiers]] to satisfy the
