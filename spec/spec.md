@@ -82,6 +82,15 @@ and other mediums (e.g., [DIF Slack](https://difdn.slack.com/archives/C4X50SNUX)
 ~ An assertion made about a [[ref:Subject]]. Used as an umbrella term for
 Credential, Assertion, Attestation, etc.
 
+[[def:Conformant Consumer]]
+~ An entity that follows the specified processing rules to consume a
+[[ref:Presentation Definition]] or [[ref:Presentation Submission]] that conforms
+to this specification.
+
+[[def:Conformant Producer]]
+~ An entity that produces a [[ref:Presentation Definition]] or
+[[ref:Presentation Submission]] that conforms to this specification.
+
 [[def:Decentralized Identifiers, Decentralized Identifier, DID]]
 ~ Unique ID URI string and PKI metadata document format for describing the
 cryptographic keys and other fundamental PKI values linked to a unique,
@@ -99,13 +108,16 @@ to transport a [[ref:Presentation Submission]]. See
 [Embed Targets](#embed-targets).
 
 [[def:Feature, Features]]
-~ Features enable [[ref:Verifiers]] to express, and processing entities to
-support, extended functionality (relative to the base objects) by defining
-one or more properties on one or more objects.
+~ Features enable [[ref:Verifiers]] to express, and [[ref:Holders]] to support,
+extended functionality (relative to the base objects) by defining one or more
+properties on one or more objects. 
+
 
 [[def:Holder, Holders]]
 ~ Holders are entities that submit proofs to [[ref:Verifiers]] to satisfy the
-requirements described in a [[def:Presentation Definition]].
+requirements described in a [[ref:Presentation Definition]]. A Holder is a
+[[ref:Conformant Consumer]] of a [[ref:Presentation Definition]] and a
+[[ref:Conformant Producer]] of a [[ref:Presentation Submission]].
 
 [[def:Holder Binding]]
 ~ Holder Bindings are requirements of a certain type of relationship between
@@ -186,7 +198,9 @@ nested. See [Submission Requirement Rules](#submission-requirement-rules).
 [[def:Verifier, Verifiers]]
 ~ Verifiers are entities that define what proofs they require from a
 [[ref:Holder]] (via a [[ref:Presentation Definition]]) in order to proceed with
-an interaction.
+an interaction. A Verifier is a [[ref:Conformant Producer]] of a
+[[ref:Presentation Definition]] and a [[ref:Conformant Consumer]] of a
+[[ref:Presentation Submission]].
 
 ## Structure of this Document
 This document has two primary sections: In the first, there is a model for defining the set of information a relying party would like to have presented, and in the second, there is a model for showing that the submitted presentation meets the related definition.
@@ -195,11 +209,11 @@ Objects are defined such that they may be used on their own or extended through
 [[ref:Features]] defined subsequently in the spec. A [[ref:Feature]] must
 declare if it has dependencies on other [[ref:Features]].
 
-A [[ref:Feature]] enables [[ref:Verifiers]] to express, and processing entities
+A [[ref:Feature]] enables [[ref:Verifiers]] to express, and [[ref:Holders]]
 to support, extended functionality (relative to the base objects) by defining
 one or more properties on one or more objects.
 
-Processing entities are not required to support [[ref:Features]].
+[[ref:Conformant Consumers]] are not required to support [[ref:Features]].
 
 ## Presentation Definition
 
@@ -381,19 +395,19 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
           :::
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
       property. If present, its value ****MUST**** be one of the following strings:
-        - `required` - This indicates that the processing entity ****MUST****
-          limit submitted fields to those listed in the `fields` array (if
-          present). Processing entities are not required to implement support
-          for this value, but they ****MUST**** understand this value
-          sufficiently to return nothing (or cease the interaction with the
-          [[ref:Verifier]]) if they do not implement it.
-        - `preferred` - This indicates that the processing entity ****SHOULD****
-          limit submitted fields to those listed in the `fields` array (if
-          present).
+        - `required` - This indicates that the [[ref:Conformant Consumer]]
+          ****MUST**** limit submitted fields to those listed in the `fields`
+          array (if present). [[ref:Conformant Consumers]] are not required to
+          implement support for this value, but they ****MUST**** understand
+          this value sufficiently to return nothing (or cease the interaction
+          with the [[ref:Verifier]]) if they do not implement it.
+        - `preferred` - This indicates that the [[ref:Conformant Consumer]]
+          ****SHOULD**** limit submitted fields to those listed in the `fields`
+          array (if present).
 
-      Omission of the `limit_disclosure` property indicates the processing
-      entity ****MAY**** submit a response that contains more than the data
-      described in the `fields` array.
+      Omission of the `limit_disclosure` property indicates the
+      [[ref:Conformant Consumer]] ****MAY**** submit a response that contains
+      more than the data described in the `fields` array.
 
 
 ### Presentation Request
@@ -683,13 +697,13 @@ When using this [[ref:Feature]]:
 
 [[ref:Presentation Definitions]] ****MAY**** include
 [[ref:Submission Requirements]] which define what combinations of inputs a
-processing entity must submit to comply with the requirements of a
+[[ref:Holder]] must submit to comply with the requirements of a
 [[ref:Verifier]].
 
 [[ref:Submission Requirements]] introduce a set of rule types and mapping
-instructions a processing entity can ingest to present requirement optionality
-to the user, and subsequently submit inputs in a way that maps back to the rules
-the [[ref:Verifier]] has asserted.
+instructions a [[ref:Conformant Consumer]] can ingest to present requirement
+optionality to the user, and subsequently submit inputs in a way that maps back
+to the rules the [[ref:Verifier]] has asserted.
 
 The following section defines the format for [[ref:Submission Requirements]]
 and the selection syntax [[ref:Verifiers]] can use to specify which combinations
@@ -788,9 +802,9 @@ For a `pick` rule [[ref:Submission Requirement Object]]:
       satisfied by the inputs submitted to the [[ref:Verifier]].
 
 If [[ref:Submission Requirement Object]] has a `from` property, this directs the
-processing entity to submit inputs from the set of [[ref:Input Descriptors]]
-with a matching `group` string. In the first example that follows, the
-[[ref:Submission Requirement]] requests a single input from
+[[ref:Conformant Consumer]] to submit inputs from the set of
+[[ref:Input Descriptors]] with a matching `group` string. In the first example
+that follows, the [[ref:Submission Requirement]] requests a single input from
 [[ref:Input Descriptor]] group `"B"`. In the second example, the
 [[ref:Submission Requirement]] requests from 2 to 4 inputs from
 [[ref:Input Descriptor]] group `"B"`.
@@ -808,9 +822,9 @@ with a matching `group` string. In the first example that follows, the
 :::
 
 If the [[ref:Submission Requirement Object]] has a `from_nested` property, this
-directs the processing entity to submit inputs such that the number of satisfied
-[[ref:Submission Requirement Objects]] matches the number requested. In the
-following example, the `from_nested` property contains an array of
+directs the [[ref:Conformant Consumer]] to submit inputs such that the number of
+satisfied [[ref:Submission Requirement Objects]] matches the number requested.
+In the following example, the `from_nested` property contains an array of
 [[ref:Submission Requirement Objects]] which requests either all members
 from group `"A"` or two members from group `"B"`:
 
@@ -855,7 +869,7 @@ processing-related rules above:
 ### Predicate Feature
 
 The predicate [[ref:Feature]] introduces properties enabling [[ref:Verifier]]
-to request that processing entities apply a predicate and return the result.
+to request that [[ref:Holder]] apply a predicate and return the result.
 
 #### Applying a predicate
 
@@ -867,14 +881,13 @@ When using this [[ref:Feature]], the _fields object_ ****MAY**** contain a
 present, the `filter` property ****MUST**** also be present.
 
 :::note The inclusion of the `predicate` property indicates that the
-processing entity returns a boolean, rather than a value returned
-from evaluation of the
-[JSONPath](https://goessner.net/articles/JsonPath/) string
+[[ref:Holder]] returns a boolean, rather than a value returned from evaluation
+of the [JSONPath](https://goessner.net/articles/JsonPath/) string
 expressions in the `path` array. The boolean returned is the result
 of using the `filter` property's
 [JSON Schema](https://json-schema.org/specification.html)
 descriptors against the evaluated value. Exclusion of the `predicate`
-property indicates that the processing entity returns the value
+property indicates that the [[ref:Conformant Consumer]] returns the value
 returned from evaluation of the
 [JSONPath](https://goessner.net/articles/JsonPath/) string
 expressions in the `path` array.
@@ -896,7 +909,7 @@ The value of `predicate` ****MUST**** be one of the following strings:
   ****SHOULD**** be the boolean result of applying the value of the
   `filter` property to the result of evaluating the `path` property.
 
-If the `predicate` property is not present, a processing entity
+If the `predicate` property is not present, a [[ref:Conformant Consumer]]
 ****MUST NOT**** return derived predicate values.
 
 If the [`predicate` property](#predicate-filters) is present, the set of JSON Schema
@@ -1001,14 +1014,14 @@ When using this [[ref:Feature]]:
 - The _constraints object_ ****MAY**** contain a `subject_is_issuer`
   property. If present, its value ****MUST**** be one of the following
   strings:
-    - `required` - This indicates that the processing entity ****MUST****
-      submit a response that has been _self-attested_, i.e., the
+    - `required` - This indicates that the [[ref:Conformant Consumer]]
+      ****MUST**** submit a response that has been _self-attested_, i.e., the
       [[ref:Claim]] used in the presentation was 'issued' by the
       [[Ref:Subject]] of the [[ref:Claim]].
     - `preferred` - This indicates that it is ****RECOMMENDED**** that the
-      processing entity submit a response that has been _self-attested_,
-      i.e., the [[ref:Claim]] used in the presentation was 'issued' by the
-      [[Ref:Subject]] of the [[ref:Claim]].
+      [[ref:Conformant Consumer]] submit a response that has been
+      _self-attested_, i.e., the [[ref:Claim]] used in the presentation was
+      'issued' by the [[Ref:Subject]] of the [[ref:Claim]].
   :::note
   The `subject_is_issuer` property could be used by a [[ref:Verifier]] to
   require that certain inputs be _self_attested_. For example, a college
@@ -1029,18 +1042,18 @@ When using this [[ref:Feature]]:
     - The _is-holder object_ ****MUST**** contain a `directive` property.
       The value of this property ****MUST****  be one of the following
       strings:
-        - `required` - This indicates that the processing entity
-          ****MUST**** include proof that the [[Ref:Subject]] of each
+        - `required` - This indicates that the [[ref:Conformant Consumer]]
+          ****MUST**** include proof that the [[ref:Subject]] of each
           attribute identified by a value in the `field_id` array is the
           same as the entity submitting the response.
         - `preferred` - This indicates that it is ****RECOMMENDED**** that
-          the processing entity include proof that the [[Ref:Subject]] of
-          each attribute identified by a value in the `field_id` array is
+          the [[ref:Conformant Consumer]] include proof that the [[Ref:Subject]]
+          of each attribute identified by a value in the `field_id` array is
           the same as the entity submitting the response.
 
   The `is_holder` property would be used by a [[ref:Verifier]] to require
   that certain inputs be provided by a certain [[Ref:Subject]]. For example,
-  an identity verification [[ref:Presentation Definition]] might contain an
+  an identity verification [[ref:Presentation refinition]] might contain an
   [[ref:Input Descriptor]] for a birthdate from a birth certificate. Using
   `is_holder`, the [[ref:Verifier]] would be able to require that the
   [[ref:Holder]] of the birth certificate [[ref:Claim]] is the same as the
@@ -1063,14 +1076,14 @@ When using this [[ref:Feature]]:
     - The _same-subject object_ ****MUST**** contain a `directive` property.
       The value of this property ****MUST****  be one of the following
       strings:
-        - `required` - This indicates that the processing entity
-          ****MUST**** include proof that the [[Ref:Subject]] of each
+        - `required` - This indicates that the [[ref:Conformant Consumer]]
+          ****MUST**** include proof that the [[ref:Subject]] of each
           attribute identified by a value in the `field_id` array is the
-          same as the [[Ref:Subject]] of the attributes identified by the
+          same as the [[ref:Subject]] of the attributes identified by the
           other values in the `field_id` array.
         - `preferred` - This indicates that it is ****RECOMMENDED**** that
-          the processing entity include proof that the [[Ref:Subject]] of
-          each attribute identified by a value in the `field_id` array is
+          the [[ref:Conformant Consumer]] include proof that the [[Ref:Subject]]
+          of each attribute identified by a value in the `field_id` array is
           the same as the [[Ref:Subject]] of the attributes identified by
           the other values in the `field_id` array.
 
