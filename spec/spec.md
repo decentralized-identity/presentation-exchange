@@ -46,7 +46,8 @@ articulate proof requirements, and a [[ref:Presentation Submission]] data format
 [[ref:Holders]] can use to describe proofs submitted in accordance with them.
 
 This specification is designed to be both [[ref:Claim]] format and transport
-envelope agnostic, meaning an implementer can use
+envelope agnostic,as long as the format can be serialized as JSON. This means
+an implementer can use
 [JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7519),
 [Verifiable Credentials (VCs)](https://www.w3.org/TR/vc-data-model/),
 [JWT-VCs](https://www.w3.org/TR/vc-data-model/#json-web-token-extensions),
