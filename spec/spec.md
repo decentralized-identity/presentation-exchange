@@ -207,7 +207,7 @@ Objects are defined such that they may be used on their own or extended through
 [[ref:Features]] defined subsequently in the spec. A [[ref:Feature]] must 
 declare if it has dependencies on other [[ref:Features]].
 
-A [[ref:Feature]] enables [[ref:Verifiers]] to express, and [[def:Conformant Consumers]]
+A [[ref:Feature]] enables [[ref:Verifiers]] to express, and [[def:Holders]]
 to support, extended functionality (relative to the base objects) by defining
 one or more properties on one or more objects. 
 
