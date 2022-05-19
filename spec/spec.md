@@ -393,13 +393,13 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
           :::
     - The _constraints object_ ****MAY**** contain a `limit_disclosure`
       property. If present, its value ****MUST**** be one of the following strings:
-        - `required` - This indicates that the [[def:Conformant Producer]]
+        - `required` - This indicates that the [[def:Conformant Consumer]]
           ****MUST**** limit submitted fields to those listed in the `fields`
-          array (if present). [[def:Conformant Producers]] are not required to
+          array (if present). [[def:Conformant Consumers]] are not required to
           implement support for this value, but they ****MUST**** understand
           this value sufficiently to return nothing (or cease the interaction
           with the [[ref:Verifier]]) if they do not implement it.
-        - `preferred` - This indicates that the [[def:Conformant Producer]]
+        - `preferred` - This indicates that the [[def:Conformant Consumer]]
           ****SHOULD**** limit submitted fields to those listed in the `fields`
           array (if present).
 
