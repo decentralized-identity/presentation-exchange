@@ -59,6 +59,7 @@
       "additionalProperties": false,
       "properties": {
         "id": { "type": "string" },
+        "intent_to_retain": { "type": "boolean" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
         "group": { "type": "array", "items": { "type": "string" } },
