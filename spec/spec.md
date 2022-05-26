@@ -82,7 +82,7 @@ and other mediums (e.g., [DIF Slack](https://difdn.slack.com/archives/C4X50SNUX)
 ~ An assertion made about a [[ref:Subject]]. Used as an umbrella term for
 Credential, Assertion, Attestation, etc.
 
-[[def:Conformant Consumer]]
+[[def:Conformant Consumer, Conformant Consumers]]
 ~ An entity that follows the specified processing rules to consume a
 [[ref:Presentation Definition]] or [[ref:Presentation Submission]] that conforms
 to this specification.
@@ -208,6 +208,7 @@ to support, extended functionality (relative to the base objects) by defining
 one or more properties on one or more objects.
 
 [[ref:Conformant Consumers]] are not required to support [[ref:Features]].
+A [[ref:Conformant Producer]] using [[ref:Features]] that a [[ref:Conformant Consumer]] does not support, might result in a [[ref:Presentation Submission]] that can be rejected by a [[ref:Verifier]]. This is especially the case when a feature introduces additional constraints on the [[ref:Input Descriptor Object]], like for instance the [Relational Constraint Feature](#relational-constraint-feature), where the `subject_is_issuer` property could be used by a [[ref:Verifier]] to require that certain inputs be _self_attested_. Depending on the [[ref:Verifier]] implementation a submission which is not self attested might be rejected, because the [[ref:Holder]] is not aware of the requirement the [[ref:Feature]] introduced.
 
 Examples in this document use the [Verifiable Credentials Data Model](https://www.w3.org/TR/vc-data-model/) and the [Decentralized  Identifiers (DIDs)](https://www.w3.org/TR/did-core/) formats for illustrative purposes only; this specification is intended to support any JSON-serializable [[ref:Claim]] format.
 
