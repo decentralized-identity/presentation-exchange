@@ -209,6 +209,8 @@ one or more properties on one or more objects.
 
 [[ref:Conformant Consumers]] are not required to support [[ref:Features]].
 
+A [[ref:Conformant Producer]] and [[ref:Conformant Consumer]] implementation may wish to use [[ref:Feature]] detection techniques for [[ref:Features]] it does not support. Producing an error might be appropriate for certain unsupported [[ref:Features]], preventing submitting inappropriate or too much data, which might result in an error being produced by another [[Conformant Consumer]] implementation.
+
 Examples in this document use the [Verifiable Credentials Data Model](https://www.w3.org/TR/vc-data-model/) and the [Decentralized  Identifiers (DIDs)](https://www.w3.org/TR/did-core/) formats for illustrative purposes only; this specification is intended to support any JSON-serializable [[ref:Claim]] format.
 
 ## Presentation Definition
