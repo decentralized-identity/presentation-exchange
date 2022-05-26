@@ -11,6 +11,7 @@
     "input_descriptors": [
       {
         "id": "citizenship_input_1",
+        "intent_to_retain": false,
         "name": "EU Driver's License",
         "group": ["A"],
         "constraints": {
@@ -42,6 +43,7 @@
       },
       {
         "id": "citizenship_input_2",
+        "intent_to_retain": false,
         "name": "US Passport",
         "group": ["A"],
         "constraints": {

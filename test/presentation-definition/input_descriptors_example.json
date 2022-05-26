@@ -1,6 +1,7 @@
 {
   "presentation_definition": {
     "id": "32f54163-7166-48f1-93d8-ff217bdb0653",
+    "intent_to_retain": true,
     "input_descriptors": [
       {
         "id": "banking_input_1",

@@ -27,6 +27,7 @@
     "input_descriptors": [
       {
         "id": "banking_input_1",
+        "intent_to_retain": true,
         "name": "Bank Account Information",
         "purpose": "Bank Account required to remit payment.",
         "group": ["A"],
@@ -99,6 +100,7 @@
       },
       {
         "id": "banking_input_2",
+        "intent_to_retain": true,
         "name": "Bank Account Information",
         "purpose": "We can only remit payment to a currently-valid bank account.",
         "group": ["A"],
@@ -152,6 +154,7 @@
       },
       {
         "id": "employment_input",
+        "intent_to_retain": true,
         "name": "Employment History",
         "purpose": "We are only verifying one current employment relationship, not any other information about employment.",
         "group": ["B"],
@@ -177,6 +180,7 @@
       },
       {
         "id": "drivers_license_input_1",
+        "intent_to_retain": false,
         "name": "EU Driver's License",
         "group": ["C"],
         "constraints": {
@@ -209,6 +213,7 @@
       },
       {
         "id": "drivers_license_input_2",
+        "intent_to_retain": false,
         "name": "Driver's License from one of 50 US States",
         "group": ["C"],
         "constraints": {

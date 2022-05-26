@@ -4,6 +4,7 @@
     "input_descriptors": [
       {
         "id": "any type of credit card from any bank",
+        "intent_to_retain": true,
         "name": "any type of credit card from any bank",
         "purpose": "Please provide your credit card details",
         "constraints": {

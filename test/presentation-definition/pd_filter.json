@@ -4,6 +4,7 @@
     "input_descriptors": [
       {
         "id": "A specific type of VC",
+        "intent_to_retain": false,
         "name": "A specific type of VC",
         "purpose": "We want a VC of this type",
         "constraints": {

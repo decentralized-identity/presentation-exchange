@@ -1,5 +1,6 @@
 {
   "id": "drivers_license_information",
+  "intent_to_retain": false,
   "name": "Verify Valid License",
   "purpose": "We need you to show that your driver's license will be valid through December of this year.",
   "constraints": {

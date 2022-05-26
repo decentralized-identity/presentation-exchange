@@ -5,6 +5,7 @@
     "input_descriptors": [
       {
         "id": "bankaccount_input",
+        "intent_to_retain": true,
         "name": "Full Bank Account Routing Information",
         "purpose": "We can only remit payment to a currently-valid bank account, submitted as an ABA RTN + Acct # or IBAN.",
         "constraints": {
@@ -34,6 +35,7 @@
       },
       {
         "id": "us_passport_input",
+        "intent_to_retain": false,
         "name": "US Passport",
         "constraints": {
           "fields": [
