@@ -91,12 +91,6 @@ to this specification.
 ~ An entity that produces a [[ref:Presentation Definition]] or
 [[ref:Presentation Submission]] that conforms to this specification.
 
-[[def:Decentralized Identifiers, Decentralized Identifier, DID]]
-~ Unique ID URI string and PKI metadata document format for describing the
-cryptographic keys and other fundamental PKI values linked to a unique,
-user-controlled, self-sovereign identifier in a target system (i.e. blockchain,
-distributed ledger).
-
 [[def:Embed Locations]]
 ~ Embed Locations are the specific paths and indexes per [[ref:Embed Target]]
 where the [[ref:Verifier]] can expect to find the [[ref:Presentation
@@ -214,6 +208,8 @@ to support, extended functionality (relative to the base objects) by defining
 one or more properties on one or more objects.
 
 [[ref:Conformant Consumers]] are not required to support [[ref:Features]].
+
+Examples in this document use the [Verifiable Credentials Data Model](https://www.w3.org/TR/vc-data-model/) and the [Decentralized  Identifiers (DIDs)](https://www.w3.org/TR/did-core/) formats for illustrative purposes only; this specification is intended to support any JSON-serializable [[ref:Claim]] format.
 
 ## Presentation Definition
 
