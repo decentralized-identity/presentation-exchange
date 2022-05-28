@@ -1392,25 +1392,25 @@ https://tools.ietf.org/html/draft-handrews-json-schema-02
 ### Presentation Definition
 
 ```json
-[[insert: ./test/presentation-definition/schema.json]]
+[[insert: ./schemas/presentation-definition.json]]
 ```
 
 ### Presentation Submission
 
 ```json
-[[insert: ./test/presentation-submission/schema.json]]
+[[insert: ./schemas/presentation-submission.json]]
 ```
 
 ### Submission Requirements
 
 ```json
-[[insert: ./test/submission-requirements/schema.json]]
+[[insert: ./schemas/submission-requirements.json]]
 ```
 
 ### Format Declaration
 
 ```json
-[[insert: ./test/presentation-definition/formats-schema.json]]
+[[insert: ./schemas/presentation-definition-formats.json]]
 ```
 
 ## JSONPath Syntax Definition
