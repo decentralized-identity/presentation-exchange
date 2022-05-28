@@ -1439,43 +1439,43 @@ https://tools.ietf.org/html/draft-handrews-json-schema-02
 ### Presentation Definition (in an envelope)
 
 ```json
-[[insert: ./test/presentation-definition/schemas/presentation-definition-envelope.json]]
+[[insert: ./schemas/presentation-definition-envelope.json]]
 ```
 
 ### Presentation Definition (plain object)
 
 ```json
-[[insert: ./test/presentation-definition/schemas/presentation-definition.json]]
+[[insert: ./schemas/presentation-definition.json]]
 ```
 
 ### Input Descriptor
 
 ```json
-[[insert: ./test/presentation-definition/schemas/input-descriptor.json]]
+[[insert: ./schemas/input-descriptor.json]]
 ```
 
 ### Presentation Submission
 
 ```json
-[[insert: ./test/presentation-submission/schema.json]]
-```
-
-### Submission Requirements
-
-```json
-[[insert: ./test/submission-requirements/schema.json]]
+[[insert: ./schemas/presentation-submission.json]]
 ```
 
 ### Submission Requirement
 
 ```json
-[[insert: ./test/presentation-definition/schemas/submission-requirement.json]]
+[[insert: ./schemas/submission-requirement.json]]
+```
+
+### Submission Requirements
+
+```json
+[[insert: ./schemas/submission-requirements.json]]
 ```
 
 ### Format Declaration
 
 ```json
-[[insert: ./test/presentation-definition/schemas/format.json]]
+[[insert: ./schemas/presentation-definition-format.json]]
 ```
 
 ## JSONPath Syntax Definition
