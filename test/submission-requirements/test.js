@@ -21,10 +21,12 @@ const ajv = require('ajv');
  * 	necessary.
  **/
 
-describe('Submission Requirement', function () {
+const submissionRequirementsSchema = '/../../schemas/submission-requirements.json'
+
+describe('Submission Requirements', function () {
   describe('JSON Schema', function () {
     it('should validate the example object using JSON Schema Draft 7', function () {
-      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const schema = JSON.parse(fs.readFileSync(__dirname + submissionRequirementsSchema));
       const data = JSON.parse(fs.readFileSync(__dirname + '/example.json'));
       const jv = new ajv({allErrors: true});
       const validate = jv.compile(schema);
@@ -35,7 +37,7 @@ describe('Submission Requirement', function () {
     });
 
     it('should validate the all example object using JSON Schema Draft 7', function () {
-      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const schema = JSON.parse(fs.readFileSync(__dirname + submissionRequirementsSchema));
       const data = JSON.parse(fs.readFileSync(__dirname + '/all_example.json'));
       const jv = new ajv({allErrors: true});
       const validate = jv.compile(schema);
@@ -46,7 +48,7 @@ describe('Submission Requirement', function () {
     });
 
     it('should validate the pick 1 example object using JSON Schema Draft 7', function () {
-      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const schema = JSON.parse(fs.readFileSync(__dirname + submissionRequirementsSchema));
       const data = JSON.parse(fs.readFileSync(__dirname + '/pick_1_example.json'));
       const jv = new ajv({allErrors: true});
       const validate = jv.compile(schema);
@@ -57,7 +59,7 @@ describe('Submission Requirement', function () {
     });
 
     it('should validate the pick 2 example object using JSON Schema Draft 7', function () {
-      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const schema = JSON.parse(fs.readFileSync(__dirname + submissionRequirementsSchema));
       const data = JSON.parse(fs.readFileSync(__dirname + '/pick_2_example.json'));
       const jv = new ajv({allErrors: true});
       const validate = jv.compile(schema);
@@ -68,7 +70,7 @@ describe('Submission Requirement', function () {
     });
 
     it('should validate the pick 3 example object using JSON Schema Draft 7', function () {
-      const schema = JSON.parse(fs.readFileSync(__dirname + '/schema.json'));
+      const schema = JSON.parse(fs.readFileSync(__dirname + submissionRequirementsSchema));
       const data = JSON.parse(fs.readFileSync(__dirname + '/pick_3_example.json'));
       const jv = new ajv({allErrors: true});
       const validate = jv.compile(schema);
