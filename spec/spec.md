@@ -336,7 +336,7 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
 - The [[ref:Input Descriptor Object]] ****MUST**** contain an `intent_to_retain`
   property.
   The value of the `intent_to_retain` property ****MUST**** be a boolean that 
-  indicates the [[ref:Verifier]] intents to retain the [[ref:Claim]]'s data being
+  indicates the [[ref:Verifier]]'s intent to retain the [[ref:Claim]]'s data being
   requested.
   A [[ref:Verifier]] shall not retain any data, including digests, signatures,
   and derived data received, except for [[ref:Presentation Submission]] descriptors
