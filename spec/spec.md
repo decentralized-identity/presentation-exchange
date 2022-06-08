@@ -319,8 +319,7 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
 [[ref:Verifier]] requires of a [[ref:Holder]]. All [[ref:Input Descriptors]]
 ****MUST**** be satisfied, unless otherwise specified by a [[ref:Feature]].
 
-[[ref: Input Descriptor Objects]] contain an identifier, an intent to retain
- indication and may contain constraints on data values, and an explanation why
+[[ref: Input Descriptor Objects]] contain an identifier and may contain constraints on data values, and an explanation why
  a certain item or set of data is being requested.
 
 #### Input Descriptor Object
@@ -333,17 +332,6 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
   The value of the `id` property ****MUST**** be a string that does not
   conflict with the `id` of another [[ref:Input Descriptor Object]] in the same
   [[ref:Presentation Definition]].
-- The [[ref:Input Descriptor Object]] ****MUST**** contain an `intent_to_retain`
-  property.
-  The value of the `intent_to_retain` property ****MUST**** be a boolean that 
-  indicates the [[ref:Verifier]] intents to retain the [[ref:Claim]]'s data being
-  requested.
-  A [[ref:Verifier]] shall not retain any data, including digests, signatures,
-  and derived data received, except for [[ref:Presentation Submission]] descriptors
-  for which the accompanying [[ref:Input Descriptor Object]]'s `intent_to_retain`
-  property was set to true.
-  Retain is defined as: “to store for a period longer than necessary to conduct the
-  exchange between [[ref:Holder]] and [[ref:Verifier]] in realtime”.
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `name` property. If
   present, its value ****SHOULD**** be a human-friendly name that describes what
   the target schema represents.
@@ -1169,6 +1157,28 @@ When using this [[ref:Feature]]:
 - `frame` - The [[ref:Presentation Definition]] ****MAY**** contain a `frame`
   property. If present, its value ****MUST**** be a
   [JSON LD Framing Document](https://w3c.github.io/json-ld-framing/) object.
+
+### Retention Feature
+
+The Retention [[ref:Feature]] extends the [[ref:Input Descriptor Object]]'s _field_ 
+object, allowing a Verifier to indicate it will retain the submitted value for the
+specific field.    
+
+A [[ref:Verifier]] must not retain any data, including digests, signatures,
+and derived data received, except for claims from the [[ref:Presentation Submission]] descriptors
+for which the accompanying [[ref:Input Descriptor Object]]'s _field_ `intent_to_retain`
+property was set to true.
+
+Retain is defined as: “to store for a period longer than necessary to conduct the
+exchange between [[ref:Holder]] and [[ref:Verifier]] in realtime”.
+
+When using this [[ref:Feature]]:
+- `intent_to_retain` - The _fields_ object inside an [[ref:Input Descriptor Object]] ****MAY****
+ contain an `intent_to_retain` property.
+ If present, its value ****MUST**** be a boolean that indicates the [[ref:Verifier]]
+ intents to retain the [[ref:Claim]]'s data being requested. 
+ If not present, this feature is not enabled, which equates to `intent_to_retain` being `false` 
+  
 
 ## Input Evaluation
 

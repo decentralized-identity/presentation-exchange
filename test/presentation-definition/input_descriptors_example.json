@@ -4,7 +4,6 @@
     "input_descriptors": [
       {
         "id": "banking_input_1",
-        "intent_to_retain": true,
         "name": "Bank Account Information",
         "purpose": "We can only remit payment to a currently-valid bank account.",
         "group": [
@@ -29,7 +28,8 @@
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
-              }
+              },
+              "intent_to_retain": true
             },
             {
               "path": [
@@ -41,7 +41,8 @@
               "filter": {
                 "type": "string",
                 "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
-              }
+              },
+              "intent_to_retain": true
             },
             {
               "path": [
@@ -53,7 +54,8 @@
               "filter": {
                 "type": "string",
                 "pattern": "^[0-9]{9}|^([a-zA-Z]){4}([a-zA-Z]){2}([0-9a-zA-Z]){2}([0-9a-zA-Z]{3})?$"
-              }
+              },
+              "intent_to_retain": true
             }
           ]
         }

@@ -27,7 +27,6 @@
     "input_descriptors": [
       {
         "id": "banking_input_1",
-        "intent_to_retain": true,
         "name": "Bank Account Information",
         "purpose": "Bank Account required to remit payment.",
         "group": ["A"],
@@ -85,7 +84,8 @@
               "filter": {
                 "type": "string",
                 "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
-              }
+              },
+              "intent_to_retain": true
             },
             {
               "path": ["$.credentialSubject.portfolio_value", "$.vc.credentialSubject.portfolio_value", "$.portfolio_value"],
@@ -93,14 +93,14 @@
               "filter": {
                 "type": "number",
                 "minimum": 1000000
-              }
+              },
+              "intent_to_retain": true
             }
           ]
         }
       },
       {
         "id": "banking_input_2",
-        "intent_to_retain": true,
         "name": "Bank Account Information",
         "purpose": "We can only remit payment to a currently-valid bank account.",
         "group": ["A"],
@@ -135,7 +135,8 @@
               "filter": {
                 "type": "string",
                 "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
-              }
+              },
+              "intent_to_retain": true
             },
             {
               "path": [
@@ -147,14 +148,14 @@
               "filter": {
                 "type": "string",
                 "pattern": "^[0-9]{9}|^([a-zA-Z]){4}([a-zA-Z]){2}([0-9a-zA-Z]){2}([0-9a-zA-Z]{3})?$"
-              }
+              },
+              "intent_to_retain": true
             }
           ]
         }
       },
       {
         "id": "employment_input",
-        "intent_to_retain": true,
         "name": "Employment History",
         "purpose": "We are only verifying one current employment relationship, not any other information about employment.",
         "group": ["B"],
@@ -180,7 +181,6 @@
       },
       {
         "id": "drivers_license_input_1",
-        "intent_to_retain": false,
         "name": "EU Driver's License",
         "group": ["C"],
         "constraints": {
@@ -213,7 +213,6 @@
       },
       {
         "id": "drivers_license_input_2",
-        "intent_to_retain": false,
         "name": "Driver's License from one of 50 US States",
         "group": ["C"],
         "constraints": {
