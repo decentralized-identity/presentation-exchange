@@ -1,6 +1,5 @@
 {
   "id": "drivers_license_information",
-  "intent_to_retain": false,
   "name": "Verify Valid License",
   "purpose": "We need to know that your license has not been revoked.",
   "constraints": {
