@@ -1177,7 +1177,7 @@ When using this [[ref:Feature]]:
 
 ### Retention Feature
 
-The Retention [[ref:Feature]] extends the [[ref:Input Descriptor Object]]'s _field_ 
+``The Retention [[ref:Feature]] extends the [[ref:Input Descriptor Object]]'s _field_ 
 object, allowing a Verifier to indicate it will retain the submitted value for the
 specific field.    
 
@@ -1193,8 +1193,7 @@ When using this [[ref:Feature]]:
 - `intent_to_retain` - The _fields_ object inside an [[ref:Input Descriptor Object]] ****MAY****
  contain an `intent_to_retain` property.
  If present, its value ****MUST**** be a boolean that indicates the [[ref:Verifier]]
- intents to retain the [[ref:Claim]]'s data being requested. 
- If not present, this feature is not enabled, which equates to `intent_to_retain` being `false` 
+ intents to retain the [[ref:Claim]]'s data being requested.
   
 
 ## Input Evaluation
