@@ -1179,7 +1179,7 @@ When using this [[ref:Feature]]:
 
 ``The Retention [[ref:Feature]] extends the [[ref:Input Descriptor Object]]'s _field_ 
 object, allowing a Verifier to indicate it will retain the submitted value for the
-specific field.    
+specific field.   It is currently presented to support mDL systems, and may be deprecated in the future of a separate specification for more robust mDL interoperability is created at a later time.
 
 A [[ref:Verifier]] must not retain any data, including digests, signatures,
 and derived data received, except for claims from the [[ref:Presentation Submission]] descriptors
