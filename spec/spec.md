@@ -311,7 +311,9 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
       format-specific algorithmic identifier references, as noted in the
       [Claim Format Designations](#claim-format-designations) section.
 
-      For example:
+      An illustrative example containing all of the formats in use by the
+      specifying implementers at time of writing (also reflected in the provided
+      JSON Schema) is as follows::
 
 ```json
 [[insert: ./test/presentation-definition/format_example.json]]
