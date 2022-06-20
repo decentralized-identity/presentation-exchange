@@ -1378,7 +1378,7 @@ the [[ref:Claim]].
 Within the _Presentation Exchange_ specification, there are numerous sections
 where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] variants
 they support and are submitting. The following are the normalized references
-used within the specification:
+used by the examples within the specification:
 
 - `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7519]]
   that will be submitted in the form of a JWT encoded string. Expression of
@@ -1407,6 +1407,10 @@ used within the specification:
   be conveyed using a `proof_type` property paired with values that are
   identifiers from the
   [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+
+::: note
+Note that the above is not an exhaustive list or a normative registry; it is merely the recommended core set upon which this specification was defined.
+:::
 
 ## JSON Schemas
 
