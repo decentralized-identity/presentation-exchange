@@ -321,7 +321,7 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
 
 ::: note
   Including purpose information should not be confused with consent to process 
-  personal data NOR as a substitute for an, e.g., GDPR-conformant expression of 
+  personal data NOR taken as a substitute for an, e.g., GDPR-conformant expression of 
   "purpose"; instead, it should be thought of as purely informative to the user.
   Implementers are encouraged to do a proper review of applicable regulatory
   requirements around consent and purpose disclosures. 
