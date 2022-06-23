@@ -1372,7 +1372,6 @@ There are a number of mechanisms for safely embedding biometric information in a
 [[ref:Claim]] such that only a person who can confirm the biometric may present
 the [[ref:Claim]].
 
-
 ## Claim Format Designations
 
 Within the _Presentation Exchange_ specification, there are numerous sections
@@ -1382,8 +1381,10 @@ abbreviation tags which are defined in a separate
 [registry](https://identity.foundation/claim-format-registry/#registry) also 
 hosted at the DIF, and maintained by the same authors as this specification. To
 add abbreviations for a claim format supported by a working implementation, please
-follow these instructions and open a PR to open a pull request at the 
-[registry repository](https://identity.foundation/claim-format-registry/#structure-of-the-registry).  This registry is not meant to be exhaustive or 
+follow [these instructions](https://identity.foundation/claim-format-registry/#structure-of-the-registry)
+and open a PR to open a pull request at the 
+[registry repository](https://github.com/decentralized-identity/claim-format-registry/).  
+This registry is not meant to be exhaustive or 
 restrictive; an implementation that supports additional claim formats can still
 be considered fully conformant.
 
