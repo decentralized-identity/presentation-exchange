@@ -1376,41 +1376,16 @@ the [[ref:Claim]].
 ## Claim Format Designations
 
 Within the _Presentation Exchange_ specification, there are numerous sections
-where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] variants
-they support and are submitting. The following are the normalized references
-used by the examples within the specification:
-
-- `jwt` - the format is a JSON Web Token (JWTs) [[spec:rfc7519]]
-  that will be submitted in the form of a JWT encoded string. Expression of
-  supported algorithms in relation to this format ****MUST**** be conveyed using
-  an `alg` property paired with values that are identifiers from the JSON Web
-  Algorithms registry [[spec:RFC7518]].
-- `jwt_vc`, `jwt_vp` - these formats are JSON Web Tokens (JWTs) [[spec:rfc7519]]
-  that will be submitted in the form of a JWT encoded string, and the body of
-  the decoded JWT string is defined in the JSON Web Token (JWT) [[spec:rfc7519]]
-  section of the
-  [W3C Verifiable Credentials specification](https://www.w3.org/TR/vc-data-model/#json-web-token).
-  Expression of supported algorithms in relation to these formats ****MUST****
-  be conveyed using an `alg` property paired with values that are identifiers
-  from the JSON Web Algorithms registry [[spec:RFC7518]].
-- `ldp` - the format is a Linked Data Proof [[ref:Linked Data Proofs]] that will
-  be submitted as an object.
-  Expression of supported algorithms in relation to these formats ****MUST****
-  be conveyed using a `proof_type` property with values that are identifiers
-  from the
-  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
-- `ldp_vc`, `ldp_vp` - Verifiable Credential Linked Data Proof and Verifiable Presentation Linked
-  Data Proof formats. These are descriptions of formats normatively defined in the W3C Verifiable
-  Credentials specification [[spec:VC-DATA MODEL]], and will be submitted in the form of a JSON
-  object.
-  Expression of supported algorithms in relation to these formats ****MUST****
-  be conveyed using a `proof_type` property paired with values that are
-  identifiers from the
-  [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
-
-::: note
-Note that the above is not an exhaustive list or a normative registry; it is merely the recommended core set upon which this specification was defined.
-:::
+where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] format 
+variants they can receive or are submitting. These formats are codified by
+abbreviation tags which are defined in a separate 
+[registry](https://identity.foundation/claim-format-registry/#registry) also 
+hosted at the DIF, and maintained by the same authors as this specification. To
+add abbreviations for a claim format supported by a working implementation, please
+follow these instructions and open a PR to open a pull request at the 
+[registry repository](https://identity.foundation/claim-format-registry/#structure-of-the-registry).  This registry is not meant to be exhaustive or 
+restrictive; an implementation that supports additional claim formats can still
+be considered fully conformant.
 
 ## JSON Schemas
 
