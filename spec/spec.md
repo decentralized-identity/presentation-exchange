@@ -1384,7 +1384,7 @@ add abbreviations for a claim format supported by a working implementation, plea
 follow [these instructions](https://identity.foundation/claim-format-registry/#structure-of-the-registry)
 and open a PR to open a pull request at the 
 [registry repository](https://github.com/decentralized-identity/claim-format-registry/).  
-This registry is not meant to be exhaustive or 
+This registry is not meant to be exhaustive nor 
 restrictive; an implementation that supports additional claim formats can still
 be considered fully conformant.
 
