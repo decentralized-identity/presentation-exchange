@@ -338,9 +338,8 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
 [[ref:Verifier]] requires of a [[ref:Holder]]. All [[ref:Input Descriptors]]
 ****MUST**** be satisfied, unless otherwise specified by a [[ref:Feature]].
 
-[[ref: Input Descriptor Objects]] contain an identifier and may contain
- constraints on data values, and an explanation why a certain item or set of
-data is being requested.
+[[ref: Input Descriptor Objects]] contain an identifier and may contain constraints on data values, and an explanation why
+ a certain item or set of data is being requested.
 
 #### Input Descriptor Object
 
@@ -1177,6 +1176,28 @@ When using this [[ref:Feature]]:
 - `frame` - The [[ref:Presentation Definition]] ****MAY**** contain a `frame`
   property. If present, its value ****MUST**** be a
   [JSON LD Framing Document](https://w3c.github.io/json-ld-framing/) object.
+
+### Retention Feature
+
+``The Retention [[ref:Feature]] extends the [[ref:Input Descriptor Object]]'s _field_ 
+object, allowing a Verifier to indicate it will retain the submitted value for the
+specific field.  It is currently presented to support mDL systems, and may be deprecated in the
+ future or moved to a separate specification for more robust mDL interoperability at a later time.
+
+A [[ref:Conformant Consumer]] ****MUST NOT**** retain any data, including digests, signatures,
+and derived data received, except for claims from the [[ref:Presentation Submission]] descriptors
+for which the accompanying [[ref:Input Descriptor Object]]'s _field_ `intent_to_retain`
+property was set to true.
+
+Retain is defined as: “to store for a period longer than necessary to conduct the
+exchange between [[ref:Holder]] and [[ref:Verifier]] in realtime”.
+
+When using this [[ref:Feature]]:
+- `intent_to_retain` - The _fields_ object inside an [[ref:Input Descriptor Object]] ****MAY****
+ contain an `intent_to_retain` property.
+ If present, its value ****MUST**** be a boolean that indicates the [[ref:Verifier]]
+ intends to retain the [[ref:Claim]]'s data being requested.
+  
 
 ## Input Evaluation
 

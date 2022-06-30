@@ -84,7 +84,8 @@
               "filter": {
                 "type": "string",
                 "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
-              }
+              },
+              "intent_to_retain": true
             },
             {
               "path": ["$.credentialSubject.portfolio_value", "$.vc.credentialSubject.portfolio_value", "$.portfolio_value"],
@@ -92,7 +93,8 @@
               "filter": {
                 "type": "number",
                 "minimum": 1000000
-              }
+              },
+              "intent_to_retain": true
             }
           ]
         }
@@ -133,7 +135,8 @@
               "filter": {
                 "type": "string",
                 "pattern": "^[0-9]{10-12}|^(DE|FR)[0-9]{2}\\s?([0-9a-zA-Z]{4}\\s?){4}[0-9a-zA-Z]{2}$"
-              }
+              },
+              "intent_to_retain": true
             },
             {
               "path": [
@@ -145,7 +148,8 @@
               "filter": {
                 "type": "string",
                 "pattern": "^[0-9]{9}|^([a-zA-Z]){4}([a-zA-Z]){2}([0-9a-zA-Z]){2}([0-9a-zA-Z]{3})?$"
-              }
+              },
+              "intent_to_retain": true
             }
           ]
         }

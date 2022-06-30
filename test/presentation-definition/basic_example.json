@@ -27,7 +27,8 @@
               "filter": {
                 "type": "string",
                 "pattern": "did:example:123|did:example:456"
-              }
+              },
+              "intent_to_retain": true
             }
           ]
         }
