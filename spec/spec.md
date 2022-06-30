@@ -1180,9 +1180,9 @@ When using this [[ref:Feature]]:
 ``The Retention [[ref:Feature]] extends the [[ref:Input Descriptor Object]]'s _field_ 
 object, allowing a Verifier to indicate it will retain the submitted value for the
 specific field.  It is currently presented to support mDL systems, and may be deprecated in the
- future or a separate specification for more robust mDL interoperability is created at a later time.
+ future or moved to a separate specification for more robust mDL interoperability at a later time.
 
-A [[ref:Verifier]] must not retain any data, including digests, signatures,
+A [[ref:Conformant Consumer]] ****MUST NOT**** retain any data, including digests, signatures,
 and derived data received, except for claims from the [[ref:Presentation Submission]] descriptors
 for which the accompanying [[ref:Input Descriptor Object]]'s _field_ `intent_to_retain`
 property was set to true.
@@ -1194,7 +1194,7 @@ When using this [[ref:Feature]]:
 - `intent_to_retain` - The _fields_ object inside an [[ref:Input Descriptor Object]] ****MAY****
  contain an `intent_to_retain` property.
  If present, its value ****MUST**** be a boolean that indicates the [[ref:Verifier]]
- intents to retain the [[ref:Claim]]'s data being requested.
+ intends to retain the [[ref:Claim]]'s data being requested.
   
 
 ## Input Evaluation
