@@ -170,7 +170,7 @@
     "name": { "type": "string" },
     "purpose": { "type": "string" },
     "format": {
-      "$ref": "https://identity.foundation/claim-format-registry/schemas/presentation-definition-claim-format-designations.json"
+      "$ref": "http://identity.foundation/claim-format-registry/schemas/presentation-definition-claim-format-designations.json"
     },
     "frame": {
       "type": "object",

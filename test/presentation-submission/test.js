@@ -1,6 +1,6 @@
 const fs = require('fs');
 const assert = require('assert');
-const ajv = require('ajv');
+const ajv = require('../__fixtures__/ajv');
 
 
 const presentationSubmissionSchema = '/../../schemas/presentation-submission.json'
@@ -10,8 +10,7 @@ describe('Presentation Submission', function () {
     it('should validate the example object using JSON Schema Draft 7', function () {
       const schema = JSON.parse(fs.readFileSync(__dirname + presentationSubmissionSchema));
       const data = JSON.parse(fs.readFileSync(__dirname + '/example.json'));
-      const jv = new ajv({allErrors: true});
-      const validate = jv.compile(schema);
+      const validate = ajv.compile(schema);
       const valid = validate(data);
 
       assert.equal(null, validate.errors);
@@ -21,8 +20,7 @@ describe('Presentation Submission', function () {
     it('should validate the nested submission example object using JSON Schema Draft 7', function () {
       const schema = JSON.parse(fs.readFileSync(__dirname + presentationSubmissionSchema));
       const data = JSON.parse(fs.readFileSync(__dirname + '/nested_submission_example.json'));
-      const jv = new ajv({allErrors: true});
-      const validate = jv.compile(schema);
+      const validate = ajv.compile(schema);
       const valid = validate(data);
 
       assert.equal(null, validate.errors);
@@ -34,8 +32,7 @@ describe('Presentation Submission', function () {
       // Allow additional properties for this
       schema.additionalProperties = true
       const data = JSON.parse(fs.readFileSync(__dirname + '/appendix_VP_example.json'));
-      const jv = new ajv({allErrors: true});
-      const validate = jv.compile(schema);
+      const validate = ajv.compile(schema);
       const valid = validate(data);
 
       assert.equal(null, validate.errors);
@@ -47,8 +44,7 @@ describe('Presentation Submission', function () {
       // Allow additional properties for this
       schema.additionalProperties = true
       const data = JSON.parse(fs.readFileSync(__dirname + '/appendix_OIDC_example.json'));
-      const jv = new ajv({allErrors: true});
-      const validate = jv.compile(schema);
+      const validate = ajv.compile(schema);
       const valid = validate(data);
 
       assert.equal(null, validate.errors);
