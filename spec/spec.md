@@ -1438,7 +1438,7 @@ https://tools.ietf.org/html/draft-handrews-json-schema-02
 
 ### Format Declaration
 
-Defined in the [Claim Format Registry](https://identity.foundation/claim-format-registry/#schemas).
+Defined in the [Claim Format Registry](https://identity.foundation/claim-format-registry/#schemas)
 
 ## JSONPath Syntax Definition
 
@@ -1449,8 +1449,8 @@ specification that call for JSONPath expression execution.
 
 JSONPath              | Description
 ----------------------|------------
-` $`                  | The root object/element
-` @`                  | The current object/element
+`$`                   | The root object/element
+`@`                   | The current object/element
 `.`                   | Child member operator
 `..`	                | Recursive descendant operator; JSONPath borrows this syntax from E4X
 `*`	                  | Wildcard matching all objects/elements regardless their names

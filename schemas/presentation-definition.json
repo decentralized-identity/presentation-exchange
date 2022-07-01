@@ -170,11 +170,7 @@
     "name": { "type": "string" },
     "purpose": { "type": "string" },
     "format": {
-      "type": "object",
-      "additionalProperties": false,
-      "patternProperties": {
-        "$ref": "https://identity.foundation/claim-format-registry/schemas/presentation-definition-claim-format-designations.json"
-      }
+      "$ref": "https://identity.foundation/claim-format-registry/schemas/presentation-definition-claim-format-designations.json"
     },
     "frame": {
       "type": "object",
