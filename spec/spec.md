@@ -1400,9 +1400,11 @@ where [[ref:Verifiers]] and [[ref:Holders]] convey what [[ref:Claim]] format
 variants they can receive or are submitting. These formats are codified by
 abbreviation tags which are defined in a separate 
 [registry](https://identity.foundation/claim-format-registry/#registry) also 
-hosted at the DIF, and maintained by the same authors as this specification. To
-add abbreviations for a claim format supported by a working implementation, please
-follow [these instructions](https://identity.foundation/claim-format-registry/#structure-of-the-registry)
+hosted at the DIF, and maintained by the same authors as this specification. 
+The registry includes JSON Schema documents, which are referenced in schemas
+defined in this specification. To add abbreviations for a claim format supported
+ by a working implementation, please follow 
+ [these instructions](https://identity.foundation/claim-format-registry/#structure-of-the-registry)
 and open a PR to open a pull request at the 
 [registry repository](https://github.com/decentralized-identity/claim-format-registry/).  
 This registry is not meant to be exhaustive nor 
@@ -1457,9 +1459,7 @@ https://tools.ietf.org/html/draft-handrews-json-schema-02
 
 ### Format Declaration
 
-```json
-[[insert: ./schemas/presentation-definition-format.json]]
-```
+Defined in the [Claim Format Registry](https://identity.foundation/claim-format-registry/#schemas)
 
 ## JSONPath Syntax Definition
 
@@ -1470,8 +1470,8 @@ specification that call for JSONPath expression execution.
 
 JSONPath              | Description
 ----------------------|------------
-` $`                  | The root object/element
-` @`                  | The current object/element
+`$`                   | The root object/element
+`@`                   | The current object/element
 `.`                   | Child member operator
 `..`	                | Recursive descendant operator; JSONPath borrows this syntax from E4X
 `*`	                  | Wildcard matching all objects/elements regardless their names

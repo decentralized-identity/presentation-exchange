@@ -25,11 +25,10 @@
         "path": { "type": "string" },
         "path_nested": {
           "type": "object",
-            "$ref": "#/definitions/descriptor"
+          "$ref": "#/definitions/descriptor"
         },
         "format": {
-          "type": "string",
-          "enum": ["jwt", "jwt_vc", "jwt_vp", "ldp", "ldp_vc", "ldp_vp"]
+          "$ref": "http://identity.foundation/claim-format-registry/schemas/presentation-submission-claim-format-designations.json#/definitions/format"
         }
       },
       "required": ["id", "path", "format"],

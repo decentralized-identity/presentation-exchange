@@ -172,34 +172,7 @@
     "name": { "type": "string" },
     "purpose": { "type": "string" },
     "format": {
-      "type": "object",
-      "additionalProperties": false,
-      "patternProperties": {
-        "^jwt$|^jwt_vc$|^jwt_vp$": {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "alg": {
-              "type": "array",
-              "minItems": 1,
-              "items": { "type": "string" }
-            }
-          },
-          "required": ["alg"]
-        },
-        "^ldp_vc$|^ldp_vp$|^ldp$": {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "proof_type": {
-              "type": "array",
-              "minItems": 1,
-              "items": { "type": "string" }
-            }
-          },
-          "required": ["proof_type"]
-        }
-      }
+      "$ref": "http://identity.foundation/claim-format-registry/schemas/presentation-definition-claim-format-designations.json"
     },
     "frame": {
       "type": "object",
