@@ -61,6 +61,9 @@
         "id": { "type": "string" },
         "name": { "type": "string" },
         "purpose": { "type": "string" },
+        "format": {
+          "$ref": "http://identity.foundation/claim-format-registry/schemas/presentation-definition-claim-format-designations.json"
+        },
         "group": { "type": "array", "items": { "type": "string" } },
         "constraints": {
           "type": "object",
