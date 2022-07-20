@@ -27,7 +27,7 @@ Presentation Exchange 2.0.0
 **Participate:**
 ~ [GitHub repo](https://github.com/decentralized-identity/presentation-exchange)
 ~ [File a bug](https://github.com/decentralized-identity/presentation-exchange/issues)
-~ [Commit history](https://github.com/decentralized-identity/presentation-exchange/commits/master)
+~ [Commit history](https://github.com/decentralized-identity/presentation-exchange/commits/main)
 
 ------------------------------------
 
