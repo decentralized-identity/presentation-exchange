@@ -393,7 +393,7 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
           for which the field is being requested.
         - The _fields object_ ****MAY**** contain a `name` property. If
           present, its value ****SHOULD**** be a human-friendly name that 
-          describes what the target schema represents.
+          describes what the target field represents.
         - The _fields object_ ****MAY**** contain a `filter` property, and if
           present its value ****MUST**** be a
           [JSON Schema](https://json-schema.org/specification.html) descriptor
