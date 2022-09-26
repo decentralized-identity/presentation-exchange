@@ -358,9 +358,12 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
   (e.g., `jwt`, `jwt_vc`, `jwt_vp`, etc.). This `format` property is identical in
   value signature to the top-level `format` object, but can be used to specifically
   constrain submission of a single input to a subset of formats or algorithms.
+- The [[ref:Input Descriptor Object]] ****MAY**** contain an `allow_self_issued` property, and if present its value ****MUST**** be a boolean. A value of `true` indicates the Holder is allowed to provide the requirements described in the [[ref:Input Descriptor Object]] as a self-issued credential/submission, whereas the value `false` or the absence of the property indicates the Holder is not allowed to provide the requirements described in the [[ref:Input Descriptor Object]] as a self-issued credential/submission.
+  If present, its value ****MUST**** be a string that describes the purpose for
+  which the [[ref:Claim]]'s data is being requested.
 - The [[ref:Input Descriptor Object]] ****MUST**** contain a `constraints`
-property. Its value ****MUST**** be an object composed of _at least one_
-of the following properties, unless otherwise specified by a [[ref:Feature]]:
+  property. Its value ****MUST**** be an object composed of _at least one_
+  of the following properties, unless otherwise specified by a [[ref:Feature]]:
     - The _constraints object_ ****MAY**** contain a `fields` property. Fields
     ****SHALL**** be processed forward from 0-index, so if a [[ref:Verifier]]
     desires to reduce processing by checking the most defining characteristics

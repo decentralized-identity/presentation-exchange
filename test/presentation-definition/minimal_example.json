@@ -12,8 +12,7 @@
             {
               "path": [
                 "$.credentialSubject.dateOfBirth",
-                "$.credentialSubject.license-number",
-                "$.credentialSubject.license-state"
+                "$.credentialSubject.dob"
               ]
             }
           ]
