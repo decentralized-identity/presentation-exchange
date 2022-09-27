@@ -1023,14 +1023,19 @@ When using this [[ref:Feature]]:
 - The _constraints object_ ****MAY**** contain a `subject_is_issuer`
   property. If present, its value ****MUST**** be one of the following
   strings:
-    - `required` - This indicates that the [[ref:Conformant Consumer]]
+    - `required` - This indicates the [[ref:Conformant Consumer]]
       ****MUST**** submit a response that has been _self-attested_, i.e., the
       [[ref:Claim]] used in the presentation was 'issued' by the
       [[Ref:Subject]] of the [[ref:Claim]].
-    - `preferred` - This indicates that it is ****RECOMMENDED**** that the
+    - `preferred` - This indicates it is ****RECOMMENDED**** that the
       [[ref:Conformant Consumer]] submit a response that has been
       _self-attested_, i.e., the [[ref:Claim]] used in the presentation was
       'issued' by the [[Ref:Subject]] of the [[ref:Claim]].
+    - `allowed` - This indicates the [[ref:Conformant Consumer]] ****MAY**** 
+      submit a response for the input in question that is composed of 
+      _self-attested_ data. This can helpful in cases where a [[ref:Verifier]] wants 
+      to allow the [[ref:Holder]] to submit data for processing as they would 
+      a form.
   :::note
   The `subject_is_issuer` property could be used by a [[ref:Verifier]] to
   require that certain inputs be _self_attested_. For example, a college
@@ -1039,6 +1044,10 @@ When using this [[ref:Feature]]:
   [[ref:Verifier]] would be able to require that the essay be provided by
   the same [[Ref:Subject]] as any other [[ref:Claims]] in the presented
   application.
+  :::
+  :::note
+  The `subject_is_issuer` property can be used by [[ref:Verifiers]] as a means 
+  to ingest user-entered data in accordance with the provided constraints. An example of this would be to provide a fallback by adding an [[ref:Input Descriptor]] that allows `subject_is_issuer` self-attested data as an option under a [[ref:Submission Requirements]] group, which the [[ref:Holder]] can fill out and submit if they do not have anything to satisfy the other options present.
   :::
 - The _constraints object_ ****MAY**** contain an `is_holder` property. If
   present, its value ****MUST**** be an array of objects composed as
