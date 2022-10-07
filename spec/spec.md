@@ -397,6 +397,10 @@ of the following properties, unless otherwise specified by a [[ref:Feature]]:
           used to filter against the values returned from evaluation of the
           [JSONPath](https://goessner.net/articles/JsonPath/) string
           expressions in the `path` array.
+        - The _fields object_ ****MAY**** contain an `optional` property. The value
+          of this property ****MUST**** be a boolean, wherein `true` indicates the 
+          field is optional, and `false` or non-presence of the property indicates 
+          the field is required.
           :::note IDO Filter
           Remember a valid JSON Schema ****MAY**** contain [additional keywords](https://datatracker.ietf.org/doc/html/draft-handrews-json-schema-01#section-6.4) (e.g., `formatMinimum` and `formatMaximum`) that require extensions to handle properly.
 
@@ -1030,7 +1034,9 @@ When using this [[ref:Feature]]:
     - `preferred` - This indicates that it is ****RECOMMENDED**** that the
       [[ref:Conformant Consumer]] submit a response that has been
       _self-attested_, i.e., the [[ref:Claim]] used in the presentation was
-      'issued' by the [[Ref:Subject]] of the [[ref:Claim]].
+      'issued' by the [[Ref:Subject]] of the [[ref:Claim]]. When set to 
+      `preferred`, this property can also act as a prompt for consuming apps 
+      to initiate capture of user-entered data for _self-attested_ submission.
   :::note
   The `subject_is_issuer` property could be used by a [[ref:Verifier]] to
   require that certain inputs be _self_attested_. For example, a college
@@ -1039,6 +1045,17 @@ When using this [[ref:Feature]]:
   [[ref:Verifier]] would be able to require that the essay be provided by
   the same [[Ref:Subject]] as any other [[ref:Claims]] in the presented
   application.
+  :::
+  :::note
+  The `subject_is_issuer` property can be used by [[ref:Verifiers]] as a means 
+  to prompt for user-entered data flows to be facilitated by client apps 
+  (e.g. user agent wallets). This can be conveyed to consuming apps by setting 
+  the `subject_is_issuer` property to `preferred` on the applicable 
+  [[ref:Input Descriptor]] and including whatever `fields` are desired for 
+  submission. An example use of this functionality would be to provide a 
+  fallback for the user to fill out a form that is generated based on the 
+  JSON Schema `filter` objects present in the `fields` of an [[ref:Input Descriptor]] 
+  for submission as _self-attested_ data.
   :::
 - The _constraints object_ ****MAY**** contain an `is_holder` property. If
   present, its value ****MUST**** be an array of objects composed as
@@ -1062,7 +1079,7 @@ When using this [[ref:Feature]]:
 
   The `is_holder` property would be used by a [[ref:Verifier]] to require
   that certain inputs be provided by a certain [[Ref:Subject]]. For example,
-  an identity verification [[ref:Presentation refinition]] might contain an
+  an identity verification [[ref:Presentation Definition]] might contain an
   [[ref:Input Descriptor]] for a birthdate from a birth certificate. Using
   `is_holder`, the [[ref:Verifier]] would be able to require that the
   [[ref:Holder]] of the birth certificate [[ref:Claim]] is the same as the
@@ -1223,7 +1240,7 @@ For each candidate input:
         Repeat until a _Field Query Result_ is found, or the `path` array
         elements are exhausted:
         1. If the result returned no JSONPath match, skip to the next
-          `path` array element
+          `path` array element.
         2. Else, evaluate the first JSONPath match (_candidate_) as follows:
            1. If the _fields object_ has no `filter`, or if _candidate_
               validates against the
@@ -1242,8 +1259,9 @@ For each candidate input:
               - set _Field Query Result_ to be _candidate_
 
            2. Else, skip to the next `path` array element
-  2. If all of the previous validation steps are successful, mark the candidate
-     input as a match for use in a [[ref:Presentation Submission]].
+  2. If all of the previous validation steps are successful, or the _fields object_ being 
+     evaluated contains the `optional` property set to the boolean value `true`, mark the 
+     candidate input as a match for use in a [[ref:Presentation Submission]].
       ::: note
       **Submission Requirement Feature Only**
 
