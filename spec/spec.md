@@ -1027,11 +1027,11 @@ When using this [[ref:Feature]]:
 - The _constraints object_ ****MAY**** contain a `subject_is_issuer`
   property. If present, its value ****MUST**** be one of the following
   strings:
-    - `required` - This indicates that the [[ref:Conformant Consumer]]
+    - `required` - This indicates the [[ref:Conformant Consumer]]
       ****MUST**** submit a response that has been _self-attested_, i.e., the
       [[ref:Claim]] used in the presentation was 'issued' by the
       [[Ref:Subject]] of the [[ref:Claim]].
-    - `preferred` - This indicates that it is ****RECOMMENDED**** that the
+    - `preferred` - This indicates it is ****RECOMMENDED**** that the
       [[ref:Conformant Consumer]] submit a response that has been
       _self-attested_, i.e., the [[ref:Claim]] used in the presentation was
       'issued' by the [[Ref:Subject]] of the [[ref:Claim]]. When set to 
