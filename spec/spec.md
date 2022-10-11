@@ -368,7 +368,7 @@ of the following properties, unless otherwise specified by a [[ref:Feature]]:
     ****SHOULD**** order these field checks before all others to ensure
     earliest termination of evaluation. If the `fields` property is present,
     its value ****MUST**** be an array of objects composed as follows, unless
-    otherwise specified by a faeture:
+    otherwise specified by a feature:
         - The _fields object_ ****MUST**** contain a `path` property. The value
           of this property ****MUST**** be an array of one or more
           [JSONPath](https://goessner.net/articles/JsonPath/) string
@@ -1047,15 +1047,15 @@ When using this [[ref:Feature]]:
   application.
   :::
   :::note
-  The `subject_is_issuer` property can be used by [[ref:Verifiers]] as a means 
-  to prompt for user-entered data flows to be facilitated by client apps 
-  (e.g. user agent wallets). This can be conveyed to consuming apps by setting 
-  the `subject_is_issuer` property to `preferred` on the applicable 
-  [[ref:Input Descriptor]] and including whatever `fields` are desired for 
-  submission. An example use of this functionality would be to provide a 
-  fallback for the user to fill out a form that is generated based on the 
+  The `subject_is_issuer` property can be used by [[ref:Verifiers]] as a way  
+  enable the submission of user-entered data to fulfill the requirements of an 
+  [[ref:Input Descriptor]]. Consuming apps ****should**** provide a means for 
+  users to enter the data required by an [[ref:Input Descriptor]] that has its 
+  `subject_is_issuer` property set to either `required` or `preferred`. An example 
+  of this would be a user agent wallet app providing a form generated using the 
   JSON Schema `filter` objects present in the `fields` of an [[ref:Input Descriptor]] 
-  for submission as _self-attested_ data.
+  that are subsequently packaged up in accordance with the structure the 
+  [[ref:Input Descriptor]] defines for submission as _self-attested_ data.
   :::
 - The _constraints object_ ****MAY**** contain an `is_holder` property. If
   present, its value ****MUST**** be an array of objects composed as
