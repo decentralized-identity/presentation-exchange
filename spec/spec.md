@@ -1030,7 +1030,10 @@ When using this [[ref:Feature]]:
     - `required` - This indicates the [[ref:Conformant Consumer]]
       ****MUST**** submit a response that has been _self-attested_, i.e., the
       [[ref:Claim]] used in the presentation was 'issued' by the
-      [[Ref:Subject]] of the [[ref:Claim]].
+      [[Ref:Subject]] of the [[ref:Claim]]. Consuming apps should be aware that 
+      the requirements of the [[ref:Input Descriptor]] can be fulfilled via the 
+      capture of user-entered data for _self-attested_ submission, and make an 
+      effort to expose the means to do so when possible.
     - `preferred` - This indicates it is ****RECOMMENDED**** that the
       [[ref:Conformant Consumer]] submit a response that has been
       _self-attested_, i.e., the [[ref:Claim]] used in the presentation was
