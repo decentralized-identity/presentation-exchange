@@ -1194,7 +1194,7 @@ When using this [[ref:Feature]]:
 
 ### Retention Feature
 
-``The Retention [[ref:Feature]] extends the [[ref:Input Descriptor Object]]'s _field_ 
+The Retention [[ref:Feature]] extends the [[ref:Input Descriptor Object]]'s _field_ 
 object, allowing a Verifier to indicate it will retain the submitted value for the
 specific field.  It is currently presented to support mDL systems, and may be deprecated in the
  future or moved to a separate specification for more robust mDL interoperability at a later time.
@@ -1579,9 +1579,14 @@ The summary and details below highlight the differences between V1 and V2 of thi
 
 Summary of changes:
 - Introduction of [[ref:Features]]
-- Removal of `schema` property from [[ref:Input Descriptor Objects]]
 - Introduction of [Status Constraint](#Status-Constraint-Feature)
-- Input Descriptor Format was moved to an external registry
+- Introduction of [Retention feature](#Retention-Feature)
+- Introduction of JSON-LD frames
+- Removal of `schema` property from [[ref:Input Descriptor Objects]]
+- Input Descriptor `format` was moved to an external registry and can be restrained
+- Input Descriptor `constraint` property has been made mandatory
+- Addition of an `optional` property for the `fields` object
+- More concise language for consumers and producers
 
 #### Features
 [[ref:Features]] enable [[ref:Verifiers]] to express, and [[ref:Holders]] to support,
@@ -1590,19 +1595,33 @@ properties on one or more objects. Features themselves are optional, but they ca
 The spec has been rearranged and several [[ref:Features]] are introduced like for instance the [Predicate](#Predicate-Feature), [Relational Constraint](#Relational-Constraint-Feature), [Credential Status Constraint](#Credential-Status-Constraint-Feature)
 In the previous versions most of these [[ref:Features]] were part of the spec that any [[ref:Conformant Producer]] or [[ref:Conformant Consumer]] had to implement.
 
-#### Removal of schema property from Input Descriptor Objects
-Previously an [[ref:Input Descriptor Object]] had a `schema` property that contained an array of URIs for [[ref:Claim]] schema's. It was removed because schema's could already be handled using a `field` property on the [[ref:Input Descriptor Object]]. It introduced ambiguity and was the source of confusion.
-As a side result this also removes support for hashlinks from the specification, as these could be used as URIs in the `schema` property.
-
 ### Status Constraint Feature
-The [Status Constraint Feature](#Status-Constraint-Feature) allows to put active, revoked or expired constraint on the statuses of [[ref:Verifiable Credentials]].
+The [Status Constraint Feature](#Status-Constraint-Feature) allows to put active, revoked or expired constraint on the statuses of [[ref:Verifiable Credentials]]. The `type' property allows _status objects_ to express which credential status type from the [VC Data Model](https://www.w3.org/TR/vc-data-model/#status) is supported.
 
-### Input Descriptor Format was moved to an external registry
+### Retention feature
+The [Retention feature](#Retention-Feature) indicates whether the Verifier intends to retain the Claim's data being requested.
+
+### Support for JSON-LD frames added
+The [[ref:Presentation Definition]] now may contain a `frame` property which must be a [JSON LD Framing Document](https://w3c.github.io/json-ld-framing/) object to allow for selective disclosure using frames.
+
+#### Removal of schema property from Input Descriptor Objects
+Previously an [[ref:Input Descriptor Object]] had a `schema` property that contained an array of URIs for [[ref:Claim]] schema's. It introduced ambiguity and was the source of confusion. It has been replaced with a `fields` property in the _constraints object_ of the [[ref:Input Descriptor Object]], allowing for a more expressive approach to restrict to certain types for instance.
+As a result, the support for hashlinks has also been removed from the specification, as these could be used as URIs in the `schema` property previously.
+
+### Input Descriptor Format was moved to an external registry and can be restrained
 Previously the [[ref:Verifiable Credential]] and [[ref:Verifiable Presentation]] formats, like `jwt`, `jwt_vp`, `ldp_vc` were listed in the specification. They have been moved to an external [registry](https://identity.foundation/claim-format-registry/schemas/presentation-definition-claim-format-designations.json) to allow for future extension without the need to update the specification.
+Also the [[ref:Input Descriptor Object]] now may contain a `format` property, next to the toplevel `format` property, to constrain a submission of a single object to a subset of formats.
+
+### The Input Descriptor constraint property has been made mandatory
+The [[ref:Input Descriptor Object]] now must contain a `constraints` property, where it was optional before. Given other optional fields, omission of the `constraints` property could potentially lead to an [[ref:Input Descriptor Object]] that didn't express anything actionable anymore. 
+
+### Addition of an optional property for the fields object
+The _fields object_ may now contain an `optional` property, indicating optionality of the field
 
 
 
-
+### More concise language for consumers and producers
+Language around consumers and producers of [[def:Presentation Definition]] and [[def:Presentation Submission]] objects has been made more concise, to prevent confusion 
 
 
 ### Embed Target Examples
