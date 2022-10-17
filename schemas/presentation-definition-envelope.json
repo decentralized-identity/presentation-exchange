@@ -82,8 +82,7 @@
               "$ref": "http://json-schema.org/draft-07/schema#"
             },
             "name": {
-              "type":
-              "string"
+              "type": "string"
             },
             "predicate": {
               "type": "string",
