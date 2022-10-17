@@ -44,8 +44,7 @@
               "type": "string"
             },
             "name": {
-              "type":
-              "string"
+              "type": "string"
             },
             "intent_to_retain": {
               "type": "boolean"
