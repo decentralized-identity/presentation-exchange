@@ -47,8 +47,7 @@
               "type": "boolean"
             },
             "name": {
-              "type":
-              "string"
+              "type": "string"
             },
             "filter": {
               "$ref": "http://json-schema.org/draft-07/schema#"
