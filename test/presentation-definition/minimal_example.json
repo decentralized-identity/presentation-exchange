@@ -6,7 +6,19 @@
       {
         "id": "wa_driver_license",
         "name": "Washington State Business License",
-        "purpose": "We can only allow licensed Washington State business representatives into the WA Business Conference"
+        "purpose": "We can only allow licensed Washington State business representatives into the WA Business Conference",
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.credentialSubject.dateOfBirth",
+                "$.credentialSubject.dob",
+                "$.vc.credentialSubject.dateOfBirth",
+                "$.vc.credentialSubject.dob"
+              ]
+            }
+          ]
+        }
       }
     ]
   }
