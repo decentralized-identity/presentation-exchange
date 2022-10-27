@@ -391,6 +391,9 @@ of the following properties, unless otherwise specified by a [[ref:Feature]]:
         - The _fields object_ ****MAY**** contain a `purpose` property. If
           present, its value ****MUST**** be a string that describes the purpose
           for which the field is being requested.
+        - The _fields object_ ****MAY**** contain a `name` property. If
+          present, its value ****MUST**** be a string, and ****SHOULD**** be a
+          human-friendly name that describes what the target field represents.
         - The _fields object_ ****MAY**** contain a `filter` property, and if
           present its value ****MUST**** be a
           [JSON Schema](https://json-schema.org/specification.html) descriptor
