@@ -181,7 +181,7 @@ application). See [Submission Requirements](#submission-requirements).
 [Submission Requirement Objects](#submission-requirement-objects).
 
 [[def:Submission Requirement Rule, Submission Requirement Rules]]
-~ Submission Requirement Rules describe combinatoric rules within a
+~ Submission Requirement Rules describe combinatorial rules within a
 [[ref:Submission Requirement Object]] when processing inputs. They may be
 nested. See [Submission Requirement Rules](#submission-requirement-rules).
 
@@ -767,7 +767,7 @@ all `input_descriptors` ****MUST**** be grouped. Any unused
 
 [[ref:Submission Requirement Rules]] are used within
 [[ref:Submission Requirement Objects]] to describe the specific combinatorial
-rules that must be applied to submit a particular subset of reqested inputs. The
+rules that must be applied to submit a particular subset of requested inputs. The
 specified [[ref:Submission Requirement Rule]] determines the behavior of the
 corresponding `from` or `from_nested` property, as described below. A conformant
 implementation ****MUST**** support the following rules:
