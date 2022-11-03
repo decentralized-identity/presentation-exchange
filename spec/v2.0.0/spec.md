@@ -230,7 +230,7 @@ requirement.
 
 ::: example Presentation Definition - Minimal Example
 ```json
-[[insert ./test/presentation-definition/minimal_example.json]]
+[[insert ./test/v2.0.0/presentation-definition/minimal_example.json]]
 ```
 :::
 
@@ -240,7 +240,7 @@ requirement.
 
 ::: example Presentation Definition - Filter By Credential Type
 ```json
-[[insert: ./test/presentation-definition/pd_filter.json]]
+[[insert: ./test/v2.0.0/presentation-definition/pd_filter.json]]
 ```
 :::
 
@@ -250,7 +250,7 @@ requirement.
 
 ::: example Presentation Definition - Two Filters
 ```json
-[[insert: ./test/presentation-definition/pd_filter2.json]]
+[[insert: ./test/v2.0.0/presentation-definition/pd_filter2.json]]
 ```
 :::
 
@@ -308,7 +308,7 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
       JSON Schema) is as follows::
 
 ```json
-[[insert: ./test/presentation-definition/format_example.json]]
+[[insert: ./test/v2.0.0/presentation-definition/format_example.json]]
 ```
 
 ::: note
@@ -554,7 +554,7 @@ To process the _Submission Entries_ of a Presentation Submission, use the follow
 ****Example Nested Submission****
 
 ```json
-[[insert: ./test/presentation-submission/nested_submission_example.json]]
+[[insert: ./test/v2.0.0/presentation-submission/nested_submission_example.json]]
 ```
 
 ### Limited Disclosure Submissions
@@ -634,7 +634,7 @@ issuance, allowing entry, accepting an application).
 
 ::: example Presentation Definition - Single Group Example
 ```json
-[[insert: ./test/presentation-definition/single_group_example.json]]
+[[insert: ./test/v2.0.0/presentation-definition/single_group_example.json]]
 ```
 :::
 
@@ -644,7 +644,7 @@ issuance, allowing entry, accepting an application).
 
 ::: example Presentation Definition - Multi-Group Example
 ```json
-[[insert: ./test/presentation-definition/multi_group_example.json]]
+[[insert: ./test/v2.0.0/presentation-definition/multi_group_example.json]]
 ```
 :::
 
@@ -682,7 +682,7 @@ When using this [[ref:Feature]]:
 
 ::: example
 ```json
-[[insert: ./test/presentation-definition/input_descriptors_example.json]]
+[[insert: ./test/v2.0.0/presentation-definition/input_descriptors_example.json]]
 ```
 :::
 
@@ -692,7 +692,7 @@ When using this [[ref:Feature]]:
 
 ::: example
 ```json
-[[insert: ./test/presentation-definition/input_descriptor_id_tokens_example.json]]
+[[insert: ./test/v2.0.0/presentation-definition/input_descriptor_id_tokens_example.json]]
 ```
 
 </section>
@@ -731,7 +731,7 @@ all `input_descriptors` ****MUST**** be grouped. Any unused
 
 ::: example Submission Requirement
 ```json
-[[insert: ./test/submission-requirements/example.json ]]
+[[insert: ./test/v2.0.0/submission-requirements/example.json ]]
 ```
 :::
 
@@ -786,7 +786,7 @@ For an `all` rule [[ref:Submission Requirement Object]]:
 
 ::: example Submission Requirement, all, group
 ```json
-[[insert: ./test/submission-requirements/all_example.json]]
+[[insert: ./test/v2.0.0/submission-requirements/all_example.json]]
 ```
 :::
 
@@ -826,13 +826,13 @@ that follows, the [[ref:Submission Requirement]] requests a single input from
 
 ::: example Submission Requirement, pick, group
 ```json
-[[insert: ./test/submission-requirements/pick_1_example.json]]
+[[insert: ./test/v2.0.0/submission-requirements/pick_1_example.json]]
 ```
 :::
 
 ::: example Submission Requirement, pick, min/max
 ```json
-[[insert: ./test/submission-requirements/pick_2_example.json]]
+[[insert: ./test/v2.0.0/submission-requirements/pick_2_example.json]]
 ```
 :::
 
@@ -845,7 +845,7 @@ from group `"A"` or two members from group `"B"`:
 
 ::: example Submission Requirement, pick, nested
 ```json
-[[insert: ./test/submission-requirements/pick_3_example.json]]
+[[insert: ./test/v2.0.0/submission-requirements/pick_3_example.json]]
 ```
 :::
 
@@ -1340,7 +1340,7 @@ requisite information to resolve the status of a [[ref:Claim]].
 
 ::: example Drivers License Expiration
 ```json
-[[insert: ./test/presentation-definition/VC_expiration_example.json]]
+[[insert: ./test/v2.0.0/presentation-definition/VC_expiration_example.json]]
 ```
 :::
 
@@ -1350,7 +1350,7 @@ requisite information to resolve the status of a [[ref:Claim]].
 
 ::: example Drivers License Revocation
 ```json
-[[insert: ./test/presentation-definition/VC_revocation_example.json]]
+[[insert: ./test/v2.0.0/presentation-definition/VC_revocation_example.json]]
 ```
 :::
 </section>
@@ -1446,37 +1446,37 @@ https://tools.ietf.org/html/draft-handrews-json-schema-02
 ### Presentation Definition (in an envelope)
 
 ```json
-[[insert: ./schemas/presentation-definition-envelope.json]]
+[[insert: ./schemas/v2.0.0/presentation-definition-envelope.json]]
 ```
 
 ### Presentation Definition (plain object)
 
 ```json
-[[insert: ./schemas/presentation-definition.json]]
+[[insert: ./schemas/v2.0.0/presentation-definition.json]]
 ```
 
 ### Input Descriptor
 
 ```json
-[[insert: ./schemas/input-descriptor.json]]
+[[insert: ./schemas/v2.0.0/input-descriptor.json]]
 ```
 
 ### Presentation Submission
 
 ```json
-[[insert: ./schemas/presentation-submission.json]]
+[[insert: ./schemas/v2.0.0/presentation-submission.json]]
 ```
 
 ### Submission Requirement
 
 ```json
-[[insert: ./schemas/submission-requirement.json]]
+[[insert: ./schemas/v2.0.0/submission-requirement.json]]
 ```
 
 ### Submission Requirements
 
 ```json
-[[insert: ./schemas/submission-requirements.json]]
+[[insert: ./schemas/v2.0.0/submission-requirements.json]]
 ```
 
 ### Format Declaration
@@ -1674,7 +1674,7 @@ Language around consumers and producers of [[def:Presentation Definition]] and [
 
 ::: example Presentation Submission - Verifiable Presentation
 ```json
-[[insert: ./test/presentation-submission/appendix_VP_example.json]]
+[[insert: ./test/v2.0.0/presentation-submission/appendix_VP_example.json]]
 ```
 :::
 
@@ -1684,7 +1684,7 @@ Language around consumers and producers of [[def:Presentation Definition]] and [
 
 ::: example Presentation Submission with OIDC JWT
 ```json
-[[insert: ./test/presentation-submission/appendix_OIDC_example.json]]
+[[insert: ./test/v2.0.0/presentation-submission/appendix_OIDC_example.json]]
 ```
 :::
 
@@ -1694,7 +1694,7 @@ Language around consumers and producers of [[def:Presentation Definition]] and [
 
 ::: example Presentation Submission using CHAPI
 ```json
-[[insert: ./test/presentation-submission/appendix_CHAPI_example.json]]
+[[insert: ./test/v2.0.0/presentation-submission/appendix_CHAPI_example.json]]
 ```
 
 </section>
@@ -1703,7 +1703,7 @@ Language around consumers and producers of [[def:Presentation Definition]] and [
 
 ::: example Presentation Submission using DIDComm
 ```json
-[[insert: ./test/presentation-submission/appendix_DIDComm_example.json]]
+[[insert: ./test/v2.0.0/presentation-submission/appendix_DIDComm_example.json]]
 ```
 :::
 
