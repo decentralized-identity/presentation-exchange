@@ -1,0 +1,19 @@
+{
+  "id": "drivers_license_information",
+  "name": "Verify Valid License",
+  "purpose": "We need to know that your license has not been revoked.",
+  "constraints": {
+    "fields": [
+      {
+        "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
+        "filter": {
+          "type": "string",
+          "const": "https://yourwatchful.gov/drivers-license-schema.json"
+        }
+      },
+      {
+        "path": ["$.credentialStatus"]
+      }
+    ]
+  }
+}
