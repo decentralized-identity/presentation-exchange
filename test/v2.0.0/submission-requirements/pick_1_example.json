@@ -1,0 +1,11 @@
+{
+  "submission_requirements": [
+    {
+      "name": "Citizenship Proof",
+      "purpose": "We need to confirm you are a citizen of one of the following countries before accepting your application",
+      "rule": "pick",
+      "count": 1,
+      "from": "B"
+    }
+  ]
+}

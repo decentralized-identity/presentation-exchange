@@ -1,0 +1,11 @@
+{
+  "submission_requirements": [
+    {
+      "name": "Eligibility to Work Proof",
+      "purpose": "We need to prove you are eligible for full-time employment in 2 or more of the following countries",
+      "rule": "pick",
+      "min": 2,
+      "from": "B"
+    }
+  ]
+}

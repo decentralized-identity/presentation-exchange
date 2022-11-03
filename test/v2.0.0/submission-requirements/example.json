@@ -1,0 +1,36 @@
+{
+  "submission_requirements": [
+    {
+      "name": "Banking Information",
+      "purpose": "We need you to prove you currently hold a bank account older than 12months.",
+      "rule": "pick",
+      "count": 1,
+      "from": "A"
+    },
+    {
+      "name": "Employment Information",
+      "purpose": "We are only verifying one current employment relationship, not any other information about employment.",
+      "rule": "all",
+      "from": "B"
+    },
+    {
+      "name": "Citizenship Information",
+      "rule": "pick",
+      "count": 1,
+      "from_nested": [
+        {
+          "name": "United States Citizenship Proofs",
+          "purpose": "We need you to prove your US citizenship.",
+          "rule": "all",
+          "from": "C"
+        },
+        {
+          "name": "European Union Citizenship Proofs",
+          "purpose": "We need you to prove you are a citizen of an EU member state.",
+          "rule": "all",
+          "from": "D"
+        }
+      ]
+    }
+  ]
+}
