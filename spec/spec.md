@@ -1622,7 +1622,7 @@ The [[ref:Input Descriptor Object]] now must contain a `constraints` property, w
 #### More concise language for consumers and producers
 Language around consumers and producers of [[def:Presentation Definition]] and [[def:Presentation Submission]] objects has been made more concise to prevent confusion. 
 
-
+#### `name` and `description` properties added to the spec.
 ### Embed Target Examples
 
 <!-- #### Presentation Definitions
