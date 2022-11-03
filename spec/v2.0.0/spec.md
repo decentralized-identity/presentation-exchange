@@ -1,14 +1,10 @@
 Presentation Exchange 2.0.0
 ==================
 
-**Specification Status:** Working Group Draft
+**Specification Status:** DIF Ratified Specification
 
 **Latest Draft:**
   [identity.foundation/presentation-exchange](https://identity.foundation/presentation-exchange)
-
-**Ratified Versions:**
-~ **v1.0.0** - [https://identity.foundation/presentation-exchange/spec/v1.0.0](https://identity.foundation/presentation-exchange/spec/v1.0.0)
-
 <!-- -->
 **Editors:**
 ~ [Daniel Buchner](https://www.linkedin.com/in/dbuchner/) (Block)
@@ -68,7 +64,7 @@ these data formats within their flows.
 
 ## Status of This Document
 
-Presentation Exchange v2.0.0 is a _WORKING GROUP APPROVED_ specification developed within
+Presentation Exchange v2.0.0 is a _DIF RATIFIED_ specification developed within
 the Decentralized Identity Foundation (DIF). It incorporates requirements and
 learnings from related work of many active industry players into a shared
 specification that meets the collective needs of the community.
