@@ -181,7 +181,7 @@ application). See [Submission Requirements](#submission-requirements).
 [Submission Requirement Objects](#submission-requirement-objects).
 
 [[def:Submission Requirement Rule, Submission Requirement Rules]]
-~ Submission Requirement Rules describe combinatorical rules within a
+~ Submission Requirement Rules describe combinatorial rules within a
 [[ref:Submission Requirement Object]] when processing inputs. They may be
 nested. See [Submission Requirement Rules](#submission-requirement-rules).
 
@@ -321,7 +321,7 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
   Implementers are encouraged to do a proper review of applicable regulatory
   requirements around consent and purpose disclosures. 
   The DIF Claims & Credentials WG Data Agreement work item is developing a 
-  supplemental specification for privacy regulator compliance (GDPR, CCPA, other),
+  supplemental specification to aid in compliance with privacy regulations (GDPR, CCPA, etc.),
   and a method for creating immutable records of consent records (data agreements) 
   for using personal data.
 :::
@@ -403,7 +403,9 @@ of the following properties, unless otherwise specified by a [[ref:Feature]]:
         - The _fields object_ ****MAY**** contain an `optional` property. The value
           of this property ****MUST**** be a boolean, wherein `true` indicates the 
           field is optional, and `false` or non-presence of the property indicates 
-          the field is required.
+          the field is required. Even when the `optional` property is present, the value 
+          located at the indicated `path` of the field ****MUST**** validate against 
+          the JSON Schema `filter`, if a `filter` is present.
           :::note IDO Filter
           Remember a valid JSON Schema ****MAY**** contain [additional keywords](https://datatracker.ietf.org/doc/html/draft-handrews-json-schema-01#section-6.4) (e.g., `formatMinimum` and `formatMaximum`) that require extensions to handle properly.
 
@@ -768,7 +770,7 @@ all `input_descriptors` ****MUST**** be grouped. Any unused
 
 [[ref:Submission Requirement Rules]] are used within
 [[ref:Submission Requirement Objects]] to describe the specific combinatorial
-rules that must be applied to submit a particular subset of reqested inputs. The
+rules that must be applied to submit a particular subset of requested inputs. The
 specified [[ref:Submission Requirement Rule]] determines the behavior of the
 corresponding `from` or `from_nested` property, as described below. A conformant
 implementation ****MUST**** support the following rules:
@@ -1263,10 +1265,14 @@ For each candidate input:
               Else
               :::
               - set _Field Query Result_ to be _candidate_
-
-           2. Else, skip to the next `path` array element
-  2. If all of the previous validation steps are successful, or the _fields object_ being 
-     evaluated contains the `optional` property set to the boolean value `true`, mark the 
+           2. Else, skip to the next `path` array element.
+        3. If no value is located for any of the specified `path` queries, and 
+           the _fields object_ ****DOES NOT**** contain the `optional` property 
+           or it is set to `false`, reject the field as invalid. If no value is 
+           located  for any of the specified `path` queries and the _fields object_ 
+           ****DOES**** contain the `optional` property set to the value `true`, 
+           treat the field as valid and proceed to the next _fields object_.
+  2. If all of the previous validation steps are successful mark the 
      candidate input as a match for use in a [[ref:Presentation Submission]].
       ::: note
       **Submission Requirement Feature Only**
