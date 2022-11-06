@@ -20,6 +20,7 @@ Presentation Exchange 2.0.0
 ~ [David Chadwick](https://www.linkedin.com/in/davidwchadwick/) (Crossword Cybersecurity)
 ~ [Jace Hensley](https://www.linkedin.com/in/jacehensley/) (Bloom)
 ~ [Niels Klomp](https://www.linkedin.com/in/niels-klomp/) (Sphereon)
+~ [Andor Kesselman](https://www.linkedin.com/in/henosisknot/) (Benri)
 
 **Participate:**
 ~ [GitHub repo](https://github.com/decentralized-identity/presentation-exchange)
