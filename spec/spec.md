@@ -209,7 +209,7 @@ one or more properties on one or more objects.
 [[ref:Conformant Consumers]] are not required to support [[ref:Features]].
 A [[ref:Conformant Producer]] using [[ref:Features]] that a [[ref:Conformant Consumer]] does not support, might result in a [[ref:Presentation Submission]] that can be rejected by a [[ref:Verifier]]. This is especially the case when a feature introduces additional constraints on the [[ref:Input Descriptor Object]], like for instance the [Relational Constraint Feature](#relational-constraint-feature), where the `subject_is_issuer` property could be used by a [[ref:Verifier]] to require that certain inputs be _self_attested_. Depending on the [[ref:Verifier]] implementation a submission which is not self attested might be rejected, because the [[ref:Holder]] is not aware of the requirement the [[ref:Feature]] introduced.
 
-A [[ref:Conformant Producer]] and [[ref:Conformant Consumer]] implementation may wish to use [[ref:Feature]] detection techniques for [[ref:Features]] it does not support. Producing an error might be appropriate for certain unsupported [[ref:Features]], preventing submitting inappropriate or too much data, which might result in an error being produced by another [[Conformant Consumer]] implementation.
+A [[ref:Conformant Producer]] and [[ref:Conformant Consumer]] implementation may wish to use [[ref:Feature]] detection techniques for [[ref:Features]] it does not support. Producing an error might be appropriate for certain unsupported [[ref:Features]], preventing submitting inappropriate or too much data, which might result in an error being produced by another [[ref:Conformant Consumer]] implementation.
 
 Examples in this document use the [Verifiable Credentials Data Model](https://www.w3.org/TR/vc-data-model/) and the [Decentralized  Identifiers (DIDs)](https://www.w3.org/TR/did-core/) formats for illustrative purposes only; this specification is intended to support any JSON-serializable [[ref:Claim]] format.
 
@@ -1224,14 +1224,14 @@ When using this [[ref:Feature]]:
 
 ## Input Evaluation
 
-A conformant consumer of a [[ref:Presentation Definition]] must filter inputs they
+A [[ref:Conformant Consumer]] of a [[ref:Presentation Definition]] must filter inputs they
 hold (signed [[ref:Claims]], raw data, etc.) to determine whether they possess
-the inputs requested by the [[ref:Verifier]]. A conformant consumer of a
+the inputs requested by the [[ref:Verifier]]. A [[ref:Conformant Consumer]] of a
 [[ref:Presentation Definition]] ****MUST**** use the following process to
 validate whether or not its candidate inputs meet the requirements it describes:
 
 For each [[ref:Input Descriptor]] in the `input_descriptors` array of a
-[[ref:Presentation Definition]], a conformant consumer compares each
+[[ref:Presentation Definition]], a [[ref:Conformant Consumer]] compares each
 candidate input (JWT, Verifiable Credential, etc.) it holds to determine whether
 there is a match.
 
