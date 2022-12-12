@@ -26,6 +26,8 @@ CM Editors
 
 ## Roadmapping Q1 2023 and beyond
 
+## 15 Dec 2022
+
 ## 8 Dec 2022
 - Agenda:
     - Roadmapping discussion (populate the above!)
@@ -33,6 +35,21 @@ CM Editors
     - Wallet Rendering - any progress?
     - PresEx - Anything new?
 
+- Discussion:
+    - CM: almost ready for V1
+    - PE: not moving forward there
+    - Wallet Rendering: should it be pushed out to it's own thing. 
+         - Brent: Are we capable of moving this forward. 
+         - Daniel: Only effort he's seen this far along. Better at abstracting base layer. 
+         - Andor: Raised concerns around OWF efforts and making sure that they have insight in this.
+         - Keith: Pointed out [spec](https://static1.squarespace.com/static/5ead4c8660689c348c80958e/t/634d55c7cb2c9a43206480c1/1666012626086/HCF+Overlays+Capture+Architecture+%28OCA%29+v1.pdf). Eventually will incorporate to profile. 
+         - Juan: Pointed out [spec](https://github.com/WebOfTrustInfo/rwot11-the-hague/blob/master/draft-documents/rendering-vcs-snapshot-9-27-22.md). Multi-wallet issuers are more common in blockchain. Disco/Wallet connect might be able to help. 
+         - Neal: First PR on CM!
+         - Kim: Control over the display is a marker of integrity
+         - Proposal: 5 minutes each week finding a new owner.
+         - Andor: reached out to OWF to see how to engage the community. 
+         - Kim: Addressed Section on Processing of the Objects #125 in https://github.com/decentralized-identity/credential-manifest/pull/135. 
+         
 ## 1 Dec 2022 
 
 - Rejuvenating the Common Agenda of PresEx and Friends (you are here) 
