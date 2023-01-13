@@ -1645,6 +1645,7 @@ Language around consumers and producers of [[def:Presentation Definition]] and [
   <button type="button">Open ID Connect</button>
   <button type="button">CHAPI</button>
   <button type="button">DIDComm</button>
+  <button type="button">JWT</button>
 </nav>
 
 <section>
@@ -1674,6 +1675,7 @@ Language around consumers and producers of [[def:Presentation Definition]] and [
   <button type="button">Open ID Connect</button>
   <button type="button">CHAPI</button>
   <button type="button">DIDComm</button>
+  <button type="button">JWT</button>
 </nav>
 
 <section>
@@ -1714,6 +1716,48 @@ Language around consumers and producers of [[def:Presentation Definition]] and [
 :::
 
 </section>
+
+<section>
+
+::: example Presentation Submission using JWT
+```text
+eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDprZXk6ejZNa2diZldhYloxeHFkVlNCQ1hzYU1UYkw4YXVwWjl0N2VWcHRLa1hncnA0bVE3IiwidHlwIjoiSldUIn0.eyJpYXQiOjE2NzM1ODUxMDEsImlzcyI6ImRpZDprZXk6ejZNa2diZldhYloxeHFkVlNCQ1hzYU1UYkw4YXVwWjl0N2VWcHRLa1hncnA0bVE3IiwidnAiOnsiQGNvbnRleHQiOlsiaHR0cHM6Ly93d3cudzMub3JnLzIwMTgvY3JlZGVudGlhbHMvdjEiXSwiaG9sZGVyIjoiZGlkOmtleTp6Nk1rZ2JmV2FiWjF4cWRWU0JDWHNhTVRiTDhhdXBaOXQ3ZVZwdEtrWGdycDRtUTciLCJwcmVzZW50YXRpb25fc3VibWlzc2lvbiI6eyJkZWZpbml0aW9uX2lkIjoiNjQ0MjIyODktMTJkZS00OWI5LWJiZjAtMDA1YmM2MTBjMmFkIiwiZGVzY3JpcHRvcl9tYXAiOlt7ImZvcm1hdCI6Imp3dF92cCIsImlkIjoid2FfZHJpdmVyX2xpY2Vuc2UiLCJwYXRoIjoiJC52ZXJpZmlhYmxlQ3JlZGVudGlhbFswXSJ9XSwiaWQiOiIwZjI4YjM3Mi03MmQ1LTQ5M2UtYmM4Ni1iMGY3MWJhMGI4N2IifSwidHlwZSI6WyJWZXJpZmlhYmxlUHJlc2VudGF0aW9uIl0sInZlcmlmaWFibGVDcmVkZW50aWFsIjpbImV5SmhiR2NpT2lKRlpFUlRRU0lzSW10cFpDSTZJbVJwWkRwclpYazZlalpOYTIxWU1YWTRUakUyV0VkblNsVkZRakp4WW1GWFdUWjFTMU51YzJORWNrZGtjMDF4ZUdaVlp6TnJSbkIwSWl3aWRIbHdJam9pU2xkVUluMC5leUpsZUhBaU9qSTFPREF4TXpBd09EQXNJbWx6Y3lJNkltUnBaRHByWlhrNmVqWk5hMjFZTVhZNFRqRTJXRWRuU2xWRlFqSnhZbUZYV1RaMVMxTnVjMk5FY2tka2MwMXhlR1pWWnpOclJuQjBJaXdpYW5ScElqb2lNelJpTVdJME5XVXRZbUkyWXkwMFpUVTRMV0kyTnpVdE1qa3pPRE5qT0RJNE1qazBJaXdpYm1KbUlqb3hOamN6TlRnMU1UQXhMQ0p6ZFdJaU9pSmthV1E2YTJWNU9ubzJUV3RuWW1aWFlXSmFNWGh4WkZaVFFrTlljMkZOVkdKTU9HRjFjRm81ZERkbFZuQjBTMnRZWjNKd05HMVJOeUlzSW5aaklqcDdJa0JqYjI1MFpYaDBJanBiSW1oMGRIQnpPaTh2ZDNkM0xuY3pMbTl5Wnk4eU1ERTRMMk55WldSbGJuUnBZV3h6TDNZeElsMHNJbWxrSWpvaU16UmlNV0kwTldVdFltSTJZeTAwWlRVNExXSTJOelV0TWprek9ETmpPREk0TWprMElpd2lkSGx3WlNJNld5SldaWEpwWm1saFlteGxRM0psWkdWdWRHbGhiQ0pkTENKcGMzTjFaWElpT2lKa2FXUTZhMlY1T25vMlRXdHRXREYyT0U0eE5saEhaMHBWUlVJeWNXSmhWMWsyZFV0VGJuTmpSSEpIWkhOTmNYaG1WV2N6YTBad2RDSXNJbWx6YzNWaGJtTmxSR0YwWlNJNklqSXdNak10TURFdE1UTlVNRFE2TkRVNk1ERmFJaXdpWlhod2FYSmhkR2x2YmtSaGRHVWlPaUl5TURVeExURXdMVEExVkRFME9qUTRPakF3TGpBd01Gb2lMQ0pqY21Wa1pXNTBhV0ZzVTNWaWFtVmpkQ0k2ZXlKaFpHUnBkR2x2Ym1Gc1RtRnRaU0k2SWsxamJHOTJhVzRpTENKa1lYUmxUMlpDYVhKMGFDSTZJakU1T0RjdE1ERXRNRElpTENKbVlXMXBiSGxPWVcxbElqb2lRVzVrY21Weklpd2laMmwyWlc1T1lXMWxJam9pVlhKcFltVWlMQ0pwWkNJNkltUnBaRHByWlhrNmVqWk5hMmRpWmxkaFlsb3hlSEZrVmxOQ1ExaHpZVTFVWWt3NFlYVndXamwwTjJWV2NIUkxhMWhuY25BMGJWRTNJbjE5ZlEuZ3NTdjFnbFo4cHVhT21JaWQ5X2EtaUdTOXB6bkdZSTlCRlVxSUpPcEstRXA5SDdLRkI1RmZ5S2FDTFF5bWtseEp3cXYzRnRyOGF4bmotVVBuT3pqQ2ciXX19.zvvz2_CkCGPdXCN9oTGhMEuv--ezv31bDHT6_zt1MXB4E0wBZjIlxODqdVZP8BhTC1lXrzgltyQsro_7odTcDg
+```
+:::
+
+::: example Presentation Submission using JWT (decoded)
+```json
+{
+  "iat": 1673585101,
+  "iss": "did:key:z6MkgbfWabZ1xqdVSBCXsaMTbL8aupZ9t7eVptKkXgrp4mQ7",
+  "vp": {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1"
+    ],
+    "holder": "did:key:z6MkgbfWabZ1xqdVSBCXsaMTbL8aupZ9t7eVptKkXgrp4mQ7",
+    "presentation_submission": {
+      "definition_id": "64422289-12de-49b9-bbf0-005bc610c2ad",
+      "descriptor_map": [
+        {
+          "format": "jwt_vp",
+          "id": "wa_driver_license",
+          "path": "$.verifiableCredential[0]"
+        }
+      ],
+      "id": "0f28b372-72d5-493e-bc86-b0f71ba0b87b"
+    },
+    "type": [
+      "VerifiablePresentation"
+    ],
+    "verifiableCredential": [
+      "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDprZXk6ejZNa21YMXY4TjE2WEdnSlVFQjJxYmFXWTZ1S1Nuc2NEckdkc01xeGZVZzNrRnB0IiwidHlwIjoiSldUIn0.eyJleHAiOjI1ODAxMzAwODAsImlzcyI6ImRpZDprZXk6ejZNa21YMXY4TjE2WEdnSlVFQjJxYmFXWTZ1S1Nuc2NEckdkc01xeGZVZzNrRnB0IiwianRpIjoiMzRiMWI0NWUtYmI2Yy00ZTU4LWI2NzUtMjkzODNjODI4Mjk0IiwibmJmIjoxNjczNTg1MTAxLCJzdWIiOiJkaWQ6a2V5Ono2TWtnYmZXYWJaMXhxZFZTQkNYc2FNVGJMOGF1cFo5dDdlVnB0S2tYZ3JwNG1RNyIsInZjIjp7IkBjb250ZXh0IjpbImh0dHBzOi8vd3d3LnczLm9yZy8yMDE4L2NyZWRlbnRpYWxzL3YxIl0sImlkIjoiMzRiMWI0NWUtYmI2Yy00ZTU4LWI2NzUtMjkzODNjODI4Mjk0IiwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCJdLCJpc3N1ZXIiOiJkaWQ6a2V5Ono2TWttWDF2OE4xNlhHZ0pVRUIycWJhV1k2dUtTbnNjRHJHZHNNcXhmVWcza0ZwdCIsImlzc3VhbmNlRGF0ZSI6IjIwMjMtMDEtMTNUMDQ6NDU6MDFaIiwiZXhwaXJhdGlvbkRhdGUiOiIyMDUxLTEwLTA1VDE0OjQ4OjAwLjAwMFoiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJhZGRpdGlvbmFsTmFtZSI6Ik1jbG92aW4iLCJkYXRlT2ZCaXJ0aCI6IjE5ODctMDEtMDIiLCJmYW1pbHlOYW1lIjoiQW5kcmVzIiwiZ2l2ZW5OYW1lIjoiVXJpYmUiLCJpZCI6ImRpZDprZXk6ejZNa2diZldhYloxeHFkVlNCQ1hzYU1UYkw4YXVwWjl0N2VWcHRLa1hncnA0bVE3In19fQ.gsSv1glZ8puaOmIid9_a-iGS9pznGYI9BFUqIJOpK-Ep9H7KFB5FfyKaCLQymklxJwqv3Ftr8axnj-UPnOzjCg"
+    ]
+  }
+}
+:::
+</section>
+  
+
 
 </tab-panels>
 
