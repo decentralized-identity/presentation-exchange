@@ -1728,6 +1728,7 @@ eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDprZXk6ejZNa2diZldhYloxeHFkVlNCQ1hzYU1UYkw4YXVw
 ::: example Presentation Submission using JWT (decoded)
 ```json
 [[insert: ./test/presentation-submission/appendix_JWT_example.json]]
+```
 :::
 
 </section>
