@@ -1,0 +1,27 @@
+{
+  "iat": 1673585101,
+  "iss": "did:key:z6MkgbfWabZ1xqdVSBCXsaMTbL8aupZ9t7eVptKkXgrp4mQ7",
+  "vp": {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1"
+    ],
+    "holder": "did:key:z6MkgbfWabZ1xqdVSBCXsaMTbL8aupZ9t7eVptKkXgrp4mQ7",
+    "presentation_submission": {
+      "definition_id": "64422289-12de-49b9-bbf0-005bc610c2ad",
+      "descriptor_map": [
+        {
+          "format": "jwt_vp",
+          "id": "wa_driver_license",
+          "path": "$.verifiableCredential[0]"
+        }
+      ],
+      "id": "0f28b372-72d5-493e-bc86-b0f71ba0b87b"
+    },
+    "type": [
+      "VerifiablePresentation"
+    ],
+    "verifiableCredential": [
+      "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDprZXk6ejZNa21YMXY4TjE2WEdnSlVFQjJxYmFXWTZ1S1Nuc2NEckdkc01xeGZVZzNrRnB0IiwidHlwIjoiSldUIn0.eyJleHAiOjI1ODAxMzAwODAsImlzcyI6ImRpZDprZXk6ejZNa21YMXY4TjE2WEdnSlVFQjJxYmFXWTZ1S1Nuc2NEckdkc01xeGZVZzNrRnB0IiwianRpIjoiMzRiMWI0NWUtYmI2Yy00ZTU4LWI2NzUtMjkzODNjODI4Mjk0IiwibmJmIjoxNjczNTg1MTAxLCJzdWIiOiJkaWQ6a2V5Ono2TWtnYmZXYWJaMXhxZFZTQkNYc2FNVGJMOGF1cFo5dDdlVnB0S2tYZ3JwNG1RNyIsInZjIjp7IkBjb250ZXh0IjpbImh0dHBzOi8vd3d3LnczLm9yZy8yMDE4L2NyZWRlbnRpYWxzL3YxIl0sImlkIjoiMzRiMWI0NWUtYmI2Yy00ZTU4LWI2NzUtMjkzODNjODI4Mjk0IiwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCJdLCJpc3N1ZXIiOiJkaWQ6a2V5Ono2TWttWDF2OE4xNlhHZ0pVRUIycWJhV1k2dUtTbnNjRHJHZHNNcXhmVWcza0ZwdCIsImlzc3VhbmNlRGF0ZSI6IjIwMjMtMDEtMTNUMDQ6NDU6MDFaIiwiZXhwaXJhdGlvbkRhdGUiOiIyMDUxLTEwLTA1VDE0OjQ4OjAwLjAwMFoiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJhZGRpdGlvbmFsTmFtZSI6Ik1jbG92aW4iLCJkYXRlT2ZCaXJ0aCI6IjE5ODctMDEtMDIiLCJmYW1pbHlOYW1lIjoiQW5kcmVzIiwiZ2l2ZW5OYW1lIjoiVXJpYmUiLCJpZCI6ImRpZDprZXk6ejZNa2diZldhYloxeHFkVlNCQ1hzYU1UYkw4YXVwWjl0N2VWcHRLa1hncnA0bVE3In19fQ.gsSv1glZ8puaOmIid9_a-iGS9pznGYI9BFUqIJOpK-Ep9H7KFB5FfyKaCLQymklxJwqv3Ftr8axnj-UPnOzjCg"
+    ]
+  }
+}
