@@ -1,5 +1,7 @@
 # Presentation Exchange / Credential Manifest joint calls
 
+[![hackmd-github-sync-badge](https://hackmd.io/vHd4V7KnQtSDyUeGdeF7wQ/badge)](https://hackmd.io/vHd4V7KnQtSDyUeGdeF7wQ)
+
 (DIF Claims and Credentials WG)
 
 ## Code Owners
@@ -22,6 +24,35 @@ CM Editors
 
 - [PE](https://identity.foundation/presentation-exchange/) & [CM](https://identity.foundation/credential-manifest/)
 
+## January 19, 2023
+
+- Presentation Exchange
+    - New issues:
+        - JSONPath security issues (two issues) - invite the guy to speak 2 or 3 weeks from now if he's a DIF member?
+        - Kristina's issue about "all matching creds" - consensus seems to be "out of scope at this layer" but further discussion (or examples to point to of specs at higher levels) both appreciated - leaving open 
+- Cred Man - no news because Juan never finished his draft PR :disappointed: 
+- Wallet Rendering
+    - issue#29 - big overhaul?
+        - pros - works with JSON Forms, inherits some mental models and capabilities; 
+            - counterweighs constraints of WR as-is
+            - not a lot of wallet providers committed to this; doesn't break that many implementations if it works for all of us!
+        - cons - "cognitive overhead" 
+            - Thierry: seems a big lift, partic in short term!
+            - Andor: commits us to good tooling in short term, doesn't work without good shared tooling
+        - kim: pendulum of "we need a language" and "no let's just hardcode this special case" - 
+        - juan: where is TBD in all this? andor: they're on board, this came out of TBD coordination
+    - [#6](https://github.com/decentralized-identity/wallet-rendering/issues/6)
+        - display<>underlying value is complicated by sharing underlying values with third-parties-- easier to share VC values across parties if each can DISPLAY DIFFERENTLY the values per context
+            - interaction with issue #29?
+                - Andor: I'd have to check how JSON Forms handles conditional logic
+            - thierry: possible use-case for this layering: conditions based on device? e.g. size of monitor, desktop/mobile, etc? HTML/CSS have one way of tackling this already...
+            - prior art for degree of human-readability of data in VCs?
+                - Kim: ZK-friendly folks tend towards less human-readable, optimizing for transformation (and selective disclosure); others tend towards where tooling is at today and requiring minimal transformations to display
+                - Kim: Use-cases also crosscut this-- education usecases tend towards human-readability (ed creds cottage industry has historically leaned on human readability for fail-over interop & portability); KYC/Verite use cases --> crisp, simple business logic, no PII --> no human readibility needed
+                - Juan: I'm renaming issue#26 cuz diff strokes for diff VCs
+            - does the VC issuer want this much constraining power?
+                - kim: edu use cases - lots of humans in the loop, more worried about human error and misinterpretation than tampering of the data...
+                - balance of power between issuer (constraining power) and users (wallet accountability to users?)
 ## January 12, 2023
 
 ### CM
