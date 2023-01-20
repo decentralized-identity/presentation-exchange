@@ -40,7 +40,7 @@ CM Editors
             - Thierry: seems a big lift, partic in short term!
             - Andor: commits us to good tooling in short term, doesn't work without good shared tooling
         - kim: pendulum of "we need a language" and "no let's just hardcode this special case" - 
-        - juan: where is TBD in all this? andor: they're on board, this came out of TBD coordination
+        - juan: where is TBD in all this? andor: they're aware and we've had discussions on it, this came out of TBD coordination. Still want to discuss with more of TBD audience and there's no consensus yet, but it's been brought up with them and came out of efforts alongside them. 
     - [#6](https://github.com/decentralized-identity/wallet-rendering/issues/6)
         - display<>underlying value is complicated by sharing underlying values with third-parties-- easier to share VC values across parties if each can DISPLAY DIFFERENTLY the values per context
             - interaction with issue #29?
