@@ -9,7 +9,7 @@
     "url": "git://github.com/decentralized-identity/presentation-exchange"
   },
   "dependencies": {
-    "spec-up": "^0.10.3"
+    "spec-up": "^0.10.6"
   },
   "devDependencies": {
     "ace-custom-element": "1.6.5",
