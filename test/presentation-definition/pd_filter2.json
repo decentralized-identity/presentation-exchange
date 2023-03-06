@@ -10,29 +10,86 @@
           "fields": [
             {
               "path": [
-                "$.termsOfUse.type"
+                "$.termsOfUse"
               ],
               "filter": {
-                "type": "string",
-                "pattern": "https://train.trust-scheme.de/info"
-              }
-            },
-            {
-              "path": [
-                "$.termsOfUse.trustScheme"
-              ],
-              "filter": {
-                "type": "string",
-                "pattern": "worldbankfederation.com"
-              }
+                "$defs": {
+                  "typeString": {
+                    "type": "string",
+                    "pattern": "https://train.trust-scheme.de/info"
+                  },
+                  "typeStringOrArray": {
+                    "anyOf": [
+                      {
+                        "$ref": "#/$defs/typeString"
+                      },
+                      {
+                        "type": "array",
+                        "contains": {
+                          "$ref": "#/$defs/typeString"
+                        }
+                      }
+                    ]
+                  },
+                  "trustSchemeString": {
+                    "type": "string",
+                    "pattern": "worldbankfederation.com"
+                  },
+                  "trustSchemeStringOrArray": {
+                    "anyOf": [
+                      {
+                        "$ref": "#/$defs/trustSchemeString"
+                      },
+                      {
+                        "type": "array",
+                        "contains": {
+                          "$ref": "#/$defs/trustSchemeString"
+                        }
+                      }
+                    ]
+                  },
+                  "tosObject": {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "trustScheme"
+                    ],
+                    "properties": {
+                      "type": {
+                        "$ref": "#/$defs/typeStringOrArray"
+                      },
+                      "trustScheme": {
+                        "$ref": "#/$defs/trustSchemeStringOrArray"
+                      }
+                    }
+                  },
+                  "tosObjectOrArray": {
+                    "anyOf": [
+                      {
+                        "$ref": "#/$defs/tosObject"
+                      },
+                      {
+                        "type": "array",
+                        "contains": {
+                          "$ref": "#/$defs/tosObject"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "$ref": "#/$defs/tosObjectOrArray"
+              } 
             },
             {
               "path": [
                 "$.type"
               ],
               "filter": {
-                "type": "string",
-                "pattern": "creditCard"
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "creditCard"
+                }
               }
             }
           ]
