@@ -229,7 +229,8 @@ requirement.
 <nav>
   <button type="button">Minimal Example</button>
   <button type="button">Filter By Credential Type</button>
-  <button type="button">Two Filters</button>
+  <button type="button">Two Filters (Simplified)</button>
+  <button type="button">Two Filters (Complex)</button>
 </nav>
 
 <section>
@@ -254,7 +255,17 @@ requirement.
 
 <section>
 
-::: example Presentation Definition - Two Filters
+::: example Presentation Definition - Two Filters (Simplified)
+```json
+[[insert: ./test/presentation-definition/pd_filter2_simplified.json]]
+```
+:::
+
+</section>
+
+<section>
+
+::: example Presentation Definition - Two Filters (Complex)
 ```json
 [[insert: ./test/presentation-definition/pd_filter2.json]]
 ```
