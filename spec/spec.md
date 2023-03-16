@@ -230,7 +230,7 @@ requirement.
   <button type="button">Minimal Example</button>
   <button type="button">Filter By Credential Type</button>
   <button type="button">Two Filters (Simplified)</button>
-  <button type="button">Two Filters (Complex)</button>
+  <button type="button">Two Filters (Real-World)</button>
 </nav>
 
 <section>
