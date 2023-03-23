@@ -13,8 +13,11 @@
                 "$.type"
               ],
               "filter": {
-                "type": "string",
-                "pattern": "<the type of VC e.g. degree certificate>"
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "<the type of VC e.g. degree certificate>"
+                }
               }
             }
           ]
