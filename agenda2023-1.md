@@ -24,6 +24,20 @@ CM Editors
 
 - [PE](https://identity.foundation/presentation-exchange/) & [CM](https://identity.foundation/credential-manifest/)
 
+## March 30, 2023
+
+Today's Presentation Exchange attendance was a bit low, presumably for end-of-quarter deadlines or what have you, so Kim and I seized the opportunity to have a 45min nerdfest on the subject of CONFORMANCE TESTING possibilities for PresEx and CredMan.  I started a spreadsheet of normative statements that can serve as a scaffold for comprehensive conformance testing (which I'm volunteering to scaffold but not DO, haha); in some future iteration of that spreadsheet, I can make it a massive markdown table and check it into the /test/ folder for each spec's repo, methinks, alongside test vectors so that implementers (or, better yet, **profilers and implementation guide authors**) will have some groundwork already done :muscle:
+
+spreadsheet is [here](https://docs.google.com/spreadsheets/d/1h5RVm4dRpJS6576jrK9mD2t4GDP_Z3xNsPXAdSd9wAc/edit#gid=0) and the recording is [here](https://us02web.zoom.us/rec/share/SAFC6azRFfRPzDWekQ3sD1oAstGw3-Vr636I3tSZEJsF-rmTdfepp8nKtQAyApuI.fLktruCJMUzKoJXS). sadly no notes were taken but we added to an issue and compared some of our favorite examples of different kinds of conformance tests:
+- that [TLS test](https://www.ssllabs.com/ssltest/analyze.html?d=google.com&s=172.217.14.110&latest) that people use for checking minutae about TLS handshake variants
+- the [VC-API report card](https://w3c-ccg.github.io/vc-api-verifier-test-suite/#conformance) from W3C-CCG
+- the [parser-tester](https://github.com/nst/JSONTestSuite) that tests how well different libraries implement the core JSON RFC (8259)
+    + this last one might be useful for more advanced/exacting conformance testing down the road!
+
+## March 2023
+
+Sorry, not many notes were taken but we triaged some issues, including some implementer feedback that will inform an implementer's guide and more detailed/real-world test vectors we'll be working on in Q2!
+
 ## Feb 9, 2023
 
 - Decision: Moving meetings to bi-weekly
