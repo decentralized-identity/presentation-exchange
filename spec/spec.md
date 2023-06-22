@@ -1617,6 +1617,7 @@ Summary of changes:
 - Introduction of [Retention](#Retention-Feature).
 - Introduction of [JSON-LD Framing](#JSON--LD-Framing-Feature).
 - Introduction of an `optional` property for the _fields object_.
+- Introduction of an optional `name` property for the [[ref:Input Descriptor Objects]].
 - Removal of `schema` property from [[ref:Input Descriptor Objects]].
 - Input Descriptor `format` was moved to an external registry and can be restrained.
 - Input Descriptor `constraint` property has been made mandatory.
@@ -1640,6 +1641,9 @@ The [[ref:Presentation Definition]] now may contain a `frame` property which mus
 
 #### Introduction of an optional property for the fields object
 The _fields object_ of an [[ref:Input Descriptor Object]] may now contain an `optional` property, indicating optionality of the field.
+
+#### Introduction of an optional `name` property to the input descriptor object
+An [[ref:Input Descriptor Object]] may now contain an `name` property, indicating a human readable representation of the target.
 
 #### Removal of schema property from Input Descriptor Objects
 Previously an [[ref:Input Descriptor Object]] had a `schema` property that contained an array of URIs for [[ref:Claim]] schema's. It introduced ambiguity and was the source of confusion. It has been replaced with a `fields` property in the _constraints object_ of the [[ref:Input Descriptor Object]], allowing for a more expressive approach to restrict to certain types for instance.
