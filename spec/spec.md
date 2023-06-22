@@ -1639,11 +1639,11 @@ The [Retention feature](#Retention-Feature) indicates whether the Verifier inten
 #### JSON-LD Framing Feature
 The [[ref:Presentation Definition]] now may contain a `frame` property which must be a [JSON LD Framing Document](https://w3c.github.io/json-ld-framing/) object to allow for selective disclosure using frames.
 
-#### Introduction of an optional property for the fields object
-The _fields object_ of an [[ref:Input Descriptor Object]] may now contain an `optional` property, indicating optionality of the field.
-
 #### Introduction of an optional `name` property to the input descriptor object
 An [[ref:Input Descriptor Object]] may now contain an `name` property, indicating a human readable representation of the target.
+
+#### Introduction of an optional property for the fields object
+The _fields object_ of an [[ref:Input Descriptor Object]] may now contain an `optional` property, indicating optionality of the field.
 
 #### Removal of schema property from Input Descriptor Objects
 Previously an [[ref:Input Descriptor Object]] had a `schema` property that contained an array of URIs for [[ref:Claim]] schema's. It introduced ambiguity and was the source of confusion. It has been replaced with a `fields` property in the _constraints object_ of the [[ref:Input Descriptor Object]], allowing for a more expressive approach to restrict to certain types for instance.
