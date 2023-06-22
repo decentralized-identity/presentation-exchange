@@ -314,12 +314,17 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
   etc.) registered in the governing
   [registry](https://identity.foundation/claim-format-registry/#registry). The
   values in each array should only be values of `alg` and/or `proofType` that
-  are valid according to this registry (and the upstream registries per
-  claim-format linked from it). These arrays of strings thus function as
-  enumerations of supported profiles for each claim format, informing the
-  [[ref:Holder]] of which [[ref:Claim]] format configurations the
-  [[ref:Verifier]] can process. The value for each claim format property
-  ****MUST**** be an object composed as follows:
+  are valid according to this registry (and the upstream registries it relies on
+  to define valid values for `alg` or `proofType` per claim format). As these
+  upstream registries of valid profiles within each claim format may add,
+  rename, or deprecate entries over time, it is recommended that implementers
+  check both the claim format registry and its dependencies when defining these
+  objects to minimize risk of ambiguity or incompatibility with other
+  implementations. These arrays of strings thus function as enumerations of
+  supported profiles for each claim format, informing the [[ref:Holder]] of
+  which [[ref:Claim]] format configurations the [[ref:Verifier]] can process.
+  The value for each claim format property ****MUST**** be an object composed as
+  follows:
     - The object ****MUST**** include a format-specific property (i.e., `alg`,
       `proof_type`) that expresses which algorithms the [[ref:Verifier]]
       supports for the format. Its value ****MUST**** be an array of one or more
