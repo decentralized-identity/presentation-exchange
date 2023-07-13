@@ -1750,42 +1750,6 @@ eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDprZXk6ejZNa2diZldhYloxeHFkVlNCQ1hzYU1UYkw4YXVw
 
 </tab-panels>
 
-### Developer Resources
-
-#### JSONPath implementations
-
-- **Node.js**
-    - https://www.npmjs.com/package/jsonpath
-    - https://www.npmjs.com/package/jsonpath-plus (Ships its own TS types and have newer updates)
-- **Java**
-    - https://github.com/json-path/JsonPath
-- **Kotlin**
-    - https://github.com/codeniko/JsonPathKt
-- **Python**
-    - https://github.com/kennknowles/python-jsonpath-rw
-- **Go**
-    - https://github.com/PaesslerAG/jsonpath
-
-#### JSON Schema implementations
-
-- **Node.js**
-    - https://www.npmjs.com/package/ajv
-    - https://www.npmjs.com/package/json-schema
-- **Java**
-    - https://github.com/ssilverman/snowy-json
-    - https://github.com/leadpony/justify
-- **.NET**
-    - https://github.com/gregsdennis/Manatee.Json
-- **Kotlin**
-    - https://github.com/worldturner/medeia-validator
-- **Python**
-    - https://github.com/Julian/jsonschema
-    - https://github.com/horejsek/python-fastjsonschema
-- **Rust**
-    - https://github.com/Stranger6667/jsonschema-rs
-- **Go**
-    - https://github.com/xeipuuv/gojsonschema
-
 ### IANA Considerations
 
 #### JSON Web Token Claims Registration
