@@ -385,7 +385,7 @@ of the following properties, unless otherwise specified by a [[ref:Feature]]:
     otherwise specified by a feature:
         - The _fields object_ ****MUST**** contain a `path` property. The value
           of this property ****MUST**** be an array of one or more
-          [JSONPath](https://goessner.net/articles/JsonPath/) string
+          [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string
           expressions (as defined in the
           [JSONPath Syntax Definition](#jsonpath-syntax-definition) section)
           that select a target value from the input. The array ****MUST****
@@ -412,7 +412,7 @@ of the following properties, unless otherwise specified by a [[ref:Feature]]:
           present its value ****MUST**** be a
           [JSON Schema](https://json-schema.org/specification.html) descriptor
           used to filter against the values returned from evaluation of the
-          [JSONPath](https://goessner.net/articles/JsonPath/) string
+          [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string
           expressions in the `path` array.
         - The _fields object_ ****MAY**** contain an `optional` property. The value
           of this property ****MUST**** be a boolean, wherein `true` indicates the 
@@ -499,7 +499,7 @@ composed and embedded as follows:
       data format of the [[ref:Claim]].
     - The `descriptor_map` object ****MUST**** include a `path` property. The
       value of this property ****MUST**** be a
-      [JSONPath](https://goessner.net/articles/JsonPath/) string expression. The
+      [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string expression. The
       `path` property indicates the [[ref:Claim]] submitted in relation to the
       identified [[ref:Input Descriptor]], when executed against the top-level
       of the object the [[ref:Presentation Submission]] is embedded within.
@@ -549,12 +549,12 @@ composed and embedded as follows:
 To process the _Submission Entries_ of a Presentation Submission, use the following process:
 
 1. For each _Submission Entry_ in the `descriptor_map` array:
-   1. Execute the `path` field's [JSONPath](https://goessner.net/articles/JsonPath/)
+   1. Execute the `path` field's [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html)
       expression string on the
       [_Current Traversal Object_](#current-traversal-object){id="current-traversal-object"},
       or if none is designated, the top level of the _Embed Target_.
    2. Decode and parse the value returned from
-      [JSONPath](https://goessner.net/articles/JsonPath/) execution in
+      [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) execution in
       accordance with the [Claim Format Designation](#claim-format-designations)
       specified in the object's `format` property. If the value parses and
       validates in accordance with the
@@ -613,7 +613,7 @@ _Input Descriptor Object_ also come from the same container.
 
 The following section details where the _Presentation Submission_ is to be
 embedded within a target data structure, as well as how to formulate the
-[JSONPath](https://goessner.net/articles/JsonPath/) expressions to select the
+[JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) expressions to select the
 [[ref:Claims]] within the target data structure.
 
 #### Embed Locations
@@ -914,14 +914,14 @@ present, the `filter` property ****MUST**** also be present.
 
 :::note The inclusion of the `predicate` property indicates that the
 [[ref:Holder]] returns a boolean, rather than a value returned from evaluation
-of the [JSONPath](https://goessner.net/articles/JsonPath/) string
+of the [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string
 expressions in the `path` array. The boolean returned is the result
 of using the `filter` property's
 [JSON Schema](https://json-schema.org/specification.html)
 descriptors against the evaluated value. Exclusion of the `predicate`
 property indicates that the [[ref:Conformant Consumer]] returns the value
 returned from evaluation of the
-[JSONPath](https://goessner.net/articles/JsonPath/) string
+[JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string
 expressions in the `path` array.
 :::
 
@@ -1254,7 +1254,7 @@ For each candidate input:
 
      Accept the candidate input if every _fields object_ yields a _Field Query
      Result_; else, reject.
-     1. For each [JSONPath](https://goessner.net/articles/JsonPath/) expression
+     1. For each [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) expression
         in the `path` array (incrementing from the 0-index), evaluate the
         JSONPath expression against the candidate input and repeat the
         following subsequence on the result.
@@ -1798,20 +1798,6 @@ eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDprZXk6ejZNa2diZldhYloxeHFkVlNCQ1hzYU1UYkw4YXVw
 </tab-panels>
 
 ### Developer Resources
-
-#### JSONPath implementations
-
-- **Node.js**
-    - https://www.npmjs.com/package/jsonpath
-    - https://www.npmjs.com/package/jsonpath-plus (Ships its own TS types and have newer updates)
-- **Java**
-    - https://github.com/json-path/JsonPath
-- **Kotlin**
-    - https://github.com/codeniko/JsonPathKt
-- **Python**
-    - https://github.com/kennknowles/python-jsonpath-rw
-- **Go**
-    - https://github.com/PaesslerAG/jsonpath
 
 #### JSON Schema implementations
 
