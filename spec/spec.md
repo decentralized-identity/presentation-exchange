@@ -1597,6 +1597,53 @@ JSONPath                      | Description
 
 ## Appendix
 
+### Security Considerations
+
+JSONPath is being used in this specification both in the Input Descriptors of the Presentation Definition,
+defining where certain data is to be found, and the Submission Data, 
+defining how data maps from the definition to the Verifiable Presentation.
+With JSONPath come certain security considerations, that must be taken into account. 
+Be aware that in a future major version of the spec we envision to have some normative texts in the specification 
+itself disallowing certain aspects of JSONPath altogether like function extensions (ie regular expressions)
+
+Please also read the JSONPath IETF document providing more details on some of the security considerations mentioned below.   
+
+#### Attack Vectors on JSONPath Implementations
+
+Historically, JSONPath has often been implemented by feeding parts of the query to an underlying 
+programming language engine, e.g.,  JavaScript's eval() function.  This approach is well known to lead to 
+injection attacks and would require perfect input validation to prevent these attacks. 
+Since that is hard to achieve we recommend restricting JSONPath queries to not allow for functions 
+(i.e Regular Expressions)
+
+Attacks on availability may attempt to trigger unusually expensive runtime performance exhibited by certain 
+implementations in certain cases. This particularly applies to the use of Regular Expressions.
+Implementers need to be aware that good average performance is not sufficient as long as an attacker can choose to 
+submit specially crafted JSONPath queries or query arguments that trigger surprisingly high, possibly exponential, 
+CPU usage or for example a stack overflow.
+We recommend restricting JSONPath queries to not allow for function extensions. 
+Function extensions like match and search are using regular expressions, 
+to which the above security considerations apply. 
+
+#### Impact of not using function extensions in JSONPath
+As such we suggest software implementors to not allow for functions and relying parties to no create definitions that 
+rely on functions.
+
+Not using functions does restrict mainly the input descriptor part in terms of how flexible you can be, 
+on the other hand most issuers know exactly what type of credentials and claims they want to receive anyway, 
+so having very complex matching logic with Regular Expressions involved typically isn’t needed anyway.
+
+#### Restrict submission data to exact JSONPath paths
+JSON path has filtering logic, but once you are submitting your Verifiable Presentation and submission data, you 
+should be correlating input descriptor field ids in the `descriptor_map` with exact paths to the Verifiable Credentials 
+or claims. We suggest to not allow for both filters and function extensions for parties implementing the specification.
+
+#### Attack Vectors on JSON Schema
+
+
+#### Impact of not using the JSON schema regex function
+
+
 ### What is new
 The summary and details below highlight the differences between V1 and V2 of this specification. 
 
