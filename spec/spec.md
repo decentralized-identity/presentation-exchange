@@ -213,6 +213,15 @@ A [[ref:Conformant Producer]] and [[ref:Conformant Consumer]] implementation may
 
 Examples in this document use the [Verifiable Credentials Data Model](https://www.w3.org/TR/vc-data-model/) and the [Decentralized  Identifiers (DIDs)](https://www.w3.org/TR/did-core/) formats for illustrative purposes only; this specification is intended to support any JSON-serializable [[ref:Claim]] format.
 
+## Use Cases
+
+The following is a non-exhaustive list of some use cases which this specification is intended to support.
+
+1. A [[ref:Holder]]'s agent can find a [[ref:Presentation Definition]] and a [[ref:Submission Requirements Object]] in a well-known location, parse them, and use them to filter the [[ref:Holder]]'s credentials for the [[ref:Holder]], who can (interactively or programmatically) select credentials which their agent pack into a [[ref:Presentation Submission]] submitted back to the [[ref:Verifier]] for assessment.
+1. A [[ref:Verifier]]'s [[ref:Presentation Definition]] and a [[ref:Submission Requirements Object]] can describe a requirement met by credentials in multiple claim formats, and a [[ref:Holder]]'s agent can parse them and meet their requirements with a "mixed" Verifiable Presentation or other container that combines credentials in different claim formats, mapping claims to requirements with [[ref:Embed Targets]].
+1. A [[ref:Verifier]] can be a [[ref:Conformant Producer]] according to this specification without supporting any of the optional features, and any [[ref:Holder]] agent which is a [[ref:Conformant Consumer]] should be able to parse and their artefacts and produce an [[ref:Presentation Submission]] fulfilling them (granted they hold credentials that meet the requirements).
+1. A [[ref:Verifier]] can be a [[ref:Conformant Producer]] according to this specification supporting any combination optional features, and any [[ref:Holder]] agent supporting none of those feature can be a [[ref:Conformant Consumer]] of that Verifier's artefacts. 
+
 ## Presentation Definition
 
 [[ref:Presentation Definitions]] are objects that articulate what proofs a
