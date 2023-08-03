@@ -286,7 +286,9 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
   [UUID](https://tools.ietf.org/html/rfc4122) such as `32f54163-7166-48f1-93d8-f
   f217bdb0653` could provide an ID that is unique in a global context, while a
   simple string such as `my_presentation_definition_1` could be suitably unique
-  in a local context.
+  in a local context. The `id` property ****SHOULD**** be unique within the 
+  [[ref:Presentation Definition]] itself, meaning no other `id` values should exist
+  at any level with the same value.
 - `input_descriptors` - The [[ref:Presentation Definition]]  ****MUST****
   contain an `input_descriptors` property. Its value ****MUST**** be an array of
   [[ref:Input Descriptor Objects]], the composition of which are described in
@@ -359,7 +361,8 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
 - The [[ref:Input Descriptor Object]] ****MUST**** contain an `id` property.
   The value of the `id` property ****MUST**** be a string that does not
   conflict with the `id` of another [[ref:Input Descriptor Object]] in the same
-  [[ref:Presentation Definition]].
+  [[ref:Presentation Definition]] and ****SHOULD**** not conflict with any other `id`
+  present in the same [[ref:Presentation Definition]].
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `name` property. If
   present, its value ****SHOULD**** be a human-friendly name that describes what
   the target schema represents.
