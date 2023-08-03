@@ -362,7 +362,7 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
   The value of the `id` property ****MUST**** be a string that does not
   conflict with the `id` of another [[ref:Input Descriptor Object]] in the same
   [[ref:Presentation Definition]] and ****SHOULD**** not conflict with any other `id`
-  present in the same [[ref:Presentation Definition]].
+  value present in the same [[ref:Presentation Definition]].
 - The [[ref:Input Descriptor Object]] ****MAY**** contain a `name` property. If
   present, its value ****SHOULD**** be a human-friendly name that describes what
   the target schema represents.
