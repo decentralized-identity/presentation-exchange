@@ -1611,9 +1611,7 @@ executing the code dealing with the regular expressions in a sandbox.
 
 When allowing Regular Expression Implementers need to be aware that good average performance is not sufficient as long
 as an attacker can choose to submit specially crafted Regular Expressions that can result in surprisingly high, possibly
-exponential, CPU usage or for example result in a stack overflow. Also when you do allow Regular Expressions in your
-solution, for instance in the Presentation Definition, you will risk the other side not supporting it, as they took the
- cautious route of not allowing Regular Expressions. This specification is still suggesting to not allow Regular 
+exponential, CPU usage or for example result in a stack overflow. Also when Regular Expressions are allowed in the solution, for instance in the Presentation Definition, there is the risk of the other side not supporting it, being cautious. This specification still suggests not to allow Regular 
 Expressions, to not break backwards compatibility with version 2.0.0. A future new major version is highly likely to 
 not allow for usage of Regular Expressions in a normative way.
 
