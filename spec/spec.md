@@ -1636,7 +1636,7 @@ Historically, JSONPath has often been implemented by feeding parts of the query 
 programming language engine, e.g.,  JavaScript's eval() function.  This approach is well known to lead to 
 injection attacks and would require perfect input validation to prevent these attacks. 
 Since that is hard to achieve we recommend restricting JSONPath queries to not allow for functions 
-(i.e Regular Expressions, see above)
+(i.e., Regular Expressions, see above)
 
 Attacks on availability may attempt to trigger unusually expensive runtime performance exhibited by certain 
 implementations in certain cases. This particularly applies to the use of Regular Expressions. We recommend restricting 
