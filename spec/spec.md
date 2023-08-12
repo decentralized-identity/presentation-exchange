@@ -1624,7 +1624,7 @@ defining where certain data is to be found, and the Presentation Submission,
 defining how data maps from the definition to the Verifiable Presentation.
 With Regular Expressions come certain security considerations, that must be taken into account.
 Be aware that in a future major version of the spec we envision to have some normative texts in the specification
-itself disallowing certain aspects of JSONPath altogether like function extensions (ie regular expressions)
+itself disallowing certain aspects of JSONPath altogether like function extensions (i.e., Regular Expressions)
 
 Please also read the JSONPath IETF document providing more details on some of the security considerations mentioned
 below.
