@@ -1621,7 +1621,7 @@ not allow for usage of Regular Expressions in a normative way.
 #### JSONPath
 
 JSONPath is being used in this specification both in the Input Descriptors of the Presentation Definition,
-defining where certain data is to be found, and the Submission Data,
+defining where certain data is to be found, and the Presentation Submission,
 defining how data maps from the definition to the Verifiable Presentation.
 With Regular Expressions come certain security considerations, that must be taken into account.
 Be aware that in a future major version of the spec we envision to have some normative texts in the specification
