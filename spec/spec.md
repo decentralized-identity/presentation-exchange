@@ -1599,8 +1599,7 @@ JSONPath                      | Description
 
 ### Security Considerations
 JSONPath and JSON schemas are being used in this specification. Both allow the use of Regular Expressions, which have 
-numerous different (often incompatible) implementations. Some implementations allow the embedding of arbitrary code, 
-which MUST never be permitted, given the presentation definition and submission data should be treated as input 
+numerous different (often incompatible) implementations. The embedding of arbitrary code in Regular Expressions MUST never be permitted, given the presentation definition and submission data should be treated as input 
 from untrusted sources. 
 Regular expressions can often also be crafted to be extremely expensive to compute, resulting in
 denial-of-service attacks.
