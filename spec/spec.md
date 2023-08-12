@@ -1645,7 +1645,7 @@ Function extensions like `match` and `search` are using regular expressions,
 to which the above security considerations apply. 
 
 #### Impact of not using function extensions in JSONPath
-As such we suggest software implementors to not allow for functions and relying parties to no create definitions that 
+As such it is recommended that software implementors do not allow for function extensions in JSONPath and relying parties do not create definitions that
 rely on functions.
 
 Not using functions does restrict the input descriptor part in terms of how flexible you can be, 
