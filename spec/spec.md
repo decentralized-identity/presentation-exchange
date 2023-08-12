@@ -1648,9 +1648,9 @@ to which the above security considerations apply.
 As such it is recommended that software implementors do not allow for function extensions in JSONPath and relying parties do not create definitions that
 rely on functions.
 
-Not using functions does restrict the input descriptor part in terms of how flexible you can be, 
-on the other hand most issuers know exactly what type of credentials and claims they want to receive anyway, 
-so having very complex matching logic with Regular Expressions involved typically isn’t needed anyway.
+Not using functions does restricts the input descriptor part in terms of flexibility. 
+On the other hand, most issuers know exactly what type of credentials and claims they want to receive, 
+so having very complex matching logic with Regular Expressions involved is not typically needed.
 
 #### Restrict submission data to exact JSONPath paths
 JSON path has filtering logic, but once you are submitting your Verifiable Presentation and submission data, you 
