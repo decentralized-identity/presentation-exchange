@@ -396,8 +396,8 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
   value signature to the top-level `format` object, but can be used to specifically
   constrain submission of a single input to a subset of formats or algorithms.
 - The [[ref:Input Descriptor Object]] ****MUST**** contain a `constraints`
-property. Its value ****MUST**** be an object composed of _at least one_
-of the following properties, unless otherwise specified by a [[ref:Feature]]:
+property. Its value ****MUST**** be an object composed as follows, unless otherwise 
+specified by a [[ref:Feature]]:
     - The _constraints object_ ****MAY**** contain a `fields` property. Fields
     ****SHALL**** be processed forward from 0-index, so if a [[ref:Verifier]]
     desires to reduce processing by checking the most defining characteristics
@@ -1287,28 +1287,23 @@ For each candidate input:
         1. If the result returned no JSONPath match, skip to the next
           `path` array element.
         2. Else, evaluate the first JSONPath match (_candidate_) as follows:
-           1. If the _fields object_ has no `filter`, or if _candidate_
-              validates against the
+           1. If the _fields object_ has no `filter`, or if _candidate_ validates against the
               [JSON Schema](https://json-schema.org/specification.html)
               descriptor specified in `filter`, then:
-              ::: note
-              **Predicate Feature Only**
-
-              If the _fields object_ has a `predicate`, set _Field Query Result_ to
-              the boolean value resulting from evaluating the _Field Query Result_ against
-              the [JSON Schema](https://json-schema.org/specification.html) descriptor value
-              of the `filter` property.
-
-              Else
-              :::
-              - set _Field Query Result_ to be _candidate_
+              - If not using the **Predicate Feature**, set _Field Query Result_ to be _candidate_.
+              - If using the **Predicate Feature**:
+                - If the _fields object_ has a `predicate`, set _Field Query Result_ to the 
+                boolean value resulting from evaluating the _Field Query Result_ against 
+                the [JSON Schema](https://json-schema.org/specification.html) descriptor 
+                value of the `filter` property.
+                - Else, set _Field Query Result_ to be _candidate_.
            2. Else, skip to the next `path` array element.
-        3. If no value is located for any of the specified `path` queries, and 
+        3. If no `path` entries are found that satisfy the _fields object_'s constraints, and 
            the _fields object_ ****DOES NOT**** contain the `optional` property 
-           or it is set to `false`, reject the field as invalid. If no value is 
-           located  for any of the specified `path` queries and the _fields object_ 
-           ****DOES**** contain the `optional` property set to the value `true`, 
-           treat the field as valid and proceed to the next _fields object_.
+           or it is set to `false`, reject the field as invalid. If no `path` entry  
+           satisfies the _fields object_'s constraints for any of the specified `path` queries, 
+           and the _fields object_ ****DOES**** contain the `optional` property set to the value 
+           `true`, treat the field as valid and proceed to the next _fields object_.
   2. If all of the previous validation steps are successful mark the 
      candidate input as a match for use in a [[ref:Presentation Submission]].
       ::: note
