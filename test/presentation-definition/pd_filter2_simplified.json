@@ -14,7 +14,7 @@
                 ],
                 "filter": {
                   "type": "string",
-                  "pattern": "https://train.trust-scheme.de/info"
+                  "pattern": "^https://train.trust-scheme.de/info$"
                 }
               },
               {
@@ -23,7 +23,7 @@
                 ],
                 "filter": {
                   "type": "string",
-                  "pattern": "worldbankfederation.com"
+                  "pattern": "^worldbankfederation.com$"
                 }
               },
               {
@@ -32,7 +32,7 @@
                 ],
                 "filter": {
                   "type": "string",
-                  "pattern": "creditCard"
+                  "pattern": "^creditCard$"
                 }
               }
             ]
@@ -41,4 +41,3 @@
       ]
     }
   }
-  

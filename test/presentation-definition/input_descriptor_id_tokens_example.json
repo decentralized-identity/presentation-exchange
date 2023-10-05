@@ -20,7 +20,7 @@
               "path": ["$.status"],
               "filter": {
                 "type": "string",
-                "pattern": "active"
+                "pattern": "^active$"
               }
             }
           ]

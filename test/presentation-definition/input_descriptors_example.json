@@ -15,7 +15,7 @@
               "path": ["$.credentialSchema.id", "$.vc.credentialSchema.id"],
               "filter": {
                 "type": "string",
-                "pattern": "https://bank-schemas.org/1.0.0/accounts.json|https://bank-schemas.org/2.0.0/accounts.json"
+                "pattern": "^https://bank-schemas.org/1.0.0/accounts.json|https://bank-schemas.org/2.0.0/accounts.json$"
               }
             },
             {
@@ -27,7 +27,7 @@
               "purpose": "We can only verify bank accounts if they are attested by a trusted bank, auditor or regulatory authority.",
               "filter": {
                 "type": "string",
-                "pattern": "did:example:123|did:example:456"
+                "pattern": "^did:example:123$|^did:example:456$"
               },
               "intent_to_retain": true
             },
