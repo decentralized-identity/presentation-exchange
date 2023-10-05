@@ -27,7 +27,7 @@
               "purpose": "We can only accept digital driver's licenses issued by national authorities of member states or trusted notarial auditors.",
               "filter": {
                 "type": "string",
-                "pattern": "did:example:gov1|did:example:gov2"
+                "pattern": "^did:example:gov1$|^did:example:gov2$"
               }
             },
             {
