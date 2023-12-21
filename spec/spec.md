@@ -406,26 +406,27 @@ specified by a [[ref:Feature]]:
     earliest termination of evaluation. If the `fields` property is present,
     its value ****MUST**** be an array of objects composed as follows, unless
     otherwise specified by a feature:
-        - The _fields object_ ****MUST**** contain either an array-valued `pointer`
-          or `path` property. The array ****MUST**** be evaluated from 0-index
-          forward, breaking as soon as a _Field Query Result_ is found (as
-          described in [Input Evaluation](#input-evaluation)), which will be used
-          for the rest of the entry's evaluation. The ability to declare multiple
+        - The _fields object_ ****MUST**** contain either a `pointer` or `path`
+          property, array-valued. The array ****MUST**** be evaluated from 
+          0-index forward, breaking as soon as a _Field Query Result_ is found
+          (as described in [Input Evaluation](#input-evaluation)), which will
+          be used for the rest of the entry's evaluation. The ability to
+          declare multiple
           expressions in this way allows the [[ref:Verifier]] to account for
           format differences - for example: normalizing the differences in
           structure between JSON-LD/JWT-based
           [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) and
           vanilla JSON Web Tokens (JWTs) [[spec:rfc7519]].
-              - If provided, the `path` property ****MUST**** be an array of one or more
-          [JSONPath](https://goessner.net/articles/JsonPath/) string
-          expressions (as defined in the
-          [JSONPath Syntax Definition](#jsonpath-syntax-definition) section)
-          that select a target value from the input.
-              - If provided, the `pointer` property ****MUST**** be an array of one or more
-          [JSONPointer](TODO) string
-          expressions (as defined in the
-          [JSONPointer Syntax Definition](#jsonpointer-syntax-definition) section)
-          that select a target value from the input.
+              - If provided, the `pointer` property ****MUST**** be an array of
+                one or more [JSONPointer](TODO) string expressions (as defined
+                in the 
+                [JSONPointer Syntax Definition](#jsonpointer-syntax-definition)
+                section) that select a target value from the input.
+              - If provided, the `path` property ****MUST**** be an array of
+                one or more [JSONPath](https://goessner.net/articles/JsonPath/)
+                string expressions (as defined in the 
+                [JSONPath Syntax Definition](#jsonpath-syntax-definition) 
+                section) that select a target value from the input.
         - The _fields object_ ****MAY**** contain an `id` property. If present,
           its value ****MUST**** be a string that is unique from every other
           field object's `id` property, including those contained in other
@@ -439,17 +440,18 @@ specified by a [[ref:Feature]]:
         - The _fields object_ ****MAY**** contain a `filter` property, and if
           present its value ****MUST**** be a
           [JSON Schema](https://json-schema.org/specification.html) descriptor
-          used to filter against the values returned from evaluation of one of:
+          used to filter against the values returned from evaluation either:
             - the [JSONPointer](https://goessner.net/articles/JsonPath/) string
-                expressions in the `pointer` array, if provided, OR
+              expressions in the `pointer` array, if provided, OR
             - the [JSONPath](https://goessner.net/articles/JsonPath/) string
-                expressions in the `path` array, if provided
-        - The _fields object_ ****MAY**** contain an `optional` property. The value
-          of this property ****MUST**** be a boolean, wherein `true` indicates the 
-          field is optional, and `false` or non-presence of the property indicates 
-          the field is required. Even when the `optional` property is present, the value 
-          located at the indicated `pointer` OR `path` of the field ****MUST**** validate against 
-          the JSON Schema `filter`, if a `filter` is present.
+              expressions in the `path` array, if provided
+        - The _fields object_ ****MAY**** contain an `optional` property. The
+          value of this property ****MUST**** be a boolean, wherein `true` 
+          indicates the field is optional, and `false` or non-presence of the
+          property indicates the field is required. Even when the `optional`
+          property is present, the value located at the indicated `pointer` OR
+          `path` of the field ****MUST**** validate against the JSON Schema
+          `filter`, if a `filter` is present.
           :::note IDO Filter
           Remember a valid JSON Schema ****MAY**** contain [additional keywords](https://datatracker.ietf.org/doc/html/draft-handrews-json-schema-01#section-6.4) (e.g., `formatMinimum` and `formatMaximum`) that require extensions to handle properly.
 
@@ -527,33 +529,35 @@ composed and embedded as follows:
       value of this property ****MUST**** be a string that matches one of the
       [Claim Format Designation](#claim-format-designations). This denotes the
       data format of the [[ref:Claim]].
-    - The `descriptor_map` object ****MUST**** include one of a `purpose` or `path` property:
-        - If provided, the value of the `pointer` property ****MUST**** be a
-        [JSONPointer](TODO) string expression. The
-        `pointer` property indicates the [[ref:Claim]] submitted in relation to the
-        identified [[ref:Input Descriptor]], when executed against the top-level
-        of the object the [[ref:Presentation Submission]] is embedded within.
-        - If provided, the value of the `path` property ****MUST**** be a
-        [JSONPath](https://goessner.net/articles/JsonPath/) string expression. The
-        `path` property indicates the [[ref:Claim]] submitted in relation to the
-        identified [[ref:Input Descriptor]], when executed against the top-level
-        of the object the [[ref:Presentation Submission]] is embedded within.
-    - The object ****MAY**** include one of a `pointer_nested` OR `path_nested` object to indicate the
-      presence of a multi-[[ref:Claim]] envelope format. This means the
-      [[ref:Claim]] indicated is to be decoded separately from its parent
-      enclosure.
-      + `pointer_nested`:
-          - The format of a `pointer_nested` object mirrors that of a `descriptor_map`
+    - The `descriptor_map` object ****MUST**** include either a `pointer` or
+      `path` property:
+        - The value of the `pointer` property, if provided, ****MUST**** be a
+        [JSONPointer](TODO) string expression. The `pointer` property indicates
+        the [[ref:Claim]] submitted in relation to the identified 
+        [[ref:Input Descriptor]], when executed against the top-level of the
+        object the [[ref:Presentation Submission]] is embedded within.
+        - The value of the `path` property, if provided, ****MUST**** be a
+        [JSONPath](https://goessner.net/articles/JsonPath/) string expression.
+        The `path` property indicates the [[ref:Claim]] submitted in relation
+        to the identified [[ref:Input Descriptor]], when executed against the
+        top-level of the object the [[ref:Presentation Submission]] is embedded
+        within.
+    - The object ****MAY**** include either a `pointer_nested` OR `path_nested`
+      object to indicate the presence of a multi-[[ref:Claim]] envelope format. 
+      This means the [[ref:Claim]] indicated is to be decoded separately from
+      its parent enclosure.
+        + `pointer_nested`:
+            - The format of a `pointer_nested` object mirrors that of a `descriptor_map`
+              property. The nesting may be any number of levels deep. The `id`
+              property ****MUST**** be the same for each level of nesting.
+            - The `pointer` property inside each `pointer_nested` property provides a
+              _relative pointer_ within a given nested value.
+        + `path_nested`:
+            - The format of a `path_nested` object mirrors that of a `descriptor_map`
             property. The nesting may be any number of levels deep. The `id`
-        property ****MUST**** be the same for each level of nesting.
-          - The `pointer` property inside each `pointer_nested` property provides a
-            _relative pointer_ within a given nested value.
-      + `path_nested`:
-          - The format of a `path_nested` object mirrors that of a `descriptor_map`
-            property. The nesting may be any number of levels deep. The `id`
-        property ****MUST**** be the same for each level of nesting.
-          - The `path` property inside each `path_nested` property provides a
-            _relative path_ within a given nested value.
+            property ****MUST**** be the same for each level of nesting.
+            - The `path` property inside each `path_nested` property provides a
+             _relative path_ within a given nested value.
 
 ::: example Basic Presentation Submission object
 ```json
