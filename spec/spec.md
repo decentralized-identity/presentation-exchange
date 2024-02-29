@@ -766,7 +766,7 @@ of inputs are acceptable.
 
 If present, all [[ref:Submission Requirements]] ****MUST**** be satisfied, and
 all `input_descriptors` ****MUST**** be grouped. Any unused
-[ref:Input Descriptors]] that remain after satisfying all
+[[ref:Input Descriptors]] that remain after satisfying all
 [[ref:Submission Requirements]] ****MUST**** be ignored.
 
 ::: example Submission Requirement
@@ -861,7 +861,7 @@ If [[ref:Submission Requirement Object]] has a `from` property, this directs the
 [[ref:Input Descriptors]] with a matching `group` string. In the first example
 that follows, the [[ref:Submission Requirement]] requests a single input from
 [[ref:Input Descriptor]] group `"B"`. In the second example, the
-[[ref:Submission Requirement]] requests from 2 to 4 inputs from
+[[ref:Submission Requirement]] requests 2 or more inputs from
 [[ref:Input Descriptor]] group `"B"`.
 
 ::: example Submission Requirement, pick, group
