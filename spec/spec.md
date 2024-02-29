@@ -1132,7 +1132,7 @@ When using this [[ref:Feature]]:
   cases where a [[ref:Claim]] may have multiple [[Ref:Subjects]].
 
   For more information about techniques used to prove binding to a
-  [[ref:Holder]], please see [_Holder Binding_](#holder-binding).
+  [[ref:Holder]], please see [_Holder Binding_](#holder-and-subject-binding).
 - The _constraints object_ ****MAY**** contain a `same_subject` property. If
   present, its value ****MUST**** be an array of objects composed as
   follows:
