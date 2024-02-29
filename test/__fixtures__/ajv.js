@@ -2,7 +2,7 @@ const Ajv = require('ajv');
 const addFormats = require('ajv-formats');
 
 const schemas = {
-  "http://identity.foundation/claim-format-registry/schemas/presentation-definition-claim-format-designations.json": {
+  "https://identity.foundation/claim-format-registry/schemas/presentation-definition-claim-format-designations.json": {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Presentation Definition Claim Format Designations",
     "type": "object",
@@ -32,7 +32,7 @@ const schemas = {
       }
     }
   },
-  "http://identity.foundation/claim-format-registry/schemas/presentation-submission-claim-format-designations.json": {
+  "https://identity.foundation/claim-format-registry/schemas/presentation-submission-claim-format-designations.json": {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Presentation Submission Claim Format Designations",
     "type": "object",
