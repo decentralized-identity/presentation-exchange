@@ -1615,49 +1615,43 @@ JSONPath                      | Description
 
 ## Appendix
 
-### Security Considerations
-JSONPath and JSON schemas are being used in this specification. Both allow the use of Regular Expressions, which have numerous different (often incompatible) implementations. The embedding of arbitrary code in Regular Expressions MUST never be permitted, given the presentation definition and submission data should be treated as input from untrusted sources. Regular expressions can often also be crafted to be extremely expensive to compute, resulting in
-denial-of-service attacks.
+## Security Considerations
+JSONPath and JSON schemas are used in this specification. Both allow the use of Regular Expressions, and JSONPath additionally allows the use of function extensions. Both introduce important security risks, which implementors should mitigate.
 
-As such this specification recommends not using Regular Expressions at all in your implementation when using JSONPath and JSON Schemas, at the potential expense of expressiveness and/or usability. If you really want to use them, make sure the code is properly guarded both in terms of execution time and from a security perspective, by for instance executing the code dealing with the regular expressions in a sandbox. 
+### Regular Expression Security Considerations
 
-When allowing Regular Expression Implementers need to be aware that good average performance is not sufficient as long as an attacker can choose to submit specially crafted Regular Expressions that can result in surprisingly high, possibly exponential, CPU usage or for example result in a stack overflow. Also when Regular Expressions are allowed in the solution, for instance in the Presentation Definition, there is the risk of the other side not supporting it, being cautious. This specification still suggests not to allow Regular Expressions, to not break backwards compatibility with version 2.0.0. A future new major version is highly likely to not allow for usage of Regular Expressions in a normative way.
+A general best practice, which this specification emphasizes, is that implementations should protect against the potential security threats caused by accepting arbitrary Regular Expressions, including those resulting in denial-of-service attacks through expensive-to-compute  expressions. Specifically, the Presentation Definition and Presentation Submission  should be treated as input from untrusted sources. 
 
-#### JSONPath
+### JSONPath-specific Considerations
 
-JSONPath is being used in this specification both in the Input Descriptors of the Presentation Definition, defining where certain data is to be found, and the Presentation Submission, defining how data maps from the definition to the Verifiable Presentation. With Regular Expressions come certain security considerations, that must be taken into account. Be aware that in a future major version of the spec we envision to have some normative texts in the specification itself disallowing certain aspects of JSONPath altogether like function extensions (i.e., Regular Expressions)
+This specification uses JSONPath in 2 locations: Presentation Definition Input Descriptors, defining where data is to be found, and Presentation Submission Descriptor Map, defining how submitted Claims map to the Presentation Definition. 
 
-Please also read the JSONPath IETF document providing more details on some of the security considerations mentioned below.
+Implementors should follow precautions related to regular expressions in JSONPath and additionl precautions related to JSONPath's support of function extensions. 
 
-#### Attack Vectors on JSONPath Implementations
+#### Function Extension Security Considerations
+Further, implementors should guard against risks introduced by JSONPath's support of function extensions. This includes function extensions accepting regular expression parameters (e.g., search and match), and more generally, any function extension that may be vulnerable to exploits on receiving arbitrary input. 
 
-Historically, JSONPath has often been implemented by feeding parts of the query to an underlying 
-programming language engine, e.g.,  JavaScript's eval() function.  This approach is well known to lead to injection attacks and would require perfect input validation to prevent these attacks. 
-Since that is hard to achieve we recommend restricting JSONPath queries to not allow for functions 
-(i.e., Regular Expressions, see above)
+The JSONPath IETF document provides more details on the security considerations described here.
 
-Attacks on availability may attempt to trigger unusually expensive runtime performance exhibited by certain implementations in certain cases. This particularly applies to the use of Regular Expressions. We recommend restricting 
-JSONPath queries to not allow for function extensions.
-Function extensions like `match` and `search` are using regular expressions, 
-to which the above security considerations apply. 
+#### Recommendations and Alternatives
 
-#### Impact of not using function extensions in JSONPath
-As such it is recommended that software implementors do not allow for function extensions in JSONPath and relying parties do not create definitions that rely on functions.
+This specification recommends avoiding use of JSONPath's regular expression and function extension features if other approaches can achieve the same goal. This describes reasons implementors consider using these features and alternatives.
 
-Not using functions does restricts the input descriptor part in terms of flexibility. 
-On the other hand, most issuers know exactly what type of credentials and claims they want to receive, 
-so having very complex matching logic with Regular Expressions involved is not typically needed.
+While these features may enable Input Descriptor flexibility, they can result in complex, sometimes opaque, matching logic. Because Relying Parties typically know the type of credentials and claims they want to receive, it's recommended to use a direct alternative.
 
-#### Restrict submission data to exact JSONPath paths
-JSON path has filtering logic, but once you are submitting your Verifiable Presentation and submission data, you should be correlating input descriptor field ids in the `descriptor_map` with exact paths to the Verifiable Credentials or claims. We suggest to not allow for both filters and function extensions for parties implementing the specification.
+On the Presentation Submission side, JSONPath filtering features can typically be avoided in favor of correlating input descriptor field ids in the `descriptor_map` with exact paths to the Verifiable Credentials or claims. 
+
+If use is necessary, implementations should use proper security and execution time guards, e.g., through sandboxed execution with a timeout.
+
+### JSONSchema-specific  Considerations
 
 #### Attack Vectors on JSON Schema
-JSON Schema validation allows the use of Regular Expressions for instance in filters, to which the security considerations, mentioned above, apply. Regular Expressions could be used in the `filter` of a `field` as part of a `constraint`, by using the `pattern` property. We advise not to use this property.
+JSON Schema allows the use of Regular Expressions, to which the security considerations mentioned above apply. 
 
-Implementations that support validating or otherwise evaluating instance string data based on "contentEncoding" and/or "contentMediaType" are at risk of evaluating data in an unsafe way based on misleading information. Applications can mitigate this risk by only performing such processing when a relationship between the schema and instance is established (e.g., they share the same authority)
+Further, implementations that support validating or evaluating instance string data based on "contentEncoding" and/or "contentMediaType" are at risk of evaluating data in an unsafe way based on misleading information. Applications can mitigate this risk by only performing such processing when a relationship between the schema and instance is established (e.g., they share the same authority)
 
-#### Impact of not using the JSON schema regex function
-Not using Regula Expressions mainly applies to the `pattern` property of the filter. You should be using other means, like `const` and for instance `format` or `enum` to filter values. Of course a regular expression allows for more flexibility, like easy matching against 2 or more values, but we suggest to not support the `pattern` property, and use something like `enum` instead.
+#### Recommendations and Alternatives
+Not using Regular Expressions mainly applies to the `pattern` property of the filter. This specification recommends using other means, such as `const`, `format`, and `enum` to filter values.
 
 
 ### What is new
