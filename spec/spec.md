@@ -1689,15 +1689,6 @@ Language around consumers and producers of [[def:Presentation Definition]] and [
 #### `name` and `description` properties added to the spec.
 ### Embed Target Examples
 
-The following section demonstrates relationships of top-level objects defined in this spec with known embed targets.
-
-As a visual example of 2 embed targets (Verifiable Presentation and JWT), a [[ref:Presentation Submission]] is embedded in a Verifiable Presentation, alongside 1-many Verifiable Credentials.
-
-```mermaid
-  classDiagram
-      Verifiable Presentation --> "many" Verifiable Credential : Contains
-      Verifiable Presentation --> Presentation Submission : Contains
-```
 <!-- #### Presentation Definitions
 
 <tab-panels selected-index="0">
