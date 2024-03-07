@@ -408,7 +408,7 @@ specified by a [[ref:Feature]]:
     otherwise specified by a feature:
         - The _fields object_ ****MUST**** contain a `path` property. The value
           of this property ****MUST**** be an array of one or more
-          [JSONPath](https://goessner.net/articles/JsonPath/) string
+          [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string
           expressions (as defined in the
           [JSONPath Syntax Definition](#jsonpath-syntax-definition) section)
           that select a target value from the input. The array ****MUST****
@@ -435,7 +435,7 @@ specified by a [[ref:Feature]]:
           present its value ****MUST**** be a
           [JSON Schema](https://json-schema.org/specification.html) descriptor
           used to filter against the values returned from evaluation of the
-          [JSONPath](https://goessner.net/articles/JsonPath/) string
+          [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string
           expressions in the `path` array.
         - The _fields object_ ****MAY**** contain an `optional` property. The value
           of this property ****MUST**** be a boolean, wherein `true` indicates the 
@@ -522,7 +522,7 @@ composed and embedded as follows:
       data format of the [[ref:Claim]].
     - The `descriptor_map` object ****MUST**** include a `path` property. The
       value of this property ****MUST**** be a
-      [JSONPath](https://goessner.net/articles/JsonPath/) string expression. The
+      [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string expression. The
       `path` property indicates the [[ref:Claim]] submitted in relation to the
       identified [[ref:Input Descriptor]], when executed against the top-level
       of the object the [[ref:Presentation Submission]] is embedded within.
@@ -572,12 +572,12 @@ composed and embedded as follows:
 To process the _Submission Entries_ of a Presentation Submission, use the following process:
 
 1. For each _Submission Entry_ in the `descriptor_map` array:
-   1. Execute the `path` field's [JSONPath](https://goessner.net/articles/JsonPath/)
+   1. Execute the `path` field's [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html)
       expression string on the
       [_Current Traversal Object_](#current-traversal-object){id="current-traversal-object"},
       or if none is designated, the top level of the _Embed Target_.
    2. Decode and parse the value returned from
-      [JSONPath](https://goessner.net/articles/JsonPath/) execution in
+      [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) execution in
       accordance with the [Claim Format Designation](#claim-format-designations)
       specified in the object's `format` property. If the value parses and
       validates in accordance with the
@@ -636,7 +636,7 @@ _Input Descriptor Object_ also come from the same container.
 
 The following section details where the _Presentation Submission_ is to be
 embedded within a target data structure, as well as how to formulate the
-[JSONPath](https://goessner.net/articles/JsonPath/) expressions to select the
+[JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) expressions to select the
 [[ref:Claims]] within the target data structure.
 
 #### Embed Locations
@@ -937,14 +937,14 @@ present, the `filter` property ****MUST**** also be present.
 
 :::note The inclusion of the `predicate` property indicates that the
 [[ref:Holder]] returns a boolean, rather than a value returned from evaluation
-of the [JSONPath](https://goessner.net/articles/JsonPath/) string
+of the [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string
 expressions in the `path` array. The boolean returned is the result
 of using the `filter` property's
 [JSON Schema](https://json-schema.org/specification.html)
 descriptors against the evaluated value. Exclusion of the `predicate`
 property indicates that the [[ref:Conformant Consumer]] returns the value
 returned from evaluation of the
-[JSONPath](https://goessner.net/articles/JsonPath/) string
+[JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string
 expressions in the `path` array.
 :::
 
@@ -1277,7 +1277,7 @@ For each candidate input:
 
      Accept the candidate input if every _fields object_ yields a _Field Query
      Result_; else, reject.
-     1. For each [JSONPath](https://goessner.net/articles/JsonPath/) expression
+     1. For each [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) expression
         in the `path` array (incrementing from the 0-index), evaluate the
         JSONPath expression against the candidate input and repeat the
         following subsequence on the result.
@@ -1535,8 +1535,8 @@ JSONPath              | Description
 `[]`	                | Subscript operator
 `[,]`	                | Union operator for alternate names or array indices as a set
 `[start:end:step]`    | Array slice operator borrowed from ES4 / Python
-`?()`                 | Applies a filter (script) expression via static evaluation
-`()`	                | Script expression via static evaluation
+`?()`                 | Applies a filter (script) expression via static evaluation (see Security Considerations)
+`()`	                | Script expression via static evaluation (see Security Considerations)
 
 **Example JSON Object**
 
@@ -1585,13 +1585,13 @@ JSONPath                      | Description
 `$.store.*`                   | All things in store, which are some books and a red bicycle
 `$.store..price`              | The price of everything in the store
 `$..book[2]`                  | The third book
-`$..book[(@.length-1)]`       | The last book via script subscript
+`$..book[(@.length-1)]`       | The last book via script subscript (see Security Considerations)
 `$..book[-1:]`                | The last book via slice
 `$..book[0,1]`                | The first two books via subscript union
 `$..book[:2]`                 | The first two books via subscript array slice
-`$..book[?(@.isbn)]`          | Filter all books with isbn number
-`$..book[?(@.price<10)]`      | Filter all books cheaper than 10
-`$..book[?(@.price==8.95)]`   | Filter all books that cost 8.95
+`$..book[?(@.isbn)]`          | Filter all books with isbn number (see Security Considerations)
+`$..book[?(@.price<10)]`      | Filter all books cheaper than 10 (see Security Considerations)
+`$..book[?(@.price==8.95)]`   | Filter all books that cost 8.95 (see Security Considerations)
 `$..book[?(@.price<30 && @.category=="fiction")]`        | Filter all fiction books cheaper than 30
 `$..*`                        | All members of JSON structure
 
@@ -1614,6 +1614,45 @@ JSONPath                      | Description
 ~ [DIF DIDComm Messaging](https://github.com/decentralized-identity/didcomm-messaging). Daniel Hardman, Sam Curren. Status: Working Group Draft.
 
 ## Appendix
+
+## Security Considerations
+JSONPath and JSON schemas are used in this specification. Both allow the use of Regular Expressions, and JSONPath additionally allows the use of function extensions. Both introduce important security risks, which implementors should mitigate.
+
+### Regular Expression Security Considerations
+
+A general best practice, which this specification emphasizes, is that implementations should protect against the potential security threats caused by accepting arbitrary Regular Expressions, including those resulting in denial-of-service attacks through expensive-to-compute  expressions. Specifically, the Presentation Definition and Presentation Submission  should be treated as input from untrusted sources. 
+
+### JSONPath-specific Considerations
+
+This specification uses JSONPath in 2 locations: Presentation Definition Input Descriptors, defining where data is to be found, and Presentation Submission Descriptor Map, defining how submitted Claims map to the Presentation Definition. 
+
+Implementors should follow precautions related to regular expressions in JSONPath and additionl precautions related to JSONPath's support of function extensions. 
+
+#### Function Extension Security Considerations
+Further, implementors should guard against risks introduced by JSONPath's support of function extensions. This includes function extensions accepting regular expression parameters (e.g., search and match), and more generally, any function extension that may be vulnerable to exploits on receiving arbitrary input. 
+
+The JSONPath IETF document provides more details on the security considerations described here.
+
+#### Recommendations and Alternatives
+
+This specification recommends avoiding use of JSONPath's regular expression and function extension features if other approaches can achieve the same goal. This describes reasons implementors consider using these features and alternatives.
+
+While these features may enable Input Descriptor flexibility, they can result in complex, sometimes opaque, matching logic. Because Relying Parties typically know the type of credentials and claims they want to receive, it's recommended to use a direct alternative.
+
+On the Presentation Submission side, JSONPath filtering features can typically be avoided in favor of correlating input descriptor field ids in the `descriptor_map` with exact paths to the Verifiable Credentials or claims. 
+
+If use is necessary, implementations should use proper security and execution time guards, e.g., through sandboxed execution with a timeout.
+
+### JSONSchema-specific  Considerations
+
+#### Attack Vectors on JSON Schema
+JSON Schema allows the use of Regular Expressions, to which the security considerations mentioned above apply. 
+
+Further, implementations that support validating or evaluating instance string data based on "contentEncoding" and/or "contentMediaType" are at risk of evaluating data in an unsafe way based on misleading information. Applications can mitigate this risk by only performing such processing when a relationship between the schema and instance is established (e.g., they share the same authority)
+
+#### Recommendations and Alternatives
+Not using Regular Expressions mainly applies to the `pattern` property of the filter. This specification recommends using other means, such as `const`, `format`, and `enum` to filter values.
+
 
 ### What is new
 The summary and details below highlight the differences between V1 and V2 of this specification. 
