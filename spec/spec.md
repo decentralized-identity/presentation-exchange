@@ -195,6 +195,26 @@ an interaction. A Verifier is a [[ref:Conformant Producer]] of a
 [[ref:Presentation Definition]] and a [[ref:Conformant Consumer]] of a
 [[ref:Presentation Submission]].
 
+## Overview
+
+The following representative sequence contextualizes the top-level objects
+described in this specification:
+
+```mermaid
+sequenceDiagram
+    Verifier->>Holder: Presentation Definition
+    Holder->>Verifier: Presentation Submission
+```
+This specification covers only the data models of these objects and not the
+exchange protocols or architectural assumptions about how they get transported.
+Specifically:
+
+- [[ref:Holder]] discovery of the [[ref:Presentation Definition]] is determined
+  by the protocol. For example, the [[ref:Verifier]] may post a QR code which,
+  when scanned, allows a [[ref:Holder]] to retrieve the [[ref:Presentation Definition]]
+- The [[ref:Presentation Submission]] may be returned in a synchronous or
+  asynchronous manner, depending on the protocol.
+
 ## Structure of this Document
 This document has two primary sections: In the first, there is a model for defining the set of information a relying party would like to have presented, and in the second, there is a model for showing that the submitted presentation meets the related definition.
 Each of these sections begins by defining a base set of properties considered essential for core uses of the model, then describes additional feature sets that expand upon the base to allow more complex uses.
