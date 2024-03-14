@@ -14,10 +14,11 @@
 ### Discussion
 
 - PE Profile for OIDC4VP: https://docs.google.com/document/d/1r7S36RFNsnCOrYbkyTFE5ybPBalT-hERSnzKQ2rzcX8/edit
-- 
+- Discussed https://github.com/decentralized-identity/presentation-exchange/issues/472; making MUST -> MAY would imply `input_descriptors` is now MAY
+  
 ### Decisions
-
-
+- Kim to email everyone to draw attention to last call issues
+- Daniel check with Gabe
 
 ### Attendees
 Daniel Buchner, Gary De Beer, Kim Duffy, Martin Riedel
