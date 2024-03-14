@@ -1,0 +1,47 @@
+
+tab-panels {
+  display: block;
+}
+
+tab-panels > nav {
+  display: flex;
+}
+
+tab-panels > nav > * {
+  padding: 0.5em 1em;
+  background: #e0e0e0;
+  border: 1px solid #aaa;
+  border-radius: 0px;
+  margin-left: -2px;
+  cursor: pointer;
+}
+
+tab-panels > nav > *:focus {
+  outline: none;
+  background: #ccc;
+}
+
+tab-panels > nav > *:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+tab-panels > nav > *:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+tab-panels > nav > *[selected] {
+  color: #fff;
+  background: #005ca7;
+  border-color: #004c8a;
+  opacity: 0.9999;
+}
+
+tab-panels > section {
+  display: none;
+}
+
+tab-panels > section[selected] {
+  display: block;
+}

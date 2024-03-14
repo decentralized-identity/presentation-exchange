@@ -1,0 +1,43 @@
+
+detail-box {
+  display: block;
+}
+
+detail-box > header [detail-box-toggle] {
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  cursor: pointer;
+}
+
+detail-box > header[detail-box-toggle]:after,
+detail-box > header [detail-box-toggle]:after {
+  content: " ";
+  display: inline-block;
+  width: 0; 
+  height: 0;
+  border-left: 0.55em solid transparent;
+  border-right: 0.55em solid transparent;
+  border-top: 0.8em solid;
+  vertical-align: sub;
+  cursor: pointer;
+}
+
+detail-box[open] > header[detail-box-toggle]:after,
+detail-box[open] > header [detail-box-toggle]:after {
+  border-top: none;
+  border-bottom: 0.8em solid;
+}
+
+detail-box > section {
+  box-sizing: border-box;
+  height: 0;
+  opacity: 0;
+  min-width: 100%;
+  transition: height 0.3s ease, opacity 0.3s;
+  overflow: hidden;
+}
+
+detail-box[open] > section {
+  opacity: 1;
+}

@@ -1,0 +1,67 @@
+
+/* PERSONA-LIST */
+
+persona-list {
+  text-align: center;
+}
+
+persona-list > ul {
+  flex-wrap: wrap;
+}
+
+persona-list > ul > li {
+  flex: 1;
+  width: 8em;
+  max-width: 7em;
+  margin: 0 1em 2em;
+  cursor: pointer;
+  will-change: transform, opacity;
+}
+
+persona-list > ul > div[persona-state="add"] {
+  opacity: 0;
+  transform: scale(0.25);
+  animation: scale-in 0.5s cubic-bezier(.47,1.64,.41,.8) 0.3s forwards;
+}
+
+persona-list i {
+  font-size: 3em;
+}
+
+persona-list h3 {
+  margin: 0.5em 0 0;
+}
+
+/* CONNECTION-LIST */
+
+connection-list {
+  text-align: left;
+}
+
+connection-list table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+connection-list th,
+connection-list td {
+  padding: 0.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* DATA-BROWSER */
+
+data-browser > ul > li {
+  padding: 0.4em 0.45em;
+  cursor: pointer;
+}
+
+/* Animations */
+
+@keyframes scale-in {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
