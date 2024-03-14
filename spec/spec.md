@@ -415,7 +415,7 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
   (e.g., `jwt`, `jwt_vc`, `jwt_vp`, etc.). This `format` property is identical in
   value signature to the top-level `format` object, but can be used to specifically
   constrain submission of a single input to a subset of formats or algorithms.
-- The [[ref:Input Descriptor Object]] ****MUST**** contain a `constraints`
+- The [[ref:Input Descriptor Object]] ****MAY**** contain a `constraints`
 property. Its value ****MUST**** be an object composed as follows, unless otherwise 
 specified by a [[ref:Feature]]:
     - The _constraints object_ ****MAY**** contain a `fields` property. Fields
