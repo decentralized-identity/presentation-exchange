@@ -1290,8 +1290,7 @@ candidate input (JWT, Verifiable Credential, etc.) it holds to determine whether
 there is a match.
 
 For each candidate input:
-  1. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-     and it contains a `fields` property with one or more _fields objects_,
+  1. If the `constraints` property of the [[ref:Input Descriptor]] contains a `fields` property with one or more _fields objects_,
      evaluate each _fields object_ against the candidate input as described
      in the following subsequence.
 
@@ -1333,8 +1332,7 @@ For each candidate input:
       relative reference to the `group` values the input is designated for.
       :::
 
- 3. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-     and it contains a `limit_disclosure` property set to the string value
+ 3. If the `constraints` property of the [[ref:Input Descriptor]] contains a `limit_disclosure` property set to the string value
      `required`, ensure that any subsequent submission of data in relation to the
      candidate input is limited to the entries specified in the `fields`
      property. If the `fields` property ****is not**** present, or contains zero
@@ -1346,17 +1344,14 @@ For each candidate input:
  ::: note
  **Relational Constraint Feature Only**
 
-  4. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-     and it contains a `subject_is_issuer` property set to the value `required`,
+  4. If the `constraints` property of the [[ref:Input Descriptor]] contains a `subject_is_issuer` property set to the value `required`,
      ensure that any submission of data in relation to the candidate input is
      fulfilled using a _self_attested_ [[ref:Claim]].
-  5. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-     and it contains an `is_holder` property, ensure that for each object in the
+  5. If the `constraints` property of the [[ref:Input Descriptor]] contains an `is_holder` property, ensure that for each object in the
      array, any submission of data in relation to the candidate input is
      fulfilled by the [[Ref:Subject]] of the attributes so identified by the
      strings in the `field_id` array.
-  6. If the `constraints` property of the [[ref:Input Descriptor]] is present,
-     and it contains a `same_subject` property, ensure that for each object in
+  6. If the `constraints` property of the [[ref:Input Descriptor]] contains a `same_subject` property, ensure that for each object in
      the array, all of the attributes so identified by the strings in the
      `field_id` array are about the same [[Ref:Subject]].
 
