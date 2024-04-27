@@ -1,15 +1,12 @@
-Presentation Exchange 2.X.X
+Presentation Exchange 2.0.1
 ==================
 
-**Specification Status:** Pre-Draft
+**Specification Status:** DIF Ratified Specification
+
+**Ratification Date**: April 25th, 2024
 
 **Latest Draft:**
   [identity.foundation/presentation-exchange](https://identity.foundation/presentation-exchange)
-
-**Ratified Versions:**
-~ **v1.0.0** - [https://identity.foundation/presentation-exchange/spec/v1.0.0](https://identity.foundation/presentation-exchange/spec/v1.0.0)
-~ **v2.0.0** - [https://identity.foundation/presentation-exchange/spec/v2.0.0](https://identity.foundation/presentation-exchange/spec/v2.0.0)
-~ **v2.0.1** - [https://identity.foundation/presentation-exchange/spec/v2.0.1](https://identity.foundation/presentation-exchange/spec/v2.0.1)
 
 <!-- -->
 **Editors:**
