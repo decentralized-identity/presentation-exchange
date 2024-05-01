@@ -9,7 +9,7 @@ Presentation Exchange 2.X.X
 **Ratified Versions:**
 ~ **v1.0.0** - [https://identity.foundation/presentation-exchange/spec/v1.0.0](https://identity.foundation/presentation-exchange/spec/v1.0.0)
 ~ **v2.0.0** - [https://identity.foundation/presentation-exchange/spec/v2.0.0](https://identity.foundation/presentation-exchange/spec/v2.0.0)
-~ **v2.0.1** - [https://identity.foundation/presentation-exchange/spec/v2.0.1](https://identity.foundation/presentation-exchange/spec/v2.0.1)
+~ **v2.1.0** - [https://identity.foundation/presentation-exchange/spec/v2.1.0](https://identity.foundation/presentation-exchange/spec/v2.1.0)
 
 <!-- -->
 **Editors:**
