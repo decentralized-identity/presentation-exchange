@@ -1,4 +1,4 @@
-Presentation Exchange 2.0.1
+Presentation Exchange 2.1.0
 ==================
 
 **Specification Status:** DIF Ratified Specification
@@ -68,7 +68,7 @@ these data formats within their flows.
 
 ## Status of This Document
 
-Presentation Exchange v2.X.X is a _PRE-DRAFT_ specification developed within
+Presentation Exchange v2.1.0 is a _DIF RATIFIED_ specification developed within
 the Decentralized Identity Foundation (DIF). It incorporates requirements and
 learnings from related work of many active industry players into a shared
 specification that meets the collective needs of the community.
