@@ -365,7 +365,7 @@ be ignored, unless otherwise specified by a [[ref:Feature]];
 
       An illustrative example containing all of the formats in use by the
       specifying implementers at time of writing (also reflected in the provided
-      JSON Schema) is as follows::
+      [[ref:JSON Schema]]) is as follows:
 
 ```json
 [[insert: ./test/presentation-definition/format_example.json]]
@@ -454,7 +454,7 @@ property. Its value ****MUST**** be an object composed as follows, and it
           human-friendly name that describes what the target field represents.
         - The _fields object_ ****MAY**** contain a `filter` property, and if
           present its value ****MUST**** be a
-          [JSON Schema](https://json-schema.org/specification.html) descriptor
+          [[ref:JSON Schema] descriptor
           used to filter against the values returned from evaluation of the
           [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string
           expressions in the `path` array.
@@ -463,9 +463,9 @@ property. Its value ****MUST**** be an object composed as follows, and it
           field is optional, and `false` or non-presence of the property indicates 
           the field is required. Even when the `optional` property is present, the value 
           located at the indicated `path` of the field ****MUST**** validate against 
-          the JSON Schema `filter`, if a `filter` is present.
+          the [[ref:JSON Schema]] `filter`, if a `filter` is present.
           :::note IDO Filter
-          Remember a valid JSON Schema ****MAY**** contain [additional keywords](https://datatracker.ietf.org/doc/html/draft-handrews-json-schema-01#section-6.4) (e.g., `formatMinimum` and `formatMaximum`) that require extensions to handle properly.
+          Remember a valid [[ref:JSON Schema]] ****MAY**** contain [additional keywords](https://datatracker.ietf.org/doc/html/draft-handrews-json-schema-01#section-6.4) (e.g., `formatMinimum` and `formatMaximum`) that require extensions to handle properly.
 
           A [[ref: Holder]] ****SHOULD**** be able to gracefully handle additional properties, even if this just means ignoring the added keywords.
           :::
@@ -961,7 +961,7 @@ present, the `filter` property ****MUST**** also be present.
 of the [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string
 expressions in the `path` array. The boolean returned is the result
 of using the `filter` property's
-[JSON Schema](https://json-schema.org/specification.html)
+[[ref:JSON Schema]]
 descriptors against the evaluated value. Exclusion of the `predicate`
 property indicates that the [[ref:Conformant Consumer]] returns the value
 returned from evaluation of the
@@ -992,7 +992,7 @@ If the [`predicate` property](#predicate-filters) is present, the set of JSON Sc
 descriptors which comprise the value of the `filter` property
 ****MUST**** be restricted according to the desired predicate
 operation, as follows:
-  - To express the following range proofs, use the JSON Schema
+  - To express the following range proofs, use the [[ref:JSON Schema]]
     [numeric range](https://json-schema.org/understanding-json-schema/reference/numeric.html#range)
     properties:
       - `greater-than` - Use the `exclusiveMinimum` descriptor. For
@@ -1033,7 +1033,7 @@ operation, as follows:
           "maximum": 65536,
         }
         ```
-  - to express the following equality proofs, use the JSON Schema
+  - to express the following equality proofs, use the [[ref:JSON Schema]]
     `const` descriptor:
       - `equal-to` - Use the `const` descriptor. For example to
         request proof that an attribute has the value "Chad", use the
@@ -1054,7 +1054,7 @@ operation, as follows:
           }
         }
         ```
-  - to express set-membership proofs, use the JSON Schema `enum`
+  - to express set-membership proofs, use the [[ref:JSON Schema]] `enum`
     descriptor:
       - `in-set` - Use the `enum` descriptor. For example, to
         request proof that an attribute is contained in the set of
@@ -1119,7 +1119,7 @@ When using this [[ref:Feature]]:
   users to enter the data required by an [[ref:Input Descriptor]] that has its 
   `subject_is_issuer` property set to either `required` or `preferred`. An example 
   of this would be a user agent wallet app providing a form generated using the 
-  JSON Schema `filter` objects present in the `fields` of an [[ref:Input Descriptor]] 
+  [[ref:JSON Schema]] `filter` objects present in the `fields` of an [[ref:Input Descriptor]] 
   that are subsequently packaged up in accordance with the structure the 
   [[ref:Input Descriptor]] defines for submission as _self-attested_ data.
   :::
@@ -1243,7 +1243,6 @@ The values of all status properties are objects, composed as follows:
   presentation protocols.
   :::
 
-
 ### JSON-LD Framing Feature
 
 The JSON-LD Framing [[ref:Feature]] extends [[ref:Presentation Definition]] to support
@@ -1308,13 +1307,13 @@ For each candidate input:
           `path` array element.
         2. Else, evaluate the first JSONPath match (_candidate_) as follows:
            1. If the _fields object_ has no `filter`, or if _candidate_ validates against the
-              [JSON Schema](https://json-schema.org/specification.html)
+              [[ref:JSON Schema]]
               descriptor specified in `filter`, then:
               - If not using the **Predicate Feature**, set _Field Query Result_ to be _candidate_.
               - If using the **Predicate Feature**:
                 - If the _fields object_ has a `predicate`, set _Field Query Result_ to the 
                 boolean value resulting from evaluating the _Field Query Result_ against 
-                the [JSON Schema](https://json-schema.org/specification.html) descriptor 
+                the [[ref:JSON Schema]] descriptor 
                 value of the `filter` property.
                 - Else, set _Field Query Result_ to be _candidate_.
            2. Else, skip to the next `path` array element.
@@ -1369,7 +1368,7 @@ specifications handle these concepts in different ways.
 [[ref:Presentation Definitions]] have a need to specify whether expired,
 revoked, or [[ref:Claims]] of other statuses can be accepted. For [[ref:Claims]]
 that have simple status properties,
-[Input Descriptor Filters](#input-descriptor-objects) JSON Schema can be used to
+[Input Descriptor Filters](#input-descriptor-objects) [[ref:JSON Schema]] can be used to
 specify acceptable criteria.
 
 The first example below demonstrates _expiry_ using the [VC Data Model's
@@ -1474,7 +1473,7 @@ variants they can receive or are submitting. These formats are codified by
 abbreviation tags which are defined in a separate 
 [registry](https://identity.foundation/claim-format-registry/#registry) also 
 hosted at the DIF, and maintained by the same authors as this specification. 
-The registry includes JSON Schema documents, which are referenced in schemas
+The registry includes [[ref:JSON Schema]] documents, which are referenced in schemas
 defined in this specification. To add abbreviations for a claim format supported
  by a working implementation, please follow 
  [these instructions](https://identity.foundation/claim-format-registry/#structure-of-the-registry)
@@ -1484,15 +1483,24 @@ This registry is not meant to be exhaustive nor
 restrictive; an implementation that supports additional claim formats can still
 be considered fully conformant.
 
-## JSON Schemas
+## JSON Schema
+
+This specification leverages [[ref:JSON Schema]] in multiple places: for processing
+[Input Descriptors](#input-descriptor), as well as for evaluating the data objects
+defined by Presentation Exchange itself for conformance with the specification.
+
+To facilitate consistent implementation of the specification and to facilitate interoperability
+implementers ****MUST*** use [[ref:JSON Schema Draft 7]]. Draft 7 is widely used, adopted,
+has significant support in open source software, and supports the features of [[ref:JSON Schema]] used by this specification.
+
+The relevant links to the Draft 7 specifications can [be found here](https://json-schema.org/specification-links#draft-7).
 
 ### Vocabulary Definition
 
 The _Presentation Exchange_ specification adopts and defines the following JSON
 Schema data format and processing variant, which implementers ****MUST****
 support for evaluation of the portions of the _Presentation Exchange_
-specification that call for JSON Schema validation:
-https://tools.ietf.org/html/draft-handrews-json-schema-02
+specification that call for [[ref:JSON Schema]] validation.
 
 ### Presentation Definition (in an envelope)
 
@@ -1619,6 +1627,9 @@ JSONPath                      | Description
 [[def: Linked Data Proof, Linked Data Proofs]]
 ~ [Data Integrity 1.0](https://w3c-ccg.github.io/data-integrity-spec/). Dave Longley, Manu Sporny. 2022-03. Status: Draft Community Group Report.
 
+[[def: JSON Schema, JSON Schema Draft 7]]
+~ [JSON Schema Draft-07](https://json-schema.org/draft-07/json-schema-release-notes.html). OpenJS Foundation. 2018-03-19. Status: Internet-Draft.
+
 [[spec]]
 
 ## Informative References
@@ -1659,16 +1670,16 @@ On the Presentation Submission side, JSONPath filtering features can typically b
 
 If use is necessary, implementations should use proper security and execution time guards, e.g., through sandboxed execution with a timeout.
 
-### JSONSchema-specific  Considerations
+### JSON Schema-specific Considerations
 
 #### Attack Vectors on JSON Schema
-JSON Schema allows the use of Regular Expressions, to which the security considerations mentioned above apply. 
 
-Further, implementations that support validating or evaluating instance string data based on "contentEncoding" and/or "contentMediaType" are at risk of evaluating data in an unsafe way based on misleading information. Applications can mitigate this risk by only performing such processing when a relationship between the schema and instance is established (e.g., they share the same authority)
+[[ref:JSON Schema]] allows the use of Regular Expressions, to which the security considerations mentioned above apply. 
+
+Further, implementations that support validating or evaluating instance string data based on "contentEncoding" and/or "contentMediaType" are at risk of evaluating data in an unsafe way based on misleading information. Applications can mitigate this risk by only performing such processing when a relationship between the schema and instance is established (e.g., they share the same authority).
 
 #### Recommendations and Alternatives
 Not using Regular Expressions mainly applies to the `pattern` property of the filter. This specification recommends using other means, such as `const`, `format`, and `enum` to filter values.
-
 
 ### What is new
 The summary and details below highlight the differences between V1 and V2 of this specification. 
