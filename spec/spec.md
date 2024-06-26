@@ -454,7 +454,7 @@ property. Its value ****MUST**** be an object composed as follows, and it
           human-friendly name that describes what the target field represents.
         - The _fields object_ ****MAY**** contain a `filter` property, and if
           present its value ****MUST**** be a
-          [[ref:JSON Schema] descriptor
+          [[ref:JSON Schema]] descriptor
           used to filter against the values returned from evaluation of the
           [JSONPath](https://ietf-wg-jsonpath.github.io/draft-ietf-jsonpath-base/draft-ietf-jsonpath-base.html) string
           expressions in the `path` array.
