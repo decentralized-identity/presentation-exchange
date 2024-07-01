@@ -1,15 +1,13 @@
-# Presentation Exchange 2.X.X
+# Presentation Exchange 2.1.1
 
-**Specification Status:** Pre-Draft
+**Specification Status:** DIF Ratified Specification
+
+**Ratification Date**: April 25th, 2024
+
+**Editorial update**: June 30, 2024
 
 **Latest Draft:**
 [identity.foundation/presentation-exchange](https://identity.foundation/presentation-exchange)
-
-**Ratified Versions:**
-~ **v1.0.0** - [https://identity.foundation/presentation-exchange/spec/v1.0.0](https://identity.foundation/presentation-exchange/spec/v1.0.0)
-~ **v2.0.0** - [https://identity.foundation/presentation-exchange/spec/v2.0.0](https://identity.foundation/presentation-exchange/spec/v2.0.0)
-~ **v2.1.0** - [https://identity.foundation/presentation-exchange/spec/v2.1.0](https://identity.foundation/presentation-exchange/spec/v2.1.0)
-~ **v2.1.1** - [https://identity.foundation/presentation-exchange/spec/v2.1.1](https://identity.foundation/presentation-exchange/spec/v2.1.1)
 
 <!-- -->
 
@@ -72,7 +70,7 @@ these data formats within their flows.
 
 ## Status of This Document
 
-Presentation Exchange v2.X.X is a _PRE-DRAFT_ specification developed within
+Presentation Exchange v2.1.0 is a _DIF RATIFIED_ specification developed within
 the Decentralized Identity Foundation (DIF). It incorporates requirements and
 learnings from related work of many active industry players into a shared
 specification that meets the collective needs of the community.
@@ -1268,8 +1266,8 @@ and derived data received, except for claims from the [[ref:Presentation Submiss
 for which the accompanying [[ref:Input Descriptor Object]]'s _field_ `intent_to_retain`
 property was set to true.
 
-Retain is defined as: “to store for a period longer than necessary to conduct the
-exchange between [[ref:Holder]] and [[ref:Verifier]] in realtime”.
+Retain is defined as: to store for a period longer than necessary to conduct the
+exchange between [[ref:Holder]] and [[ref:Verifier]] in realtime.
 
 When using this [[ref:Feature]]:
 

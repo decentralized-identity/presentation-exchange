@@ -38,6 +38,18 @@
     },
     {
       "title": "DIF Presentation Exchange",
+      "spec_directory": "./spec/v2.1.1",
+      "output_path": "./build/spec/v2.1.1",
+      "logo": "https://rawcdn.githack.com/decentralized-identity/decentralized-identity.github.io/a3ca39717e440302d1fd99a796e7f00e1c42eb2d/images/logo-flat.svg",
+      "logo_link": "https://identity.foundation",
+      "source": {
+        "host": "github",
+        "account": "decentralized-identity",
+        "repo": "presentation-exchange"
+      }
+    },
+    {
+      "title": "DIF Presentation Exchange",
       "spec_directory": "./spec",
       "output_path": "./build",
       "logo": "https://rawcdn.githack.com/decentralized-identity/decentralized-identity.github.io/a3ca39717e440302d1fd99a796e7f00e1c42eb2d/images/logo-flat.svg",
