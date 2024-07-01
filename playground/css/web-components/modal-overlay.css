@@ -1,0 +1,66 @@
+
+modal-overlay {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+modal-overlay:not([open]) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+modal-overlay:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+modal-overlay > article {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  box-sizing: border-box;
+  max-height: 100%;
+  margin: auto;
+  background: #fff;
+  z-index: 1;
+}
+
+modal-overlay > article > header [modal-close]:before {
+  content: "⨉";
+}
+
+modal-overlay > article > footer {
+  display: flex;
+  /* flex: none; */
+  justify-content: flex-end;
+}
+
+  modal-overlay > article > header,
+  modal-overlay > article > footer {
+    padding: 0.8em;
+  }
+
+  modal-overlay > article > header:empty,
+  modal-overlay > article > footer:empty {
+    padding: 0.4em 0;
+  }
+
+modal-overlay > article > section {
+  padding: 0 1em;
+  overflow: auto;
+}
