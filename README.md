@@ -13,3 +13,7 @@ npx serve build
 ```
 
 Visit http://localhost:5000/
+### Schema Reference for Consent Credentials
+
+When using Presentation Exchange for health-data consent, input descriptors can reference JSON Schemas or credential definitions (e.g., HL7/FHIR-based schemas).
+See also: https://hl7.org/fhir/
